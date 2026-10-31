@@ -1,0 +1,25 @@
+name: Engineering task
+description: A bounded task with resumable state and acceptance evidence
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and intended behavior
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Component, owned files and exclusions
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance checks and evidence limits
+    validations:
+      required: true
+  - type: textarea
+    id: handoff
+    attributes:
+      label: Current commit, failures and next step
