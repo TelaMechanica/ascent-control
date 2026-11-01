@@ -4,10 +4,10 @@ Public shared application and extension interfaces. Ascent Control+ is a private
 
 ## Migration status
 
-The existing internal application is being migrated. This repository initially contains the shared package/dependency contracts and development workflow; it is **not yet the complete public application export**. Do not advertise a finished public installer from this branch. The existing internal release is maintained separately during extraction.
+The existing internal application is being migrated. This repository contains shared package/dependency contracts, the development workflow, and the first six reviewed standalone runtime modules; it is **not yet the complete public application export**. Do not advertise a finished public installer from this branch. The existing internal release is maintained separately during extraction.
 
 Widget and application-extension installation must validate product dependencies, versions and active providers. Mapster+ requires Ascent Control+; a UI toggle or supplied edition string cannot satisfy this requirement. Data/configuration remains owned by the same application and widget family across upgrades.
 
-Read AGENTS.md, docs/STATUS.md and docs/TASKS.md before work. Both coding agents follow those same instructions. Run `python -m unittest discover -s tests -v` for the initial contract checks.
+Read AGENTS.md, docs/STATUS.md and docs/TASKS.md before work. Both coding agents follow those same instructions. Run `python -m pip install -r requirements-dev.txt`, then `python -m pytest tests -q`, `python tools/check_tree.py` and `python tools/check_public_runtime.py`. The imported modules retain their original names and exact source bytes to preserve callers during migration.
 
 A project-wide license has not yet been selected. No blanket license grant is added by this migration; third-party material retains its own terms.
