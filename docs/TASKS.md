@@ -9,3 +9,5 @@
 - Keep Service Mode and dependent widget deployment outside this public source snapshot.
 
 Current shared runtime: six modules, byte-pinned source inventory, offline CLI and regression tests. Run the full pytest suite, runtime inventory/hash/import check and privacy check for source changes. Hardware validation requires separate authorization; host fixtures do not establish physical behavior.
+
+Issue #6: standalone camera source export includes a pinned source receipt, import/privacy checks, synthetic relocation/GOT/PLT regressions and opt-in image gate tests. Retain the exact frozen donor gates. A local source-image import cache remains proposed work; no vendor support pack is shipped.
