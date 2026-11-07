@@ -1,0 +1,4 @@
+# Windows x64 artifacts for the existing builder dependency versions.
+capstone==5.0.9 --hash=sha256:732cedbbb56d42e723f14d7af6387f1454194a820b4b96b56d1e53f865ef85d0
+pyelftools==0.33 --hash=sha256:f215ad5f47d3f1373a21496a6c9e0707c622840d0622f23ff7ce08678b020036
+unicorn==2.1.4 --hash=sha256:d7107500c64ce5c168fbff6bef9485b5db1350050036f4cea568650cf8bdbdf5
