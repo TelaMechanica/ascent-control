@@ -13,3 +13,8 @@ These are implementation tasks, not completed claims. Assign concrete GitHub iss
 ## Developer preview preparation 2026 11 06
 
 Current documentation scope: README.md, docs/STATUS.md, docs/TASKS.md and docs/PUBLICATION_POLICY.md. Preserve pending runtime-import review. Complete file-level provenance and intended source-available license review before promoting a public developer preview. Keep AC+ private pending operator-reported Caddx guidance and explicit publication scope. This batch changes no application behavior and creates no installer.
+
+
+## Executable source review snapshot 2026 11 06
+
+Current scope: six retained runtime helpers and their tests/source receipt, offline CLI and meaningful command tests, runtime inventory/closure checker, technical README/status and source review. Record operator-reported verbal Caddx CRSF/MSP approval. Preserve the pending historical source branch; no original history rewrite. Run the full pytest suite (including retained function-based protocol tests), source closure/hash and privacy checks before merge. Service Mode and dependent widget releases remain private/gated; do not publish them. Continue the full application migration separately.

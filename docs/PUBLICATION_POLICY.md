@@ -8,11 +8,11 @@ Every proposed source file must record its origin, authorship evidence and appli
 
 Do not include vendor firmware images, extracted vendor executables, drivers, tuning data or copied proprietary reference implementations without specific redistribution authority. Independently implemented interoperability code needs its own provenance record. Preserve third-party notices and terms; a project license cannot replace them.
 
-The pending shared-runtime source import remains a separate review. Its six helpers are not part of public main until that review and merge are complete.
+The six shared helpers have a dedicated source review and byte-pinned import receipt. The operator reports verbal Caddx approval for CRSF/MSP; preserve that provenance and distinguish it from a blanket vendor license.
 
 ## Private product boundary
 
-Ascent Control+ remains private. Publication of its source, implementation details, assets or packages requires the operator to report Caddx guidance and explicitly authorize the resulting scope. Public interfaces already present here do not authorize exporting private implementations.
+The remaining Caddx-guidance gate concerns Service Mode and widget releases depending on it. Private Service Mode implementation, access/provisioning assets and dependent installation executors are not included in this source snapshot. Public interfaces do not authorize exporting those implementations.
 
 ## Intended permissions
 
