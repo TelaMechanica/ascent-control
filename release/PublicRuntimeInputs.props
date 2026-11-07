@@ -1,0 +1,1030 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project>
+  <ItemGroup>
+    <Content Include="..\..\runtime\device_tools\licenses\capstone\capstone-5.0.9\LICENSE.TXT">
+      <Link>runtime\device_tools\licenses\capstone\capstone-5.0.9\LICENSE.TXT</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\licenses\capstone\capstone-5.0.9\src\LICENSE.TXT">
+      <Link>runtime\device_tools\licenses\capstone\capstone-5.0.9\src\LICENSE.TXT</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\licenses\capstone\capstone-5.0.9\src\LICENSE_LLVM.TXT">
+      <Link>runtime\device_tools\licenses\capstone\capstone-5.0.9\src\LICENSE_LLVM.TXT</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\licenses\pyelftools\pyelftools-0.33\LICENSE">
+      <Link>runtime\device_tools\licenses\pyelftools\pyelftools-0.33\LICENSE</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\licenses\unicorn\unicorn-2.1.4\src\qemu\COPYING">
+      <Link>runtime\device_tools\licenses\unicorn\unicorn-2.1.4\src\qemu\COPYING</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\licenses\unicorn\unicorn-2.1.4\src\qemu\COPYING.LIB">
+      <Link>runtime\device_tools\licenses\unicorn\unicorn-2.1.4\src\qemu\COPYING.LIB</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\licenses\unicorn\unicorn-2.1.4\src\qemu\LICENSE">
+      <Link>runtime\device_tools\licenses\unicorn\unicorn-2.1.4\src\qemu\LICENSE</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\licenses\unicorn\unicorn-2.1.4\src\tests\regress\LICENSE">
+      <Link>runtime\device_tools\licenses\unicorn\unicorn-2.1.4\src\tests\regress\LICENSE</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\arm\bin\arm-none-eabi-as.exe">
+      <Link>runtime\device_tools\native_builder\windows-x64\arm\bin\arm-none-eabi-as.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\arm\bin\arm-none-eabi-ld.exe">
+      <Link>runtime\device_tools\native_builder\windows-x64\arm\bin\arm-none-eabi-ld.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\arm\bin\arm-none-eabi-nm.exe">
+      <Link>runtime\device_tools\native_builder\windows-x64\arm\bin\arm-none-eabi-nm.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\arm\bin\arm-none-eabi-objcopy.exe">
+      <Link>runtime\device_tools\native_builder\windows-x64\arm\bin\arm-none-eabi-objcopy.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\arm\bin\arm-none-eabi-objdump.exe">
+      <Link>runtime\device_tools\native_builder\windows-x64\arm\bin\arm-none-eabi-objdump.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\bin\ascent-mkfs.ubifs.exe">
+      <Link>runtime\device_tools\native_builder\windows-x64\bin\ascent-mkfs.ubifs.exe</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\licenses\arm\license.txt">
+      <Link>runtime\device_tools\native_builder\windows-x64\licenses\arm\license.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\licenses\native-ubifs\LICENSE.GPL-2.0.txt">
+      <Link>runtime\device_tools\native_builder\windows-x64\licenses\native-ubifs\LICENSE.GPL-2.0.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\licenses\native-ubifs\notices\GCC-RUNTIME-EXCEPTION.txt">
+      <Link>runtime\device_tools\native_builder\windows-x64\licenses\native-ubifs\notices\GCC-RUNTIME-EXCEPTION.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\licenses\native-ubifs\notices\GPL-3.0.txt">
+      <Link>runtime\device_tools\native_builder\windows-x64\licenses\native-ubifs\notices\GPL-3.0.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\licenses\native-ubifs\notices\ZLIB-LICENSE.txt">
+      <Link>runtime\device_tools\native_builder\windows-x64\licenses\native-ubifs\notices\ZLIB-LICENSE.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\manifest.json">
+      <Link>runtime\device_tools\native_builder\windows-x64\manifest.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\__init__.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\__init__.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\arm.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\arm.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\arm64.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\arm64.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\arm64_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\arm64_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\arm_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\arm_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\bpf.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\bpf.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\bpf_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\bpf_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\evm.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\evm.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\evm_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\evm_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\arm.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\arm.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\arm64.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\arm64.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\bpf.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\bpf.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\capstone.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\capstone.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\evm.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\evm.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\m680x.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\m680x.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\m68k.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\m68k.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\mips.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\mips.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\mos65xx.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\mos65xx.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\platform.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\platform.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\ppc.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\ppc.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\riscv.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\riscv.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\sh.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\sh.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\sparc.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\sparc.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\systemz.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\systemz.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\tms320c64x.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\tms320c64x.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\tricore.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\tricore.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\wasm.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\wasm.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\x86.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\x86.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\xcore.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\include\capstone\xcore.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\lib\capstone.dll">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\lib\capstone.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\m680x.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\m680x.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\m680x_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\m680x_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\m68k.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\m68k.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\m68k_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\m68k_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\mips.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\mips.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\mips_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\mips_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\mos65xx.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\mos65xx.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\mos65xx_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\mos65xx_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\ppc.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\ppc.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\ppc_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\ppc_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\riscv.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\riscv.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\riscv_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\riscv_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\sh.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\sh.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\sh_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\sh_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\sparc.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\sparc.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\sparc_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\sparc_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\systemz.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\systemz.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\sysz_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\sysz_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\tms320c64x.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\tms320c64x.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\tms320c64x_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\tms320c64x_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\tricore.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\tricore.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\tricore_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\tricore_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\wasm.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\wasm.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\wasm_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\wasm_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\x86.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\x86.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\x86_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\x86_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\xcore.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\xcore.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone\xcore_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone\xcore_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone-5.0.9.dist-info\LICENSE.TXT">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone-5.0.9.dist-info\LICENSE.TXT</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone-5.0.9.dist-info\METADATA">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone-5.0.9.dist-info\METADATA</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone-5.0.9.dist-info\RECORD">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone-5.0.9.dist-info\RECORD</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone-5.0.9.dist-info\WHEEL">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone-5.0.9.dist-info\WHEEL</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\capstone-5.0.9.dist-info\top_level.txt">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\capstone-5.0.9.dist-info\top_level.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\__init__.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\__init__.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\common\__init__.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\common\__init__.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\common\construct_utils.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\common\construct_utils.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\common\exceptions.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\common\exceptions.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\common\utils.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\common\utils.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\construct\__init__.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\construct\__init__.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\construct\adapters.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\construct\adapters.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\construct\core.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\construct\core.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\construct\debug.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\construct\debug.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\construct\lib\__init__.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\construct\lib\__init__.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\construct\lib\binary.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\construct\lib\binary.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\construct\lib\bitstream.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\construct\lib\bitstream.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\construct\lib\container.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\construct\lib\container.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\construct\lib\hex.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\construct\lib\hex.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\construct\macros.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\construct\macros.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\__init__.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\__init__.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\abbrevtable.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\abbrevtable.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\aranges.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\aranges.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\callframe.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\callframe.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\compileunit.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\compileunit.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\constants.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\constants.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\datatype_cpp.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\datatype_cpp.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\descriptions.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\descriptions.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\die.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\die.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\dwarf_expr.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\dwarf_expr.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\dwarf_util.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\dwarf_util.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\dwarfinfo.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\dwarfinfo.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\enums.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\enums.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\lineprogram.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\lineprogram.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\locationlists.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\locationlists.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\namelut.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\namelut.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\ranges.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\ranges.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\structs.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\structs.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\typeunit.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\dwarf\typeunit.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\ehabi\__init__.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\ehabi\__init__.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\ehabi\constants.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\ehabi\constants.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\ehabi\decoder.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\ehabi\decoder.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\ehabi\ehabiinfo.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\ehabi\ehabiinfo.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\ehabi\structs.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\ehabi\structs.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\__init__.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\__init__.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\constants.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\constants.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\descriptions.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\descriptions.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\dynamic.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\dynamic.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\elffile.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\elffile.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\enums.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\enums.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\gnuversions.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\gnuversions.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\hash.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\hash.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\notes.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\notes.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\relocation.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\relocation.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\sections.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\sections.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\segments.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\segments.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\elf\structs.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\elf\structs.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\elftools\py.typed">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\elftools\py.typed</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\pyelftools-0.33.data\scripts\readelf.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\pyelftools-0.33.data\scripts\readelf.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\pyelftools-0.33.dist-info\METADATA">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\pyelftools-0.33.dist-info\METADATA</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\pyelftools-0.33.dist-info\RECORD">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\pyelftools-0.33.dist-info\RECORD</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\pyelftools-0.33.dist-info\WHEEL">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\pyelftools-0.33.dist-info\WHEEL</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\pyelftools-0.33.dist-info\licenses\LICENSE">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\pyelftools-0.33.dist-info\licenses\LICENSE</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\pyelftools-0.33.dist-info\top_level.txt">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\pyelftools-0.33.dist-info\top_level.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\__init__.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\__init__.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\arm64_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\arm64_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\arm_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\arm_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\arm.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\arm.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\arm64.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\arm64.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\m68k.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\m68k.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\mips.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\mips.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\platform.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\platform.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\ppc.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\ppc.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\riscv.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\riscv.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\s390x.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\s390x.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\sparc.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\sparc.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\tricore.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\tricore.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\unicorn.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\unicorn.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\x86.h">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\include\unicorn\x86.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\lib\unicorn.dll">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\lib\unicorn.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\lib\unicorn.lib">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\lib\unicorn.lib</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\m68k_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\m68k_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\mips_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\mips_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\ppc_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\ppc_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\py.typed">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\py.typed</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\riscv_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\riscv_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\s390x_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\s390x_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\sparc_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\sparc_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\tricore_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\tricore_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py2.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py2.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\__init__.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\__init__.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\arch\__init__.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\arch\__init__.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\arch\arm.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\arch\arm.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\arch\arm64.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\arch\arm64.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\arch\intel.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\arch\intel.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\arch\types.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\arch\types.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\unicorn.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\unicorn_py3\unicorn.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn\x86_const.py">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn\x86_const.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn-2.1.4.dist-info\METADATA">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn-2.1.4.dist-info\METADATA</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn-2.1.4.dist-info\RECORD">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn-2.1.4.dist-info\RECORD</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn-2.1.4.dist-info\WHEEL">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn-2.1.4.dist-info\WHEEL</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\python\unicorn-2.1.4.dist-info\top_level.txt">
+      <Link>runtime\device_tools\native_builder\windows-x64\python\unicorn-2.1.4.dist-info\top_level.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\qualification.json">
+      <Link>runtime\device_tools\native_builder\windows-x64\qualification.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\native_builder\windows-x64\source\native-ubifs-corresponding-source.tar.gz">
+      <Link>runtime\device_tools\native_builder\windows-x64\source\native-ubifs-corresponding-source.tar.gz</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\licenses\THIRD-PARTY-SOURCES.json">
+      <Link>runtime\device_tools\licenses\THIRD-PARTY-SOURCES.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\manifest.json">
+      <Link>runtime\device_tools\camera_support\v1\manifest.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\00.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\00.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\01.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\01.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\02.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\02.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\03.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\03.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\04.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\04.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\05.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\05.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\06.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\06.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\07.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\07.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\08.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\08.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\09.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\09.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\10.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\10.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\11.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\11.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\12.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\12.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\13.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\13.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\14.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\14.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\15.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\15.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\16.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\16.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\17.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\17.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_tools\camera_support\v1\payload\18.bin">
+      <Link>runtime\device_tools\camera_support\v1\payload\18.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

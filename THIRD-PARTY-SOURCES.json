@@ -1,0 +1,42 @@
+{
+  "schema": "ascent.third_party.sources.v1",
+  "archive": {
+    "name": "ASCENT-Third-Party-Sources-0.43.54-v1.zip",
+    "bytes": 221444755,
+    "sha256": "56f14124f9555e2f3a06f3d130805b3a63e70d687d2ed335cab2c1ef5637fa62",
+    "url": "https://github.com/TelaMechanica/ascent-control/releases/download/v0.43.54/ASCENT-Third-Party-Sources-0.43.54-v1.zip"
+  },
+  "components": [
+    {
+      "package": "unicorn",
+      "version": "2.1.4",
+      "name": "unicorn-2.1.4.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/b2/1b/b4248aa8422e86de690cf8e85cf8feae4c33405a097d1ebe71570bdaa6f5/unicorn-2.1.4.tar.gz",
+      "sha256": "00567a70e323f749b419cd86bee4f9115beab7ebba32194581c090cbb7c59cff",
+      "bytes": 2900334
+    },
+    {
+      "package": "capstone",
+      "version": "5.0.9",
+      "name": "capstone-5.0.9.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/39/01/6516910f546fbb996068207b9dd0229b14bc8dae223114d5e0e27d3cad11/capstone-5.0.9.tar.gz",
+      "sha256": "0429af292ddc604d3c9344696807e281d5e728db029f00e6a4ea9e3bff1aac9e",
+      "bytes": 2947300
+    },
+    {
+      "package": "pyelftools",
+      "version": "0.33",
+      "name": "pyelftools-0.33.tar.gz",
+      "url": "https://files.pythonhosted.org/packages/a3/11/767522582afab1b884d277de0e6e011640cb9d7292a38694b4b1a1df1ae8/pyelftools-0.33.tar.gz",
+      "sha256": "660d82dcbeb8e83d1702bd97f223f761625da06111c0cc988eac6b8ab0c1b61f",
+      "bytes": 15068655
+    },
+    {
+      "name": "gcc-arm-none-eabi-10-2020-q4-major-src.tar.bz2",
+      "url": "https://developer.arm.com/-/media/Files/downloads/gnu-rm/10-2020q4/gcc-arm-none-eabi-10-2020-q4-major-src.tar.bz2",
+      "sha256": "2721e414ef279118ac6c6f4f57114d8dad09a875f98025b123e9dc1c59177156",
+      "bytes": 200406637
+    }
+  ],
+  "native_helper": "Exact source/adapter/build recipe is also included in the native tools package"
+}

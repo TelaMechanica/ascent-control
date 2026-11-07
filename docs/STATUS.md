@@ -1,10 +1,21 @@
 # Current status
 
-Six shared Python modules, regression tests and an offline JSON CLI are available. The [README](../README.md) lists the code, commands and test instructions; [source inventory](SOURCE_REVIEW.md) records module hashes and dependency scope.
+The 0.43.54 public desktop release is being prepared on the desktop/MSI branch.
+The integrated repository contains the Windows host, public backend and UI,
+firmware builders, pinned native-tool inputs and package verification tools.
+Service Mode and dependent receiver/widget operations remain private in AC+.
 
-The full desktop application and MSI are not included. Service Mode and dependent widget deployment remain outside this repository. Final project use/license terms remain under review. The [work queue](TASKS.md) tracks the remaining migration.
+The native Windows HD Pro donor-only build passed with WSL refused. Its image
+passed donor round-trip, pinned application patch, filesystem readback and
+unchanged-component checks. The final combined suite passed 515 tests and 55 subtests. Runtime inventory,
+camera source/import and privacy checks also pass.
+The earlier MSI candidate passed administrative extraction and privacy checks;
+the first-release MSI is rebuilt after the HD Pro tester build is connected.
 
-Standalone camera grafting source now covers Z8, Z40 and Hub extraction, gate 1, application construction/verification and gate 2. The camera source receipt and import check are separate from the six-module shared-runtime contract. Vendor inputs, native helper/tool binaries and private application services are excluded. See [camera instructions](CAMERA_GRAFTING.md). Synthetic regression evidence does not qualify hardware or a new donor version.
+Z8/Z40/Hub donor-only pipelines passed offline native Windows runs with WSL
+refused. HD Pro is included in this first release for tester image creation and
+issue reporting. Physical camera qualification remains separate from build
+integrity checks. No release engineering check constitutes a hardware PASS.
 
-
-Camera export validation:126default tests and27subtests passed. With locally supplied exact-version images,43adversarial image regressions passed in isolated target processes (7unchanged-donor,13Z40,11Z8,12Hub); no image fixtures or vendor assets are checked in. Current fixtures include the production updater-identity delta from the pinned donor. Import/inventory/privacy checks passed. See CAMERA_VALIDATION.json.
+Project permissions are in LICENSE. Dependency notices and corresponding-source
+inventories are included with the source and release assets.

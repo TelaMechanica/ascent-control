@@ -1,9 +1,18 @@
-# Source publication policy
+# Publication policy
 
-Include source with recorded origin, applicable attribution, dependency scope and tests. Keep source hashes in the import receipt. Preserve third-party notices and terms. A hash or similarity check alone does not establish ownership.
+Public AC includes the desktop application, ordinary configuration and live
+features, firmware management, camera builders and their reviewed support packs.
+Service Mode and dependent receiver/widget implementations remain private in AC+.
 
-Do not include captured device data, credentials, personal paths, vendor firmware images or extracted vendor executables in source exports. The current shared-runtime import has an explicit inventory and static standard-library dependency check.
+Exclude captured device data, credentials, personal paths, actual device
+identifiers and private capability implementations from source and release
+artifacts. Verify both source and actual MSI contents. The complete normal donor
+image is supplied by the user. Release assets include manifest-pinned vendor
+camera support inputs; those retain their owners' rights and are outside the
+original-project license. HD Pro is included for tester builds, with physical
+qualification explicitly unestablished.
 
-Service Mode implementation, access/provisioning assets and dependent widget deployment are outside this public source snapshot.
-
-Intended project use covers personal, hobbyist development, educational and private professional work with attribution. Resale, sublicensing and incorporation into third-party products are not intended permissions. Final source-available terms remain under review; this document is not a license grant. Third-party rights remain separate.
+Original project material uses the checked-in LICENSE and explicit scope
+inventory. Third-party license texts, notices and corresponding-source assets
+accompany redistribution as recorded in THIRD-PARTY-SOURCES.json. Preserve
+attribution and component terms; do not infer vendor rights from the AC license.

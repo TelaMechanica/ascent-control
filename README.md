@@ -1,50 +1,53 @@
-# Ascent Control shared code
+# ASCENT Control
 
-This repository contains six shared Python helpers, their offline CLI and regression tests, plus standalone Z8, Z40 and Hub firmware grafting source. Python 3.10 or later is required. The six shared helpers use only the standard library; camera grafting uses additional pinned dependencies and external tools.
+ASCENT Control is a Windows application for ASCENT device configuration, live
+status, firmware inspection and management, RF and RC management where supported,
+and a local fleet registry. This repository contains the public desktop source,
+Windows MSI build tooling, shared protocol helpers and camera-image builders.
 
-## Included code
+Service Mode and operations that depend on it, including receiver widget
+deployment and Picker, belong to AC+ and are excluded from this repository.
 
-| Module | Behavior |
-| --- | --- |
-| `runtime/caddx_fw_version.py` | Parse firmware labels and compare numeric versions; preserve unknown results. |
-| `runtime/caddx_crsf.py` | Encode/decode RC channel frames and HID channel mapping. |
-| `runtime/caddx_msp.py` | Parse MSP frames, checksums and GPS/OSD data. |
-| `runtime/caddx_msp_osd.py` | Reassemble MSP streams and decode DisplayPort character grids. |
-| `runtime/caddx_mgrs.py` | Convert MGRS, UTM and WGS84 coordinates; reject unsupported polar regions. |
-| `runtime/caddx_tile_image.py` | Inspect PNG/JPEG headers and enforce tile dimensions; does not decode pixels. |
+## Download and test
 
-The six shared helpers run locally without WSL or attached hardware. Camera-grafting tool requirements are documented separately. This repository does not include the full desktop application, Service Mode, receiver installation, widget deployment, vendor firmware or an MSI.
+Download the Windows x64 MSI from [Releases](https://github.com/TelaMechanica/ascent-control/releases).
+The installer includes its Python and media runtimes, native firmware tools,
+Z8/Z40/Hub camera support and the HD Pro tester profile. WSL and separate camera
+source images are unnecessary for the included donor-only builders. Supply your
+own exact normal 19.2.14 donor image. The app does not include that full image.
 
-## Camera grafting source
+HD Pro is included for tester builds in this first release. Its output is
+`Ascent_G_Sky_19_2_14_HDPro_1.img`. Build checks establish donor identity,
+application patch identity and image/filesystem integrity; physical boot, capture,
+timing and image quality remain unqualified. See [HD Pro details](firmware/hdpro/README.md).
 
-[Camera CLI instructions](docs/CAMERA_GRAFTING.md) cover source-image extraction, unchanged-donor gate 1, application build and independent verification, and target-specific gate 2. Vendor images and extracted assets are supplied locally and are not included. The current grafts target normal 19.2.14; these host checks do not establish hardware qualification.
+The MSI is unsigned. Microsoft Edge WebView2 Runtime is required by the desktop
+host. Report reproducible problems through [Issues](https://github.com/TelaMechanica/ascent-control/issues),
+including the application version, steps and sanitized error text. For image
+builder reports include the target, donor hash and output hash. Remove personal
+paths and device identifiers before uploading logs.
 
-## Run the offline tools
+## Build the Windows MSI
 
-From the repository root:
+Install .NET SDK 8.0.424 on Windows x64. From PowerShell in a fresh checkout:
 
-```sh
-python tools/inspect_local.py version 19.2.14 --compare 19.2.4
-python tools/inspect_local.py grid-encode 0 0
-python tools/inspect_local.py grid-decode 31NAA6602100000
-python tools/inspect_local.py tile path/to/tile.png
+```powershell
+.\tools\Build-Installer.ps1 -OutputDir .\artifacts\release
 ```
 
-Commands print JSON. Exit status 2 indicates invalid, unsupported or unknown input. The version comparison is numeric, so `19.2.14` is newer than `19.2.4`. The grid example uses a synthetic location. The tile command checks the container header and dimensions only.
+The script downloads hash-pinned public release inputs and stages pinned Python
+and GStreamer dependencies. It restores WiX 5.0.2, freezes the reviewed source
+inventory, builds the desktop host, verifies the packaged runtime, tests the media
+runtime, builds an MSI and administratively extracts it to compare every payload
+file. It does not install or launch AC or access hardware. Use a fresh output
+folder for repeat builds; previous output is preserved.
 
-To use a module directly:
+For offline input archives, pass `-NativeArchive` and `-CameraArchive` with the
+matching release ZIP paths. `-DependencyCache` accepts only the exact per-file
+Python and GStreamer hashes recorded in `release/public-payload.json`.
+The Windows build workflow uses these same checks from a fresh Git checkout.
 
-```python
-import sys
-sys.path.insert(0, "runtime")
-import caddx_crsf
-import caddx_fw_version
-
-print(caddx_fw_version.compare("19.2.14", "19.2.4"))
-print(caddx_crsf.crc8_d5(bytes([1, 2, 3])))
-```
-
-## Run tests and source checks
+## Source checks
 
 ```sh
 python -m pip install -r requirements-dev.txt
@@ -55,10 +58,21 @@ python tools/check_camera_source.py
 python tools/check_tree.py
 ```
 
-Default tests use synthetic inputs and do not connect to devices. Camera GOT/PLT tests require external ARM binutils; see the camera instructions. The source receipt pins imported bytes; the runtime checker verifies the inventory and standard-library dependency closure.
+Camera relocation tests use ARM binutils. No default test connects to hardware.
+See [camera CLI instructions](docs/CAMERA_GRAFTING.md) for standalone source tools.
+The original six standard-library shared helpers and their source-hash contract
+remain available through `tools/inspect_local.py`.
 
-## Source and permissions
+## Permissions and third-party material
 
-[Source inventory](docs/SOURCE_REVIEW.md) lists the imported modules, hashes and dependency scope. Existing technical attribution is retained. Final project use/license terms remain under review; third-party material retains its own terms.
+Copyright 2026 TelaMechanica, the sole ASCENT Control contributor. Original
+project material is provided under the [Personal and Private Use License](LICENSE):
+personal, hobbyist development, educational and private professional use, with
+attribution. Third-party sale, redistribution and product reuse are restricted.
+The [scope inventory](PROJECT_LICENSE_SCOPE.json) identifies original project
+material; separately licensed material retains its own terms.
 
-Service Mode and dependent widget deployment are not included. See [current status](docs/STATUS.md) and [tasks](docs/TASKS.md) for the remaining application migration. This is a technical source snapshot, not a downloadable desktop release.
+Read [third-party notices](THIRD-PARTY-NOTICES.md) and the
+[source inventory](THIRD-PARTY-SOURCES.json). Matching source archives accompany
+native helper/tool binaries in the release. Vendor-origin camera material retains
+its existing rights; the project license grants no rights to vendor IP.

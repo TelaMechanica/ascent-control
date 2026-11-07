@@ -1,0 +1,27 @@
+{
+  "node0": {
+    "dev_name": "Z8",
+    "res_info": "1920x1080P60",
+    "selected": 1,
+    "high_priority": 1
+  },
+  "node1": {
+    "dev_name": "MAX",
+    "res_info": "2560x1440P50",
+    "selected": 0,
+    "high_priority": 0
+  },
+  "node2": {
+    "dev_name": "Z40",
+    "res_info": "2000x1500P50",
+    "selected": 0,
+    "high_priority": 0
+  },
+  "node3": {
+    "dev_name": "HDMI",
+    "res_info": "1920x1080P60",
+    "selected": 0,
+    "high_priority": 0
+  },
+  "fly_ctrl": "betaFlight"
+}

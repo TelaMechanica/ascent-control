@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Ascent Control</title>
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="shell">
+  <aside class="rail">
+    <div class="brand">
+      <img src="assets/ascent_skull.png" alt="Ascent">
+      <div class="brand-title">ASCENT CONTROL</div>
+      <div class="build" id="build">STARTING…</div>
+    </div>
+
+    <!-- Configuration <-> Live. Two transports to the same physical unit:
+         Configuration drives the vendor serial FSM, Live the CGC UDP control plane
+         on 9001. A mode, not an expert toggle, so it is top-left under the brand
+         rather than in the ADVANCED menu -- and in the rail rather than in <main>,
+         where a 320px control was taking a full-width row. Reuses .segmented, which
+         app.css already defines and two panels already use. -->
+    <div class="segmented" id="modeSwitch" style="width:100%;margin:14px 0 2px">
+      <button id="modeConfiguration" class="active">CONFIG</button>
+      <button id="modeLive">LIVE</button>
+    </div>
+
+    <nav id="nav">
+      <button class="nav active" data-view="device">DEVICE INFO</button>
+      <button class="nav" data-view="rf">MANAGE RF</button>
+      <button class="nav hidden" data-view="hub">MANAGE HUB</button>
+      <button class="nav hidden" data-view="rc">MANAGE RC</button>
+      <button class="nav" data-view="fleet">MANAGE FLEET</button>
+      <button class="nav" data-view="firmware">MANAGE FIRMWARE</button>
+      <button class="nav" data-view="repeater">MANAGE REPEATER</button>
+
+      <div class="advanced-row" data-companion-anchor="advanced">
+        <label class="switch-row disclosure">
+          <span id="advancedLabel">ADVANCED</span>
+          <input id="advanced" type="checkbox">
+          <i></i>
+        </label>
+      </div>
+      <div id="advancedMenu" class="advanced-menu hidden">
+        <button class="nav sub" data-view="settings" data-companion-anchor="settings">APPLICATION SETTINGS</button>
+        <button class="nav sub" data-view="diagnostics">DIAGNOSTICS</button>
+      </div>
+    </nav>
+  </aside>
+
+  <main>
+    <div class="connectbar">
+      <div class="connect-label">CONNECTION</div>
+      <select id="connectionSelect"><option value="auto">AUTO — SCANNING…</option></select>
+      <button id="connectBtn" class="action" data-companion-anchor="connection-status">CONNECT</button>
+      <button class="secondary refresh-action" id="refresh">REFRESH DEVICE</button>
+      <label class="switch-row" title="Connect to the first identified Ascent device when the app starts.">
+        <span id="autoConnectLabel">AUTO-CONNECT</span>
+        <input id="autoConnect" type="checkbox">
+        <i></i>
+      </label>
+      <select id="langTop" class="lang-select" aria-label="Language"
+              title="Language · Мова · Язык · 语言">
+        <option value="en">EN</option>
+        <option value="uk">УКР</option>
+        <option value="ru">РУС</option>
+        <option value="zh-Hans">中文</option>
+      </select>
+    </div>
+    <!-- The identity strip: the product image, the product name, and the stored
+         nickname when there is one. Nothing else.
+
+         It answers "which unit am I looking at", on every page, at a glance. It is
+         NOT an inspection surface: firmware, serial, transport, BB ID, link, RX MCS
+         and the service endpoints all live on DEVICE INFO, which is the complete
+         place to inspect a device. Connection state stays in the connection bar
+         above and is not repeated here. -->
+    <header class="topbar">
+      <div class="device-block device-with-image" data-companion-anchor="device-panel">
+        <img id="deviceImage" class="device-image hidden" alt="Connected device">
+        <div class="device-copy">
+          <div class="kicker" id="deviceKicker">DETECTED DEVICE</div>
+          <h1 id="deviceName">NO DEVICE</h1>
+          <div class="device-nickname" id="deviceNickname"></div>
+        </div>
+        <span class="batt-readout" id="deviceBattery"></span>
+      </div>
+    </header>
+
+    <section id="content" data-companion-anchor="content"></section>
+
+    <footer>
+      <span id="status"></span>
+    </footer>
+  </main>
+</div>
+<script src="i18n.js"></script>
+<script src="domains/rf_diagnostics.js"></script>
+<script src="domains/rc_source.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,857 @@
+{
+  "schema": "ascent.public.build_inputs.v1",
+  "version": "0.43.54",
+  "release_tag": "v0.43.54",
+  "native_manifest_sha256": "1f2927b3b386e6c411400471a227544262189e565bd21a9b5b8843c20be88891",
+  "native": {
+    "name": "ASCENT-Native-Windows-Tools-0.43.54-v2.zip",
+    "bytes": 21126715,
+    "sha256": "690a07c66c3abc75d4e8c003b78f0433d095cf1f4dd72a2cedd03c646e74fb48",
+    "url": "https://github.com/TelaMechanica/ascent-control/releases/download/v0.43.54/ASCENT-Native-Windows-Tools-0.43.54-v2.zip",
+    "files": {
+      "licenses/capstone/capstone-5.0.9/LICENSE.TXT": {
+        "sha256": "65e9ed46a59976eda8f5bd1ea79a680dea38dd299c760bc9a8d87a764ef5029b",
+        "bytes": 1687
+      },
+      "licenses/capstone/capstone-5.0.9/src/LICENSE.TXT": {
+        "sha256": "65e9ed46a59976eda8f5bd1ea79a680dea38dd299c760bc9a8d87a764ef5029b",
+        "bytes": 1687
+      },
+      "licenses/capstone/capstone-5.0.9/src/LICENSE_LLVM.TXT": {
+        "sha256": "dfdca2d7fdbabfd937f9dc41b7f61647b0e6cb1f9ee767ecb4520f979ebe91da",
+        "bytes": 3331
+      },
+      "licenses/pyelftools/pyelftools-0.33/LICENSE": {
+        "sha256": "ae18bf4cb82f92af7547259177bc28bc48e4fc732518bcedfe690226288d3445",
+        "bytes": 1534
+      },
+      "licenses/unicorn/unicorn-2.1.4/src/qemu/COPYING": {
+        "sha256": "6f04ae8364d0079a192b14635f4b1da294ce18724c034c39a6a41d1b09df6100",
+        "bytes": 17992
+      },
+      "licenses/unicorn/unicorn-2.1.4/src/qemu/COPYING.LIB": {
+        "sha256": "dc626520dcd53a22f727af3ee42c770e56c97a64fe3adb063799d8ab032fe551",
+        "bytes": 26530
+      },
+      "licenses/unicorn/unicorn-2.1.4/src/qemu/LICENSE": {
+        "sha256": "139c64b7a9ae62858ff969aae622ecfcf4f1519655bd92d2e70a1a2fb615690e",
+        "bytes": 1177
+      },
+      "licenses/unicorn/unicorn-2.1.4/src/tests/regress/LICENSE": {
+        "sha256": "2b16ef2d08597fccc3ffa8a8872e387e4b08e333e11b29c0bbb24f9d2167ac41",
+        "bytes": 1688
+      },
+      "native_builder/windows-x64/arm/bin/arm-none-eabi-as.exe": {
+        "sha256": "70bdffd0b32a415240ca729a3d8df2dd145ec9c33f01988f9bf066d1f8dfe177",
+        "bytes": 1377792
+      },
+      "native_builder/windows-x64/arm/bin/arm-none-eabi-ld.exe": {
+        "sha256": "8fdafc3452b7209a2d6944f9f9af1c9813aaadea652bb5c0e84b1ac19614e48f",
+        "bytes": 1298432
+      },
+      "native_builder/windows-x64/arm/bin/arm-none-eabi-nm.exe": {
+        "sha256": "582991668dc96d4fa367eb44124b748eb6390175134ff7830c8390e0eaf5cb9a",
+        "bytes": 790528
+      },
+      "native_builder/windows-x64/arm/bin/arm-none-eabi-objcopy.exe": {
+        "sha256": "6694ea8ccb01c1a879854ffbd1a378b5f850ad995e86e6db96a233c6f042ebaf",
+        "bytes": 899072
+      },
+      "native_builder/windows-x64/arm/bin/arm-none-eabi-objdump.exe": {
+        "sha256": "f087970ceee6d43d1b7ead94c79921a5d2a8627cfa5171787590aaa18a837e82",
+        "bytes": 1326080
+      },
+      "native_builder/windows-x64/bin/ascent-mkfs.ubifs.exe": {
+        "sha256": "82a0a33a90e38bf65fc2983a2e5371a347a31d217fe7103b9c8fedd8d778d2f7",
+        "bytes": 176128
+      },
+      "native_builder/windows-x64/licenses/arm/license.txt": {
+        "sha256": "9b47c67a1d2421fa5724e2bfd9e2be03f399ade15273b6e38a8f2a3c9bfe31d6",
+        "bytes": 553129
+      },
+      "native_builder/windows-x64/licenses/native-ubifs/LICENSE.GPL-2.0.txt": {
+        "sha256": "dcc100d4161cc0b7177545ab6e47216f84857cda3843847c792a25289852dcaa",
+        "bytes": 18007
+      },
+      "native_builder/windows-x64/licenses/native-ubifs/notices/GCC-RUNTIME-EXCEPTION.txt": {
+        "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74",
+        "bytes": 3324
+      },
+      "native_builder/windows-x64/licenses/native-ubifs/notices/GPL-3.0.txt": {
+        "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+        "bytes": 35147
+      },
+      "native_builder/windows-x64/licenses/native-ubifs/notices/ZLIB-LICENSE.txt": {
+        "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243",
+        "bytes": 1002
+      },
+      "native_builder/windows-x64/manifest.json": {
+        "sha256": "1f2927b3b386e6c411400471a227544262189e565bd21a9b5b8843c20be88891",
+        "bytes": 22261
+      },
+      "native_builder/windows-x64/python/capstone/__init__.py": {
+        "sha256": "94571d1314355e261aff0ddfc94985fe8761232ddff6874181fd21efa9fab47f",
+        "bytes": 43853
+      },
+      "native_builder/windows-x64/python/capstone/arm.py": {
+        "sha256": "00ea7442a1496d84aca469bfa3542290eafe22898b5be0dece9294865b9508ba",
+        "bytes": 2154
+      },
+      "native_builder/windows-x64/python/capstone/arm64.py": {
+        "sha256": "834979e887315fae9a447698502f6866c246cb99b65c84b8b6fdef8087181284",
+        "bytes": 2428
+      },
+      "native_builder/windows-x64/python/capstone/arm64_const.py": {
+        "sha256": "f358d461b1f45a8d91d8e308ca82e5b35c5d2e5c135d8ed07d8cdc86456a5418",
+        "bytes": 81768
+      },
+      "native_builder/windows-x64/python/capstone/arm_const.py": {
+        "sha256": "1b00d7b48be4b72b730272486d4fd2057cb8019e67f1bd145bcabb1b988d1c67",
+        "bytes": 17295
+      },
+      "native_builder/windows-x64/python/capstone/bpf.py": {
+        "sha256": "f879595fbc413bfa74600b4cbaa7a2cdd7200b2f92e718ad31fb36844e7c0f9d",
+        "bytes": 1438
+      },
+      "native_builder/windows-x64/python/capstone/bpf_const.py": {
+        "sha256": "070717e28a68ee7e1e8b29cb9a299f5e462be81d9ad6c83dccce5f771fe22e7e",
+        "bytes": 2160
+      },
+      "native_builder/windows-x64/python/capstone/evm.py": {
+        "sha256": "29f35d3953b2eeb976e02af3cdbf3a78066d4d5a750588da0672e48bc5aa0385",
+        "bytes": 383
+      },
+      "native_builder/windows-x64/python/capstone/evm_const.py": {
+        "sha256": "b3a60498c0ac455098d884574829875deb83a4176a052480249a9d3e93f42b6d",
+        "bytes": 3292
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/arm.h": {
+        "sha256": "55b51767f8a9118eb73a34ed231eb6ffe3ace5df3326e42fee430778f5628d30",
+        "bytes": 20872
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/arm64.h": {
+        "sha256": "335cd0305922e852777cdcaa0e38479d07d1333d46cc8cde0fe90c03ce776c9b",
+        "bytes": 86980
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/bpf.h": {
+        "sha256": "864014559514848b914b26310c912eaf42a1c54ab30cb9f89d6edf6393a79eef",
+        "bytes": 4308
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/capstone.h": {
+        "sha256": "65bb5f0a7947ccf91d23a4db4584ed310663af9527fc4cbd179b1fa99d21f9fe",
+        "bytes": 34908
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/evm.h": {
+        "sha256": "1defbf3926651d481ae0fd9942f3811ceac6a79df28fbd5d58eb6b0423d8b34d",
+        "bytes": 4574
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/m680x.h": {
+        "sha256": "6d20cb54b1c882aa874ea364e98c880484fdee65e046d0a172a31b82400eb141",
+        "bytes": 12857
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/m68k.h": {
+        "sha256": "91f23e01a3addcb9b8b18de5d2fd2946134fac782cc7833144187b259f145a98",
+        "bytes": 14468
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/mips.h": {
+        "sha256": "8f806d3f8f86f84a36a6c2e586c10191c8494a8e6cb036db5ed020c5ae402158",
+        "bytes": 18000
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/mos65xx.h": {
+        "sha256": "7ef12404e03725a1d807f46bfac06de0c45981b353532ab67efb4e07e4e46ce9",
+        "bytes": 5991
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/platform.h": {
+        "sha256": "06ccad6778eea6a94930f10e20e24ae4287014a4dc87cc66b9f13198371d838c",
+        "bytes": 4132
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/ppc.h": {
+        "sha256": "d1d5bf90bf03ccf479262cf90d003ccd271f941a369e0e5556076afc3a55caba",
+        "bytes": 40378
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/riscv.h": {
+        "sha256": "6d112f486553896607746315340b69db991242d81e8c33b30f02e0c339ade25a",
+        "bytes": 13799
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/sh.h": {
+        "sha256": "a3be96c93a2b91682ff0bcd3ba0a1303a6f30fce8aa9105d52a84d0467b60aa4",
+        "bytes": 8238
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/sparc.h": {
+        "sha256": "59f988c98630a9c3f70282a1095861f48bfcfd58f6d104f24f378a17eaf767ca",
+        "bytes": 11817
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/systemz.h": {
+        "sha256": "32da6c63cd358ba7002814b2a0f77d0fd617347ead2c30cddc8e9f8075740b87",
+        "bytes": 47232
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/tms320c64x.h": {
+        "sha256": "e30f98590a301d65e413951a663ea6cd15f7f9992543bd52dcc6f1205ee0a061",
+        "bytes": 8621
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/tricore.h": {
+        "sha256": "c0bcc689644f0066cbae95d3b6e9370545336aa5415c329990f273f01e736c23",
+        "bytes": 13257
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/wasm.h": {
+        "sha256": "f2861adc7692734ddf9e955f6eba5c00ea5462eb30f8c2da2239b4718febff53",
+        "bytes": 6441
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/x86.h": {
+        "sha256": "e150421101a4467c7f1ff6418f16a97f7504df27af6f2d86c44b13b8f3f7b8a0",
+        "bytes": 45041
+      },
+      "native_builder/windows-x64/python/capstone/include/capstone/xcore.h": {
+        "sha256": "5f81adf0761c57cf61306e4f683f27cedcc9f50d7a308a374c389d16e490c297",
+        "bytes": 5154
+      },
+      "native_builder/windows-x64/python/capstone/lib/capstone.dll": {
+        "sha256": "76958e18380023a68fd1714fa2e01c594cc6db1955a07ad6937b66e66dc5d6c3",
+        "bytes": 7576576
+      },
+      "native_builder/windows-x64/python/capstone/m680x.py": {
+        "sha256": "24d56b8f6e9c12d73f830f26de36d02461e4d73a3091943e6c90884181efe41d",
+        "bytes": 2065
+      },
+      "native_builder/windows-x64/python/capstone/m680x_const.py": {
+        "sha256": "a8ceebe6e6213da834406e7a56c1f808fad554c5ed85a986b0ef8647db3718da",
+        "bytes": 8885
+      },
+      "native_builder/windows-x64/python/capstone/m68k.py": {
+        "sha256": "0567bf26e32a274b086d296fdcc078dcbda2c66280f941e5986b30eecc647bc8",
+        "bytes": 2438
+      },
+      "native_builder/windows-x64/python/capstone/m68k_const.py": {
+        "sha256": "79de0ea42977ad2875fd73a34ddb55fc2ace58dac45b0ee8aff0ae138c7a8faa",
+        "bytes": 10489
+      },
+      "native_builder/windows-x64/python/capstone/mips.py": {
+        "sha256": "c23b6e5d5df2be6f728dda2da2a8f805d4d1500e383aebf555da1fa9650639e8",
+        "bytes": 1001
+      },
+      "native_builder/windows-x64/python/capstone/mips_const.py": {
+        "sha256": "80a325c59a8a88918d1ebc55268e07461841ddde50d034a545d31cdf44668324",
+        "bytes": 18592
+      },
+      "native_builder/windows-x64/python/capstone/mos65xx.py": {
+        "sha256": "f9b525569fcae4768ac4b2230a46468a571e934717f14d52910e243d0b279e9a",
+        "bytes": 998
+      },
+      "native_builder/windows-x64/python/capstone/mos65xx_const.py": {
+        "sha256": "22762e23dec6d011f75068cac995f4c05f6cf5c93c207502eeb11d0cd4a136f3",
+        "bytes": 3393
+      },
+      "native_builder/windows-x64/python/capstone/ppc.py": {
+        "sha256": "1ee21161d21902744379624d87048138272a99c6bd98623256baa065038bf03d",
+        "bytes": 1384
+      },
+      "native_builder/windows-x64/python/capstone/ppc_const.py": {
+        "sha256": "4284db74b7db3a0e3eda043970096c047df81d9b0a81c13b3b5b70ca623d4b0b",
+        "bytes": 45023
+      },
+      "native_builder/windows-x64/python/capstone/riscv.py": {
+        "sha256": "c40beee7bd99d3f1cc329203020def06140a786d17e2ec963feefb12e0c8e872",
+        "bytes": 1104
+      },
+      "native_builder/windows-x64/python/capstone/riscv_const.py": {
+        "sha256": "6ac81243404207d74b3190c37180b6353a001191c7df5d04fd25f89b624abdd1",
+        "bytes": 10953
+      },
+      "native_builder/windows-x64/python/capstone/sh.py": {
+        "sha256": "d50212075a918e94b41f1e67f838a3b70bc44d19941f33b6d502e5359c967592",
+        "bytes": 1478
+      },
+      "native_builder/windows-x64/python/capstone/sh_const.py": {
+        "sha256": "a19a1837892a0eaa9bc3e5cd3638625471d705a35b08aa26994ad108928125be",
+        "bytes": 7154
+      },
+      "native_builder/windows-x64/python/capstone/sparc.py": {
+        "sha256": "389867d194a7bef779466a5283953cb2b30d2e84368e80112677cfaa0334097c",
+        "bytes": 1127
+      },
+      "native_builder/windows-x64/python/capstone/sparc_const.py": {
+        "sha256": "aef73803efe9a2e0e109fe05e0b791f33e62d41c54ed32cd2773837960d1ddae",
+        "bytes": 9738
+      },
+      "native_builder/windows-x64/python/capstone/systemz.py": {
+        "sha256": "9e75611fb8930ef665b04a80e14ca0735953f69d2f0fdb608f96ea172cef7f2d",
+        "bytes": 1115
+      },
+      "native_builder/windows-x64/python/capstone/sysz_const.py": {
+        "sha256": "98ad76240b48eff060f96fc0986933c904cbdfd654866eb49e7ee5879db2908e",
+        "bytes": 56291
+      },
+      "native_builder/windows-x64/python/capstone/tms320c64x.py": {
+        "sha256": "597bf661d25e283c007c9ee76defb422f41e4279aae5bbd8b5736400109cf6b3",
+        "bytes": 1672
+      },
+      "native_builder/windows-x64/python/capstone/tms320c64x_const.py": {
+        "sha256": "643aeb59e96e2eb10f6ca4e9d27db9c00d83195cf442dea453418ac2df0cb94b",
+        "bytes": 7257
+      },
+      "native_builder/windows-x64/python/capstone/tricore.py": {
+        "sha256": "6716ed4579dadec5c476a0a704c35421860cdaaf20796c7d9c5ebfceb5c4e3cb",
+        "bytes": 1123
+      },
+      "native_builder/windows-x64/python/capstone/tricore_const.py": {
+        "sha256": "95d640cfc8d698f162edc68646c4829cd25289ee47d2869815b33b7839d32bae",
+        "bytes": 12010
+      },
+      "native_builder/windows-x64/python/capstone/wasm.py": {
+        "sha256": "8fb19dfb59cd7175ab0e55b8b7c2d37e150c237ed6060862be6ec3e98bf21d6d",
+        "bytes": 1627
+      },
+      "native_builder/windows-x64/python/capstone/wasm_const.py": {
+        "sha256": "e03e231892153456070055f39a53ed3205feeb24e7d768a2b193adcbe26cffc5",
+        "bytes": 5132
+      },
+      "native_builder/windows-x64/python/capstone/x86.py": {
+        "sha256": "08cbb0a02ff152bcf1fbd7c4f8850b3ade38c25b9f0a6a9b900a55ee75e87c67",
+        "bytes": 2816
+      },
+      "native_builder/windows-x64/python/capstone/x86_const.py": {
+        "sha256": "83cf4550d9256f5f9b8e218b9b732e46d83ef602b463a01d6eeb778deb28e040",
+        "bytes": 45756
+      },
+      "native_builder/windows-x64/python/capstone/xcore.py": {
+        "sha256": "67a3bab5ec77998bf88f320b61be7110318454be2252ff2a02f42ca4aab56a8c",
+        "bytes": 1082
+      },
+      "native_builder/windows-x64/python/capstone/xcore_const.py": {
+        "sha256": "34367710ee0501621fb8b325890cae740ff38075d3ef66b36de9b8b4dcec227f",
+        "bytes": 3424
+      },
+      "native_builder/windows-x64/python/capstone-5.0.9.dist-info/LICENSE.TXT": {
+        "sha256": "404bd0cb0137ffb797258f844f53e5273f9b6d5781a1a359a2880411f49a4f30",
+        "bytes": 1718
+      },
+      "native_builder/windows-x64/python/capstone-5.0.9.dist-info/METADATA": {
+        "sha256": "be4a51b083e6175d370ab2d0cfac1a32d0ade1dfe9dd7525155f353a89ad3332",
+        "bytes": 3418
+      },
+      "native_builder/windows-x64/python/capstone-5.0.9.dist-info/RECORD": {
+        "sha256": "b7d60e1e9527cfc9c10820727dd042b2e77a9cbdd5af69ec7b902b1518f9e6e7",
+        "bytes": 5136
+      },
+      "native_builder/windows-x64/python/capstone-5.0.9.dist-info/WHEEL": {
+        "sha256": "954d2ebdda888c0e874734e98d9d47f8321f3929249066add906bbe074cb3439",
+        "bytes": 97
+      },
+      "native_builder/windows-x64/python/capstone-5.0.9.dist-info/top_level.txt": {
+        "sha256": "56c1f96e71b2e141ae32eee253f90d7a19cb2d9be56d940a76af5b90617100a2",
+        "bytes": 9
+      },
+      "native_builder/windows-x64/python/elftools/__init__.py": {
+        "sha256": "d8a071e9e68576ceab6ed200c5f4718119f7d61ee0fae337a867b095f1d5c5d9",
+        "bytes": 267
+      },
+      "native_builder/windows-x64/python/elftools/common/__init__.py": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "native_builder/windows-x64/python/elftools/common/construct_utils.py": {
+        "sha256": "9529375fbb5a6662a482e8ff4b6c1eca486e9011624a3008a55af76b0c581eb6",
+        "bytes": 5070
+      },
+      "native_builder/windows-x64/python/elftools/common/exceptions.py": {
+        "sha256": "ce89c2d8b856b6615f5dce6f5b6b6eeba9be278eaac34d1f2f854b23bb25abe1",
+        "bytes": 512
+      },
+      "native_builder/windows-x64/python/elftools/common/utils.py": {
+        "sha256": "3858dfe8156798e35f9502f4031acc2d76dce95dacf78f040719cc0e3934756f",
+        "bytes": 4660
+      },
+      "native_builder/windows-x64/python/elftools/construct/__init__.py": {
+        "sha256": "15104eb011a640e4268a9b9221d07201a0360ff0b1c8b49e252ef41fdfbb35de",
+        "bytes": 5031
+      },
+      "native_builder/windows-x64/python/elftools/construct/adapters.py": {
+        "sha256": "5745745b25eb849174ee5c3179b9867b03e0471633e9eac8276aa439fe4c8841",
+        "bytes": 19495
+      },
+      "native_builder/windows-x64/python/elftools/construct/core.py": {
+        "sha256": "86c7c9ef0303beb7bfe7b310c52e44697cc31b6cec7435eb33168216b70a965f",
+        "bytes": 49248
+      },
+      "native_builder/windows-x64/python/elftools/construct/debug.py": {
+        "sha256": "491486779e464e0f4a59cfd429d8e93c577a0f0d9b969847e69400a3c86acb1c",
+        "bytes": 4304
+      },
+      "native_builder/windows-x64/python/elftools/construct/lib/__init__.py": {
+        "sha256": "322a9b5b2cbe036a5ccf8e939dcbc3734203073db70fc4f2cb00f0f98ba107cf",
+        "bytes": 264
+      },
+      "native_builder/windows-x64/python/elftools/construct/lib/binary.py": {
+        "sha256": "f18e4161a11bc95732bd01c577cbe98373081afd5b4112b02fec51a0e1df2e11",
+        "bytes": 2780
+      },
+      "native_builder/windows-x64/python/elftools/construct/lib/bitstream.py": {
+        "sha256": "ee8081769bed1d00a086399c8749a847c1a48b8d08637506bf7d1229b6e1808a",
+        "bytes": 2641
+      },
+      "native_builder/windows-x64/python/elftools/construct/lib/container.py": {
+        "sha256": "0385a420febf5bac714153ceaadd192ff9d09862bc7e17c203bf759aa18b2bb4",
+        "bytes": 5363
+      },
+      "native_builder/windows-x64/python/elftools/construct/lib/hex.py": {
+        "sha256": "55f82dc36f273347c08e9e469fd497368241453b7a63e69e167ad6b316e5e2c7",
+        "bytes": 1368
+      },
+      "native_builder/windows-x64/python/elftools/construct/macros.py": {
+        "sha256": "0244e84cf4f598ac8da7c3d8f1f09b06112a508e71fb8d381b377f1c0472a4e3",
+        "bytes": 24996
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/__init__.py": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/abbrevtable.py": {
+        "sha256": "cbe4a69fb4ced4ae87eb4694818ccf6c49302b8158bb8bb08b6e3864cee7aad4",
+        "bytes": 3036
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/aranges.py": {
+        "sha256": "bbfa73cd13e89665b2b808c0c3b6dfc98978316e0f39a9b392768505f6263d36",
+        "bytes": 5559
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/callframe.py": {
+        "sha256": "e5aae743714801ee80d5dc4b71c43007a8cb1638ed3cd0bf825dde2b298e70b0",
+        "bytes": 32237
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/compileunit.py": {
+        "sha256": "bfff5b0da5a081390b0d0505f18d19ef5c70287b7ebd2fa094671a7139dfdef5",
+        "bytes": 11322
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/constants.py": {
+        "sha256": "1b9b0e320c5cb7aa3a0117564431a73ce964d79a3a44ff0b74af7218e96f3f32",
+        "bytes": 6576
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/datatype_cpp.py": {
+        "sha256": "d70081e2ee33a2cb7036dec99fa6fb9a2cf310c8d6b273994c2634d0ff254c10",
+        "bytes": 9497
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/descriptions.py": {
+        "sha256": "735bc09c8ffec232df46a6c067947a0ec34667377d1fe13f37711e8d3f7befbd",
+        "bytes": 28705
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/die.py": {
+        "sha256": "fe9f146dc9236a17b05376afbd1e4df901ad7735454cd699c8ce91277d3c0b8e",
+        "bytes": 16485
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/dwarf_expr.py": {
+        "sha256": "0c217469f041aa7deb729b2d343323f05ad5b43e2a81b50fa980e61479f4f97b",
+        "bytes": 11698
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/dwarf_util.py": {
+        "sha256": "4f0af20941ed2da56666b3c9fb42600d956c3b147017d1a57b2a3fe95e5ec8b0",
+        "bytes": 3494
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/dwarfinfo.py": {
+        "sha256": "d8b16c376f3a3ccf2a41f86105df70e50368d03f973801e684185d315f357207",
+        "bytes": 32693
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/enums.py": {
+        "sha256": "1e236370193e698513fafe29cd44afde8f9fc6b64d6dc6d5249bc6abdc8e6bf3",
+        "bytes": 22908
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/lineprogram.py": {
+        "sha256": "3e85191a28d2d61539f52569c314101a29a9cbaac7837760ae2bb42e7b72e0f8",
+        "bytes": 12528
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/locationlists.py": {
+        "sha256": "9a9ea693f0a84f446e503e64b367702afd1ce81a80940710064b7f7d8fa33267",
+        "bytes": 21017
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/namelut.py": {
+        "sha256": "cdb08d65cef4384f04f60d071b27bcdd5a76d7630e60579d85d59766171e6586",
+        "bytes": 7419
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/ranges.py": {
+        "sha256": "44cf61af9ffa970646732cc17a1a806eb44a43176a9ca2ae9049e266031d5b65",
+        "bytes": 10778
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/structs.py": {
+        "sha256": "6469b6d08f3a2628756ce7966c43fb13cdae74be2e034adc5daa5e9e5091515f",
+        "bytes": 27067
+      },
+      "native_builder/windows-x64/python/elftools/dwarf/typeunit.py": {
+        "sha256": "4b133343d9af443bb42302363ea32f0b6c576a93a3c1c28915ff9a47c26214a8",
+        "bytes": 10776
+      },
+      "native_builder/windows-x64/python/elftools/ehabi/__init__.py": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "native_builder/windows-x64/python/elftools/ehabi/constants.py": {
+        "sha256": "a386df95ebe53338db1cdfe498a06acf8e976007b5fab5c4eed2b8904932caa8",
+        "bytes": 32
+      },
+      "native_builder/windows-x64/python/elftools/ehabi/decoder.py": {
+        "sha256": "ab3bd609bd96582b44e507da614881b477491d3be235cd7d154516697e7c77f4",
+        "bytes": 12287
+      },
+      "native_builder/windows-x64/python/elftools/ehabi/ehabiinfo.py": {
+        "sha256": "15a37115fb720208ae0daccd3d32447f0abb553a9ce9b3e6dab47c3f92e2747f",
+        "bytes": 8859
+      },
+      "native_builder/windows-x64/python/elftools/ehabi/structs.py": {
+        "sha256": "cf381dc793d59cea78844f424b7a31dbf04513d9d7d318a962f6d25ef60f3e90",
+        "bytes": 1417
+      },
+      "native_builder/windows-x64/python/elftools/elf/__init__.py": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "native_builder/windows-x64/python/elftools/elf/constants.py": {
+        "sha256": "3a4a262a24a9ed7f796f80b6ddb54c31eba93e78293cb490b577dc8dcbca86b8",
+        "bytes": 4888
+      },
+      "native_builder/windows-x64/python/elftools/elf/descriptions.py": {
+        "sha256": "4f3e4e597828c1cdbfbb64e6230ba19c52ed32c978e7153f9ddb4edb7ff0c8cc",
+        "bytes": 33425
+      },
+      "native_builder/windows-x64/python/elftools/elf/dynamic.py": {
+        "sha256": "a31f7bd38236df432068feb81356e7245228491111b7e76d501fb5e107eda7ed",
+        "bytes": 15775
+      },
+      "native_builder/windows-x64/python/elftools/elf/elffile.py": {
+        "sha256": "2615f5052b79d8f5065f5739920b5f29aafd4831e4915a8983030ebe1cc978cf",
+        "bytes": 44966
+      },
+      "native_builder/windows-x64/python/elftools/elf/enums.py": {
+        "sha256": "4d975df4e75de4433cc673dfc7524a9a302792b1d2ec087a649dd24f120dad88",
+        "bytes": 50544
+      },
+      "native_builder/windows-x64/python/elftools/elf/gnuversions.py": {
+        "sha256": "0e553e59718df3d74d028aff795d9b44562dc648abfc787d75c27f0486cf8272",
+        "bytes": 9362
+      },
+      "native_builder/windows-x64/python/elftools/elf/hash.py": {
+        "sha256": "b8b10cd2c96814febc54bb122ccea5aef3ecf4270954ad661364a9368f2306d5",
+        "bytes": 9078
+      },
+      "native_builder/windows-x64/python/elftools/elf/notes.py": {
+        "sha256": "4c3f1bc337e3a808ae118cbebc92844dc1a1af74934659dfa14dd892376ce64a",
+        "bytes": 3483
+      },
+      "native_builder/windows-x64/python/elftools/elf/relocation.py": {
+        "sha256": "d9b4a0e47e5297bae9214f6ac40b9e2d779738777c8fe0cd1b31656cc605ed48",
+        "bytes": 24376
+      },
+      "native_builder/windows-x64/python/elftools/elf/sections.py": {
+        "sha256": "c90ce9f31e37cb714343256534e25603d2eefb732c0b41f1671ae7027abe4b36",
+        "bytes": 22016
+      },
+      "native_builder/windows-x64/python/elftools/elf/segments.py": {
+        "sha256": "8b808b2cee7976775e5ed8788970c2733f5dec859e2c0ef58aadcddcb2eef95a",
+        "bytes": 5536
+      },
+      "native_builder/windows-x64/python/elftools/elf/structs.py": {
+        "sha256": "114b209e3b7cdd471ca2875d554781cf4a174acf93c080d38da52c24fb2332be",
+        "bytes": 25390
+      },
+      "native_builder/windows-x64/python/elftools/py.typed": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "native_builder/windows-x64/python/pyelftools-0.33.data/scripts/readelf.py": {
+        "sha256": "7a6d9d6719afe951db1e94a45a2fccfecf3a95300162055e098f03a6bb37862c",
+        "bytes": 92867
+      },
+      "native_builder/windows-x64/python/pyelftools-0.33.dist-info/METADATA": {
+        "sha256": "dbbb739509c795b8b7e700057880a88365218bb1c7216b198a22c97c8aedce62",
+        "bytes": 1003
+      },
+      "native_builder/windows-x64/python/pyelftools-0.33.dist-info/RECORD": {
+        "sha256": "77d46c3b3f539ad27f30116d3a9b9bb50cfcfd4507018dddbb0e3f0a73c556da",
+        "bytes": 4931
+      },
+      "native_builder/windows-x64/python/pyelftools-0.33.dist-info/WHEEL": {
+        "sha256": "69e6228a0d35958183cc1812f07c565ce837b95eb51bd8a33acba9fa4f68d6c9",
+        "bytes": 91
+      },
+      "native_builder/windows-x64/python/pyelftools-0.33.dist-info/licenses/LICENSE": {
+        "sha256": "ae18bf4cb82f92af7547259177bc28bc48e4fc732518bcedfe690226288d3445",
+        "bytes": 1534
+      },
+      "native_builder/windows-x64/python/pyelftools-0.33.dist-info/top_level.txt": {
+        "sha256": "227018f51ead87440f7375e64a937cbc56986d74d02acb562326fb1d23101f91",
+        "bytes": 9
+      },
+      "native_builder/windows-x64/python/unicorn/__init__.py": {
+        "sha256": "0e8ac7115c755994a968fa865bd1b2f2075edea715c17e91d62af2cc52c13392",
+        "bytes": 305
+      },
+      "native_builder/windows-x64/python/unicorn/arm64_const.py": {
+        "sha256": "ddadd814eccd0a312bb43da7b4f2298690660bd5698c27edc306b1d981cff972",
+        "bytes": 7873
+      },
+      "native_builder/windows-x64/python/unicorn/arm_const.py": {
+        "sha256": "ace0c3e49f61649034a1bec4279576b67e064df146ea8062c67e68dc14e6eb7b",
+        "bytes": 4284
+      },
+      "native_builder/windows-x64/python/unicorn/include/unicorn/arm.h": {
+        "sha256": "7746a8a6714ddfce7036a3d41c4d26c59b3edaf532458f8a8a35127eb61b0381",
+        "bytes": 5614
+      },
+      "native_builder/windows-x64/python/unicorn/include/unicorn/arm64.h": {
+        "sha256": "a0f19ff95563eb45ec1b78dfd759e1b23ac19ee562ee8554a5270bb53144621c",
+        "bytes": 9362
+      },
+      "native_builder/windows-x64/python/unicorn/include/unicorn/m68k.h": {
+        "sha256": "1647203eb80ee34891ff7ec217e3d2b6b1b14532df32d33e75a5738b546050b1",
+        "bytes": 1629
+      },
+      "native_builder/windows-x64/python/unicorn/include/unicorn/mips.h": {
+        "sha256": "e3aa91f7c2aeda746abfe1fb44e4de3cbe866517a478f1acc7739b7e6474754d",
+        "bytes": 6747
+      },
+      "native_builder/windows-x64/python/unicorn/include/unicorn/platform.h": {
+        "sha256": "a1b9ae7e9384ad18942b7abaaaf62d51d604e3722753d7e20dd1b82b1eb00b9f",
+        "bytes": 7076
+      },
+      "native_builder/windows-x64/python/unicorn/include/unicorn/ppc.h": {
+        "sha256": "402f7db37c4a4f8b90c5e2f80b85dee031d814b37aed7c5a671a601f4a42a80c",
+        "bytes": 11225
+      },
+      "native_builder/windows-x64/python/unicorn/include/unicorn/riscv.h": {
+        "sha256": "313cf8db927aa8501496ff5c89fffc2a690837fe394a25d7dcbd7d4caafa7e64",
+        "bytes": 9919
+      },
+      "native_builder/windows-x64/python/unicorn/include/unicorn/s390x.h": {
+        "sha256": "591db40b7c93b1584da3b93a98ccc01ef2df89c9be3c3d348721b8cccff187c8",
+        "bytes": 4518
+      },
+      "native_builder/windows-x64/python/unicorn/include/unicorn/sparc.h": {
+        "sha256": "4f4ffd28c02be0fe1f18695f755b8a5964d07d563c5f32156c716acf69e96bc5",
+        "bytes": 4227
+      },
+      "native_builder/windows-x64/python/unicorn/include/unicorn/tricore.h": {
+        "sha256": "4a6baa756c91c2ef74813d95800d556e89b133a860ea6970160332f32aaa3fab",
+        "bytes": 4146
+      },
+      "native_builder/windows-x64/python/unicorn/include/unicorn/unicorn.h": {
+        "sha256": "0414b3948a8bdd3f28451f7f2ae03b5c790d08ea93e6e02b2e4db19a0de49507",
+        "bytes": 54032
+      },
+      "native_builder/windows-x64/python/unicorn/include/unicorn/x86.h": {
+        "sha256": "dd75a7680a5552717a4abe559c10f5b805f7c68ae6f2be9729387f2300860c0f",
+        "bytes": 41722
+      },
+      "native_builder/windows-x64/python/unicorn/lib/unicorn.dll": {
+        "sha256": "010d85dce84b8f6ffaec3d5420f1b5f7768f859eb831be574c7da23e656ee8f1",
+        "bytes": 9598976
+      },
+      "native_builder/windows-x64/python/unicorn/lib/unicorn.lib": {
+        "sha256": "60a95ffb6572942b7db1f57901d23e664ed22a54a7d92dfcad15fc3e3ef1f724",
+        "bytes": 49894000
+      },
+      "native_builder/windows-x64/python/unicorn/m68k_const.py": {
+        "sha256": "af95f32f2810fe19888ac723db70c74c7fb1df2bc8ba3578ede0a28b8eca94a7",
+        "bytes": 1144
+      },
+      "native_builder/windows-x64/python/unicorn/mips_const.py": {
+        "sha256": "087925a25a128662e095bb861af3c38a2a6c522fc21e222e31b71aeacaaa63d3",
+        "bytes": 5160
+      },
+      "native_builder/windows-x64/python/unicorn/ppc_const.py": {
+        "sha256": "11e0c52a1c137874352119fb3d1621639079feda6574ee575271ef683a0a8f17",
+        "bytes": 10880
+      },
+      "native_builder/windows-x64/python/unicorn/py.typed": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "native_builder/windows-x64/python/unicorn/riscv_const.py": {
+        "sha256": "86e08d5f6327d154306d5d02899331892de6f44020ff86900a84d2b212205925",
+        "bytes": 7270
+      },
+      "native_builder/windows-x64/python/unicorn/s390x_const.py": {
+        "sha256": "4f6194d1697d8684921782a81f494458dc859f8ebf2f78e30f673bd5f7cd590f",
+        "bytes": 4101
+      },
+      "native_builder/windows-x64/python/unicorn/sparc_const.py": {
+        "sha256": "9dd58fa5aeab225a0f8186f653f5c8fc5fd161b75ccc6a541e5af79f36af2698",
+        "bytes": 3381
+      },
+      "native_builder/windows-x64/python/unicorn/tricore_const.py": {
+        "sha256": "88310f61e12b731b2550031eb6423fbf815e66428b483132d3df47614c9d53ae",
+        "bytes": 3199
+      },
+      "native_builder/windows-x64/python/unicorn/unicorn.py": {
+        "sha256": "2aed71e6d5bc60807198cdcc3ed43a485a7acae1f41f08d986137afc55df2029",
+        "bytes": 321
+      },
+      "native_builder/windows-x64/python/unicorn/unicorn_const.py": {
+        "sha256": "c21d7c49f62296591a5f09ed0119ef95083b82f5f3f66b829578784c7b164368",
+        "bytes": 3258
+      },
+      "native_builder/windows-x64/python/unicorn/unicorn_py2.py": {
+        "sha256": "b82ccc7c00762e10f0326e8d8ad4381872cf531799d5e003ad52c9d7ac61ae42",
+        "bytes": 39639
+      },
+      "native_builder/windows-x64/python/unicorn/unicorn_py3/__init__.py": {
+        "sha256": "2cd4a0d95ef236b5b9e3efb68b20fb6a6d1fb4190db2e9cc0a6447eb2c0aa755",
+        "bytes": 24
+      },
+      "native_builder/windows-x64/python/unicorn/unicorn_py3/arch/__init__.py": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      },
+      "native_builder/windows-x64/python/unicorn/unicorn_py3/arch/arm.py": {
+        "sha256": "d486ff4a9c3f797e5e57a5201a1e2304b97a54b6bc61e320062f1290f4e3dc33",
+        "bytes": 4108
+      },
+      "native_builder/windows-x64/python/unicorn/unicorn_py3/arch/arm64.py": {
+        "sha256": "2e393f3f863da1576619e03abcbda2a2e2e54d673aac98979cf0b6caed8926b4",
+        "bytes": 5040
+      },
+      "native_builder/windows-x64/python/unicorn/unicorn_py3/arch/intel.py": {
+        "sha256": "b3b8338a85ac74623e7a67dfb4f44dc9933786a329e64d772987490dbf751637",
+        "bytes": 5453
+      },
+      "native_builder/windows-x64/python/unicorn/unicorn_py3/arch/types.py": {
+        "sha256": "525ed179db874a13291f9469bd6243e7293aba17454de9b10a9227106d093787",
+        "bytes": 2774
+      },
+      "native_builder/windows-x64/python/unicorn/unicorn_py3/unicorn.py": {
+        "sha256": "b4de7d560790a587157b17edd71c83b4f2d2bade2447d1a5433c497468ac8aeb",
+        "bytes": 54301
+      },
+      "native_builder/windows-x64/python/unicorn/x86_const.py": {
+        "sha256": "d7663db6425f52838f3e79e45a8fe22b6c02be7edb44367ea2118aec04ee5728",
+        "bytes": 41605
+      },
+      "native_builder/windows-x64/python/unicorn-2.1.4.dist-info/METADATA": {
+        "sha256": "6fcd483933e356688ad94de631e862787cd537b5b579769a485db676b89741eb",
+        "bytes": 4330
+      },
+      "native_builder/windows-x64/python/unicorn-2.1.4.dist-info/RECORD": {
+        "sha256": "96442f81cb8b3b78a64b70fc2e82c134936672164ae8b3ccbfcb44f4318fe31f",
+        "bytes": 3311
+      },
+      "native_builder/windows-x64/python/unicorn-2.1.4.dist-info/WHEEL": {
+        "sha256": "f845f90d0ccd190128c8bf7d43ed0fd3e0fe0976dfa9a7de9da01e89243f51f9",
+        "bytes": 100
+      },
+      "native_builder/windows-x64/python/unicorn-2.1.4.dist-info/top_level.txt": {
+        "sha256": "ec0c03f370a783d55b68e240432c15850ec60ac7b8aa1cbb20eafec6dd512b71",
+        "bytes": 8
+      },
+      "native_builder/windows-x64/qualification.json": {
+        "sha256": "1c4bcd53b54ed7db7e5b6102157305bc5d7adb8ef94ff195f65dd624537ae3fc",
+        "bytes": 7375
+      },
+      "native_builder/windows-x64/source/native-ubifs-corresponding-source.tar.gz": {
+        "sha256": "6589e32be4a09ce41dcedf329abfc8c7f2552c4fa435dae70a48aa84fdcd3994",
+        "bytes": 874970
+      },
+      "licenses/THIRD-PARTY-SOURCES.json": {
+        "sha256": "3c3d43dd128bfe194a65b8360be6001fb4b25d5a5a00bd7b8f7118eba0c2b03c",
+        "bytes": 1878
+      }
+    }
+  },
+  "camera": {
+    "name": "ASCENT-Camera-Support-19.2.14-v1.zip",
+    "sha256": "177d6da1ccd187d1b06969c5aad92d20ae815dfd33663af54b84228ef53b6f7d",
+    "bytes": 5537108,
+    "files": {
+      "camera_support/v1/manifest.json": {
+        "sha256": "154a1b0236e71c003393cf78e1abef774a8dea88fd3b5f7fa59c973fcceb5dd3",
+        "bytes": 6859
+      },
+      "camera_support/v1/payload/00.bin": {
+        "sha256": "c84eb115ec5070aea26f38b071891f0ae41b6bb9f1acc1b173676e1a2e1327cf",
+        "bytes": 2680168
+      },
+      "camera_support/v1/payload/01.bin": {
+        "sha256": "4171b74e9888c91f9f312587cbb95f392fa2b25af5a9c626a1fdaa2c99c73918",
+        "bytes": 32768
+      },
+      "camera_support/v1/payload/02.bin": {
+        "sha256": "eaa8909b38428ab148a0c36a6c804c02d305dc22ca20f00b3776e849394d63c1",
+        "bytes": 120
+      },
+      "camera_support/v1/payload/03.bin": {
+        "sha256": "22ba1da054cc18ec7135037c480f3da17a0329221cfac9b418a173ec10eb96a6",
+        "bytes": 12192
+      },
+      "camera_support/v1/payload/04.bin": {
+        "sha256": "766a4a0300a968712f495736c32f869fa116d1269cb71292f9371e8fe433e513",
+        "bytes": 6623
+      },
+      "camera_support/v1/payload/05.bin": {
+        "sha256": "3cf9abbee1682ff12b2bf4db5230a70ba0cfa15ad48c92eb5a36a18c67bc5464",
+        "bytes": 13592
+      },
+      "camera_support/v1/payload/06.bin": {
+        "sha256": "edb6b910ad9ae387c2b7c76bce7833a8ce5440817812d026c14f1c8e2ffeaa6d",
+        "bytes": 173
+      },
+      "camera_support/v1/payload/07.bin": {
+        "sha256": "50b28cfa85335b31ac1d82be6a76a2960a77ab6f025b500f5abd2c8c871b6191",
+        "bytes": 580
+      },
+      "camera_support/v1/payload/08.bin": {
+        "sha256": "6e3809b8722fdb0a8dbcb25ad482db7af3e85e0cb9e82ddbf7e98c356ea138f7",
+        "bytes": 252
+      },
+      "camera_support/v1/payload/09.bin": {
+        "sha256": "a3fbd5a0bb4726e70a0147c73d3dab76e2cd4dff628dc6771b6b0e2125ad5f3a",
+        "bytes": 144722
+      },
+      "camera_support/v1/payload/10.bin": {
+        "sha256": "2d0a8da754e03e4b35c92e8794f76e10b8e4ab12dab3aca80cd4fd7acb150db7",
+        "bytes": 144722
+      },
+      "camera_support/v1/payload/11.bin": {
+        "sha256": "4f6f5f4cee5d29ad01d5ca0af67f7fb514ecea63fc6745772eeae1be12362b09",
+        "bytes": 144722
+      },
+      "camera_support/v1/payload/12.bin": {
+        "sha256": "be8442b295ea7a57a09bd52e1fdd5e34bbdaa7798016378935742f0f3e9d85ec",
+        "bytes": 144722
+      },
+      "camera_support/v1/payload/13.bin": {
+        "sha256": "085d84d0334fa81919b308405bbbaeec778f5ab09c7c9f973f0c29b4febaab4b",
+        "bytes": 144722
+      },
+      "camera_support/v1/payload/14.bin": {
+        "sha256": "a7364b734de962ba5b3ad27adb8e42dafe923422580181fcb82b43bae33ae817",
+        "bytes": 144722
+      },
+      "camera_support/v1/payload/15.bin": {
+        "sha256": "8965b2a0ac37f2e012238d209bcad0dc33988dc112600565f0d17139dd46e048",
+        "bytes": 144722
+      },
+      "camera_support/v1/payload/16.bin": {
+        "sha256": "35ceb1672002e205d7d4f29b646c1c681af8fcc5ebcf110f3d545562441b6cbd",
+        "bytes": 2478160
+      },
+      "camera_support/v1/payload/17.bin": {
+        "sha256": "7559294c7f35797f916ca8dbe32d490e13c110f26cdcfd379eda871398209648",
+        "bytes": 2529316
+      },
+      "camera_support/v1/payload/18.bin": {
+        "sha256": "49d6b180417b266242cbdd811c6b27cecbecc3c064b4f6bec0eaad17590da59b",
+        "bytes": 2525208
+      }
+    },
+    "url": "https://github.com/TelaMechanica/ascent-control/releases/download/v0.43.54/ASCENT-Camera-Support-19.2.14-v1.zip"
+  },
+  "hdpro": {
+    "name": "ASCENT-HDPro-Profile-19.2.14-v3.zip",
+    "sha256": "7dd744d423f0ffa15fb6469d7562f6a531769b051524962c48c318bd0d86eaaf",
+    "bytes": 36245,
+    "hardware_qualified": false,
+    "ac_target_admitted": true,
+    "url": "https://github.com/TelaMechanica/ascent-control/releases/download/v0.43.54/ASCENT-HDPro-Profile-19.2.14-v3.zip",
+    "build_availability": "TESTING"
+  },
+  "sources": {
+    "name": "ASCENT-Third-Party-Sources-0.43.54-v1.zip",
+    "bytes": 221444755,
+    "sha256": "56f14124f9555e2f3a06f3d130805b3a63e70d687d2ed335cab2c1ef5637fa62",
+    "url": "https://github.com/TelaMechanica/ascent-control/releases/download/v0.43.54/ASCENT-Third-Party-Sources-0.43.54-v1.zip"
+  }
+}

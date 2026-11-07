@@ -1,0 +1,31 @@
+{
+  "schema": "ascent.public.release.validation.v1",
+  "version": "0.43.54",
+  "tests": {
+    "passed": 515,
+    "subtests_passed": 55
+  },
+  "source_checks": [
+    "runtime inventory and original six-helper hash contract",
+    "camera source hashes/import boundary",
+    "source privacy"
+  ],
+  "windows_native": {
+    "wsl_invocations_refused": true,
+    "z8": "PASS",
+    "z40": "PASS",
+    "hub": "PASS",
+    "hdpro": "PASS"
+  },
+  "hdpro": {
+    "build_availability": "TESTING",
+    "hardware_qualified": false,
+    "image_name": "Ascent_G_Sky_19_2_14_HDPro_1.img",
+    "image_sha256": "3613f476121796834432f7fe2b8f5883e05e9cdef4872036e145b7f15fa6e7ca",
+    "image_bytes": 17478561
+  },
+  "hardware_executed": false,
+  "application_installed": false,
+  "private_service_mode_included": false,
+  "msi_validation": "Final public-checkout build recorded with release assets."
+}

@@ -1,0 +1,11 @@
+<Application x:Class="Ascent.Desktop.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <!--
+      No merged theme ResourceDictionary here on purpose. The approved UI's own
+      industrial theme lives entirely inside the WebView2 content (app.css); this
+      window applies only the minimal native chrome needed before that content
+      loads (see MainWindow.xaml's startup overlay).
+    -->
+</Application>

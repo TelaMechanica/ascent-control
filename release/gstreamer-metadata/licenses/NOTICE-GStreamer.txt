@@ -1,0 +1,26 @@
+GStreamer components bundled with Ascent Control
+================================================
+
+Version:  1.26.11 (MSVC x86_64)
+Source:   https://gstreamer.freedesktop.org/data/pkg/windows/1.26.11/msvc/gstreamer-1.0-msvc-x86_64-1.26.11.msi
+SHA-256:  31cbc21fa0950b5c1e79c80959b2799805cb05a7a35953a13a9f790776137605
+
+Ascent Control bundles a trimmed subset of the GStreamer runtime so that video
+works without a separate installation. The bundled components -- the GStreamer
+core libraries and the ten plugins listed in plugin-licenses.json -- are licensed
+under the GNU Lesser General Public License, version 2.1 or later. The full text
+is in LGPL-2.1.txt beside this file.
+
+These components are UNMODIFIED binaries from the official distribution named
+above. Nothing was patched, recompiled or statically linked into Ascent Control;
+they are loaded dynamically at runtime. The corresponding source for this exact
+version is published by the GStreamer project at:
+
+    https://gstreamer.freedesktop.org/src/
+
+You may obtain, modify and relink these libraries under the terms of the LGPL. To
+replace a bundled component, substitute the corresponding DLL in the gstreamer\
+directory of the Ascent Control installation.
+
+GStreamer is a trademark of its respective owners. Ascent Control is not affiliated
+with or endorsed by the GStreamer project.

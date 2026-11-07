@@ -1,0 +1,51 @@
+{
+  "gstreamer_version": "1.26.11",
+  "source_url": "https://gstreamer.freedesktop.org/data/pkg/windows/1.26.11/msvc/gstreamer-1.0-msvc-x86_64-1.26.11.msi",
+  "source_sha256": "31cbc21fa0950b5c1e79c80959b2799805cb05a7a35953a13a9f790776137605",
+  "bin_dlls": [
+    "ffi-7.dll",
+    "gio-2.0-0.dll",
+    "glib-2.0-0.dll",
+    "gmodule-2.0-0.dll",
+    "gobject-2.0-0.dll",
+    "gstaudio-1.0-0.dll",
+    "gstbase-1.0-0.dll",
+    "gstcodecparsers-1.0-0.dll",
+    "gstcodecs-1.0-0.dll",
+    "gstd3d11-1.0-0.dll",
+    "gstd3dshader-1.0-0.dll",
+    "gstdxva-1.0-0.dll",
+    "gstnet-1.0-0.dll",
+    "gstpbutils-1.0-0.dll",
+    "gstreamer-1.0-0.dll",
+    "gstrtp-1.0-0.dll",
+    "gstrtsp-1.0-0.dll",
+    "gstsdp-1.0-0.dll",
+    "gsttag-1.0-0.dll",
+    "gstvideo-1.0-0.dll",
+    "intl-8.dll",
+    "orc-0.4-0.dll",
+    "pcre2-8-0.dll",
+    "z-1.dll"
+  ],
+  "plugins": [
+    "gstcoreelements.dll",
+    "gsttypefindfunctions.dll",
+    "gstplayback.dll",
+    "gstvideoconvertscale.dll",
+    "gstrtsp.dll",
+    "gstrtp.dll",
+    "gstrtpmanager.dll",
+    "gstudp.dll",
+    "gstvideoparsersbad.dll",
+    "gstd3d11.dll"
+  ],
+  "total_bytes": 18063360,
+  "license": "LGPL-2.1-or-later (GStreamer core and staged plugins)",
+  "excluded": [
+    "gstlibav.dll (avdec_h264/avdec_h265) -- FFmpeg-derived software decoders",
+    "gstopenh264.dll (openh264dec) -- Cisco OpenH264 software decoder",
+    "gstd3d12.dll (d3d12h264dec) -- newer hardware path, not needed while d3d11 is the sink",
+    "development SDK, headers, .lib, examples, gst-launch/gst-inspect tools"
+  ]
+}

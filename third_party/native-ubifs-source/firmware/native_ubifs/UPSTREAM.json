@@ -1,0 +1,28 @@
+{
+  "upstream": "https://git.infraroot.at/mtd-utils.git",
+  "release_archive": "https://infraroot.at/pub/mtd/mtd-utils-2.2.0.tar.bz2",
+  "version": "2.2.0",
+  "tag": "v2.2.0",
+  "commit": "31e990c56aba7584cde310685d663bb122f16003",
+  "archive_sha256": "250d082f67375ca8451b5fcfc9a23a53ced3ebebd8312c288daf2507bbab1324",
+  "adapter_license": "GPL-2.0-only",
+  "upstream_notices_retained": true,
+  "windows_compiler": "MSYS2 UCRT64 GCC 13.2.0",
+  "windows_zlib": "1.3",
+  "compiled_helpers": {
+    "adapter1": {
+      "sha256": "be6c8c14c691348fb369fd46585cab85c22cdba28ee2a97611bf146a08b8cba9",
+      "bytes": 557461
+    },
+    "adapter2": {
+      "sha256": "70b0cf090957809e877eae35ce8255c84b67b5e0f53aeb0ef342f1d76f8a5b32",
+      "bytes": 559457
+    },
+    "adapter3": {
+      "sha256": "82a0a33a90e38bf65fc2983a2e5371a347a31d217fe7103b9c8fedd8d778d2f7",
+      "bytes": 176128,
+      "privacy_source_paths": "neutral relative source paths and prefix maps",
+      "assertions": true
+    }
+  }
+}
