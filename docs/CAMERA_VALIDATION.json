@@ -1,0 +1,25 @@
+{
+  "schema": "ascent.camera.validation.v1",
+  "default_suite": {
+    "passed": 126,
+    "subtests_passed": 27
+  },
+  "external_image_regressions": {
+    "unchanged_donor": 7,
+    "z40_gate2": 13,
+    "z8_gate2": 11,
+    "hub_gate2": 12,
+    "passed_total": 43,
+    "skipped": 0
+  },
+  "external_inputs": "Locally supplied exact-version images; no image or extracted vendor file included",
+  "source_checks": [
+    "camera inventory and import closure",
+    "six-module runtime inventory and standard-library closure",
+    "privacy scan",
+    "project identity hooks reproduce from retained assembly"
+  ],
+  "scope": "offline host and image checks; no hardware execution",
+  "retained_test_setup_correction": "Current gate2 fixtures include the pinned updater identity delta derived from the donor; production guards are unchanged",
+  "native_windows_msi_included": false
+}
