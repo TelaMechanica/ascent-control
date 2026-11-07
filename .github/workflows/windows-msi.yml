@@ -4,7 +4,9 @@ on:
   push:
     tags: ['v*']
 permissions:
-  contents: read
+  # GitHub requires write-level repository access to download draft release assets.
+  # This workflow runs only on trusted manual dispatches and release tags.
+  contents: write
 jobs:
   windows-msi:
     runs-on: windows-2022

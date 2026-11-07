@@ -1061,7 +1061,7 @@
     ".github/ISSUE_TEMPLATE/task.yml": "0f5481014431e47898bb2011c031fb7b71f5f135aeec1c095e42d7ead775e114",
     ".github/pull_request_template.md": "daf7d4ab194d78ebb4e6f617cfc91a88e02785a2bd2cb16448eaa742578b22cc",
     ".github/workflows/contracts.yml": "f49983370e35919211684c918c32003d11cf3a362e0accf1925c1b71a7a2690e",
-    ".github/workflows/windows-msi.yml": "b744965a68ad343b4554865b3b2622c69dcf028e9cdd040ac9342f78ad4b1675",
+    ".github/workflows/windows-msi.yml": "e24c988152d81cef570a061e41242fc9a08753f5c9e30f8d066d3b93e426dcba",
     ".gitignore": "d47bc9c9a965d2826ffd034993a7f1b96dbe03ff29368410b434793f11cc90aa",
     "AGENTS.md": "1aa9b5a0de93ada288e26112634232b198cdc31c33abbfd2034ffb19c02d3c59",
     "CLAUDE.md": "6b7a588984f9f1b30041bad3e0292a8188d38c520c803fc82169ee6941605d4c",
