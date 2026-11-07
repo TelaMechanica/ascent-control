@@ -15,3 +15,5 @@ A project-wide license has not yet been selected. No blanket license grant is ad
 ## Public preview and licensing
 
 See [publication policy](docs/PUBLICATION_POLICY.md) for the source review process, intended use restrictions and private product boundary. The intended model is source-available; final terms are not yet applied. Public availability does not mean vendor material is licensed for reuse.
+
+Read the [developer preview announcement](docs/DEVELOPER_PREVIEW.md) for what is available today and the next public milestones.

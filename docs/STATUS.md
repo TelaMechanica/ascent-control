@@ -15,3 +15,8 @@ Migration foundation, not a completed public application export. Shared dependen
 Atomic storage/rollback, publisher trust, legacy integration, provider extraction, public/private build inventory and hardware checks are not completed by these unit tests. The running internal application has not been changed. Public project-wide licensing remains pending.
 
 Next: claim concrete issues, import the privacy-audited source privately, and extract providers while retaining one shared application. Read AGENTS.md/current issue/PR before work; record actual commands, failures, limits and next steps at handoff.
+
+
+## Public progress announcement 2026 11 06
+
+The operator authorized publishing the [developer preview progress announcement](DEVELOPER_PREVIEW.md). It describes the current foundation and pending source/license review without granting new code permissions or claiming a complete desktop release. The source import remains separate and AC+ stays private.
