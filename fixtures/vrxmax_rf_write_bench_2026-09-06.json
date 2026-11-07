@@ -1,0 +1,73 @@
+{
+  "schema": "ascent.rf_write_bench.v1",
+  "title": "Generated RF readback semantic fixture; not bench evidence",
+  "device": {
+    "identity_cmd60": "Ascent_VRX_max_WF",
+    "firmware": "19.2.4",
+    "serial_number": "9005",
+    "rf_board_code": 160,
+    "remote_path": "/factory/fpv_bb_freq.json"
+  },
+  "outcome": {
+    "write_applied": true,
+    "reported_by_backend": "READBACK_MISMATCH",
+    "false_failure": true,
+    "cause": "is_defalut is device-owned; we sent 1 and the device returned 0. That was the only semantic difference in the whole document."
+  },
+  "before": {
+    "provenance": "Protocol-format fixture; no live operator record",
+    "same_bytes_as": "fixtures/vrxmax_cmd115_116_integrity.json",
+    "payload_length": 2018,
+    "md5": "f36ad83490bfe0cd947271c2144918ef",
+    "indent_spaces": 4,
+    "key_order": [
+      "RFBoardType",
+      "bandC",
+      "is_defalut",
+      "bandA",
+      "bandB",
+      "bandD"
+    ],
+    "is_defalut": 1,
+    "cmd116_payload_ascii": "{\n    \"RFBoardType\": 160,\n    \"bandC\": [\n        6015000,\n        6045000,\n        6075000,\n        6110000,\n        6145000,\n        6180000,\n        6220000,\n        6255000,\n        6290000,\n        6325000,\n        6360000,\n        6395000,\n        6440000,\n        6480000,\n        6520000,\n        6560000,\n        6600000,\n        6640000,\n        6680000,\n        6720000,\n        6760000,\n        6800000,\n        6840000,\n        6880000,\n        6920000,\n        6960000,\n        7000000,\n        7040000,\n        7080000,\n        7120000,\n        7160000,\n        7200000,\n        7240000,\n        7280000,\n        7320000,\n        5839000\n    ],\n    \"is_defalut\": 1,\n    \"bandA\": [\n        4495000,\n        4525000,\n        4555000,\n        4585000,\n        4615000,\n        4645000,\n        4675000,\n        4705000,\n        4735000,\n        4765000,\n        4795000,\n        4825000,\n        4855000,\n        4885000,\n        4915000,\n        4945000,\n        4975000,\n        5005000,\n        5035000,\n        5065000,\n        5120000,\n        5160000,\n        5200000,\n        5240000,\n        5275000,\n        5320000,\n        5360000,\n        5400000,\n        5440000,\n        5839000\n    ],\n    \"bandB\": [\n        5475000,\n        5510000,\n        5545000,\n        5580000,\n        5620000,\n        5660000,\n        5695000,\n        5740000,\n        5770000,\n        5805000,\n        5878000,\n        5914000,\n        5955000,\n        5985000,\n        5839000\n    ],\n    \"bandD\": [\n        3100000,\n        3140000,\n        3180000,\n        3220000,\n        3260000,\n        3300000,\n        3340000,\n        3380000,\n        3420000,\n        3460000,\n        3500000,\n        3540000,\n        3580000,\n        3620000,\n        3660000,\n        3700000,\n        3740000,\n        3775000,\n        3810000,\n        3845000,\n        3880000,\n        3915000,\n        3950000,\n        3985000,\n        4020000,\n        4055000,\n        4090000,\n        4125000,\n        4160000,\n        4200000\n    ]\n}"
+  },
+  "after": {
+    "provenance": "OBSERVED AT THE BENCH, NOT CAPTURED VERBATIM. The raw post-write cmd-116 frame was not saved; only these properties were recorded. Capture the raw frame on the next write and fill in cmd116_payload_ascii.",
+    "verbatim_payload_captured": false,
+    "cmd116_payload_ascii": null,
+    "payload_length": 1088,
+    "indent_spaces": 0,
+    "key_order": [
+      "RFBoardType",
+      "bandC",
+      "is_defalut",
+      "bandA",
+      "bandB",
+      "bandD"
+    ],
+    "key_order_preserved": true,
+    "is_defalut": 0
+  },
+  "findings": [
+    {
+      "id": "is_defalut_is_device_owned",
+      "statement": "The device clears is_defalut from 1 to 0 on any write to /factory/fpv_bb_freq.json. It is device-owned and must be excluded from readback comparison, with the transition recorded.",
+      "consequence": "Readback verification compares the document minus DEVICE_OWNED_KEYS. Band arrays remain the proof that a write applied."
+    },
+    {
+      "id": "device_reserializes_compact",
+      "statement": "The device re-serializes the file itself with no indentation: 2018 bytes in, 1088 bytes back.",
+      "consequence": "Payload length and MD5 can never match across a write and must never be compared across one. The cmd-115 MD5 stays an integrity check within a single read."
+    },
+    {
+      "id": "device_preserves_key_order",
+      "statement": "Key order survived the write intact: RFBoardType, bandC, is_defalut, bandA, bandB, bandD -- is_defalut still mid-document, where the device had it.",
+      "consequence": "ordered_equal stays. Readback comparison is not weakened to order-blind ==; the device gives no reason to."
+    }
+  ],
+  "still_unverified": [
+    "The raw post-write cmd-116 payload bytes (see after.provenance).",
+    "The exact separator style the device emits (no indentation is established; whether it emits ', '/': ' or ','/':' is not).",
+    "The cmd-115 digest offset inside the 68-byte payload (docs/PROTOCOL_SPEC.md section 9.2)."
+  ]
+}

@@ -2,7 +2,7 @@
 
 The source in `firmware/mode_a` builds Z8, Z40 and Hub application grafts against the frozen normal 19.2.14 donor layout. It includes independent ELF/emulation verifiers and two image gates. Gate 1 rebuilds the donor without semantic changes; gate 2 applies only the frozen per-target delta and verifies the resulting image. These are offline host checks, not hardware qualification. An unknown donor or failed check requires investigation; do not bypass the check.
 
-Vendor images, extracted ELF applications, tuning data, kernel modules and peripheral firmware are not included. Supply your own source images. This source snapshot does not establish permission to redistribute vendor-derived outputs. Original project use/license terms remain under review; retained attribution and third-party terms continue to apply.
+The desktop MSI includes a manifest-pinned camera support pack with the extracted applications and support data needed for donor-only Z8/Z40/Hub builds. The complete donor image is supplied by the user. The standalone source-image CLI below remains available. Project permissions are in LICENSE; vendor and third-party material retain their own rights and terms.
 
 ## Tools and dependencies
 
@@ -19,7 +19,7 @@ The adjacent Windows requirements file pins Windows x86_64 wheels. Python packag
 
 Application assembly requires the external Arm GNU Embedded 10-2020-q4-major toolchain (`arm-none-eabi-as`, `ld`, `nm`, `objcopy`, `objdump`). Obtain the official release from Arm and validate its published archive checksum before extraction. Set `ASCENT_ARM_TOOLCHAIN_DIR` to its absolute `bin` directory. The default is `/opt/gcc-arm-none-eabi-10-2020-q4-major/bin`. No compiler binaries are included here. CI uses distribution-provided ARM binutils for synthetic fixtures only; it does not qualify firmware outputs with that toolchain.
 
-Full image reconstruction additionally requires external `mkfs.ubifs` and `fakeroot` on Linux. The inventory metadata adapter used by the private native Windows bundle is not part of this source export. These instructions qualify the Linux CLI route; Windows application assembly can use Windows Python and Arm tools, but this snapshot does not provide a self-contained native Windows full-image tool bundle. Keep any external tools under their own licenses.
+Full image reconstruction additionally requires external `mkfs.ubifs` and `fakeroot` on Linux. The Windows desktop release instead includes a pinned native bundle and metadata adapter, with source and license inventories. Use the Firmware panel for donor-only builds without WSL. These standalone instructions describe the Linux CLI route. Keep external tools under their own licenses.
 
 ## Inputs and extraction
 
@@ -126,4 +126,13 @@ Camera synthetic tests exercise real relocation logic, address-shaped scalar pre
 
 ## Smaller local inputs
 
-A future local import-once cache could keep verified extracted sources and ask only for the donor image on later builds. Current algorithms still need complete source ELFs. Measured deduplicated inputs for all three targets total 19 files, 11,292,206 bytes (10.769 MiB), excluding the donor, outputs and metadata. They include four vendor ELFs and 15 Hub assets. Such a cache is not implemented here. Shipping those assets would redistribute vendor code and data even without shipping an `.img`; no vendor support pack is included.
+The desktop release includes the reviewed support pack: 19 deduplicated payloads,
+11,292,206 bytes, excluding donor, outputs and manifest. They include four
+vendor ELFs and 15 Hub assets. Their hashes, sizes and source provenance are
+recorded by the pack manifest and validated before use. Source-only CLI users
+can still supply the full source images through the commands above.
+
+HD Pro uses a separate exact-donor profile and portable application patch,
+included in this first release for tester builds. See
+[HD Pro instructions](../firmware/hdpro/README.md). It does not require Z8/Z40/Hub
+source images. Physical camera operation remains unqualified.

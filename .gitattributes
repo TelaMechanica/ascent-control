@@ -1,4 +1,5 @@
-* text=auto eol=lf
+# Release inventories pin exact source and notice bytes on every platform.
+* -text
 *.png binary
 *.ico binary
 *.jpg binary

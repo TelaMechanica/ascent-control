@@ -1,4 +1,4 @@
-"""Enforce the reviewed runtime inventory and its pure standard-library closure."""
+"""Enforce the desktop boundary and the original shared-helper contract."""
 import ast
 import hashlib
 import json
@@ -8,8 +8,17 @@ root=Path(__file__).resolve().parents[1]
 receipt=json.loads((root/'docs/SHARED_SOURCE_IMPORT.json').read_text())
 expected={item['path']:item for item in receipt['files'] if item['path'].startswith('runtime/')}
 actual={p.relative_to(root).as_posix() for p in (root/'runtime').rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc'}
-if actual!=set(expected):
+profile=json.loads((root/'release/public-payload.json').read_text())
+desktop={item['source']:item for item in profile['files'] if item['source'].startswith('runtime/')}
+reviewed=set(expected)|set(desktop)
+if actual!=reviewed:
     raise SystemExit('Runtime inventory differs from the reviewed import manifest.')
+from verify_public_build import check_python
+for name,item in desktop.items():
+    path=root/name
+    if path.stat().st_size!=item['bytes'] or hashlib.sha256(path.read_bytes()).hexdigest()!=item['sha256']:
+        raise SystemExit(name+': desktop source differs from the reviewed payload')
+    if path.suffix=='.py':check_python(path)
 allowed={'__future__','math','re','struct'}
 for name,item in expected.items():
     data=(root/name).read_bytes()

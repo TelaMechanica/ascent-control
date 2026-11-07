@@ -1,0 +1,1982 @@
+{
+  "schema": "ascent.ubifs.corresponding-source.v1",
+  "upstream_commit": "31e990c56aba7584cde310685d663bb122f16003",
+  "files": {
+    "compiled-source-windows-adapter3/adapter/compat/asm/byteorder.h": {
+      "size": 69,
+      "sha256": "6cfc80ea76999fbec62886f8c08c46197bdf326384bedc31447948ecbf114e6f"
+    },
+    "compiled-source-windows-adapter3/adapter/compat/byteswap.h": {
+      "size": 149,
+      "sha256": "3e442d79a68f9dfb83027c36e16e428c29d049f04fcbdb2b241e84e956bcfe2e"
+    },
+    "compiled-source-windows-adapter3/adapter/compat/endian.h": {
+      "size": 191,
+      "sha256": "5545b6b584f310de1759b34db3d2c7242496e608ce322c09772fc0ae3d21519b"
+    },
+    "compiled-source-windows-adapter3/adapter/compat/features.h": {
+      "size": 44,
+      "sha256": "9f0f7fc0a8752c836657ced6839b0b070a9be48d11062fcf85ccfd261f37881e"
+    },
+    "compiled-source-windows-adapter3/adapter/compat/linux/fs.h": {
+      "size": 297,
+      "sha256": "13d5dc794a3a98b2038e19ad6b8deb081d1ba4afa93bc6a87c0a5fdd4cb83a02"
+    },
+    "compiled-source-windows-adapter3/adapter/compat/linux/types.h": {
+      "size": 435,
+      "sha256": "c9cfb5a3d06c090270a26492f3e16cc34f2f465bc99567c1aa8711bc7c5c6b97"
+    },
+    "compiled-source-windows-adapter3/adapter/compat/sys/ioctl.h": {
+      "size": 294,
+      "sha256": "71505ae376657650ae5edecee88514a5b2ef1890563747d6796f449e851289d2"
+    },
+    "compiled-source-windows-adapter3/adapter/compat/sys/sysmacros.h": {
+      "size": 142,
+      "sha256": "884b68c6927f86475f8bbd70331be701eada5c39e212ccf70eb5636726d9f35c"
+    },
+    "compiled-source-windows-adapter3/adapter/compat/uuid.h": {
+      "size": 494,
+      "sha256": "09eedab0be69d6b31db6a8e878bcc9f6c2f0b4be71b5ba99cc5ac8f4fe21b311"
+    },
+    "compiled-source-windows-adapter3/adapter/portable.h": {
+      "size": 4437,
+      "sha256": "35e5c141f9d0dce70367299a6462501a28b492020ecae39b1a97af4c093f6bdf"
+    },
+    "compiled-source-windows-adapter3/build-command.json": {
+      "size": 1298,
+      "sha256": "c86b1b4f333a1c4a9786d1557a0af34e69de315b72864ebad1bd57dfbba48785"
+    },
+    "compiled-source-windows-adapter3/src/.gitignore": {
+      "size": 1806,
+      "sha256": "559112aaf0c6c439f3c9ab84b901ac7edf0235b1279ceca20392a466ed5e6686"
+    },
+    "compiled-source-windows-adapter3/src/CHANGELOG.md": {
+      "size": 39833,
+      "sha256": "19cab85b4022db12c57ebf1ebd9f0034bf1a0147fc84cab7c4d6d8f322023080"
+    },
+    "compiled-source-windows-adapter3/src/COPYING": {
+      "size": 18007,
+      "sha256": "dcc100d4161cc0b7177545ab6e47216f84857cda3843847c792a25289852dcaa"
+    },
+    "compiled-source-windows-adapter3/src/Makefile.am": {
+      "size": 1225,
+      "sha256": "28a98d4ddca9361b0f7e3e1ed1e6f256b7c782b1ab73f7b989bac201b78636ab"
+    },
+    "compiled-source-windows-adapter3/src/README.txt": {
+      "size": 5424,
+      "sha256": "1675049ec753cc22a760285dcaf0c3d6c4829bdae012a8e47a22455800cbca27"
+    },
+    "compiled-source-windows-adapter3/src/autogen.sh": {
+      "size": 50,
+      "sha256": "76266b7f1705d00c1023995c2ac87866c00b450a6348b6854e24af3d71fe3366"
+    },
+    "compiled-source-windows-adapter3/src/configure.ac": {
+      "size": 9510,
+      "sha256": "a926c67d2448bb294a1e7a2dd782cd964115a334d5d25374c3a2398f44f7a00b"
+    },
+    "compiled-source-windows-adapter3/src/include/common.h": {
+      "size": 8022,
+      "sha256": "a46ade4238dc5a1c559715b7f44af9dad49682f09c924af15c959ff1e49870b0"
+    },
+    "compiled-source-windows-adapter3/src/include/crc32.h": {
+      "size": 294,
+      "sha256": "971f38988b9271c6a61c6d4981c56271e94dd1664b2eec8948a8acd6d65ed2da"
+    },
+    "compiled-source-windows-adapter3/src/include/dictionary.h": {
+      "size": 6589,
+      "sha256": "e2ce774bdb8e29869f1cf66bef5a85e30021ed06ac17792e2941d526f144c7a8"
+    },
+    "compiled-source-windows-adapter3/src/include/libfec.h": {
+      "size": 1226,
+      "sha256": "19c8fd9c990e55eef2219c7852c86ea74082050aebcda29fb4c50ae2227ffa34"
+    },
+    "compiled-source-windows-adapter3/src/include/libiniparser.h": {
+      "size": 9645,
+      "sha256": "b825901ef4bcb6ee6b99c6ef82b7d2d032f0474c94d7a710429fe7ae6d4718f0"
+    },
+    "compiled-source-windows-adapter3/src/include/libmissing.h": {
+      "size": 318,
+      "sha256": "81cf2d7fee4e86a34aa0513167fc7600018403f031a556e88dbf9889647012b1"
+    },
+    "compiled-source-windows-adapter3/src/include/libmtd.h": {
+      "size": 12459,
+      "sha256": "de5c754074b585681260060902cc7b7820530ea3cb7f89e7733b58195261be31"
+    },
+    "compiled-source-windows-adapter3/src/include/libscan.h": {
+      "size": 3157,
+      "sha256": "8615a2d5768e14ffb2a1af6a98b953c55d409e889788c41bfd692a60ca2bf462"
+    },
+    "compiled-source-windows-adapter3/src/include/libubi.h": {
+      "size": 16769,
+      "sha256": "b76ee8cdc995b689cb600c1029cf1e43f6331985879b55436a4d1c42943a68ca"
+    },
+    "compiled-source-windows-adapter3/src/include/libubigen.h": {
+      "size": 6104,
+      "sha256": "c444d7b6726516b02542611d12cabf4e3485a1042ac9263f21b1304eec2b0f2c"
+    },
+    "compiled-source-windows-adapter3/src/include/linux/jffs2.h": {
+      "size": 7033,
+      "sha256": "c6e4183627eaed4d09bfcb9fac61addb43308fe3d515299ef3decc223025bb37"
+    },
+    "compiled-source-windows-adapter3/src/include/mtd/ftl-user.h": {
+      "size": 2646,
+      "sha256": "229e21ed1c0b716e590ee3eedade49720cf7f869309c001dc1c93ca3079e442f"
+    },
+    "compiled-source-windows-adapter3/src/include/mtd/inftl-user.h": {
+      "size": 1672,
+      "sha256": "f79a9307062b953b770c0263d00e996a0328ee22c686ec170f98d7788223c3b1"
+    },
+    "compiled-source-windows-adapter3/src/include/mtd/jffs2-user.h": {
+      "size": 2371,
+      "sha256": "e8de63e1661a4da34b75672a45879c38a9498be00482b9aca091985c9818d972"
+    },
+    "compiled-source-windows-adapter3/src/include/mtd/mtd-abi.h": {
+      "size": 9581,
+      "sha256": "6cc5771f746bbba0ebeb06c59a229d7504b9d09e8c6c96fc157c674d903979fd"
+    },
+    "compiled-source-windows-adapter3/src/include/mtd/mtd-user.h": {
+      "size": 1199,
+      "sha256": "66162a5bf2811a63ef2a88a09e85cc3c2c6ab992bc29a69e892de23eabfad834"
+    },
+    "compiled-source-windows-adapter3/src/include/mtd/nftl-user.h": {
+      "size": 1401,
+      "sha256": "549fd80036700ca23a1c940b67fe973936b63a78d6414e24d107caa31790adfb"
+    },
+    "compiled-source-windows-adapter3/src/include/mtd/ubi-media.h": {
+      "size": 17221,
+      "sha256": "0dc9c8e28ed3ee72c8cad0450fcc489b43abb61bd4604f2bc3a51741bdd73d50"
+    },
+    "compiled-source-windows-adapter3/src/include/mtd/ubi-user.h": {
+      "size": 18160,
+      "sha256": "92fb16ca37a35b33ba701cc5dc53a78655c6f502545293ce76089f4fd011eab5"
+    },
+    "compiled-source-windows-adapter3/src/include/mtd/ubifs-media.h": {
+      "size": 26272,
+      "sha256": "7916295374c4583f7240926f40ea2a841bdcc121a41f82b117286bfd0eb9d16b"
+    },
+    "compiled-source-windows-adapter3/src/include/mtd_swab.h": {
+      "size": 1903,
+      "sha256": "5b8eac28d42c11a5e377412fa720a2257e76e3a80c1acc6f119cbb4ea882e7c1"
+    },
+    "compiled-source-windows-adapter3/src/include/xalloc.h": {
+      "size": 2469,
+      "sha256": "b1351c167211c92687dbe02aa02722d428dff033e4bb284dd6e388d268073524"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/Makemodule.am": {
+      "size": 1232,
+      "sha256": "1a7875cb28da119daf00e8076a8a91df4d1a791a728d12a55444dc1c74f8fa92"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/compr.c": {
+      "size": 14688,
+      "sha256": "cbd79ad1e5a9240ae2dedd693804c5e0108569c5ea9313633be1eeea15427a88"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/compr.h": {
+      "size": 3276,
+      "sha256": "2da46d8131087c678caf4b67675d11fc16b5214902d35f8e6570e667aee323c3"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/compr_lzo.c": {
+      "size": 2946,
+      "sha256": "70dfbeb1d281b1e2657569060c392dfbe652c4e871afe205da5bafed2c705713"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/compr_rtime.c": {
+      "size": 2659,
+      "sha256": "281e0f0fed3e8250599d79a8a81f8c7360690eafecc69d370dd192e7692700ee"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/compr_zlib.c": {
+      "size": 3941,
+      "sha256": "c65dc9729a95151add4e4380e008a3745d648d633f54b1d7ae3a969b41712019"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/device_table.txt": {
+      "size": 4252,
+      "sha256": "8b9be12bcd6769bcbc7c66b7d8b15dd032515ffbf987af6e5344718ec110dc1d"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/jffs2dump.c": {
+      "size": 27779,
+      "sha256": "d47c97b2f08e228a1ba87c44f9fe3415fb5c12f1a4a17aafecf98989f9ea0b0b"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/jffs2reader.c": {
+      "size": 21131,
+      "sha256": "8a36214ded26a3280c476bc786af337812f9ebd94c3ed1005952061f6767ce3b"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/mkfs.jffs2.1": {
+      "size": 6788,
+      "sha256": "f03b292455819941535d4c8e6683fc547f0dc02b423c3be02d31f586c97f2e7a"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/mkfs.jffs2.c": {
+      "size": 49060,
+      "sha256": "1041f3a6e08b2a0cfa588c02c560a5cf11cfb2822901d200f550568c8d8530d5"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/rbtree.c": {
+      "size": 8620,
+      "sha256": "5adf31919cb1011773782618cb45bc9682798eb0f34ed4b1541cbfcc118c763f"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/rbtree.h": {
+      "size": 5247,
+      "sha256": "42e43d5d00bde1e004098ab28a53e4ee2e9bb5e2d0818bd03555349850125810"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/summary.h": {
+      "size": 4837,
+      "sha256": "81722721af5ce1f43a79b7dc356749267ded04e41b3443ee76e27dbc0f010ee6"
+    },
+    "compiled-source-windows-adapter3/src/jffsX-utils/sumtool.c": {
+      "size": 25510,
+      "sha256": "305ae2b9c2e294ef6d47bf6503ccfaa991b773a891f717825afd0c844ea5f789"
+    },
+    "compiled-source-windows-adapter3/src/lib/LICENSE.libiniparser": {
+      "size": 1082,
+      "sha256": "dde54469aee95da4a8f3edb97fee64f4d9c03b89a2358a968c67a856e4f1a501"
+    },
+    "compiled-source-windows-adapter3/src/lib/Makemodule.am": {
+      "size": 955,
+      "sha256": "68c53ec7f188e358865437de31335ba5b73ae01117f413d57aa3a7280abd2499"
+    },
+    "compiled-source-windows-adapter3/src/lib/common.c": {
+      "size": 5114,
+      "sha256": "afcc6d1363998c4e8eb0aed45edbb81c8075344d52199f703d741b6276eac871"
+    },
+    "compiled-source-windows-adapter3/src/lib/dictionary.c": {
+      "size": 11442,
+      "sha256": "4755eebc5d5e31ea532f1c0b09092f2a82157625b1ff7888ac7c4dd964969009"
+    },
+    "compiled-source-windows-adapter3/src/lib/execinfo.c": {
+      "size": 638,
+      "sha256": "aa6c0634b29c0004c894502034aff52798dd93fba39c7fbcd46518b1a89499fa"
+    },
+    "compiled-source-windows-adapter3/src/lib/libcrc32.c": {
+      "size": 5586,
+      "sha256": "037b96c4ee984187c2d2e701dad616edd1ede5e38c22b1078e6c38ce69decb14"
+    },
+    "compiled-source-windows-adapter3/src/lib/libfec.c": {
+      "size": 24536,
+      "sha256": "fbe3c2f76925bba14de5b9e180f7020dd1fed0eeb86c07a280e3a14cabb353b2"
+    },
+    "compiled-source-windows-adapter3/src/lib/libiniparser.c": {
+      "size": 18538,
+      "sha256": "54ab27ec9bb65e40cfc90f03a7078686dfaf35d98a40ce8f725b7b99aa4de653"
+    },
+    "compiled-source-windows-adapter3/src/lib/libmtd.c": {
+      "size": 33921,
+      "sha256": "e507f54cc9949da9b8a401b2e01d64380f82256947c610f0c4d1153672897f79"
+    },
+    "compiled-source-windows-adapter3/src/lib/libmtd_int.h": {
+      "size": 3963,
+      "sha256": "dc83dcbe108be38f13f7097388ae95ca6d4fd8ace4c04445438bc9b0cfabef29"
+    },
+    "compiled-source-windows-adapter3/src/lib/libmtd_legacy.c": {
+      "size": 10731,
+      "sha256": "5e8103f2dcf35b608100c9631023709f51f2b7135922bebbb70cc6af6837df59"
+    },
+    "compiled-source-windows-adapter3/src/lib/libscan.c": {
+      "size": 5548,
+      "sha256": "a13fbd231f62777acb575183930a80b4342d7b0ab7e3f6c5fe6e8a2b06ae7e11"
+    },
+    "compiled-source-windows-adapter3/src/lib/libubi.c": {
+      "size": 30819,
+      "sha256": "3aad725f6ec3f5cfefa7799920b0bdaaad5834c08322d3e3046149bf65fa6928"
+    },
+    "compiled-source-windows-adapter3/src/lib/libubi_int.h": {
+      "size": 4347,
+      "sha256": "2d06fb39065502974007c0e62dbfe17132e36e83173bb2c347bbc8a1a1c30b3c"
+    },
+    "compiled-source-windows-adapter3/src/lib/libubigen.c": {
+      "size": 8479,
+      "sha256": "332dad52b930cbfcfcd4753cc28edadf7e47fc8f7b1f9d5d14e4bb854cf90a9e"
+    },
+    "compiled-source-windows-adapter3/src/m4/ac_define_dir.m4": {
+      "size": 1187,
+      "sha256": "21a5fb92d05241f26c26b4a9195d64e0402dbbda2efe3b038e1c1b2d7fee78c6"
+    },
+    "compiled-source-windows-adapter3/src/m4/ax_pthread.m4": {
+      "size": 22556,
+      "sha256": "4fa6c352f1fb33147947ead61f9b12537f3d146ce068c003552d3b9582a7a406"
+    },
+    "compiled-source-windows-adapter3/src/m4/compiler.m4": {
+      "size": 1563,
+      "sha256": "06f7a3b167202bbfd0cd59b07bc05f3837076fbee99458c3796c5a2f2ddb558e"
+    },
+    "compiled-source-windows-adapter3/src/make_a_release.sh": {
+      "size": 3364,
+      "sha256": "41bbcb4756bb62677492bb2eff87d35c50dd1327b9fd7838f4c862076b514ce1"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/MAKEDEV": {
+      "size": 784,
+      "sha256": "42b8a92cbcadb40e0d841db6f23e0f07a57bb8c132a27ccef0bfc6f6d195aa4d"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/Makemodule.am": {
+      "size": 2000,
+      "sha256": "7808a4cbe6f1f832985cadcfb257f5899cc2ee0e0a2c3dd4e33615f9d4f82fc5"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/doc_loadbios.c": {
+      "size": 3304,
+      "sha256": "bef526ff9d9cbbe39263833246968c9637abed15538d9feb4b53e8e556c099a2"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/docfdisk.c": {
+      "size": 8985,
+      "sha256": "a7735f992672186da058e5adfd1c4e7f0e612b93bab8d93bfc3c871b0f5bd4db"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/fectest.c": {
+      "size": 1982,
+      "sha256": "437a8365f1a0698f382132698811bb88f8c5e4f01be08ce38189d0aed3abc235"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/flash_erase.c": {
+      "size": 8725,
+      "sha256": "bd9ededaaab6aea8ab8b966836351aabfd65560122fcd5aa1cbfb6d57349c8fc"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/flash_eraseall": {
+      "size": 150,
+      "sha256": "db47914e84b9d017d3ee54e493d5f5d036b5b1fb805b09c7fe1dfd25a0f5d574"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/flash_lock.c": {
+      "size": 154,
+      "sha256": "4cd618a7913f23ecd772a61cd020ab173ead099b49a077cca61d20845d96cb0d"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/flash_otp_dump.c": {
+      "size": 1396,
+      "sha256": "46aae605f232e2f4da1d10d97f4d7b6624baf0115a1511cf2ff144cf7bd4af2c"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/flash_otp_erase.c": {
+      "size": 1258,
+      "sha256": "5456d8b0b9842145379187af3e3d21e648b28c8c2dce1849d21f228b02f1d357"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/flash_otp_info.c": {
+      "size": 1308,
+      "sha256": "bcb130ad8ceccfc898fedea222897f20e6a468a0959d1ac5d6898d80e3ee2c7d"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/flash_otp_lock.c": {
+      "size": 1535,
+      "sha256": "4918c48268281fdb8db5667a162604eb4dab8e6c44b8f9815ecd8cb3482cc96c"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/flash_otp_write.c": {
+      "size": 2457,
+      "sha256": "3d8e0c40cf051ca21c70e05c7a2f77f19a1f44ac3ba93c8a81ba44b172f71519"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/flash_unlock.c": {
+      "size": 5097,
+      "sha256": "fca7b445804969d775624164c2f047dec60f4f44036165d7f397b02c059d34ef"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/flashcp.c": {
+      "size": 15326,
+      "sha256": "d687d8b5e0a40ce0ac324e3a4132f17b2692cc8846efb2f8310a91691c9de19f"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/ftl_check.c": {
+      "size": 6481,
+      "sha256": "62f1c1edb23c3a79fc344cc6032bd0085c6dbbd73a74131e9b65a01a9e9ecf0e"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/ftl_format.c": {
+      "size": 9512,
+      "sha256": "9a61704ecf048c5a10bf7d2be64655df36581f4d3dc4963ae2f51eaa022a2865"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/lsmtd.8": {
+      "size": 3227,
+      "sha256": "af9e3901f8328db17faf7b7bc2bb53a45c7590cfc82cc65a4524a01491586a12"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/lsmtd.c": {
+      "size": 19066,
+      "sha256": "dd1ccc5f2d0c2c06355cfe703f373347492502a0d009a5de00f21f09a8d40fab"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/lsmtd.h": {
+      "size": 1160,
+      "sha256": "80c7bbbcffcb7848fe37fcbbdc0893946dc4a95e78e2b799ccc41709a57efebc"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/lsmtd_scan.c": {
+      "size": 5394,
+      "sha256": "4d4139c3398be2a688b97266aa6cac4254552a627c6dcc9a9d43cd886e8c51a8"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/mcast_image.h": {
+      "size": 369,
+      "sha256": "630b2607f700b20027a3954d875b40a7ca29cbd78517af443ae747c1ef8a669f"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/mtd_debug.c": {
+      "size": 9589,
+      "sha256": "422223708410f14e7f0b33323f4d1d8191e1d3aacf697f3430e4b0085dac3539"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/mtdpart.c": {
+      "size": 4783,
+      "sha256": "ba72304970fc6072efa66c250bb4aa2e4a7685f0920cc267e5bcedf53deae8ec"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/recv_image.c": {
+      "size": 14850,
+      "sha256": "b1c105045f9421f4ac41275850b607b031142199f0c900b439eb54c1a0073d60"
+    },
+    "compiled-source-windows-adapter3/src/misc-utils/serve_image.c": {
+      "size": 7866,
+      "sha256": "c1cbe9911a5cddb733ab319933e3096a23b68dcf97e4a67634496ccae2c306af"
+    },
+    "compiled-source-windows-adapter3/src/nand-utils/Makemodule.am": {
+      "size": 802,
+      "sha256": "fd9998ab2987a7f560d2418784baa127945792373cc7368854393f7ee0dc4181"
+    },
+    "compiled-source-windows-adapter3/src/nand-utils/load_nandsim.sh": {
+      "size": 3676,
+      "sha256": "a277b63c0d0f436abf02d3d6a0480627235a054b149f5cca657e5686370011e6"
+    },
+    "compiled-source-windows-adapter3/src/nand-utils/nanddump.c": {
+      "size": 15229,
+      "sha256": "ffc92bbaa4c8cc9a8fe1b231af0f08b8f927258864c800eab52e9a9f4ddb620f"
+    },
+    "compiled-source-windows-adapter3/src/nand-utils/nandflipbits.c": {
+      "size": 7327,
+      "sha256": "4de9ccc5abc983db7988dd4feb096d18a0f9ab369d2553159d874206d2fed8e6"
+    },
+    "compiled-source-windows-adapter3/src/nand-utils/nandtest.c": {
+      "size": 7689,
+      "sha256": "d46224e77de0ae3f6694850d72ab6db40e0fd755758713e17f32da9e62953d3b"
+    },
+    "compiled-source-windows-adapter3/src/nand-utils/nandwrite.c": {
+      "size": 16721,
+      "sha256": "26cc5c4bcd2a1c28a9e1ac59cf039fcc616443f0ba602a70168913bc0a9da0f8"
+    },
+    "compiled-source-windows-adapter3/src/nand-utils/nftl_format.c": {
+      "size": 13176,
+      "sha256": "caada2c9912daeee9c691cd56eec136e6f1f157a78fa8128f5418c21ffec11e9"
+    },
+    "compiled-source-windows-adapter3/src/nand-utils/nftldump.c": {
+      "size": 7768,
+      "sha256": "6ff11742c56b475d356ca5c33bd2e9f1ff5100a0379a28e8e21c2553a215fa1e"
+    },
+    "compiled-source-windows-adapter3/src/nor-utils/Makemodule.am": {
+      "size": 188,
+      "sha256": "6990ab765ce19b3a1f46713edaa4c5f2bc38f080824ed918bca6c0217a618087"
+    },
+    "compiled-source-windows-adapter3/src/nor-utils/rfddump.c": {
+      "size": 7305,
+      "sha256": "970869f4b98832ebb769c98ebe4bcc6bcbb2c400c45e1d83364de6917bae5082"
+    },
+    "compiled-source-windows-adapter3/src/nor-utils/rfdformat.c": {
+      "size": 3432,
+      "sha256": "62b290814451a3b2355a41272d7b75653d83a907ff92aeba3143348f849cca85"
+    },
+    "compiled-source-windows-adapter3/src/tests/checkfs/.gitignore": {
+      "size": 20,
+      "sha256": "1c3534e28cb15ba1f6441ea1e65b73473a5a9b2d1efe451e6f5ed7ee6902f9b4"
+    },
+    "compiled-source-windows-adapter3/src/tests/checkfs/Makemodule.am": {
+      "size": 294,
+      "sha256": "8da55f75c8ffe1ceca72f0ac4105b86725e246642ca4eb742870d51067ab1441"
+    },
+    "compiled-source-windows-adapter3/src/tests/checkfs/README": {
+      "size": 6985,
+      "sha256": "1aeb811fe4665288964f2e10b65ea48f3be2081a8abc0bbd4f182589dd86ee36"
+    },
+    "compiled-source-windows-adapter3/src/tests/checkfs/checkfs.c": {
+      "size": 21762,
+      "sha256": "4ed49216b241a2e46be25a9e42a8e28ac7c1cb85485a96ad9d3872e8932b0de2"
+    },
+    "compiled-source-windows-adapter3/src/tests/checkfs/comm.c": {
+      "size": 1184,
+      "sha256": "f58c9e01cf5212c8eb6ce96f2588268ad846974398fe9a150a13327cf41372ad"
+    },
+    "compiled-source-windows-adapter3/src/tests/checkfs/common.h": {
+      "size": 216,
+      "sha256": "7e4b4d4f6f3acefd2cc38a9dc2ce7918a398b38269d3147602df8c924fe507bf"
+    },
+    "compiled-source-windows-adapter3/src/tests/checkfs/makefiles.c": {
+      "size": 8569,
+      "sha256": "fb67bb807bf3e99983684a2fe7d47db265b6b570ed9d2055d2d4ba196517ad7f"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/Makemodule.am": {
+      "size": 3577,
+      "sha256": "edac7501f4bb060fd11a7dd78a2e55e4baf28462a6de4b70f700fa9da7edb3db"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/fs_help_all.sh.in": {
+      "size": 1424,
+      "sha256": "9d0cab446592000afe60bdac4c82ba14685db7fb0ecc1fe8c5b56d9d7bd1b273"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/fs_run_all.sh.in": {
+      "size": 729,
+      "sha256": "c04ff16027402f4b2bf5029aacaf2e8c4b65b95c659101397d69873220beb188"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/integrity/.gitignore": {
+      "size": 9,
+      "sha256": "2cb0da80dbc7eca115313fed7edb6d5bda47487d645aa068224b667b0427ebc3"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/integrity/integck.c": {
+      "size": 79147,
+      "sha256": "e25755a33dd849f1c3502bb2f15a57493356a85e773a30f889971b1668781775"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/lib/tests.c": {
+      "size": 30439,
+      "sha256": "800cd1bdf630da16a169f1dbc6cfe30418a321f16ff5da83a80e64465fb16a00"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/lib/tests.h": {
+      "size": 7346,
+      "sha256": "4a3717fe427785bf964bd66df8585d30be6ab51e1d2d5053cf76e33243555682"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/simple/.gitignore": {
+      "size": 36,
+      "sha256": "d6699b616dffee491d003897fe88915708550cf81b5d292e01d845888c643568"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/simple/ftrunc.c": {
+      "size": 2695,
+      "sha256": "26cddaf52bfa38a88ef702171581b61a6c966ef34b3ece73d52cc58e18b9de11"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/simple/orph.c": {
+      "size": 4654,
+      "sha256": "419fbf18c5af701e7fd0a216f3305ef37a451470c93fd33781eb17fad1e3294d"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/simple/perf.c": {
+      "size": 5130,
+      "sha256": "94c186459d8ce274cca671cca6a28efada192a006568ec6ec588bf7c4251503d"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/simple/test_1.c": {
+      "size": 4391,
+      "sha256": "a640d4fc3ba9494731d2f9795dd65cc75bd262f70a6f2c44fd11a9d227d74cd2"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/simple/test_2.c": {
+      "size": 6377,
+      "sha256": "7bb445dfef4aa199c5a1d4bb45b21e3bb45780dff0cc8a1f0ac9d43f680934a9"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/atoms/.gitignore": {
+      "size": 99,
+      "sha256": "9fa1806365fa71ac7c882932f7875e78cce43cbe2916f1854642146109efa261"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/atoms/fwrite00.c": {
+      "size": 5860,
+      "sha256": "e1e0a18955656792bd7ff8d8810131f14d046a7e903c051afc2c038f36c1d70f"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/atoms/gcd_hupper.c": {
+      "size": 5388,
+      "sha256": "92194581d1c81cd1cc1217bfa868ffc550aca00277127f8ccbb46af2b8cb3883"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/atoms/pdfrun.c": {
+      "size": 3674,
+      "sha256": "c3c84f6ed9b5080e72309b84113570b0d32ce217c7daf1de325b46267c11620b"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/atoms/rmdir00.c": {
+      "size": 3713,
+      "sha256": "4cfdb3f68f5af158b0cd96573b6be181e6fe16f2a2b677900125287550cf825b"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/atoms/rndrm00.c": {
+      "size": 4350,
+      "sha256": "d4de194f10e77a17d8ff7f56abe6d7e81ed31fdfae81bc2c18efa006bf07e013"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/atoms/rndrm99.c": {
+      "size": 10393,
+      "sha256": "7d945f817b202229eade68a99b7d394cd4988ef8c5e3c5cf1bcff05c8595d00c"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/atoms/rndwrite00.c": {
+      "size": 5303,
+      "sha256": "d19a08c92e33a712873665425def56f05cc6904e0f1c2de5b6badbf5c9221f47"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/atoms/stress_1.c": {
+      "size": 2676,
+      "sha256": "5defafdb7085e728569916ec8c889b087ed8dbc2c34073c6b58dfdc7545c4c88"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/atoms/stress_2.c": {
+      "size": 3038,
+      "sha256": "e468c5f9e173344a3dd6709d4d808ea40de4767aa2e488fdfb3debcd90965a81"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/atoms/stress_3.c": {
+      "size": 3150,
+      "sha256": "af51ffa1afe6e1681aca34de87d28dfb2daadd6bdf6929c8011742c529567e11"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/fs_stress00.sh.in": {
+      "size": 1179,
+      "sha256": "c19649f49010f137fb0e5528d91d21b194c6d71dba9fd6a15bd0ae9db0dd5cf6"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/stress/fs_stress01.sh.in": {
+      "size": 693,
+      "sha256": "3f089792ef5c2bdd06b729260711fd70c3ffe6e8f65a5b1312ff55062b1f5d3c"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/utils/.gitignore": {
+      "size": 28,
+      "sha256": "cb7c1eb3861f8bede91c32319d9e28e74924a3a26bcbde435bde39f9ebc43ffa"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/utils/free_space.c": {
+      "size": 1519,
+      "sha256": "09ba44b04a81c4980ab1f867a5a434aa58b537f3a605921b6caa05d2113e2d58"
+    },
+    "compiled-source-windows-adapter3/src/tests/fs-tests/utils/fstest_monitor.c": {
+      "size": 5374,
+      "sha256": "62f0712b0aea9e4a596b1bb7b1eabd556aff947e037bffb5c90e00de1f17bc30"
+    },
+    "compiled-source-windows-adapter3/src/tests/jittertest/.gitignore": {
+      "size": 30,
+      "sha256": "781b0adcc10b0c80ecd1803d30412fcad49771e57e4801a44630b42422bcc835"
+    },
+    "compiled-source-windows-adapter3/src/tests/jittertest/JitterTest.c": {
+      "size": 34773,
+      "sha256": "bebd1ab657b6df494e0db8090722517fc8089f7191bb538876c0175c4283763f"
+    },
+    "compiled-source-windows-adapter3/src/tests/jittertest/Makemodule.am": {
+      "size": 357,
+      "sha256": "868b43ceddd61ee0c9fa743955078c9a57d4dbbdf1ae46819b7fea8b8bf909c1"
+    },
+    "compiled-source-windows-adapter3/src/tests/jittertest/README": {
+      "size": 6727,
+      "sha256": "44594628c2a81bf8cff81ff3847e8a28e48201b7e2c212edc3c8efb9f9e5f6dc"
+    },
+    "compiled-source-windows-adapter3/src/tests/jittertest/filljffs2.sh": {
+      "size": 249,
+      "sha256": "79760f63d47e5b45cebadab5e7d6450c88dd8ab9a1509c6fd75c31800414962a"
+    },
+    "compiled-source-windows-adapter3/src/tests/jittertest/plotJittervsFill.c": {
+      "size": 10236,
+      "sha256": "b6c8811d4df62ed80048a5178e82b962aa762c117f4b86468892d8a8a591c92e"
+    },
+    "compiled-source-windows-adapter3/src/tests/mtd-tests/Makemodule.am": {
+      "size": 1100,
+      "sha256": "d3246294e115eccd38177e87d1ab85a33f71339f44ce802bc60411367957ac0f"
+    },
+    "compiled-source-windows-adapter3/src/tests/mtd-tests/flash_readtest.c": {
+      "size": 6376,
+      "sha256": "04190c6be8ad91e7ba2800e358998715d7b3b2c6cffc2bc9b0c8006a84def9b0"
+    },
+    "compiled-source-windows-adapter3/src/tests/mtd-tests/flash_speed.c": {
+      "size": 14223,
+      "sha256": "5e200ca12172a85b223c3b4deb0d5b6c9dfc81e2767a55a485e1eb40c0852f3d"
+    },
+    "compiled-source-windows-adapter3/src/tests/mtd-tests/flash_stress.c": {
+      "size": 6285,
+      "sha256": "188f2329b9502eb53cee072ef55a1cf2cdd70bb4b8842dfbdaa97e78dc934545"
+    },
+    "compiled-source-windows-adapter3/src/tests/mtd-tests/flash_torture.c": {
+      "size": 6100,
+      "sha256": "2eee8cc7d6b0eec10423f64386d79d6b267fcd9cc61a8fd40c3964207cd9f82f"
+    },
+    "compiled-source-windows-adapter3/src/tests/mtd-tests/nandbiterrs.c": {
+      "size": 12881,
+      "sha256": "0838b67e870ff8f9a7cdd0bd2e0e5a2faca8aafa8eda22effe6a17328b6caa69"
+    },
+    "compiled-source-windows-adapter3/src/tests/mtd-tests/nandpagetest.c": {
+      "size": 14116,
+      "sha256": "5f9e33972c23753e7532252ce0786bf80f5c7f633dff2d5f1961235b222f9c2c"
+    },
+    "compiled-source-windows-adapter3/src/tests/mtd-tests/nandsubpagetest.c": {
+      "size": 10731,
+      "sha256": "192d7862ae89c4671b033a1feccd0c2fd9c459806db25267c196f9b042f17785"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/.gitignore": {
+      "size": 102,
+      "sha256": "31330c58a386cb83268f9b08beab2ef75f0c961b2bdfc5a153e1910f95d36d24"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/Makemodule.am": {
+      "size": 2541,
+      "sha256": "241c671d5db09c520d88767e1fcbe1a82784da2f2c83d4254dc08f1120f0ef9c"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/helpers.c": {
+      "size": 8943,
+      "sha256": "e717228749bd6dde21348d9c1956ed2974f5c64703aceb8addcd4b2ba0699a40"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/helpers.h": {
+      "size": 4483,
+      "sha256": "743c91b72ebd1735ca5727fa41735c2b158ebd56efaaf8cf6165fb6ce2d27f05"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/integ.c": {
+      "size": 19247,
+      "sha256": "215f65fd662e6f14ca0eef76e6ae517c562171b63ebb7be1c9de825cac5a47d2"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/io_basic.c": {
+      "size": 4330,
+      "sha256": "252ccd3fb787437437e6116784d62a4306c98b1ba47e9dbd7600344c8e3fe94d"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/io_paral.c": {
+      "size": 7842,
+      "sha256": "1c299e80db8e214395c2298f300c389d53f27aabb1d9fb3b5f52b04ad2d6d344"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/io_read.c": {
+      "size": 9051,
+      "sha256": "918d733c3e878e80cdbd72aba62144f8a7e39f95999425ff115f620824fad1f0"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/io_update.c": {
+      "size": 7437,
+      "sha256": "d200d0b17fd507d11c099cee354b36d54f45ffed0ccfa36ce4126bb7e1c90d8a"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/mkvol_bad.c": {
+      "size": 7443,
+      "sha256": "080b0acfe85925302a5e4df1d3053cee66b279e0cd3121fe8a5c266b600657b1"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/mkvol_basic.c": {
+      "size": 5557,
+      "sha256": "909da98d5d97caaf9640a766664cfdbbc18ff45831eef7b52a9337a282e0fdea"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/mkvol_paral.c": {
+      "size": 2529,
+      "sha256": "2e495db7ca3512ff56428df5ca78416d388d113311ad6dc490fad7f877fc150a"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/rsvol.c": {
+      "size": 6698,
+      "sha256": "27942b37505b298ee27bede17b6c8f9eced5212f12837d1eef26fde98dfb7828"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/runubitests.sh.in": {
+      "size": 586,
+      "sha256": "47d626d076d50b2dc6576d3be7ecaafb5bdd1d6988d37fdb8d7c98a7ab48899e"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/ubi-stress-test.sh.in": {
+      "size": 5793,
+      "sha256": "4eb8dfc4b8dce8eef88a325ac7cf2f0be7a5cb6a5ef6ec9d96b765b500ae110c"
+    },
+    "compiled-source-windows-adapter3/src/tests/ubi-tests/volrefcnt.c": {
+      "size": 3067,
+      "sha256": "7f74951a1cd53ceef51232945e1ecc4cebb4421446827530f91c222b11f115b4"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/Makemodule.am": {
+      "size": 998,
+      "sha256": "9b42e3d82fe2111b61b115c85e335567085f780a35a78cfbabd07409b82608f3"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/libmtd_test.c": {
+      "size": 12941,
+      "sha256": "78244ca224e2cbd3ecdff12c431497c4cc2e9e6d59cbae7325309200e1e51b4e"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/libubi_test.c": {
+      "size": 6877,
+      "sha256": "dbd60876be5d640b89d3355a15748f5ff7d23ca0a7fb171a29b1f447dcacd215"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/misc/ubi_ctrl/dev": {
+      "size": 6,
+      "sha256": "8120df5c8f62657d17d76c31d14103e60d5c59fe12ad14a481f53543b31afba0"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/mtd/mtd0/dev": {
+      "size": 5,
+      "sha256": "498ec21e1be9bb6701eb33e576cb6c97332bcf8636e2af8e0f5aa82b337db28e"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/mtd/mtd0/erasesize": {
+      "size": 5,
+      "sha256": "177c3e8cb33623be46f2c6c109d2f79c5af10938c21dabc1e8d17b85002fe432"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/mtd/mtd0/flags": {
+      "size": 10,
+      "sha256": "8ecc14b5cc54ab71e6a55cc65e81fd57b6cebbeec888fdb82fd9544805eda38e"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/mtd/mtd0/name": {
+      "size": 5,
+      "sha256": "5ab294726d8484faa8c29b9f5601de928eb2511034e3cee7cbd6f0e967a36ea3"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/mtd/mtd0/numeraseregions": {
+      "size": 3,
+      "sha256": "a1fb50e6c86fae1679ef3351296fd6713411a08cf8dd1790a4fd05fae8688164"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/mtd/mtd0/oobavail": {
+      "size": 2,
+      "sha256": "aa67a169b0bba217aa0aa88a65346920c84c42447c36ba5f7ea65f422c1fe5d8"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/mtd/mtd0/oobsize": {
+      "size": 4,
+      "sha256": "56292515f7d3a7110811eb8de26b3f75f82a0766aa5a1fd66ebcfcb84fe6d5ff"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/mtd/mtd0/size": {
+      "size": 9,
+      "sha256": "1c717f8a059be27832853ed4d506f3c7ab305023703aefda2b2272606e13ee01"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/mtd/mtd0/subpagesize": {
+      "size": 3,
+      "sha256": "913f5d1da2feaf4deeccc9e55cbb350a20f12b3f507e87be85dbb77fdd3cb9bc"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/mtd/mtd0/writesize": {
+      "size": 4,
+      "sha256": "56292515f7d3a7110811eb8de26b3f75f82a0766aa5a1fd66ebcfcb84fe6d5ff"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/ubi/ubi0": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/sysfs_mock/class/ubi/version": {
+      "size": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "compiled-source-windows-adapter3/src/tests/unittests/test_lib.h": {
+      "size": 3142,
+      "sha256": "66c636c2c4043cb5d09fe955a44b2d1f0c26fef648d26a8fee093ad369f1e1fd"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/.gitignore": {
+      "size": 134,
+      "sha256": "c94912d3f6ec02366b5f6079fb9a77c44270e9745480c5d8621fd07d31e22680"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/Makemodule.am": {
+      "size": 1522,
+      "sha256": "32c7c30255d14f031f8e37d2b75ea50859da8bda4f96558b0f2a6ba6d24c4450"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/mtdinfo.c": {
+      "size": 11330,
+      "sha256": "388ea01cea47d70e0dcd2159a9ce6e9a5e208454d93fd01094e10d2234d3580c"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubiattach.c": {
+      "size": 8616,
+      "sha256": "e84089f7b40a38bb0710e51f1c4d4e9f991575842af354a7ebdd9929f24fd40a"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubiblock.c": {
+      "size": 4198,
+      "sha256": "02ed2a580b5dad0599bb7a2f6f9875c81111bd0774768ce531ed3ab710cb5e09"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubicrc32.c": {
+      "size": 2796,
+      "sha256": "6d62ed093273180960f23e24208ccd79a39ceea9226c44ddc079a63aa6605c22"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubidetach.c": {
+      "size": 5446,
+      "sha256": "5ca371f36a9360a2c92539bea9693e6fd21a9361668af31857401cf16845be3e"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubiformat.c": {
+      "size": 23969,
+      "sha256": "b3358c48bbe77e3cc420615ae0c4fedad726bfd944240ac57a18896c623445fc"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubihealthd.c": {
+      "size": 5126,
+      "sha256": "a6105d3e2174c10739764c865fed21271bc49e75c658000c28162d9870fcee05"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubimkvol.c": {
+      "size": 8767,
+      "sha256": "31497f088e1e6816330cf8cffac70f46fdb0716c2a89ea6b7d968dc0574b2ce0"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubinfo.c": {
+      "size": 11785,
+      "sha256": "5bbb56bbc2cb0f503dcaf3ba8d20950e8f74557fdce96ac41d18b8c8a943d52b"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubinize.8": {
+      "size": 4900,
+      "sha256": "8a6c1bf0fdb9e268dbd4d8eeb6a0f40bd10f005b1f81af7264394aee7cc95df7"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubinize.c": {
+      "size": 18225,
+      "sha256": "fdf55ce724250f55afd8cf7f2095bb7117876f6593ec2eff3f3931ccca3e816b"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubirename.c": {
+      "size": 4160,
+      "sha256": "ecd71247f629f95bea5568ddb40316ef3a70761afa99b7c5314f0350aedf0110"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubirmvol.c": {
+      "size": 5178,
+      "sha256": "a4f9b3f5c0f6c5027f821c9085339bc92f3693a3ba7d1abe10001512009b10b7"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubirsvol.c": {
+      "size": 6351,
+      "sha256": "44384a27656ea7e384a90492456ac8fcb061f693b345e46902dd306d68ca2a6e"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubiscan.c": {
+      "size": 8892,
+      "sha256": "8854f3dfd366b64a77c817dce4bcd433cfbf429f63bea270552a56fa9435ce8e"
+    },
+    "compiled-source-windows-adapter3/src/ubi-utils/ubiupdatevol.c": {
+      "size": 8023,
+      "sha256": "09c7fe339e0630fb29afd5c35a5f2dd3e4f4239b1b5e5b81dbe93e576220e171"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/Makemodule.am": {
+      "size": 1413,
+      "sha256": "74435ed3d578b5ce7bbcd6591a768f41ec35e7c384799c4a4494d04ce7391196"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/.gitignore": {
+      "size": 12,
+      "sha256": "c8b3489b49b530a3696820f85c8a734b6b9226e5d01e23fa57a1758eff60c7ea"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/README": {
+      "size": 544,
+      "sha256": "b264389329b5f7144f29ec2ceaabe2796c857550952ba4f14669e64e26e423b5"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/compr.c": {
+      "size": 5652,
+      "sha256": "f9056f4f315991462dabaa2c205b823b59a82b8df92a2353ff9decbbc80db4fa"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/compr.h": {
+      "size": 1461,
+      "sha256": "3a6f5dc8e064afaa4ce2533de9dc66a27fdc6ec41e3363c2b00b00dee932df02"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/crc16.c": {
+      "size": 2618,
+      "sha256": "4dc047c4eace3ed9eeeccc5d32cfeac5ef28b212fe133fe445eaea690ed7b970"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/crc16.h": {
+      "size": 599,
+      "sha256": "ffc8159dcee97a917b97eb38e13d0dbd06bcc8ddb20313406b845b17bfd358a2"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/crypto.c": {
+      "size": 8765,
+      "sha256": "e357bf8ac4c08621c185e6e7ae1485b163282924a0d2de80894822defc975427"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/crypto.h": {
+      "size": 1757,
+      "sha256": "8d2354287767e534308be3117f0e22ae7b1e875b2f72d0045ef556f13c5233af"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/defs.h": {
+      "size": 1647,
+      "sha256": "7ebb4a4f4ba83b84d072e38007218fead1f739eaf41bb83fd8989e5b914695a9"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/devtable.c": {
+      "size": 14864,
+      "sha256": "f325e3e29e1b9439ce8b35ae5afeef0a484c78aa35aeddbcce88abea950a6444"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/fscrypt.c": {
+      "size": 7098,
+      "sha256": "12a4afc688e4ae59fc457001e1b5ffded3e8933b97e89765c0ce9142cfbc44de"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/fscrypt.h": {
+      "size": 4390,
+      "sha256": "c1702ff1633f598c68d102c8659238c69d406b470b3423ba1d7146352eda4ffa"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/hashtable/hashtable.c": {
+      "size": 9064,
+      "sha256": "f6668cadd1cae3a7feb2996feec4d629c0759abfe602d2862abe8799d32b56d6"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/hashtable/hashtable.h": {
+      "size": 7374,
+      "sha256": "ff25ec679ab119ffb3b4180a236854b3c9ebcce6828283a763211bab0f02eaa1"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/hashtable/hashtable_itr.c": {
+      "size": 5386,
+      "sha256": "938957dc66ba28331b6e035f00b4c1eead700319a8e1e2a50fb2947302f9b3ff"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/hashtable/hashtable_itr.h": {
+      "size": 4086,
+      "sha256": "a75306c564951145d1b33d1c6ceb25bbe490afaadf99aa07c573a71ea4461642"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/hashtable/hashtable_private.h": {
+      "size": 2955,
+      "sha256": "647a26f48c726ca47740743b1ef56c9d62d82f848c2864296e12877518038078"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/inventory.c": {
+      "size": 10489,
+      "sha256": "a6fdb524b7b04ad02473224088e14dfa15e78691f71ec421481a75cebc9874b6"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/inventory.h": {
+      "size": 470,
+      "sha256": "037875358d0e5fa69ce6b2b5e1abe9daff8fd69fc006edd77dfbb02ce22f4ec5"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/key.h": {
+      "size": 5823,
+      "sha256": "773b0162c0ed2b24dccf62bb4e450306a1de844e2d58ecfd379cae658c54c8fe"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/lpt.c": {
+      "size": 15946,
+      "sha256": "e1872077a90248166257424d8193a5656bb7122fac1b64957290c8d506bfe4fe"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/lpt.h": {
+      "size": 980,
+      "sha256": "db549fa4db561457bfcb2c0a3c5dd4e47ab9dbfe43537e0b3a1605fa0271e722"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/main.c": {
+      "size": 1887,
+      "sha256": "695afd6856e8aa79769ff8e351b2395510a4455242782be9fcb234d355ee1a95"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/mkfs.ubifs.c": {
+      "size": 81212,
+      "sha256": "2f2a81054d0182a5758191b73916919509b837a034d2bbc7a59166fbf824676b"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/mkfs.ubifs.h": {
+      "size": 4654,
+      "sha256": "a582b543ec76c09afd95138eacf5f590646fedb86c1120f6d26d7ee2fa44d00f"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/sign.c": {
+      "size": 8825,
+      "sha256": "2fef8a3d6b07f97f67b3d3be639f771e7d4213d3f74975f93e412b47aec8ce5e"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/sign.h": {
+      "size": 2035,
+      "sha256": "3d1450dd9bb4160689b9d160d5a7876e37b61b6c894641f794fa591f67069ddf"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mkfs.ubifs/ubifs.h": {
+      "size": 12736,
+      "sha256": "610a90a227b27e3c22c2ab7f12e947dd2355f1361d09c41bfc9d0ee331398af3"
+    },
+    "compiled-source-windows-adapter3/src/ubifs-utils/mount.ubifs": {
+      "size": 1801,
+      "sha256": "175df527fa9406e1dc8784d34112dc624ce7e2bd6eee70dfd75ddc2cecb967c4"
+    },
+    "firmware/native_ubifs/Build-Windows.ps1": {
+      "size": 3725,
+      "sha256": "7b5edffaa7efac44d53aa475841389821fd5de86471323c4fd310af8f5a150ba"
+    },
+    "firmware/native_ubifs/LICENSE.GPL-2.0.txt": {
+      "size": 18007,
+      "sha256": "dcc100d4161cc0b7177545ab6e47216f84857cda3843847c792a25289852dcaa"
+    },
+    "firmware/native_ubifs/README.md": {
+      "size": 6238,
+      "sha256": "1b83ce4a8fd5e8fc009a349ff1464a3857fbc12181634c4b4e689ffd6bc48594"
+    },
+    "firmware/native_ubifs/Test-HelperRegression-Windows.ps1": {
+      "size": 1106,
+      "sha256": "c4291eaef135f5c63b959c7e70c43745e08a068ee399bbc880887b8eb6861307"
+    },
+    "firmware/native_ubifs/Test-Windows.ps1": {
+      "size": 1680,
+      "sha256": "d394d4d78a1faddf2de1bddd9f0866de2676ca086a13521557e8ecd21701aa50"
+    },
+    "firmware/native_ubifs/UPSTREAM.json": {
+      "size": 994,
+      "sha256": "787c062dced765274938fe734231243508756ee036253d216e604f1cfe96da01"
+    },
+    "firmware/native_ubifs/build.py": {
+      "size": 4363,
+      "sha256": "299fd15b4f0fba12f76e2528e9c745359b2288d2b79db01b34fc9c81e5133810"
+    },
+    "firmware/native_ubifs/compat/asm/byteorder.h": {
+      "size": 69,
+      "sha256": "6cfc80ea76999fbec62886f8c08c46197bdf326384bedc31447948ecbf114e6f"
+    },
+    "firmware/native_ubifs/compat/byteswap.h": {
+      "size": 149,
+      "sha256": "3e442d79a68f9dfb83027c36e16e428c29d049f04fcbdb2b241e84e956bcfe2e"
+    },
+    "firmware/native_ubifs/compat/endian.h": {
+      "size": 191,
+      "sha256": "5545b6b584f310de1759b34db3d2c7242496e608ce322c09772fc0ae3d21519b"
+    },
+    "firmware/native_ubifs/compat/features.h": {
+      "size": 44,
+      "sha256": "9f0f7fc0a8752c836657ced6839b0b070a9be48d11062fcf85ccfd261f37881e"
+    },
+    "firmware/native_ubifs/compat/linux/fs.h": {
+      "size": 297,
+      "sha256": "13d5dc794a3a98b2038e19ad6b8deb081d1ba4afa93bc6a87c0a5fdd4cb83a02"
+    },
+    "firmware/native_ubifs/compat/linux/types.h": {
+      "size": 435,
+      "sha256": "c9cfb5a3d06c090270a26492f3e16cc34f2f465bc99567c1aa8711bc7c5c6b97"
+    },
+    "firmware/native_ubifs/compat/sys/ioctl.h": {
+      "size": 294,
+      "sha256": "71505ae376657650ae5edecee88514a5b2ef1890563747d6796f449e851289d2"
+    },
+    "firmware/native_ubifs/compat/sys/sysmacros.h": {
+      "size": 142,
+      "sha256": "884b68c6927f86475f8bbd70331be701eada5c39e212ccf70eb5636726d9f35c"
+    },
+    "firmware/native_ubifs/compat/uuid.h": {
+      "size": 494,
+      "sha256": "09eedab0be69d6b31db6a8e878bcc9f6c2f0b4be71b5ba99cc5ac8f4fe21b311"
+    },
+    "firmware/native_ubifs/inventory.c": {
+      "size": 10483,
+      "sha256": "672abe85a350b476697c2b31c238bd6cd458c60e010eacc284242aedf670f5d6"
+    },
+    "firmware/native_ubifs/inventory.h": {
+      "size": 470,
+      "sha256": "037875358d0e5fa69ce6b2b5e1abe9daff8fd69fc006edd77dfbb02ce22f4ec5"
+    },
+    "firmware/native_ubifs/main.c": {
+      "size": 1887,
+      "sha256": "695afd6856e8aa79769ff8e351b2395510a4455242782be9fcb234d355ee1a95"
+    },
+    "firmware/native_ubifs/notices/GCC-RUNTIME-EXCEPTION.txt": {
+      "size": 3324,
+      "sha256": "9d6b43ce4d8de0c878bf16b54d8e7a10d9bd42b75178153e3af6a815bdc90f74"
+    },
+    "firmware/native_ubifs/notices/GPL-3.0.txt": {
+      "size": 35147,
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903"
+    },
+    "firmware/native_ubifs/notices/ZLIB-LICENSE.txt": {
+      "size": 1002,
+      "sha256": "845efc77857d485d91fb3e0b884aaa929368c717ae8186b66fe1ed2495753243"
+    },
+    "firmware/native_ubifs/portable.h": {
+      "size": 4437,
+      "sha256": "35e5c141f9d0dce70367299a6462501a28b492020ecae39b1a97af4c093f6bdf"
+    },
+    "firmware/native_ubifs/test_helper.py": {
+      "size": 3138,
+      "sha256": "a3fe6c5a7e39620addc5d62ca22c556037ebd5f76da241903d36c5060086dfd3"
+    },
+    "firmware/native_ubifs/upstream/.gitignore": {
+      "size": 1806,
+      "sha256": "559112aaf0c6c439f3c9ab84b901ac7edf0235b1279ceca20392a466ed5e6686"
+    },
+    "firmware/native_ubifs/upstream/CHANGELOG.md": {
+      "size": 39833,
+      "sha256": "19cab85b4022db12c57ebf1ebd9f0034bf1a0147fc84cab7c4d6d8f322023080"
+    },
+    "firmware/native_ubifs/upstream/COPYING": {
+      "size": 18007,
+      "sha256": "dcc100d4161cc0b7177545ab6e47216f84857cda3843847c792a25289852dcaa"
+    },
+    "firmware/native_ubifs/upstream/Makefile.am": {
+      "size": 1225,
+      "sha256": "28a98d4ddca9361b0f7e3e1ed1e6f256b7c782b1ab73f7b989bac201b78636ab"
+    },
+    "firmware/native_ubifs/upstream/README.txt": {
+      "size": 5424,
+      "sha256": "1675049ec753cc22a760285dcaf0c3d6c4829bdae012a8e47a22455800cbca27"
+    },
+    "firmware/native_ubifs/upstream/autogen.sh": {
+      "size": 50,
+      "sha256": "76266b7f1705d00c1023995c2ac87866c00b450a6348b6854e24af3d71fe3366"
+    },
+    "firmware/native_ubifs/upstream/configure.ac": {
+      "size": 9510,
+      "sha256": "a926c67d2448bb294a1e7a2dd782cd964115a334d5d25374c3a2398f44f7a00b"
+    },
+    "firmware/native_ubifs/upstream/include/common.h": {
+      "size": 8022,
+      "sha256": "a46ade4238dc5a1c559715b7f44af9dad49682f09c924af15c959ff1e49870b0"
+    },
+    "firmware/native_ubifs/upstream/include/crc32.h": {
+      "size": 294,
+      "sha256": "971f38988b9271c6a61c6d4981c56271e94dd1664b2eec8948a8acd6d65ed2da"
+    },
+    "firmware/native_ubifs/upstream/include/dictionary.h": {
+      "size": 6589,
+      "sha256": "e2ce774bdb8e29869f1cf66bef5a85e30021ed06ac17792e2941d526f144c7a8"
+    },
+    "firmware/native_ubifs/upstream/include/libfec.h": {
+      "size": 1226,
+      "sha256": "19c8fd9c990e55eef2219c7852c86ea74082050aebcda29fb4c50ae2227ffa34"
+    },
+    "firmware/native_ubifs/upstream/include/libiniparser.h": {
+      "size": 9645,
+      "sha256": "b825901ef4bcb6ee6b99c6ef82b7d2d032f0474c94d7a710429fe7ae6d4718f0"
+    },
+    "firmware/native_ubifs/upstream/include/libmissing.h": {
+      "size": 318,
+      "sha256": "81cf2d7fee4e86a34aa0513167fc7600018403f031a556e88dbf9889647012b1"
+    },
+    "firmware/native_ubifs/upstream/include/libmtd.h": {
+      "size": 12459,
+      "sha256": "de5c754074b585681260060902cc7b7820530ea3cb7f89e7733b58195261be31"
+    },
+    "firmware/native_ubifs/upstream/include/libscan.h": {
+      "size": 3157,
+      "sha256": "8615a2d5768e14ffb2a1af6a98b953c55d409e889788c41bfd692a60ca2bf462"
+    },
+    "firmware/native_ubifs/upstream/include/libubi.h": {
+      "size": 16769,
+      "sha256": "b76ee8cdc995b689cb600c1029cf1e43f6331985879b55436a4d1c42943a68ca"
+    },
+    "firmware/native_ubifs/upstream/include/libubigen.h": {
+      "size": 6104,
+      "sha256": "c444d7b6726516b02542611d12cabf4e3485a1042ac9263f21b1304eec2b0f2c"
+    },
+    "firmware/native_ubifs/upstream/include/linux/jffs2.h": {
+      "size": 7033,
+      "sha256": "c6e4183627eaed4d09bfcb9fac61addb43308fe3d515299ef3decc223025bb37"
+    },
+    "firmware/native_ubifs/upstream/include/mtd/ftl-user.h": {
+      "size": 2646,
+      "sha256": "229e21ed1c0b716e590ee3eedade49720cf7f869309c001dc1c93ca3079e442f"
+    },
+    "firmware/native_ubifs/upstream/include/mtd/inftl-user.h": {
+      "size": 1672,
+      "sha256": "f79a9307062b953b770c0263d00e996a0328ee22c686ec170f98d7788223c3b1"
+    },
+    "firmware/native_ubifs/upstream/include/mtd/jffs2-user.h": {
+      "size": 2371,
+      "sha256": "e8de63e1661a4da34b75672a45879c38a9498be00482b9aca091985c9818d972"
+    },
+    "firmware/native_ubifs/upstream/include/mtd/mtd-abi.h": {
+      "size": 9581,
+      "sha256": "6cc5771f746bbba0ebeb06c59a229d7504b9d09e8c6c96fc157c674d903979fd"
+    },
+    "firmware/native_ubifs/upstream/include/mtd/mtd-user.h": {
+      "size": 1199,
+      "sha256": "66162a5bf2811a63ef2a88a09e85cc3c2c6ab992bc29a69e892de23eabfad834"
+    },
+    "firmware/native_ubifs/upstream/include/mtd/nftl-user.h": {
+      "size": 1401,
+      "sha256": "549fd80036700ca23a1c940b67fe973936b63a78d6414e24d107caa31790adfb"
+    },
+    "firmware/native_ubifs/upstream/include/mtd/ubi-media.h": {
+      "size": 17221,
+      "sha256": "0dc9c8e28ed3ee72c8cad0450fcc489b43abb61bd4604f2bc3a51741bdd73d50"
+    },
+    "firmware/native_ubifs/upstream/include/mtd/ubi-user.h": {
+      "size": 18160,
+      "sha256": "92fb16ca37a35b33ba701cc5dc53a78655c6f502545293ce76089f4fd011eab5"
+    },
+    "firmware/native_ubifs/upstream/include/mtd/ubifs-media.h": {
+      "size": 26272,
+      "sha256": "7916295374c4583f7240926f40ea2a841bdcc121a41f82b117286bfd0eb9d16b"
+    },
+    "firmware/native_ubifs/upstream/include/mtd_swab.h": {
+      "size": 1903,
+      "sha256": "5b8eac28d42c11a5e377412fa720a2257e76e3a80c1acc6f119cbb4ea882e7c1"
+    },
+    "firmware/native_ubifs/upstream/include/xalloc.h": {
+      "size": 2469,
+      "sha256": "b1351c167211c92687dbe02aa02722d428dff033e4bb284dd6e388d268073524"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/Makemodule.am": {
+      "size": 1232,
+      "sha256": "1a7875cb28da119daf00e8076a8a91df4d1a791a728d12a55444dc1c74f8fa92"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/compr.c": {
+      "size": 14688,
+      "sha256": "cbd79ad1e5a9240ae2dedd693804c5e0108569c5ea9313633be1eeea15427a88"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/compr.h": {
+      "size": 3276,
+      "sha256": "2da46d8131087c678caf4b67675d11fc16b5214902d35f8e6570e667aee323c3"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/compr_lzo.c": {
+      "size": 2946,
+      "sha256": "70dfbeb1d281b1e2657569060c392dfbe652c4e871afe205da5bafed2c705713"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/compr_rtime.c": {
+      "size": 2659,
+      "sha256": "281e0f0fed3e8250599d79a8a81f8c7360690eafecc69d370dd192e7692700ee"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/compr_zlib.c": {
+      "size": 3941,
+      "sha256": "c65dc9729a95151add4e4380e008a3745d648d633f54b1d7ae3a969b41712019"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/device_table.txt": {
+      "size": 4252,
+      "sha256": "8b9be12bcd6769bcbc7c66b7d8b15dd032515ffbf987af6e5344718ec110dc1d"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/jffs2dump.c": {
+      "size": 27779,
+      "sha256": "d47c97b2f08e228a1ba87c44f9fe3415fb5c12f1a4a17aafecf98989f9ea0b0b"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/jffs2reader.c": {
+      "size": 21128,
+      "sha256": "24564a528863970d5ce9a3cca5ac695f29d91c0b8599d44de2fb4c12e50f2c3f"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/mkfs.jffs2.1": {
+      "size": 6788,
+      "sha256": "f03b292455819941535d4c8e6683fc547f0dc02b423c3be02d31f586c97f2e7a"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/mkfs.jffs2.c": {
+      "size": 49030,
+      "sha256": "e7151dc4a49ce6e41c7f79de6cdbe33dfc511ea49c9994f24e1f3e0684d52693"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/rbtree.c": {
+      "size": 8620,
+      "sha256": "5adf31919cb1011773782618cb45bc9682798eb0f34ed4b1541cbfcc118c763f"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/rbtree.h": {
+      "size": 5247,
+      "sha256": "42e43d5d00bde1e004098ab28a53e4ee2e9bb5e2d0818bd03555349850125810"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/summary.h": {
+      "size": 4837,
+      "sha256": "81722721af5ce1f43a79b7dc356749267ded04e41b3443ee76e27dbc0f010ee6"
+    },
+    "firmware/native_ubifs/upstream/jffsX-utils/sumtool.c": {
+      "size": 25510,
+      "sha256": "305ae2b9c2e294ef6d47bf6503ccfaa991b773a891f717825afd0c844ea5f789"
+    },
+    "firmware/native_ubifs/upstream/lib/LICENSE.libiniparser": {
+      "size": 1082,
+      "sha256": "dde54469aee95da4a8f3edb97fee64f4d9c03b89a2358a968c67a856e4f1a501"
+    },
+    "firmware/native_ubifs/upstream/lib/Makemodule.am": {
+      "size": 955,
+      "sha256": "68c53ec7f188e358865437de31335ba5b73ae01117f413d57aa3a7280abd2499"
+    },
+    "firmware/native_ubifs/upstream/lib/common.c": {
+      "size": 5114,
+      "sha256": "afcc6d1363998c4e8eb0aed45edbb81c8075344d52199f703d741b6276eac871"
+    },
+    "firmware/native_ubifs/upstream/lib/dictionary.c": {
+      "size": 11442,
+      "sha256": "4755eebc5d5e31ea532f1c0b09092f2a82157625b1ff7888ac7c4dd964969009"
+    },
+    "firmware/native_ubifs/upstream/lib/execinfo.c": {
+      "size": 638,
+      "sha256": "aa6c0634b29c0004c894502034aff52798dd93fba39c7fbcd46518b1a89499fa"
+    },
+    "firmware/native_ubifs/upstream/lib/libcrc32.c": {
+      "size": 5586,
+      "sha256": "037b96c4ee984187c2d2e701dad616edd1ede5e38c22b1078e6c38ce69decb14"
+    },
+    "firmware/native_ubifs/upstream/lib/libfec.c": {
+      "size": 24536,
+      "sha256": "fbe3c2f76925bba14de5b9e180f7020dd1fed0eeb86c07a280e3a14cabb353b2"
+    },
+    "firmware/native_ubifs/upstream/lib/libiniparser.c": {
+      "size": 18538,
+      "sha256": "54ab27ec9bb65e40cfc90f03a7078686dfaf35d98a40ce8f725b7b99aa4de653"
+    },
+    "firmware/native_ubifs/upstream/lib/libmtd.c": {
+      "size": 33912,
+      "sha256": "75c3c13cb955ffbaed0d5cb0fdb50c93226f556d16a93ed4faab8620202cfd5d"
+    },
+    "firmware/native_ubifs/upstream/lib/libmtd_int.h": {
+      "size": 3963,
+      "sha256": "dc83dcbe108be38f13f7097388ae95ca6d4fd8ace4c04445438bc9b0cfabef29"
+    },
+    "firmware/native_ubifs/upstream/lib/libmtd_legacy.c": {
+      "size": 10725,
+      "sha256": "e55c865b87be9cc7526ded5b63e1466f00f4692e953d8fa002621fcaff217a1d"
+    },
+    "firmware/native_ubifs/upstream/lib/libscan.c": {
+      "size": 5548,
+      "sha256": "a13fbd231f62777acb575183930a80b4342d7b0ab7e3f6c5fe6e8a2b06ae7e11"
+    },
+    "firmware/native_ubifs/upstream/lib/libubi.c": {
+      "size": 30804,
+      "sha256": "75281c353c5b2dc285ebda7cd9629bb4e0511569e0031a21c5b5ddd1530f3e67"
+    },
+    "firmware/native_ubifs/upstream/lib/libubi_int.h": {
+      "size": 4347,
+      "sha256": "2d06fb39065502974007c0e62dbfe17132e36e83173bb2c347bbc8a1a1c30b3c"
+    },
+    "firmware/native_ubifs/upstream/lib/libubigen.c": {
+      "size": 8479,
+      "sha256": "332dad52b930cbfcfcd4753cc28edadf7e47fc8f7b1f9d5d14e4bb854cf90a9e"
+    },
+    "firmware/native_ubifs/upstream/m4/ac_define_dir.m4": {
+      "size": 1187,
+      "sha256": "21a5fb92d05241f26c26b4a9195d64e0402dbbda2efe3b038e1c1b2d7fee78c6"
+    },
+    "firmware/native_ubifs/upstream/m4/ax_pthread.m4": {
+      "size": 22556,
+      "sha256": "4fa6c352f1fb33147947ead61f9b12537f3d146ce068c003552d3b9582a7a406"
+    },
+    "firmware/native_ubifs/upstream/m4/compiler.m4": {
+      "size": 1563,
+      "sha256": "06f7a3b167202bbfd0cd59b07bc05f3837076fbee99458c3796c5a2f2ddb558e"
+    },
+    "firmware/native_ubifs/upstream/make_a_release.sh": {
+      "size": 3364,
+      "sha256": "41bbcb4756bb62677492bb2eff87d35c50dd1327b9fd7838f4c862076b514ce1"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/MAKEDEV": {
+      "size": 784,
+      "sha256": "42b8a92cbcadb40e0d841db6f23e0f07a57bb8c132a27ccef0bfc6f6d195aa4d"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/Makemodule.am": {
+      "size": 2000,
+      "sha256": "7808a4cbe6f1f832985cadcfb257f5899cc2ee0e0a2c3dd4e33615f9d4f82fc5"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/doc_loadbios.c": {
+      "size": 3301,
+      "sha256": "3275a9cd863010bb3f84479f7d897b6d3f7067b446f1740b145477838a8aaac9"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/docfdisk.c": {
+      "size": 8985,
+      "sha256": "a7735f992672186da058e5adfd1c4e7f0e612b93bab8d93bfc3c871b0f5bd4db"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/fectest.c": {
+      "size": 1982,
+      "sha256": "437a8365f1a0698f382132698811bb88f8c5e4f01be08ce38189d0aed3abc235"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/flash_erase.c": {
+      "size": 8725,
+      "sha256": "bd9ededaaab6aea8ab8b966836351aabfd65560122fcd5aa1cbfb6d57349c8fc"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/flash_eraseall": {
+      "size": 150,
+      "sha256": "db47914e84b9d017d3ee54e493d5f5d036b5b1fb805b09c7fe1dfd25a0f5d574"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/flash_lock.c": {
+      "size": 154,
+      "sha256": "4cd618a7913f23ecd772a61cd020ab173ead099b49a077cca61d20845d96cb0d"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/flash_otp_dump.c": {
+      "size": 1396,
+      "sha256": "46aae605f232e2f4da1d10d97f4d7b6624baf0115a1511cf2ff144cf7bd4af2c"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/flash_otp_erase.c": {
+      "size": 1258,
+      "sha256": "5456d8b0b9842145379187af3e3d21e648b28c8c2dce1849d21f228b02f1d357"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/flash_otp_info.c": {
+      "size": 1308,
+      "sha256": "bcb130ad8ceccfc898fedea222897f20e6a468a0959d1ac5d6898d80e3ee2c7d"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/flash_otp_lock.c": {
+      "size": 1535,
+      "sha256": "4918c48268281fdb8db5667a162604eb4dab8e6c44b8f9815ecd8cb3482cc96c"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/flash_otp_write.c": {
+      "size": 2457,
+      "sha256": "3d8e0c40cf051ca21c70e05c7a2f77f19a1f44ac3ba93c8a81ba44b172f71519"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/flash_unlock.c": {
+      "size": 5097,
+      "sha256": "fca7b445804969d775624164c2f047dec60f4f44036165d7f397b02c059d34ef"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/flashcp.c": {
+      "size": 15323,
+      "sha256": "71d576cc75b4d70c027a65213385ca87fcedf7be11f38ae437252eb10ee8773e"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/ftl_check.c": {
+      "size": 6478,
+      "sha256": "83773d0e5e40584ec8207079de8b93fba6eb766b72871a2810ff9aa2aba16817"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/ftl_format.c": {
+      "size": 9509,
+      "sha256": "587e2e56b8a7e55c8a079a44b3c191deadb0083b092d8ecd2bccbea050dba7b8"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/lsmtd.8": {
+      "size": 3227,
+      "sha256": "af9e3901f8328db17faf7b7bc2bb53a45c7590cfc82cc65a4524a01491586a12"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/lsmtd.c": {
+      "size": 19066,
+      "sha256": "dd1ccc5f2d0c2c06355cfe703f373347492502a0d009a5de00f21f09a8d40fab"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/lsmtd.h": {
+      "size": 1160,
+      "sha256": "80c7bbbcffcb7848fe37fcbbdc0893946dc4a95e78e2b799ccc41709a57efebc"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/lsmtd_scan.c": {
+      "size": 5394,
+      "sha256": "4d4139c3398be2a688b97266aa6cac4254552a627c6dcc9a9d43cd886e8c51a8"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/mcast_image.h": {
+      "size": 369,
+      "sha256": "630b2607f700b20027a3954d875b40a7ca29cbd78517af443ae747c1ef8a669f"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/mtd_debug.c": {
+      "size": 9589,
+      "sha256": "422223708410f14e7f0b33323f4d1d8191e1d3aacf697f3430e4b0085dac3539"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/mtdpart.c": {
+      "size": 4783,
+      "sha256": "ba72304970fc6072efa66c250bb4aa2e4a7685f0920cc267e5bcedf53deae8ec"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/recv_image.c": {
+      "size": 14850,
+      "sha256": "b1c105045f9421f4ac41275850b607b031142199f0c900b439eb54c1a0073d60"
+    },
+    "firmware/native_ubifs/upstream/misc-utils/serve_image.c": {
+      "size": 7863,
+      "sha256": "89c07c13af5c8384def16804f9105942d97f27bac8911cdde2d4cbfe3843c66b"
+    },
+    "firmware/native_ubifs/upstream/nand-utils/Makemodule.am": {
+      "size": 802,
+      "sha256": "fd9998ab2987a7f560d2418784baa127945792373cc7368854393f7ee0dc4181"
+    },
+    "firmware/native_ubifs/upstream/nand-utils/load_nandsim.sh": {
+      "size": 3676,
+      "sha256": "a277b63c0d0f436abf02d3d6a0480627235a054b149f5cca657e5686370011e6"
+    },
+    "firmware/native_ubifs/upstream/nand-utils/nanddump.c": {
+      "size": 15229,
+      "sha256": "ffc92bbaa4c8cc9a8fe1b231af0f08b8f927258864c800eab52e9a9f4ddb620f"
+    },
+    "firmware/native_ubifs/upstream/nand-utils/nandflipbits.c": {
+      "size": 7327,
+      "sha256": "4de9ccc5abc983db7988dd4feb096d18a0f9ab369d2553159d874206d2fed8e6"
+    },
+    "firmware/native_ubifs/upstream/nand-utils/nandtest.c": {
+      "size": 7689,
+      "sha256": "d46224e77de0ae3f6694850d72ab6db40e0fd755758713e17f32da9e62953d3b"
+    },
+    "firmware/native_ubifs/upstream/nand-utils/nandwrite.c": {
+      "size": 16718,
+      "sha256": "af10f4a409f3671c81dfbb2cb0596e23e1660df8a60e3b0457c5cdcbaa33db3f"
+    },
+    "firmware/native_ubifs/upstream/nand-utils/nftl_format.c": {
+      "size": 13176,
+      "sha256": "caada2c9912daeee9c691cd56eec136e6f1f157a78fa8128f5418c21ffec11e9"
+    },
+    "firmware/native_ubifs/upstream/nand-utils/nftldump.c": {
+      "size": 7768,
+      "sha256": "6ff11742c56b475d356ca5c33bd2e9f1ff5100a0379a28e8e21c2553a215fa1e"
+    },
+    "firmware/native_ubifs/upstream/nor-utils/Makemodule.am": {
+      "size": 188,
+      "sha256": "6990ab765ce19b3a1f46713edaa4c5f2bc38f080824ed918bca6c0217a618087"
+    },
+    "firmware/native_ubifs/upstream/nor-utils/rfddump.c": {
+      "size": 7302,
+      "sha256": "d1ad8cbe21753a629ada55a0e841973a4869ac58fbec71c6b460914d00360782"
+    },
+    "firmware/native_ubifs/upstream/nor-utils/rfdformat.c": {
+      "size": 3432,
+      "sha256": "62b290814451a3b2355a41272d7b75653d83a907ff92aeba3143348f849cca85"
+    },
+    "firmware/native_ubifs/upstream/tests/checkfs/.gitignore": {
+      "size": 20,
+      "sha256": "1c3534e28cb15ba1f6441ea1e65b73473a5a9b2d1efe451e6f5ed7ee6902f9b4"
+    },
+    "firmware/native_ubifs/upstream/tests/checkfs/Makemodule.am": {
+      "size": 294,
+      "sha256": "8da55f75c8ffe1ceca72f0ac4105b86725e246642ca4eb742870d51067ab1441"
+    },
+    "firmware/native_ubifs/upstream/tests/checkfs/README": {
+      "size": 6985,
+      "sha256": "1aeb811fe4665288964f2e10b65ea48f3be2081a8abc0bbd4f182589dd86ee36"
+    },
+    "firmware/native_ubifs/upstream/tests/checkfs/checkfs.c": {
+      "size": 21762,
+      "sha256": "4ed49216b241a2e46be25a9e42a8e28ac7c1cb85485a96ad9d3872e8932b0de2"
+    },
+    "firmware/native_ubifs/upstream/tests/checkfs/comm.c": {
+      "size": 1184,
+      "sha256": "f58c9e01cf5212c8eb6ce96f2588268ad846974398fe9a150a13327cf41372ad"
+    },
+    "firmware/native_ubifs/upstream/tests/checkfs/common.h": {
+      "size": 216,
+      "sha256": "7e4b4d4f6f3acefd2cc38a9dc2ce7918a398b38269d3147602df8c924fe507bf"
+    },
+    "firmware/native_ubifs/upstream/tests/checkfs/makefiles.c": {
+      "size": 8569,
+      "sha256": "fb67bb807bf3e99983684a2fe7d47db265b6b570ed9d2055d2d4ba196517ad7f"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/Makemodule.am": {
+      "size": 3577,
+      "sha256": "edac7501f4bb060fd11a7dd78a2e55e4baf28462a6de4b70f700fa9da7edb3db"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/fs_help_all.sh.in": {
+      "size": 1424,
+      "sha256": "9d0cab446592000afe60bdac4c82ba14685db7fb0ecc1fe8c5b56d9d7bd1b273"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/fs_run_all.sh.in": {
+      "size": 729,
+      "sha256": "c04ff16027402f4b2bf5029aacaf2e8c4b65b95c659101397d69873220beb188"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/integrity/.gitignore": {
+      "size": 9,
+      "sha256": "2cb0da80dbc7eca115313fed7edb6d5bda47487d645aa068224b667b0427ebc3"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/integrity/integck.c": {
+      "size": 79105,
+      "sha256": "77ac5db09601abe893c80a4ec5af60d4228539bbcb0ca890ebcb2e78137c76d1"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/lib/tests.c": {
+      "size": 30409,
+      "sha256": "8cef702b4ad1f149be6bc9aa977515fbc3c3d16938133d43cc62a82210b872a3"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/lib/tests.h": {
+      "size": 7346,
+      "sha256": "4a3717fe427785bf964bd66df8585d30be6ab51e1d2d5053cf76e33243555682"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/simple/.gitignore": {
+      "size": 36,
+      "sha256": "d6699b616dffee491d003897fe88915708550cf81b5d292e01d845888c643568"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/simple/ftrunc.c": {
+      "size": 2695,
+      "sha256": "26cddaf52bfa38a88ef702171581b61a6c966ef34b3ece73d52cc58e18b9de11"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/simple/orph.c": {
+      "size": 4654,
+      "sha256": "419fbf18c5af701e7fd0a216f3305ef37a451470c93fd33781eb17fad1e3294d"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/simple/perf.c": {
+      "size": 5130,
+      "sha256": "94c186459d8ce274cca671cca6a28efada192a006568ec6ec588bf7c4251503d"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/simple/test_1.c": {
+      "size": 4391,
+      "sha256": "a640d4fc3ba9494731d2f9795dd65cc75bd262f70a6f2c44fd11a9d227d74cd2"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/simple/test_2.c": {
+      "size": 6377,
+      "sha256": "7bb445dfef4aa199c5a1d4bb45b21e3bb45780dff0cc8a1f0ac9d43f680934a9"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/atoms/.gitignore": {
+      "size": 99,
+      "sha256": "9fa1806365fa71ac7c882932f7875e78cce43cbe2916f1854642146109efa261"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/atoms/fwrite00.c": {
+      "size": 5860,
+      "sha256": "e1e0a18955656792bd7ff8d8810131f14d046a7e903c051afc2c038f36c1d70f"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/atoms/gcd_hupper.c": {
+      "size": 5382,
+      "sha256": "214a6e0ead27a4c50d54e224917213918cac823c9ffb821bd539f911849a8d4b"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/atoms/pdfrun.c": {
+      "size": 3674,
+      "sha256": "c3c84f6ed9b5080e72309b84113570b0d32ce217c7daf1de325b46267c11620b"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/atoms/rmdir00.c": {
+      "size": 3713,
+      "sha256": "4cfdb3f68f5af158b0cd96573b6be181e6fe16f2a2b677900125287550cf825b"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/atoms/rndrm00.c": {
+      "size": 4350,
+      "sha256": "d4de194f10e77a17d8ff7f56abe6d7e81ed31fdfae81bc2c18efa006bf07e013"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/atoms/rndrm99.c": {
+      "size": 10390,
+      "sha256": "7e9574d4b5519f83856d2ae59cbe5d60500e10797f53c228a7baac6b83f4c8d4"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/atoms/rndwrite00.c": {
+      "size": 5303,
+      "sha256": "d19a08c92e33a712873665425def56f05cc6904e0f1c2de5b6badbf5c9221f47"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/atoms/stress_1.c": {
+      "size": 2676,
+      "sha256": "5defafdb7085e728569916ec8c889b087ed8dbc2c34073c6b58dfdc7545c4c88"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/atoms/stress_2.c": {
+      "size": 3038,
+      "sha256": "e468c5f9e173344a3dd6709d4d808ea40de4767aa2e488fdfb3debcd90965a81"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/atoms/stress_3.c": {
+      "size": 3150,
+      "sha256": "af51ffa1afe6e1681aca34de87d28dfb2daadd6bdf6929c8011742c529567e11"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/fs_stress00.sh.in": {
+      "size": 1179,
+      "sha256": "c19649f49010f137fb0e5528d91d21b194c6d71dba9fd6a15bd0ae9db0dd5cf6"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/stress/fs_stress01.sh.in": {
+      "size": 693,
+      "sha256": "3f089792ef5c2bdd06b729260711fd70c3ffe6e8f65a5b1312ff55062b1f5d3c"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/utils/.gitignore": {
+      "size": 28,
+      "sha256": "cb7c1eb3861f8bede91c32319d9e28e74924a3a26bcbde435bde39f9ebc43ffa"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/utils/free_space.c": {
+      "size": 1516,
+      "sha256": "a075dc555ed53607f20241b8a0902be65027b09ae7d88b4ccd3c85346649ebb1"
+    },
+    "firmware/native_ubifs/upstream/tests/fs-tests/utils/fstest_monitor.c": {
+      "size": 5374,
+      "sha256": "62f0712b0aea9e4a596b1bb7b1eabd556aff947e037bffb5c90e00de1f17bc30"
+    },
+    "firmware/native_ubifs/upstream/tests/jittertest/.gitignore": {
+      "size": 30,
+      "sha256": "781b0adcc10b0c80ecd1803d30412fcad49771e57e4801a44630b42422bcc835"
+    },
+    "firmware/native_ubifs/upstream/tests/jittertest/JitterTest.c": {
+      "size": 34773,
+      "sha256": "bebd1ab657b6df494e0db8090722517fc8089f7191bb538876c0175c4283763f"
+    },
+    "firmware/native_ubifs/upstream/tests/jittertest/Makemodule.am": {
+      "size": 357,
+      "sha256": "868b43ceddd61ee0c9fa743955078c9a57d4dbbdf1ae46819b7fea8b8bf909c1"
+    },
+    "firmware/native_ubifs/upstream/tests/jittertest/README": {
+      "size": 6727,
+      "sha256": "44594628c2a81bf8cff81ff3847e8a28e48201b7e2c212edc3c8efb9f9e5f6dc"
+    },
+    "firmware/native_ubifs/upstream/tests/jittertest/filljffs2.sh": {
+      "size": 249,
+      "sha256": "79760f63d47e5b45cebadab5e7d6450c88dd8ab9a1509c6fd75c31800414962a"
+    },
+    "firmware/native_ubifs/upstream/tests/jittertest/plotJittervsFill.c": {
+      "size": 10236,
+      "sha256": "b6c8811d4df62ed80048a5178e82b962aa762c117f4b86468892d8a8a591c92e"
+    },
+    "firmware/native_ubifs/upstream/tests/mtd-tests/Makemodule.am": {
+      "size": 1100,
+      "sha256": "d3246294e115eccd38177e87d1ab85a33f71339f44ce802bc60411367957ac0f"
+    },
+    "firmware/native_ubifs/upstream/tests/mtd-tests/flash_readtest.c": {
+      "size": 6376,
+      "sha256": "04190c6be8ad91e7ba2800e358998715d7b3b2c6cffc2bc9b0c8006a84def9b0"
+    },
+    "firmware/native_ubifs/upstream/tests/mtd-tests/flash_speed.c": {
+      "size": 14223,
+      "sha256": "5e200ca12172a85b223c3b4deb0d5b6c9dfc81e2767a55a485e1eb40c0852f3d"
+    },
+    "firmware/native_ubifs/upstream/tests/mtd-tests/flash_stress.c": {
+      "size": 6285,
+      "sha256": "188f2329b9502eb53cee072ef55a1cf2cdd70bb4b8842dfbdaa97e78dc934545"
+    },
+    "firmware/native_ubifs/upstream/tests/mtd-tests/flash_torture.c": {
+      "size": 6100,
+      "sha256": "2eee8cc7d6b0eec10423f64386d79d6b267fcd9cc61a8fd40c3964207cd9f82f"
+    },
+    "firmware/native_ubifs/upstream/tests/mtd-tests/nandbiterrs.c": {
+      "size": 12881,
+      "sha256": "0838b67e870ff8f9a7cdd0bd2e0e5a2faca8aafa8eda22effe6a17328b6caa69"
+    },
+    "firmware/native_ubifs/upstream/tests/mtd-tests/nandpagetest.c": {
+      "size": 14116,
+      "sha256": "5f9e33972c23753e7532252ce0786bf80f5c7f633dff2d5f1961235b222f9c2c"
+    },
+    "firmware/native_ubifs/upstream/tests/mtd-tests/nandsubpagetest.c": {
+      "size": 10731,
+      "sha256": "192d7862ae89c4671b033a1feccd0c2fd9c459806db25267c196f9b042f17785"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/.gitignore": {
+      "size": 102,
+      "sha256": "31330c58a386cb83268f9b08beab2ef75f0c961b2bdfc5a153e1910f95d36d24"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/Makemodule.am": {
+      "size": 2541,
+      "sha256": "241c671d5db09c520d88767e1fcbe1a82784da2f2c83d4254dc08f1120f0ef9c"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/helpers.c": {
+      "size": 8943,
+      "sha256": "e717228749bd6dde21348d9c1956ed2974f5c64703aceb8addcd4b2ba0699a40"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/helpers.h": {
+      "size": 4483,
+      "sha256": "743c91b72ebd1735ca5727fa41735c2b158ebd56efaaf8cf6165fb6ce2d27f05"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/integ.c": {
+      "size": 19244,
+      "sha256": "b377cc5b689c79e9cdb4a633be75240ea89c7012d7bc41193f7ece844ad6b3b8"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/io_basic.c": {
+      "size": 4330,
+      "sha256": "252ccd3fb787437437e6116784d62a4306c98b1ba47e9dbd7600344c8e3fe94d"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/io_paral.c": {
+      "size": 7842,
+      "sha256": "1c299e80db8e214395c2298f300c389d53f27aabb1d9fb3b5f52b04ad2d6d344"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/io_read.c": {
+      "size": 9051,
+      "sha256": "918d733c3e878e80cdbd72aba62144f8a7e39f95999425ff115f620824fad1f0"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/io_update.c": {
+      "size": 7437,
+      "sha256": "d200d0b17fd507d11c099cee354b36d54f45ffed0ccfa36ce4126bb7e1c90d8a"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/mkvol_bad.c": {
+      "size": 7443,
+      "sha256": "080b0acfe85925302a5e4df1d3053cee66b279e0cd3121fe8a5c266b600657b1"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/mkvol_basic.c": {
+      "size": 5557,
+      "sha256": "909da98d5d97caaf9640a766664cfdbbc18ff45831eef7b52a9337a282e0fdea"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/mkvol_paral.c": {
+      "size": 2529,
+      "sha256": "2e495db7ca3512ff56428df5ca78416d388d113311ad6dc490fad7f877fc150a"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/rsvol.c": {
+      "size": 6698,
+      "sha256": "27942b37505b298ee27bede17b6c8f9eced5212f12837d1eef26fde98dfb7828"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/runubitests.sh.in": {
+      "size": 586,
+      "sha256": "47d626d076d50b2dc6576d3be7ecaafb5bdd1d6988d37fdb8d7c98a7ab48899e"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/ubi-stress-test.sh.in": {
+      "size": 5793,
+      "sha256": "4eb8dfc4b8dce8eef88a325ac7cf2f0be7a5cb6a5ef6ec9d96b765b500ae110c"
+    },
+    "firmware/native_ubifs/upstream/tests/ubi-tests/volrefcnt.c": {
+      "size": 3067,
+      "sha256": "7f74951a1cd53ceef51232945e1ecc4cebb4421446827530f91c222b11f115b4"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/Makemodule.am": {
+      "size": 998,
+      "sha256": "9b42e3d82fe2111b61b115c85e335567085f780a35a78cfbabd07409b82608f3"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/libmtd_test.c": {
+      "size": 12941,
+      "sha256": "78244ca224e2cbd3ecdff12c431497c4cc2e9e6d59cbae7325309200e1e51b4e"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/libubi_test.c": {
+      "size": 6877,
+      "sha256": "dbd60876be5d640b89d3355a15748f5ff7d23ca0a7fb171a29b1f447dcacd215"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/misc/ubi_ctrl/dev": {
+      "size": 6,
+      "sha256": "8120df5c8f62657d17d76c31d14103e60d5c59fe12ad14a481f53543b31afba0"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/mtd/mtd0/dev": {
+      "size": 5,
+      "sha256": "498ec21e1be9bb6701eb33e576cb6c97332bcf8636e2af8e0f5aa82b337db28e"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/mtd/mtd0/erasesize": {
+      "size": 5,
+      "sha256": "177c3e8cb33623be46f2c6c109d2f79c5af10938c21dabc1e8d17b85002fe432"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/mtd/mtd0/flags": {
+      "size": 10,
+      "sha256": "8ecc14b5cc54ab71e6a55cc65e81fd57b6cebbeec888fdb82fd9544805eda38e"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/mtd/mtd0/name": {
+      "size": 5,
+      "sha256": "5ab294726d8484faa8c29b9f5601de928eb2511034e3cee7cbd6f0e967a36ea3"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/mtd/mtd0/numeraseregions": {
+      "size": 3,
+      "sha256": "a1fb50e6c86fae1679ef3351296fd6713411a08cf8dd1790a4fd05fae8688164"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/mtd/mtd0/oobavail": {
+      "size": 2,
+      "sha256": "aa67a169b0bba217aa0aa88a65346920c84c42447c36ba5f7ea65f422c1fe5d8"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/mtd/mtd0/oobsize": {
+      "size": 4,
+      "sha256": "56292515f7d3a7110811eb8de26b3f75f82a0766aa5a1fd66ebcfcb84fe6d5ff"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/mtd/mtd0/size": {
+      "size": 9,
+      "sha256": "1c717f8a059be27832853ed4d506f3c7ab305023703aefda2b2272606e13ee01"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/mtd/mtd0/subpagesize": {
+      "size": 3,
+      "sha256": "913f5d1da2feaf4deeccc9e55cbb350a20f12b3f507e87be85dbb77fdd3cb9bc"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/mtd/mtd0/writesize": {
+      "size": 4,
+      "sha256": "56292515f7d3a7110811eb8de26b3f75f82a0766aa5a1fd66ebcfcb84fe6d5ff"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/ubi/ubi0": {
+      "size": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/sysfs_mock/class/ubi/version": {
+      "size": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865"
+    },
+    "firmware/native_ubifs/upstream/tests/unittests/test_lib.h": {
+      "size": 3139,
+      "sha256": "44a0342b9bba11be383de22948040a8e313d0184ebcef9aae2a5ca4ed0ed04c5"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/.gitignore": {
+      "size": 134,
+      "sha256": "c94912d3f6ec02366b5f6079fb9a77c44270e9745480c5d8621fd07d31e22680"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/Makemodule.am": {
+      "size": 1522,
+      "sha256": "32c7c30255d14f031f8e37d2b75ea50859da8bda4f96558b0f2a6ba6d24c4450"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/mtdinfo.c": {
+      "size": 11330,
+      "sha256": "388ea01cea47d70e0dcd2159a9ce6e9a5e208454d93fd01094e10d2234d3580c"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubiattach.c": {
+      "size": 8616,
+      "sha256": "e84089f7b40a38bb0710e51f1c4d4e9f991575842af354a7ebdd9929f24fd40a"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubiblock.c": {
+      "size": 4198,
+      "sha256": "02ed2a580b5dad0599bb7a2f6f9875c81111bd0774768ce531ed3ab710cb5e09"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubicrc32.c": {
+      "size": 2796,
+      "sha256": "6d62ed093273180960f23e24208ccd79a39ceea9226c44ddc079a63aa6605c22"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubidetach.c": {
+      "size": 5446,
+      "sha256": "5ca371f36a9360a2c92539bea9693e6fd21a9361668af31857401cf16845be3e"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubiformat.c": {
+      "size": 23966,
+      "sha256": "acc129208d2e329b9f3b295c14d7bc2ed6f21ccb1ad0006126c025ad117757f9"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubihealthd.c": {
+      "size": 5126,
+      "sha256": "a6105d3e2174c10739764c865fed21271bc49e75c658000c28162d9870fcee05"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubimkvol.c": {
+      "size": 8767,
+      "sha256": "31497f088e1e6816330cf8cffac70f46fdb0716c2a89ea6b7d968dc0574b2ce0"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubinfo.c": {
+      "size": 11785,
+      "sha256": "5bbb56bbc2cb0f503dcaf3ba8d20950e8f74557fdce96ac41d18b8c8a943d52b"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubinize.8": {
+      "size": 4900,
+      "sha256": "8a6c1bf0fdb9e268dbd4d8eeb6a0f40bd10f005b1f81af7264394aee7cc95df7"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubinize.c": {
+      "size": 18216,
+      "sha256": "1016983eb411ad143e606357956d93dd0391fc8fb5de84e59e0687fbc95adf8b"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubirename.c": {
+      "size": 4160,
+      "sha256": "ecd71247f629f95bea5568ddb40316ef3a70761afa99b7c5314f0350aedf0110"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubirmvol.c": {
+      "size": 5178,
+      "sha256": "a4f9b3f5c0f6c5027f821c9085339bc92f3693a3ba7d1abe10001512009b10b7"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubirsvol.c": {
+      "size": 6351,
+      "sha256": "44384a27656ea7e384a90492456ac8fcb061f693b345e46902dd306d68ca2a6e"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubiscan.c": {
+      "size": 8892,
+      "sha256": "8854f3dfd366b64a77c817dce4bcd433cfbf429f63bea270552a56fa9435ce8e"
+    },
+    "firmware/native_ubifs/upstream/ubi-utils/ubiupdatevol.c": {
+      "size": 8020,
+      "sha256": "6169756099f8359558e87017c36b340864104f60f46b9f8965ae228d0f6fac61"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/Makemodule.am": {
+      "size": 1413,
+      "sha256": "74435ed3d578b5ce7bbcd6591a768f41ec35e7c384799c4a4494d04ce7391196"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/.gitignore": {
+      "size": 12,
+      "sha256": "c8b3489b49b530a3696820f85c8a734b6b9226e5d01e23fa57a1758eff60c7ea"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/README": {
+      "size": 544,
+      "sha256": "b264389329b5f7144f29ec2ceaabe2796c857550952ba4f14669e64e26e423b5"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/compr.c": {
+      "size": 5652,
+      "sha256": "f9056f4f315991462dabaa2c205b823b59a82b8df92a2353ff9decbbc80db4fa"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/compr.h": {
+      "size": 1461,
+      "sha256": "3a6f5dc8e064afaa4ce2533de9dc66a27fdc6ec41e3363c2b00b00dee932df02"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/crc16.c": {
+      "size": 2618,
+      "sha256": "4dc047c4eace3ed9eeeccc5d32cfeac5ef28b212fe133fe445eaea690ed7b970"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/crc16.h": {
+      "size": 599,
+      "sha256": "ffc8159dcee97a917b97eb38e13d0dbd06bcc8ddb20313406b845b17bfd358a2"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/crypto.c": {
+      "size": 8765,
+      "sha256": "e357bf8ac4c08621c185e6e7ae1485b163282924a0d2de80894822defc975427"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/crypto.h": {
+      "size": 1757,
+      "sha256": "8d2354287767e534308be3117f0e22ae7b1e875b2f72d0045ef556f13c5233af"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/defs.h": {
+      "size": 1647,
+      "sha256": "7ebb4a4f4ba83b84d072e38007218fead1f739eaf41bb83fd8989e5b914695a9"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/devtable.c": {
+      "size": 14855,
+      "sha256": "d5d19cfb11fd793472c5f03b8145cda3babfbc06fea08f99966248a1ba65856a"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/fscrypt.c": {
+      "size": 7098,
+      "sha256": "12a4afc688e4ae59fc457001e1b5ffded3e8933b97e89765c0ce9142cfbc44de"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/fscrypt.h": {
+      "size": 4390,
+      "sha256": "c1702ff1633f598c68d102c8659238c69d406b470b3423ba1d7146352eda4ffa"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/hashtable/hashtable.c": {
+      "size": 9064,
+      "sha256": "f6668cadd1cae3a7feb2996feec4d629c0759abfe602d2862abe8799d32b56d6"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/hashtable/hashtable.h": {
+      "size": 7374,
+      "sha256": "ff25ec679ab119ffb3b4180a236854b3c9ebcce6828283a763211bab0f02eaa1"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/hashtable/hashtable_itr.c": {
+      "size": 5386,
+      "sha256": "938957dc66ba28331b6e035f00b4c1eead700319a8e1e2a50fb2947302f9b3ff"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/hashtable/hashtable_itr.h": {
+      "size": 4086,
+      "sha256": "a75306c564951145d1b33d1c6ceb25bbe490afaadf99aa07c573a71ea4461642"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/hashtable/hashtable_private.h": {
+      "size": 2955,
+      "sha256": "647a26f48c726ca47740743b1ef56c9d62d82f848c2864296e12877518038078"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/key.h": {
+      "size": 5823,
+      "sha256": "773b0162c0ed2b24dccf62bb4e450306a1de844e2d58ecfd379cae658c54c8fe"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/lpt.c": {
+      "size": 15946,
+      "sha256": "e1872077a90248166257424d8193a5656bb7122fac1b64957290c8d506bfe4fe"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/lpt.h": {
+      "size": 980,
+      "sha256": "db549fa4db561457bfcb2c0a3c5dd4e47ab9dbfe43537e0b3a1605fa0271e722"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/mkfs.ubifs.c": {
+      "size": 79444,
+      "sha256": "70cc11184dfac06f34027bf5abc79bd60df4ec2a9f68c897e85cebb63fd09aa2"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/mkfs.ubifs.h": {
+      "size": 4651,
+      "sha256": "5dc4f69fa4bdb871c6a45254d0ed5311122434c349a915c25aa2e4833d5d5e02"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/sign.c": {
+      "size": 8825,
+      "sha256": "2fef8a3d6b07f97f67b3d3be639f771e7d4213d3f74975f93e412b47aec8ce5e"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/sign.h": {
+      "size": 2035,
+      "sha256": "3d1450dd9bb4160689b9d160d5a7876e37b61b6c894641f794fa591f67069ddf"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/ubifs.h": {
+      "size": 12736,
+      "sha256": "610a90a227b27e3c22c2ab7f12e947dd2355f1361d09c41bfc9d0ee331398af3"
+    },
+    "firmware/native_ubifs/upstream/ubifs-utils/mount.ubifs": {
+      "size": 1801,
+      "sha256": "175df527fa9406e1dc8784d34112dc624ce7e2bd6eee70dfd75ddc2cecb967c4"
+    }
+  }
+}

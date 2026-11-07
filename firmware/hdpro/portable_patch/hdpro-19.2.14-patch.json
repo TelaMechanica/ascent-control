@@ -1,0 +1,289 @@
+{
+  "schema": "ascent-hdpro-engineering-patch-v1",
+  "base_sha256": "8aef873e2a3f9893ae6462c4daa9e5700c1deb53d2a92c6d6066b9c415213ece",
+  "base_bytes": 2486456,
+  "result_sha256": "3ebdc5825e018da16c7c07101324568d35fd846eb41aaf4caad96749061974ad",
+  "result_bytes": 2501648,
+  "extension_sha256": "2c00799bdecb4abf74320bda5935704516315ff8d07f8c68054ee646e66a5a4f",
+  "extension_bytes": 15192,
+  "patches": [
+    {
+      "offset": 84,
+      "size": 1,
+      "previous_sha256": "67586e98fad27da0b9968bc039a1ef34c939b9b8e523a8bef89d478608c5ecf6",
+      "replacement_hex": "03"
+    },
+    {
+      "offset": 89,
+      "size": 1,
+      "previous_sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "replacement_hex": "01"
+    },
+    {
+      "offset": 93,
+      "size": 1,
+      "previous_sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "replacement_hex": "01"
+    },
+    {
+      "offset": 97,
+      "size": 1,
+      "previous_sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+      "replacement_hex": "01"
+    },
+    {
+      "offset": 100,
+      "size": 2,
+      "previous_sha256": "b413f47d13ee2fe6c845b2ee141af81de858df4ec549a58b7970bb96645bc8d2",
+      "replacement_hex": "1600"
+    },
+    {
+      "offset": 104,
+      "size": 2,
+      "previous_sha256": "b413f47d13ee2fe6c845b2ee141af81de858df4ec549a58b7970bb96645bc8d2",
+      "replacement_hex": "1600"
+    },
+    {
+      "offset": 112,
+      "size": 1,
+      "previous_sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71",
+      "replacement_hex": "01"
+    },
+    {
+      "offset": 116,
+      "size": 1,
+      "previous_sha256": "084fed08b978af4d7d196a7446a86b58009e636b611db16211b65a9aadff29c5",
+      "replacement_hex": "01"
+    },
+    {
+      "offset": 120,
+      "size": 2,
+      "previous_sha256": "15a0a278f5e015f33f6b783f0016306533752fed06044467cd02a0f947bec46c",
+      "replacement_hex": "0000"
+    },
+    {
+      "offset": 124,
+      "size": 2,
+      "previous_sha256": "15a0a278f5e015f33f6b783f0016306533752fed06044467cd02a0f947bec46c",
+      "replacement_hex": "0000"
+    },
+    {
+      "offset": 128,
+      "size": 2,
+      "previous_sha256": "15a0a278f5e015f33f6b783f0016306533752fed06044467cd02a0f947bec46c",
+      "replacement_hex": "0000"
+    },
+    {
+      "offset": 132,
+      "size": 3,
+      "previous_sha256": "f05e7dfd5c005433273ce43ac5970762c9c688f2eae4e0a45401785f96aaad5e",
+      "replacement_hex": "b41e25"
+    },
+    {
+      "offset": 136,
+      "size": 3,
+      "previous_sha256": "f05e7dfd5c005433273ce43ac5970762c9c688f2eae4e0a45401785f96aaad5e",
+      "replacement_hex": "b41e25"
+    },
+    {
+      "offset": 140,
+      "size": 1,
+      "previous_sha256": "e52d9c508c502347344d8c07ad91cbd6068afc75ff6292f062a09ca381c89e71",
+      "replacement_hex": "05"
+    },
+    {
+      "offset": 144,
+      "size": 2,
+      "previous_sha256": "47dc540c94ceb704a23875c11273e16bb0b8a87aed84de911f2133568115f254",
+      "replacement_hex": "0010"
+    },
+    {
+      "offset": 152,
+      "size": 3,
+      "previous_sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c",
+      "replacement_hex": "942225"
+    },
+    {
+      "offset": 156,
+      "size": 3,
+      "previous_sha256": "cf7605ed1bc735f6c825554154627467e1cac9df54cee8699218ed434603c568",
+      "replacement_hex": "942226"
+    },
+    {
+      "offset": 160,
+      "size": 3,
+      "previous_sha256": "cf7605ed1bc735f6c825554154627467e1cac9df54cee8699218ed434603c568",
+      "replacement_hex": "942226"
+    },
+    {
+      "offset": 164,
+      "size": 3,
+      "previous_sha256": "ef944f321907a5b6eaf1a95dc9d45c110d0b2d7ba13bbba78b61c519fb85430c",
+      "replacement_hex": "0cc800"
+    },
+    {
+      "offset": 168,
+      "size": 3,
+      "previous_sha256": "ef944f321907a5b6eaf1a95dc9d45c110d0b2d7ba13bbba78b61c519fb85430c",
+      "replacement_hex": "2c6d04"
+    },
+    {
+      "offset": 172,
+      "size": 1,
+      "previous_sha256": "e77b9a9ae9e30b0dbdb6f510a264ef9de781501d7b6b92ae89eb059c5ab743db",
+      "replacement_hex": "06"
+    },
+    {
+      "offset": 184,
+      "size": 3,
+      "previous_sha256": "14ee33d2c86d0a915e8a1d75d0603819e74f583d15e6e4e8d1df916f26d0e3fd",
+      "replacement_hex": "000026"
+    },
+    {
+      "offset": 188,
+      "size": 3,
+      "previous_sha256": "9c34eb46ddac525339e80e7152c92587cfabaa9cf5563672c43a88fdc8873500",
+      "replacement_hex": "00002b"
+    },
+    {
+      "offset": 192,
+      "size": 3,
+      "previous_sha256": "9c34eb46ddac525339e80e7152c92587cfabaa9cf5563672c43a88fdc8873500",
+      "replacement_hex": "00002b"
+    },
+    {
+      "offset": 196,
+      "size": 2,
+      "previous_sha256": "ba6e79d09900dafbd8b4716c540908da8a082646c2afe589c164adc89bd01cda",
+      "replacement_hex": "102c"
+    },
+    {
+      "offset": 200,
+      "size": 3,
+      "previous_sha256": "5500512bb2757b48aeee995bb93cb22794dacdc72de5a89b43e0c3f4e422cbff",
+      "replacement_hex": "102c00"
+    },
+    {
+      "offset": 204,
+      "size": 1,
+      "previous_sha256": "67586e98fad27da0b9968bc039a1ef34c939b9b8e523a8bef89d478608c5ecf6",
+      "replacement_hex": "05"
+    },
+    {
+      "offset": 304810,
+      "size": 54,
+      "previous_sha256": "e404484f8ec42f71979adf5119e29b242d2b55186bb00b757cc89c371c6d38c8",
+      "replacement_hex": "3046214658f279fa804600f022b800bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf"
+    },
+    {
+      "offset": 304865,
+      "size": 27,
+      "previous_sha256": "70706684c8a9d2a7bdd69ec121e1aed5ff44436b703e14fec899cdd36bed3a0f",
+      "replacement_hex": "bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf00bf"
+    },
+    {
+      "offset": 305896,
+      "size": 6,
+      "previous_sha256": "6b9f5ebbed73589983848669265dd904073e35a8bfc8f34b799a2d77c726ce3e",
+      "replacement_hex": "58f22cb800bf"
+    },
+    {
+      "offset": 354194,
+      "size": 4,
+      "previous_sha256": "22c54c9a57b2ad762b0f2c338be8c212be1c5baf7adeba726a502472887b6136",
+      "replacement_hex": "4cf2a9f9"
+    },
+    {
+      "offset": 354556,
+      "size": 4,
+      "previous_sha256": "90d0f4dca8b9cfa14674e9ea1f57cd8990bc17f089a15557bb19199796fb4535",
+      "replacement_hex": "4cf2feb8"
+    },
+    {
+      "offset": 355129,
+      "size": 3,
+      "previous_sha256": "4e4d73c3f7f8572c72a7a2265120fd9bebffd7b1d984358f36eddd3dba42c319",
+      "replacement_hex": "f2ec2d"
+    },
+    {
+      "offset": 355144,
+      "size": 1,
+      "previous_sha256": "32ebb1abcc1c601ceb9c4e3c4faba0caa5b85bb98c4f1e6612c40faa528a91c9",
+      "replacement_hex": "38"
+    },
+    {
+      "offset": 355148,
+      "size": 1,
+      "previous_sha256": "9e8e8c37a53bac77a653d590b783b2508e8ed2fed040a278bf4f4703bbd5d82d",
+      "replacement_hex": "b9"
+    },
+    {
+      "offset": 355160,
+      "size": 1,
+      "previous_sha256": "32ebb1abcc1c601ceb9c4e3c4faba0caa5b85bb98c4f1e6612c40faa528a91c9",
+      "replacement_hex": "38"
+    },
+    {
+      "offset": 355190,
+      "size": 1,
+      "previous_sha256": "2f0fd1e89b8de1d57292742ec380ea47066e307ad645f5bc3adad8a06ff58608",
+      "replacement_hex": "17"
+    },
+    {
+      "offset": 355198,
+      "size": 1,
+      "previous_sha256": "32ebb1abcc1c601ceb9c4e3c4faba0caa5b85bb98c4f1e6612c40faa528a91c9",
+      "replacement_hex": "38"
+    },
+    {
+      "offset": 355214,
+      "size": 1,
+      "previous_sha256": "9e8e8c37a53bac77a653d590b783b2508e8ed2fed040a278bf4f4703bbd5d82d",
+      "replacement_hex": "b9"
+    },
+    {
+      "offset": 355229,
+      "size": 3,
+      "previous_sha256": "4e4d73c3f7f8572c72a7a2265120fd9bebffd7b1d984358f36eddd3dba42c319",
+      "replacement_hex": "f2ec2d"
+    },
+    {
+      "offset": 355244,
+      "size": 3,
+      "previous_sha256": "c90441ec143ca1372c97d2914e2e2328b9c5a37e3a35ad5fbceec22f41cf0a4d",
+      "replacement_hex": "98bc24"
+    },
+    {
+      "offset": 356664,
+      "size": 4,
+      "previous_sha256": "83a71f31d8291d10f0fb49bfa8244c13f4ce0dc648f857fe955a93c1aed21bb4",
+      "replacement_hex": "4bf21cbd"
+    }
+  ],
+  "hardware_qualified": false,
+  "ac_target_admitted": false,
+  "source_hashes": {
+    "firmware/hdpro/README.md": "7d576d601100c1cf2c8c0ff4d0862fb27bfb4749868af145c944860f08d9bb4c",
+    "firmware/hdpro/legacy_pro_capture.py": "b291c8d45a3c9fa402af575c0dc72559a68057c00a418a744c8b6e58f1e71ef1",
+    "firmware/hdpro/legacy_pro_clock.c": "4bb4647fbf63bcbcaaf9a74c8af8bad4c7b2db412ca9da5ee67a233944d6a005",
+    "firmware/hdpro/legacy_pro_clock.h": "add5e48df192766e278ec10617f875e314fcf5041a9f19b73ec5f3356fbaa173",
+    "firmware/hdpro/legacy_pro_core.c": "405b9ea889cdb7bb681562342a02faff6d65478bbdb19de2a7bb26f0950bbf64",
+    "firmware/hdpro/legacy_pro_core.h": "8917ccf43040dcb3647fe1c131142b7a9e6624b26cf2e2ffda1c4898439e5082",
+    "firmware/hdpro/legacy_pro_cv610_regs.c": "6893e4e1a321364240e196ee718483dd724401053333a90ad5070110104b5228",
+    "firmware/hdpro/legacy_pro_cv610_regs.h": "43c5935ff2696928c2324da289720ceca8c250835b4d8906b477a1cea67b49a7",
+    "firmware/hdpro/legacy_pro_cv610_sensor.c": "0345187af3d9e7596a78e33adb481e146ac07415c70d6eb45e6e4da1932f2e44",
+    "firmware/hdpro/legacy_pro_cv610_sensor.h": "cf8b47d7ede2b026170a8ed9dcf96ea176c1b4f39d112ebc74ba562c7bb44410",
+    "firmware/hdpro/legacy_pro_gain_q10.inc": "c523f788dc309987416e49ba699597e48172b158b854dbb60ea1ce9138fa5c2f",
+    "firmware/hdpro/legacy_pro_linux_io.c": "645e00ff8f4469c8729728ea0fc876d91b05345a5070f6f749f31770de9ab72f",
+    "firmware/hdpro/legacy_pro_linux_io.h": "85349519e97df322c7479b778f9cc4ffca9150ada5feb6ab1f27054946dabbba",
+    "firmware/hdpro/legacy_pro_patch.py": "421ba2312b864c5784136bb5d04d9cd5f1abc92d62bb1d654fa93b7fc1484ea0",
+    "firmware/hdpro/legacy_pro_programs.inc": "b7912b7319e74b372b1b1ef3f2b156269ffb4653fe918beacbfb69d099c12b60",
+    "firmware/hdpro/legacy_pro_startup.py": "db338f6f156cb5f2acb04c0c336f4fdef36939291f8099779e7885be4831b107"
+  },
+  "limitations": [
+    "Connector/lane order",
+    "Sensor input timing and odd-height acceptance",
+    "RAW/Bayer interpretation on CV610",
+    "IQ/AWB/black-level calibration"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "schema": "ascent.hdpro.assets.v1",
+  "application_sha256": "3ebdc5825e018da16c7c07101324568d35fd846eb41aaf4caad96749061974ad",
+  "hardware_qualified": false,
+  "ac_target_admitted": true,
+  "files": {
+    "README.md": "6bdbb441b9866222ad2c855600db3e6d45dc47c310d20c4b35886b4286897a37",
+    "hdpro_build.py": "0abd1fa56173d5798a32cc61b950c9f6240756b2168c82698f62302f78973e57",
+    "legacy_pro_capture.py": "b291c8d45a3c9fa402af575c0dc72559a68057c00a418a744c8b6e58f1e71ef1",
+    "legacy_pro_clock.c": "4bb4647fbf63bcbcaaf9a74c8af8bad4c7b2db412ca9da5ee67a233944d6a005",
+    "legacy_pro_clock.h": "add5e48df192766e278ec10617f875e314fcf5041a9f19b73ec5f3356fbaa173",
+    "legacy_pro_core.c": "405b9ea889cdb7bb681562342a02faff6d65478bbdb19de2a7bb26f0950bbf64",
+    "legacy_pro_core.h": "8917ccf43040dcb3647fe1c131142b7a9e6624b26cf2e2ffda1c4898439e5082",
+    "legacy_pro_cv610_regs.c": "6893e4e1a321364240e196ee718483dd724401053333a90ad5070110104b5228",
+    "legacy_pro_cv610_regs.h": "43c5935ff2696928c2324da289720ceca8c250835b4d8906b477a1cea67b49a7",
+    "legacy_pro_cv610_sensor.c": "0345187af3d9e7596a78e33adb481e146ac07415c70d6eb45e6e4da1932f2e44",
+    "legacy_pro_cv610_sensor.h": "cf8b47d7ede2b026170a8ed9dcf96ea176c1b4f39d112ebc74ba562c7bb44410",
+    "legacy_pro_gain_q10.inc": "c523f788dc309987416e49ba699597e48172b158b854dbb60ea1ce9138fa5c2f",
+    "legacy_pro_linux_io.c": "645e00ff8f4469c8729728ea0fc876d91b05345a5070f6f749f31770de9ab72f",
+    "legacy_pro_linux_io.h": "85349519e97df322c7479b778f9cc4ffca9150ada5feb6ab1f27054946dabbba",
+    "legacy_pro_patch.py": "421ba2312b864c5784136bb5d04d9cd5f1abc92d62bb1d654fa93b7fc1484ea0",
+    "legacy_pro_programs.inc": "b7912b7319e74b372b1b1ef3f2b156269ffb4653fe918beacbfb69d099c12b60",
+    "legacy_pro_startup.py": "db338f6f156cb5f2acb04c0c336f4fdef36939291f8099779e7885be4831b107",
+    "portable_patch/hdpro-19.2.14-extension.bin": "2c00799bdecb4abf74320bda5935704516315ff8d07f8c68054ee646e66a5a4f",
+    "portable_patch/hdpro-19.2.14-patch.json": "8601be60d43e9db6a1832faeaec4101421097fe58afabff8f426f915c813da42"
+  },
+  "build_availability": "TESTING"
+}

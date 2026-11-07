@@ -1,0 +1,52 @@
+[
+    {
+        "plugin":  "gstcoreelements.dll",
+        "license":  "LGPL-2.1-or-later",
+        "source_module":  "gstreamer"
+    },
+    {
+        "plugin":  "gsttypefindfunctions.dll",
+        "license":  "LGPL-2.1-or-later",
+        "source_module":  "gst-plugins-base"
+    },
+    {
+        "plugin":  "gstplayback.dll",
+        "license":  "LGPL-2.1-or-later",
+        "source_module":  "gst-plugins-base"
+    },
+    {
+        "plugin":  "gstvideoconvertscale.dll",
+        "license":  "LGPL-2.1-or-later",
+        "source_module":  "gst-plugins-base"
+    },
+    {
+        "plugin":  "gstrtsp.dll",
+        "license":  "LGPL-2.1-or-later",
+        "source_module":  "gst-plugins-good"
+    },
+    {
+        "plugin":  "gstrtp.dll",
+        "license":  "LGPL-2.1-or-later",
+        "source_module":  "gst-plugins-good"
+    },
+    {
+        "plugin":  "gstrtpmanager.dll",
+        "license":  "LGPL-2.1-or-later",
+        "source_module":  "gst-plugins-good"
+    },
+    {
+        "plugin":  "gstudp.dll",
+        "license":  "LGPL-2.1-or-later",
+        "source_module":  "gst-plugins-good"
+    },
+    {
+        "plugin":  "gstvideoparsersbad.dll",
+        "license":  "LGPL-2.1-or-later",
+        "source_module":  "gst-plugins-bad"
+    },
+    {
+        "plugin":  "gstd3d11.dll",
+        "license":  "LGPL-2.1-or-later",
+        "source_module":  "gst-plugins-bad"
+    }
+]

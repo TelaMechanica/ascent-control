@@ -1,0 +1,4 @@
+<Project><ItemGroup>
+  <Compile Remove="$(MSBuildProjectDirectory)\obj\**\*.cs;$(MSBuildProjectDirectory)\bin\**\*.cs" />
+  <Page Remove="$(MSBuildProjectDirectory)\obj\**\*.xaml;$(MSBuildProjectDirectory)\bin\**\*.xaml" />
+</ItemGroup></Project>
