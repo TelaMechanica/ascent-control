@@ -9,3 +9,7 @@
 - MIG-07: reproducible public/private builds and clean install/upgrade acceptance; retain all hardware gates.
 
 These are implementation tasks, not completed claims. Assign concrete GitHub issues and attach evidence as work lands.
+
+## Developer preview preparation 2026 11 06
+
+Current documentation scope: README.md, docs/STATUS.md, docs/TASKS.md and docs/PUBLICATION_POLICY.md. Preserve pending runtime-import review. Complete file-level provenance and intended source-available license review before promoting a public developer preview. Keep AC+ private pending operator-reported Caddx guidance and explicit publication scope. This batch changes no application behavior and creates no installer.
