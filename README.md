@@ -53,6 +53,6 @@ Tests use synthetic inputs and do not connect to devices. The source receipt pin
 
 ## Source and permissions
 
-[Source review](docs/SOURCE_REVIEW.md) records origin, scope and the operator-reported Caddx verbal approval for CRSF/MSP. Existing provenance comments are retained. That report does not claim blanket rights to vendor firmware or private capabilities. Final project use/license terms remain under review; no broad resale or redistribution permission is added by publishing these files.
+[Source inventory](docs/SOURCE_REVIEW.md) lists the imported modules, hashes and dependency scope. Existing technical attribution is retained. Final project use/license terms remain under review; third-party material retains its own terms.
 
-Service Mode remains private pending Caddx guidance. Widget releases that depend on it remain gated. See [current status](docs/STATUS.md) and [tasks](docs/TASKS.md) for the remaining application migration. This is a technical source snapshot, not a downloadable desktop release.
+Service Mode and dependent widget deployment are not included. See [current status](docs/STATUS.md) and [tasks](docs/TASKS.md) for the remaining application migration. This is a technical source snapshot, not a downloadable desktop release.
