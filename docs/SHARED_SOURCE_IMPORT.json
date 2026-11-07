@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "scope": "shared_pure_python_batch_1_not_full_application",
+  "files": [
+    {
+      "path": "runtime/caddx_fw_version.py",
+      "sha256": "d85c61227e2543f4a5eafa55a1ed4d9461effa850185ec2bd58ca1a4563ec820",
+      "bytes": 5537,
+      "import_mode": "byte_identical"
+    },
+    {
+      "path": "runtime/caddx_mgrs.py",
+      "sha256": "2af9c14ce8246c7cebedf14bb91dd4c7c12abe9335b5fa3f0ca83cdcca429c7e",
+      "bytes": 8586,
+      "import_mode": "byte_identical"
+    },
+    {
+      "path": "runtime/caddx_tile_image.py",
+      "sha256": "3362291ff44cbf09ed44d4814fe5efb198925eed66689e033d4f411b93fdd568",
+      "bytes": 6753,
+      "import_mode": "byte_identical"
+    },
+    {
+      "path": "runtime/caddx_crsf.py",
+      "sha256": "3bbec22a6ef766c54a17f6d6b3ec3e57da29c49ec97f8be51122aa5d2421b1c0",
+      "bytes": 5906,
+      "import_mode": "byte_identical"
+    },
+    {
+      "path": "runtime/caddx_msp.py",
+      "sha256": "a357886345a2dd76b88efce8eeaa9b96484a78f795675f389b8190845387795f",
+      "bytes": 11605,
+      "import_mode": "byte_identical"
+    },
+    {
+      "path": "runtime/caddx_msp_osd.py",
+      "sha256": "59219ab0eef22d4c70927c3937fd3091e0bea1c394682e28ec0f61017bdd4bc8",
+      "bytes": 10967,
+      "import_mode": "byte_identical"
+    },
+    {
+      "path": "tests/test_crsf_and_osd.py",
+      "sha256": "d03e85be1ae926500cacf199ce0cb48f9287ea07c348df3b716239061f8162b1",
+      "bytes": 9735,
+      "import_mode": "byte_identical"
+    },
+    {
+      "path": "tests/test_phase475_hid_encoding.py",
+      "sha256": "eed233b67a0f9da44121df096f332e0311a22d7a84a8a02919f4ab67fde45081",
+      "bytes": 1275,
+      "import_mode": "byte_identical"
+    }
+  ]
+}
