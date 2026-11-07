@@ -1,6 +1,6 @@
 # Ascent Control shared code
 
-This repository contains six executable Python helpers used by Ascent Control, their regression tests, and package/dependency contracts. Python 3.10 or later is required. The helpers and offline CLI use only the standard library.
+This repository contains six shared Python helpers, their offline CLI and regression tests, plus standalone Z8, Z40 and Hub firmware grafting source. Python 3.10 or later is required. The six shared helpers use only the standard library; camera grafting uses additional pinned dependencies and external tools.
 
 ## Included code
 
@@ -13,7 +13,11 @@ This repository contains six executable Python helpers used by Ascent Control, t
 | `runtime/caddx_mgrs.py` | Convert MGRS, UTM and WGS84 coordinates; reject unsupported polar regions. |
 | `runtime/caddx_tile_image.py` | Inspect PNG/JPEG headers and enforce tile dimensions; does not decode pixels. |
 
-The code runs locally without WSL or attached hardware. It does not include the full desktop application, Service Mode, receiver installation, widget deployment, vendor firmware or an MSI.
+The six shared helpers run locally without WSL or attached hardware. Camera-grafting tool requirements are documented separately. This repository does not include the full desktop application, Service Mode, receiver installation, widget deployment, vendor firmware or an MSI.
+
+## Camera grafting source
+
+[Camera CLI instructions](docs/CAMERA_GRAFTING.md) cover source-image extraction, unchanged-donor gate 1, application build and independent verification, and target-specific gate 2. Vendor images and extracted assets are supplied locally and are not included. The current grafts target normal 19.2.14; these host checks do not establish hardware qualification.
 
 ## Run the offline tools
 
@@ -44,12 +48,14 @@ print(caddx_crsf.crc8_d5(bytes([1, 2, 3])))
 
 ```sh
 python -m pip install -r requirements-dev.txt
+python -m pip install --require-hashes -r firmware/mode_a/requirements-builder.txt
 python -m pytest tests -q
 python tools/check_public_runtime.py
+python tools/check_camera_source.py
 python tools/check_tree.py
 ```
 
-Tests use synthetic inputs and do not connect to devices. The source receipt pins imported bytes; the runtime checker verifies the inventory and standard-library dependency closure.
+Default tests use synthetic inputs and do not connect to devices. Camera GOT/PLT tests require external ARM binutils; see the camera instructions. The source receipt pins imported bytes; the runtime checker verifies the inventory and standard-library dependency closure.
 
 ## Source and permissions
 
