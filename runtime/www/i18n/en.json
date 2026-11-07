@@ -1,0 +1,12 @@
+{
+  "locale": "en",
+  "name": "English",
+  "native": "English",
+  "provenance": {
+    "source": "the application itself; English is the source language",
+    "machine_translated": false,
+    "reviewed_by_speaker": true,
+    "safety_strings_needing_review": []
+  },
+  "strings": {}
+}

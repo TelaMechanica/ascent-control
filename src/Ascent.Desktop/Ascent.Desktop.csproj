@@ -1,0 +1,857 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>AscentControl</AssemblyName>
+    <RootNamespace>Ascent.Desktop</RootNamespace>
+    <ApplicationTitle>Ascent Control</ApplicationTitle>
+    <Product>Ascent Control</Product>
+    <ApplicationIcon>Assets\AscentControl.ico</ApplicationIcon>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AscentFileVersion Condition="'$(AscentFileVersion)' == ''">0.0.0.0</AscentFileVersion>
+    <Version>$(AscentFileVersion)</Version>
+    <FileVersion>$(AscentFileVersion)</FileVersion>
+    <AssemblyVersion>$(AscentFileVersion)</AssemblyVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.4191.47" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\AscentControl.ico" />
+    <Resource Include="Assets\AscentControlIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\LICENSE">
+      <Link>LICENSE</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\PROJECT_LICENSE_SCOPE.json">
+      <Link>PROJECT_LICENSE_SCOPE.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\THIRD-PARTY-NOTICES.md">
+      <Link>THIRD-PARTY-NOTICES.md</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\THIRD-PARTY-SOURCES.json">
+      <Link>THIRD-PARTY-SOURCES.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\README.md">
+      <Link>firmware\hdpro\README.md</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\assets.json">
+      <Link>firmware\hdpro\assets.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\hdpro_build.py">
+      <Link>firmware\hdpro\hdpro_build.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_capture.py">
+      <Link>firmware\hdpro\legacy_pro_capture.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_clock.c">
+      <Link>firmware\hdpro\legacy_pro_clock.c</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_clock.h">
+      <Link>firmware\hdpro\legacy_pro_clock.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_core.c">
+      <Link>firmware\hdpro\legacy_pro_core.c</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_core.h">
+      <Link>firmware\hdpro\legacy_pro_core.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_cv610_regs.c">
+      <Link>firmware\hdpro\legacy_pro_cv610_regs.c</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_cv610_regs.h">
+      <Link>firmware\hdpro\legacy_pro_cv610_regs.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_cv610_sensor.c">
+      <Link>firmware\hdpro\legacy_pro_cv610_sensor.c</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_cv610_sensor.h">
+      <Link>firmware\hdpro\legacy_pro_cv610_sensor.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_gain_q10.inc">
+      <Link>firmware\hdpro\legacy_pro_gain_q10.inc</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_linux_io.c">
+      <Link>firmware\hdpro\legacy_pro_linux_io.c</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_linux_io.h">
+      <Link>firmware\hdpro\legacy_pro_linux_io.h</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_patch.py">
+      <Link>firmware\hdpro\legacy_pro_patch.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_programs.inc">
+      <Link>firmware\hdpro\legacy_pro_programs.inc</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\legacy_pro_startup.py">
+      <Link>firmware\hdpro\legacy_pro_startup.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\portable_patch\hdpro-19.2.14-extension.bin">
+      <Link>firmware\hdpro\portable_patch\hdpro-19.2.14-extension.bin</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\hdpro\portable_patch\hdpro-19.2.14-patch.json">
+      <Link>firmware\hdpro\portable_patch\hdpro-19.2.14-patch.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\arm_tools.py">
+      <Link>runtime\device_tools\mode_a\arm_tools.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\ascent_g_sky_image_tool.py">
+      <Link>runtime\device_tools\mode_a\ascent_g_sky_image_tool.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\deflate_distance.py">
+      <Link>runtime\device_tools\mode_a\deflate_distance.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\direct_camera.py">
+      <Link>runtime\device_tools\mode_a\direct_camera.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\emu.py">
+      <Link>runtime\device_tools\mode_a\emu.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\extract.py">
+      <Link>runtime\device_tools\mode_a\extract.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\fextent.py">
+      <Link>runtime\device_tools\mode_a\fextent.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\fs_backend.py">
+      <Link>runtime\device_tools\mode_a\fs_backend.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\hub_build.py">
+      <Link>runtime\device_tools\mode_a\hub_build.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\hub_gate2.py">
+      <Link>runtime\device_tools\mode_a\hub_gate2.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\mode_a_build.py">
+      <Link>runtime\device_tools\mode_a\mode_a_build.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\rc_displayport.py">
+      <Link>runtime\device_tools\mode_a\rc_displayport.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\rc_displayport_transport.py">
+      <Link>runtime\device_tools\mode_a\rc_displayport_transport.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\sensor_lifecycle.py">
+      <Link>runtime\device_tools\mode_a\sensor_lifecycle.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\ubifs_inventory.py">
+      <Link>runtime\device_tools\mode_a\ubifs_inventory.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\variant_identity.py">
+      <Link>runtime\device_tools\mode_a\variant_identity.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\verify_hub_app.py">
+      <Link>runtime\device_tools\mode_a\verify_hub_app.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\verify_hub_config.py">
+      <Link>runtime\device_tools\mode_a\verify_hub_config.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\verify_variant_identity.py">
+      <Link>runtime\device_tools\mode_a\verify_variant_identity.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\verify_z40_app.py">
+      <Link>runtime\device_tools\mode_a\verify_z40_app.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\verify_z8_app.py">
+      <Link>runtime\device_tools\mode_a\verify_z8_app.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\z40_build.py">
+      <Link>runtime\device_tools\mode_a\z40_build.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\z8_build.py">
+      <Link>runtime\device_tools\mode_a\z8_build.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\firmware\mode_a\z8_gate2.py">
+      <Link>runtime\device_tools\mode_a\z8_gate2.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\Configure-AscentRNDIS.ps1">
+      <Link>runtime\Configure-AscentRNDIS.ps1</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_cgc.py">
+      <Link>runtime\caddx_cgc.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_crsf.py">
+      <Link>runtime\caddx_crsf.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_device_config.py">
+      <Link>runtime\caddx_device_config.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_firmware_upgrade.py">
+      <Link>runtime\caddx_firmware_upgrade.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_firmware_variant.py">
+      <Link>runtime\caddx_firmware_variant.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_fw_version.py">
+      <Link>runtime\caddx_fw_version.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_hid.py">
+      <Link>runtime\caddx_hid.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_legacy_serial.py">
+      <Link>runtime\caddx_legacy_serial.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_mgrs.py">
+      <Link>runtime\caddx_mgrs.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_msp.py">
+      <Link>runtime\caddx_msp.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_msp_osd.py">
+      <Link>runtime\caddx_msp_osd.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_read_bundle.py">
+      <Link>runtime\caddx_read_bundle.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_relay_factory.py">
+      <Link>runtime\caddx_relay_factory.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_relay_network_control.py">
+      <Link>runtime\caddx_relay_network_control.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_relay_press.py">
+      <Link>runtime\caddx_relay_press.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_relay_qos.py">
+      <Link>runtime\caddx_relay_qos.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_repeater.py">
+      <Link>runtime\caddx_repeater.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_sky_rndis_provision.py">
+      <Link>runtime\caddx_sky_rndis_provision.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_sky_user_cfg.py">
+      <Link>runtime\caddx_sky_user_cfg.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_tile_image.py">
+      <Link>runtime\caddx_tile_image.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\caddx_vendor_write.py">
+      <Link>runtime\caddx_vendor_write.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\dev_harness.py">
+      <Link>runtime\dev_harness.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_capability.py">
+      <Link>runtime\device_capability.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_config_store.py">
+      <Link>runtime\device_config_store.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_naming.py">
+      <Link>runtime\device_naming.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\device_session.py">
+      <Link>runtime\device_session.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\experimental.py">
+      <Link>runtime\experimental.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\firmware_builder.py">
+      <Link>runtime\firmware_builder.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\firmware_camera_support.py">
+      <Link>runtime\firmware_camera_support.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\firmware_native_backend.py">
+      <Link>runtime\firmware_native_backend.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\first_run.py">
+      <Link>runtime\first_run.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\hid_source.py">
+      <Link>runtime\hid_source.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\known_receivers.py">
+      <Link>runtime\known_receivers.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\local_settings.py">
+      <Link>runtime\local_settings.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\log_redaction.py">
+      <Link>runtime\log_redaction.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\max_19_2_14.py">
+      <Link>runtime\max_19_2_14.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\operation_audit.py">
+      <Link>runtime\operation_audit.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\receiver_capabilities.py">
+      <Link>runtime\receiver_capabilities.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\receiver_identity.py">
+      <Link>runtime\receiver_identity.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\regional_rf_mode.py">
+      <Link>runtime\regional_rf_mode.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\rf_band_plans.py">
+      <Link>runtime\rf_band_plans.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\rf_plan_api.py">
+      <Link>runtime\rf_plan_api.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\vendor_rf_telemetry.py">
+      <Link>runtime\vendor_rf_telemetry.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\vendor_templates\fpv_bb_freq.json">
+      <Link>runtime\vendor_templates\fpv_bb_freq.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\vendor_templates\mipi_hub.json">
+      <Link>runtime\vendor_templates\mipi_hub.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\vendor_templates\msp_rc_cfg.json">
+      <Link>runtime\vendor_templates\msp_rc_cfg.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\vtx_nicknames.py">
+      <Link>runtime\vtx_nicknames.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\windows_driver_repair.py">
+      <Link>runtime\windows_driver_repair.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\app.css">
+      <Link>runtime\www\app.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\app.js">
+      <Link>runtime\www\app.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\ascent_skull.png">
+      <Link>runtime\www\assets\ascent_skull.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_CamHub.png">
+      <Link>runtime\www\assets\devices\Ascent_CamHub.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_GT.png">
+      <Link>runtime\www\assets\devices\Ascent_GT.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_GTPro.png">
+      <Link>runtime\www\assets\devices\Ascent_GTPro.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_GTProZ40.png">
+      <Link>runtime\www\assets\devices\Ascent_GTProZ40.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_GTProZ8.png">
+      <Link>runtime\www\assets\devices\Ascent_GTProZ8.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_GT_Max_HF_Z40.png">
+      <Link>runtime\www\assets\devices\Ascent_GT_Max_HF_Z40.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_GT_Max_HF_Z8.png">
+      <Link>runtime\www\assets\devices\Ascent_GT_Max_HF_Z8.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_GT_Max_Hub.png">
+      <Link>runtime\www\assets\devices\Ascent_GT_Max_Hub.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_GT_Max_WF.png">
+      <Link>runtime\www\assets\devices\Ascent_GT_Max_WF.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_GT_Max_WF_Z40.png">
+      <Link>runtime\www\assets\devices\Ascent_GT_Max_WF_Z40.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_GT_Max_WF_Z8.png">
+      <Link>runtime\www\assets\devices\Ascent_GT_Max_WF_Z8.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_Goggles.png">
+      <Link>runtime\www\assets\devices\Ascent_Goggles.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_LitePlus.png">
+      <Link>runtime\www\assets\devices\Ascent_LitePlus.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_Lite_VTX.png">
+      <Link>runtime\www\assets\devices\Ascent_Lite_VTX.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_RC.png">
+      <Link>runtime\www\assets\devices\Ascent_RC.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_Relay.png">
+      <Link>runtime\www\assets\devices\Ascent_Relay.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_VRX.png">
+      <Link>runtime\www\assets\devices\Ascent_VRX.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_VRXMAX.png">
+      <Link>runtime\www\assets\devices\Ascent_VRXMAX.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_VRXPro.png">
+      <Link>runtime\www\assets\devices\Ascent_VRXPro.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_VRX_Cine.png">
+      <Link>runtime\www\assets\devices\Ascent_VRX_Cine.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_VRX_MAX_WF.png">
+      <Link>runtime\www\assets\devices\Ascent_VRX_MAX_WF.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\devices\ascent_repeater.png">
+      <Link>runtime\www\assets\devices\ascent_repeater.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\PROVENANCE.json">
+      <Link>runtime\www\assets\rc\PROVENANCE.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\README.md">
+      <Link>runtime\www\assets\rc\README.md</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\SOURCE_README.txt">
+      <Link>runtime\www\assets\rc\SOURCE_README.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\png\radiomaster_ax12.png">
+      <Link>runtime\www\assets\rc\png\radiomaster_ax12.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\png\radiomaster_boxer.png">
+      <Link>runtime\www\assets\rc\png\radiomaster_boxer.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\png\radiomaster_gx12.png">
+      <Link>runtime\www\assets\rc\png\radiomaster_gx12.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\png\radiomaster_pocket.png">
+      <Link>runtime\www\assets\rc\png\radiomaster_pocket.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\png\radiomaster_tx16s.png">
+      <Link>runtime\www\assets\rc\png\radiomaster_tx16s.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\png\radiomaster_zorro.png">
+      <Link>runtime\www\assets\rc\png\radiomaster_zorro.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\png\rog_ally.png">
+      <Link>runtime\www\assets\rc\png\rog_ally.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\png\controller.png">
+      <Link>runtime\www\assets\rc\png\controller.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\png\tbs_tango_2.png">
+      <Link>runtime\www\assets\rc\png\tbs_tango_2.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\svg\radiomaster_ax12.svg">
+      <Link>runtime\www\assets\rc\svg\radiomaster_ax12.svg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\svg\radiomaster_boxer.svg">
+      <Link>runtime\www\assets\rc\svg\radiomaster_boxer.svg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\svg\radiomaster_gx12.svg">
+      <Link>runtime\www\assets\rc\svg\radiomaster_gx12.svg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\svg\radiomaster_pocket.svg">
+      <Link>runtime\www\assets\rc\svg\radiomaster_pocket.svg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\svg\radiomaster_tx16s.svg">
+      <Link>runtime\www\assets\rc\svg\radiomaster_tx16s.svg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\svg\radiomaster_zorro.svg">
+      <Link>runtime\www\assets\rc\svg\radiomaster_zorro.svg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\svg\rog_ally.svg">
+      <Link>runtime\www\assets\rc\svg\rog_ally.svg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\svg\controller.svg">
+      <Link>runtime\www\assets\rc\svg\controller.svg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\assets\rc\svg\tbs_tango_2.svg">
+      <Link>runtime\www\assets\rc\svg\tbs_tango_2.svg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\domains\rc_source.js">
+      <Link>runtime\www\domains\rc_source.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\domains\rf_diagnostics.js">
+      <Link>runtime\www\domains\rf_diagnostics.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\i18n\en.json">
+      <Link>runtime\www\i18n\en.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\i18n\ru.json">
+      <Link>runtime\www\i18n\ru.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\i18n\uk.json">
+      <Link>runtime\www\i18n\uk.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\i18n\zh-Hans.json">
+      <Link>runtime\www\i18n\zh-Hans.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\i18n.js">
+      <Link>runtime\www\i18n.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\runtime\www\index.html">
+      <Link>runtime\www\index.html</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\third_party\licenses\LGPL-2.1.txt">
+      <Link>third_party\licenses\LGPL-2.1.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\third_party\licenses\NOTICE-GStreamer.txt">
+      <Link>third_party\licenses\NOTICE-GStreamer.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\third_party\licenses\Python-3.12.7-LICENSE.txt">
+      <Link>third_party\licenses\Python-3.12.7-LICENSE.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\third_party\licenses\WebView2-LICENSE.txt">
+      <Link>third_party\licenses\WebView2-LICENSE.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\third_party\licenses\WebView2-NOTICE.txt">
+      <Link>third_party\licenses\WebView2-NOTICE.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\third_party\licenses\arm\license.txt">
+      <Link>third_party\licenses\arm\license.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\third_party\licenses\native-ubifs\LICENSE.GPL-2.0.txt">
+      <Link>third_party\licenses\native-ubifs\LICENSE.GPL-2.0.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\third_party\licenses\native-ubifs\notices\GCC-RUNTIME-EXCEPTION.txt">
+      <Link>third_party\licenses\native-ubifs\notices\GCC-RUNTIME-EXCEPTION.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\third_party\licenses\native-ubifs\notices\GPL-3.0.txt">
+      <Link>third_party\licenses\native-ubifs\notices\GPL-3.0.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\third_party\licenses\native-ubifs\notices\ZLIB-LICENSE.txt">
+      <Link>third_party\licenses\native-ubifs\notices\ZLIB-LICENSE.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\third_party\licenses\plugin-licenses.json">
+      <Link>third_party\licenses\plugin-licenses.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\pyembed\**\*" Condition="Exists('..\..\pyembed')">
+      <Link>pyembed\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\gstreamer\**\*" Condition="Exists('..\..\gstreamer')">
+      <Link>gstreamer\%(RecursiveDir)%(Filename)%(Extension)</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="..\..\release\PublicRuntimeInputs.props" />
+</Project>

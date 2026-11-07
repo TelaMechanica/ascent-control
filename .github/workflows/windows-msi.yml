@@ -1,0 +1,42 @@
+name: Windows MSI
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  windows-msi:
+    runs-on: windows-2022
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
+        with:
+          dotnet-version: '8.0.424'
+      - name: Download pinned build archives
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $deps=Get-Content release/dependencies.json -Raw|ConvertFrom-Json
+          New-Item -ItemType Directory -Path build-inputs|Out-Null
+          gh release download $deps.release_tag --repo $env:GITHUB_REPOSITORY --dir build-inputs --pattern $deps.native.name --pattern $deps.camera.name
+          if($LASTEXITCODE -ne 0){throw 'Release build inputs could not be downloaded'}
+      - name: Build and verify MSI without installing
+        shell: pwsh
+        run: |
+          $deps=Get-Content release/dependencies.json -Raw|ConvertFrom-Json
+          ./tools/Build-Installer.ps1 -OutputDir artifacts/release -NativeArchive (Join-Path build-inputs $deps.native.name) -CameraArchive (Join-Path build-inputs $deps.camera.name)
+          if($LASTEXITCODE -ne 0){throw 'MSI build failed'}
+          # Raw build records include machine-local paths and are not uploaded.
+          Get-ChildItem artifacts/release -Filter '*.msi'|ForEach-Object {
+            $hash=(Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+            "$hash  $($_.Name)"|Set-Content -Encoding ascii artifacts/release/SHA256SUMS.txt
+          }
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: public-windows-msi
+          path: |
+            artifacts/release/*.msi
+            artifacts/release/SHA256SUMS.txt
+          if-no-files-found: error

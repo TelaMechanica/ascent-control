@@ -1,13 +1,12 @@
 # Work queue
 
-- Integrate package/dependency contracts with the application loader and operation routes.
-- Implement authenticated package installation, atomic activation/rollback and stable configuration ownership.
-- Preserve the private capability boundary and fail-closed operation checks.
-- Complete the public desktop source migration without vendor binaries or device captures.
-- Finalize project use/license terms while retaining third-party attribution and terms.
-- Verify reproducible packages and clean install/upgrade behavior before distributing an installer.
-- Keep Service Mode and dependent widget deployment outside this public source snapshot.
+- Complete the integrated 0.43.54 source checks and native HD Pro build run.
+- Verify the first-release MSI from the public checkout and publish matching assets.
+- Gather tester reports for HD Pro boot, capture, timing and image quality.
+- Qualify installed Windows UI and upgrade behavior with operator evidence.
+- Extend the device/firmware coverage matrix as reproducible reports arrive.
+- Preserve the Service Mode and dependent widget boundary in AC+.
 
-Current shared runtime: six modules, byte-pinned source inventory, offline CLI and regression tests. Run the full pytest suite, runtime inventory/hash/import check and privacy check for source changes. Hardware validation requires separate authorization; host fixtures do not establish physical behavior.
-
-Issue #6: standalone camera source export includes a pinned source receipt, import/privacy checks, synthetic relocation/GOT/PLT regressions and opt-in image gate tests. Retain the exact frozen donor gates. A local source-image import cache remains proposed work; no vendor support pack is shipped.
+Default checks are offline. Hardware execution needs separate authorization.
+Failed evidence is preserved and retests are appended. Shared-helper hashes,
+public runtime inventory, camera gates and privacy checks remain mandatory.

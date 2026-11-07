@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Ascent Control installer (WiX 7, `wix build`).
+
+  Built by tools/Build-Installer.ps1, which publishes the application first and
+  passes the publish tree in as $(PublishDir). Nothing is harvested from a
+  developer's working copy: the MSI contains exactly what `dotnet publish`
+  produced, plus the SHA-256-verified interpreter staged beside it.
+
+  Two notes on what is deliberately NOT here:
+
+  * No Company or Copyright string is invented. The csproj records why - chrome
+    must not carry text nobody authorised. MSI requires a Manufacturer property,
+    so it carries the project's own name and nothing more. If this is ever
+    shipped under a real publisher, set it here and in the signing step together.
+
+  * Nothing writes into the install directory at runtime. Settings, logs, map
+    packages and nickname stores all resolve under %LOCALAPPDATA%\Ascent Control
+    (local_settings.config_root, BoundedLogWriter), which is what makes a
+    per-machine install into Program Files safe for a standard user.
+-->
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
+
+  <Package
+      Name="Ascent Control"
+      Manufacturer="Ascent Control"
+      Version="$(var.ProductVersion)"
+      UpgradeCode="353ECEAF-B574-563B-9587-39464C4F0131"
+      Scope="perMachine"
+      Compressed="yes">
+
+    <!-- Stable across versions, derived once from the product name. Changing it
+         would turn an upgrade into a second parallel installation. -->
+
+    <SummaryInformation Description="Ascent Control" />
+
+    <!-- Replace an older build in place. A downgrade is refused with a readable
+         message rather than being allowed to half-apply over a newer tree.
+
+         AllowSameVersionUpgrades IS LOAD-BEARING, not tidiness. Windows Installer
+         compares only the first THREE fields of ProductVersion, so two builds of
+         0.10.0 look identical to it: without this, a MajorUpgrade does not fire,
+         the previous product is never removed, and the new one registers ALONGSIDE
+         it. Five "Ascent Control 0.10.0" entries accumulated in Add/Remove Programs
+         that way, and the application in Program Files stayed on the first one
+         installed. -->
+    <MajorUpgrade
+        AllowSameVersionUpgrades="yes"
+        DowngradeErrorMessage="A newer version of Ascent Control is already installed. Uninstall it first if you intend to go back." />
+
+    <MediaTemplate EmbedCab="yes" />
+
+    <Launch
+        Condition="Installed OR VersionNT64"
+        Message="Ascent Control requires 64-bit Windows." />
+
+    <StandardDirectory Id="ProgramFiles6432Folder">
+      <Directory Id="INSTALLFOLDER" Name="Ascent Control" />
+    </StandardDirectory>
+
+    <StandardDirectory Id="ProgramMenuFolder">
+      <Directory Id="ShortcutFolder" Name="Ascent Control" />
+    </StandardDirectory>
+
+    <Feature Id="Main" Title="Ascent Control" Level="1">
+      <ComponentGroupRef Id="ApplicationFiles" />
+      <ComponentRef Id="StartMenuShortcut" />
+    </Feature>
+
+    <!-- The whole publish tree: the WPF host, the Python backend under runtime\,
+         the locked UI under runtime\www\, and pyembed\ when it has been staged.
+         Harvested at build time so a new backend module cannot be left out of the
+         installer by being forgotten in a hand-written component list. -->
+    <ComponentGroup Id="ApplicationFiles" Directory="INSTALLFOLDER">
+      <Files Include="$(var.PublishDir)\**" />
+    </ComponentGroup>
+
+    <Component Id="StartMenuShortcut" Directory="ShortcutFolder"
+               Guid="27C3411D-3611-5867-A96A-8819CDE97642">
+      <Shortcut Id="AscentControlShortcut"
+                Name="Ascent Control"
+                Description="Configuration and live control for Ascent receivers"
+                Target="[INSTALLFOLDER]AscentControl.exe"
+                WorkingDirectory="INSTALLFOLDER" />
+      <RemoveFolder Id="RemoveShortcutFolder" Directory="ShortcutFolder" On="uninstall" />
+      <!-- A per-machine package still needs a per-user registry key to own the
+           per-user Start Menu folder; the shortcut has no other keypath. -->
+      <RegistryValue Root="HKCU" Key="Software\Ascent Control"
+                     Name="Installed" Type="integer" Value="1" KeyPath="yes" />
+    </Component>
+
+  </Package>
+</Wix>

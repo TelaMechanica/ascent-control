@@ -1,0 +1,108 @@
+{
+  "source_archive": "rc_controller_asset_pack_fixed_rog_ally_png_svg.zip",
+  "source_archive_sha256": "91562f8117ac5892029c22bd90ec8f06e7a690be2ce116a663f789ba22e0fb09",
+  "authority": "Artwork supplied by TelaMechanica; original bytes retained",
+  "source_note": "Pack README describes generated PNG assets and simplified vector traces; not manufacturer photographs or physical identity proof",
+  "transformation": "NONE: all original PNG/SVG bytes preserved",
+  "files": [
+    {
+      "path": "svg/radiomaster_ax12.svg",
+      "bytes": 255034,
+      "sha256": "91297d7fa5ce421e4a02d943515fec4c9864d2444af9d8511bed4a6c6773046d"
+    },
+    {
+      "path": "svg/radiomaster_boxer.svg",
+      "bytes": 208312,
+      "sha256": "462eabf966216e739eccb696c242365c912b96af79d30be75fdaf2448e3f80cf"
+    },
+    {
+      "path": "svg/radiomaster_gx12.svg",
+      "bytes": 271554,
+      "sha256": "dc0019dff1bb826e0f1f88bc78d96289a88edbf51e4fa7cf3903d3977c85f2fc"
+    },
+    {
+      "path": "svg/radiomaster_pocket.svg",
+      "bytes": 145188,
+      "sha256": "7934f7a5616ffc5f0bdd22a41f95785871473b06d6cb611cf885537242c60cf1"
+    },
+    {
+      "path": "svg/radiomaster_tx16s.svg",
+      "bytes": 178877,
+      "sha256": "8b32af34a0c769ce7f210d5248efc23ebeaa2477727ced51eb1276f43840ed88"
+    },
+    {
+      "path": "svg/radiomaster_zorro.svg",
+      "bytes": 206344,
+      "sha256": "bd2ab73a6dca746849eb620e8f638a2f30f3e5d853b0c6119bf3cb839adc547a"
+    },
+    {
+      "path": "svg/rog_ally.svg",
+      "bytes": 109648,
+      "sha256": "c42786cf529217daf7352621265b9198f3e5a517e1cac01d04d45f53b75a4fbf"
+    },
+    {
+      "path": "svg/controller.svg",
+      "bytes": 179428,
+      "sha256": "b421cf74732b503ea6fb38837705ec6e94c53c9a30be7f300ad335a584f332c8"
+    },
+    {
+      "path": "svg/tbs_tango_2.svg",
+      "bytes": 164090,
+      "sha256": "a9909b5e5e44a8f050373916bbdc2f31b6ea2480e6b6217bc6706fe71589f0ee"
+    },
+    {
+      "path": "png/radiomaster_ax12.png",
+      "bytes": 1251321,
+      "sha256": "fcbccfc52bd6135a5f40db708b10ceadfee599057777101936a57c71ea3be77b"
+    },
+    {
+      "path": "png/radiomaster_boxer.png",
+      "bytes": 1084165,
+      "sha256": "e9e71ec998d637485af484de41e175dc746ec8a67e49fc9d5084e53d8ff8b8ae"
+    },
+    {
+      "path": "png/radiomaster_gx12.png",
+      "bytes": 1233353,
+      "sha256": "8db7e25fad80bad54e8986131473ac830a0463fed5312cdff7027ceeceb93fc5"
+    },
+    {
+      "path": "png/radiomaster_pocket.png",
+      "bytes": 875683,
+      "sha256": "9b4159f4512bf0de660fc3b84af8f0474b8569cf7e9bd252e1d9ab3138a3139d"
+    },
+    {
+      "path": "png/radiomaster_tx16s.png",
+      "bytes": 1045153,
+      "sha256": "40a305975c1b14e5b6b168a9f1b096c3da270eef957f0fbdc7d5b978219848de"
+    },
+    {
+      "path": "png/radiomaster_zorro.png",
+      "bytes": 1006467,
+      "sha256": "b86e5f1e2eb996100a9356c5a045700dbc69f5ad87f13c6dbee3b855e89924da"
+    },
+    {
+      "path": "png/rog_ally.png",
+      "bytes": 731321,
+      "sha256": "0ed82535b6ce4a3ed411a744b3c3536cc44b29537b12dcfd2cfcd66725cfe5c4"
+    },
+    {
+      "path": "png/controller.png",
+      "bytes": 1195628,
+      "sha256": "0101da08e5417f79c6dd29deb7eced1a543a055aed17f3040f884825f43ee2aa"
+    },
+    {
+      "path": "png/tbs_tango_2.png",
+      "bytes": 818539,
+      "sha256": "ab1396d1f64a97e9d0b421f577a8310d6980ca54d2343262c3abb3d16b816ce5"
+    }
+  ],
+  "previous_source_archive": "rc_controller_asset_pack_png_svg.zip",
+  "previous_source_archive_sha256": "73e19e44d7f241437c34fb57523c1deced0d4eb0785cc53b8622d68f44048ffb",
+  "archive_history": [
+    {
+      "archive": "rc_controller_asset_pack_updated_png_svg.zip",
+      "sha256": "5a2550d91bddb428bf77bf1b6e920847ef28ccc90ee296218b00ce234cb924dc",
+      "note": "Earlier mislabeled Ally artwork retained in Git history"
+    }
+  ]
+}

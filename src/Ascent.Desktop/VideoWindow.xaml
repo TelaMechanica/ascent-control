@@ -1,0 +1,27 @@
+<Window x:Class="Ascent.Desktop.VideoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ascent Control — Live Video"
+        Width="1280" Height="720" MinWidth="320" MinHeight="180"
+        Background="#FF050505"
+        UseLayoutRounding="True" TextOptions.TextFormattingMode="Display"
+        ShowInTaskbar="True">
+    <!--
+      A separate top-level window on purpose. WebView2 is an HwndHost whose native
+      child composes above all WPF content, so a second HwndHost in the main window
+      could only be tiled beside it, not layered - and tiling would mean shrinking
+      the approved web UI and teaching it that it no longer owns the window. See
+      VideoSurface.cs.
+
+      The status text below is the only WPF content here, and the video surface is
+      added over it in code once the stream starts, so the message is what is visible
+      before the first frame and after a failure.
+    -->
+    <Grid x:Name="Root">
+        <TextBlock x:Name="Status"
+                   HorizontalAlignment="Center" VerticalAlignment="Center"
+                   Margin="32" TextWrapping="Wrap" TextAlignment="Center"
+                   FontFamily="Cascadia Mono, IBM Plex Mono, Roboto Mono, Consolas" FontSize="11" Foreground="#FF9A948A"
+                   Text="STARTING VIDEO…"/>
+    </Grid>
+</Window>

@@ -1,0 +1,72 @@
+ASCENT Control Personal and Private Use License
+Version 1.0
+
+Copyright (c) 2026 TelaMechanica. All rights reserved except as stated below.
+Licensor and sole ASCENT Control contributor: TelaMechanica.
+Project: https://github.com/TelaMechanica/ascent-control
+
+1. Covered material
+
+This license applies to original ASCENT Control material identified in
+PROJECT_LICENSE_SCOPE.json, and only to rights held by TelaMechanica. Caddx
+firmware, donor-extracted camera applications and tuning data, vendor resources,
+and separately licensed third-party material are excluded. Their owners retain
+their rights and their applicable terms remain authoritative. No third-party
+copyright, patent or trademark permission is granted by this license.
+
+2. Permitted use
+
+You may download, inspect, compile, run and privately modify covered material
+for personal use, hobbyist development, educational use and private professional
+use. Private professional use means internal use in your own work or
+organization, including paid professional work, without distributing the
+software or providing its functionality to third parties as a product or hosted
+service. Private backups and internal copies for these uses are permitted.
+
+Ordinary work outputs are not restricted merely because the software helped
+produce them. Outputs containing covered code or third-party material remain
+subject to the applicable terms.
+
+3. Restrictions
+
+Without separate written permission from TelaMechanica, you may not sell,
+rent, sublicense, publicly redistribute or distribute covered material or
+modified versions to third parties, whether for payment or free of charge.
+You may not incorporate covered material or substantial portions into a
+third-party product, library, firmware package or hosted service; bundle it
+for resale; white label it; or charge others for access to its functionality.
+Permitted private professional use does not authorize these activities.
+
+These restrictions do not remove rights independently provided by mandatory
+law or the hosting platform. Viewing and forking within GitHub are subject to
+GitHub's terms; they do not create a general redistribution or commercial-use
+license for covered material.
+
+4. Attribution
+
+Preserve this license, the TelaMechanica attribution, the project URL and all
+applicable copyright and third-party notices in permitted copies. Identify
+private modifications so they are not attributed to TelaMechanica. Attribution
+does not expand the permissions in this license.
+
+5. Third-party components
+
+THIRD-PARTY-NOTICES.md and component license files identify separately licensed
+material. Nothing in this license limits rights granted by those licenses or
+relicenses their covered material. The project restrictions apply only to the
+covered original ASCENT Control material.
+
+6. Warranty and liability
+
+Covered material is provided AS IS, without express or implied warranties,
+including merchantability, fitness for a particular purpose and noninfringement,
+to the extent permitted by applicable law. To that extent, TelaMechanica is not
+liable for claims, losses or damages arising from its use or distribution.
+
+7. Termination and permission requests
+
+Permission under this license ends if you violate its conditions. Termination
+does not affect rights independently granted by third-party licenses or
+mandatory law. Request additional permission from TelaMechanica through the
+project's GitHub repository. No additional permission is implied by possession
+of source code, binaries or a firmware image.

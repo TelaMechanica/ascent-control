@@ -1,0 +1,58 @@
+<Window x:Class="Ascent.Desktop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        Title="Ascent Control"
+        Icon="Assets/AscentControl.ico"
+        Width="1440" Height="900" MinWidth="1180" MinHeight="720"
+        WindowState="Maximized" WindowStartupLocation="Manual"
+        UseLayoutRounding="True" TextOptions.TextFormattingMode="Display"
+        Background="#FF0A0A0A">
+    <!--
+      This window is deliberately empty of application UI. The approved web UI
+      (index.html/app.css/app.js, unmodified) is the entire interface; it is loaded
+      into the WebView2 control below from the local backend origin once that
+      backend reports it is listening. See MainWindow.xaml.cs.
+
+      The startup overlay below is the ONLY native-drawn content in this
+      application, and it is shown only before the real UI has loaded, if startup
+      fails, or while a close is draining a device operation.
+
+      Z-order note: Microsoft.Web.WebView2.Wpf.WebView2 is an HwndHost. Its native
+      child window is composed ABOVE all WPF content regardless of Grid z-order, so
+      this overlay is only actually visible while Browser.Visibility is not Visible.
+      MainWindow.xaml.cs keeps the browser hidden until the approved page has
+      loaded; that is what turned the former startup failure into a blank white
+      window instead of a readable message. Colours below track the industrial
+      application shell (carbon #0A0A0A, signal orange #FF5A1F, paper #E9E5DC).
+    -->
+    <Grid>
+        <wv2:WebView2 x:Name="Browser"/>
+
+        <Border x:Name="StartupOverlay" Background="#FF0A0A0A">
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="720"
+                    Margin="32" Padding="34" Background="#FF181818"
+                    BorderBrush="#FFFF5A1F" BorderThickness="6,1,1,1">
+            <StackPanel>
+                <TextBlock Text="ASCENT CONTROL"
+                           Foreground="#FFE9E5DC" FontFamily="Bahnschrift, Arial Narrow, Segoe UI"
+                           FontSize="34" FontWeight="Black" TextAlignment="Left"/>
+
+                <ProgressBar x:Name="StartupProgress" IsIndeterminate="True"
+                             Height="5" Margin="0,20,0,20" BorderThickness="0"
+                             Background="#FF343434" Foreground="#FFFF5A1F"/>
+
+                <TextBlock x:Name="StartupText"
+                           Text="STARTING ASCENT CONTROL…"
+                           Foreground="#FFE9E5DC" FontFamily="Cascadia Mono, IBM Plex Mono, Roboto Mono, Consolas" FontSize="13"
+                           FontWeight="Bold" TextWrapping="Wrap" TextAlignment="Left"/>
+
+                <TextBlock x:Name="StartupDetail"
+                           Visibility="Collapsed" Margin="0,16,0,0"
+                           Foreground="#FFA29F98" FontFamily="Cascadia Mono, IBM Plex Mono, Roboto Mono, Consolas" FontSize="11"
+                           TextWrapping="Wrap" TextAlignment="Left"/>
+            </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
+</Window>
