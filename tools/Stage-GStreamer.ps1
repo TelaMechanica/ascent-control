@@ -31,7 +31,7 @@
   as the sink -- so hardware decoding for both H.264 and H.265 comes free with a
   file we already need, and no codec library is redistributed. gstlibav.dll
   (avdec_*) and gstopenh264.dll are deliberately NOT staged: see the notes file
-  this script writes, and docs/GSTREAMER_BUNDLING.md.
+  this script writes and THIRD-PARTY-NOTICES.md.
 
   The archive is verified by SHA-256 before a single byte is extracted. An
   installer that silently ships whatever the network returned is worse than one
@@ -211,9 +211,9 @@ New-Item -ItemType Directory -Force -Path $licDir | Out-Null
 
 # The upstream distribution ships NO licence text of its own -- share\ carries
 # locale data and nothing else -- so the obligation cannot be met by copying. The
-# licence text is committed at installer\licenses\ and staged from there, which
+# licence text is committed at third_party\licenses\ and staged from there, which
 # also keeps the build offline-deterministic.
-$lgpl = Join-Path $here '..\installer\licenses\LGPL-2.1.txt'
+$lgpl = Join-Path $here '..\third_party\licenses\LGPL-2.1.txt'
 if (-not (Test-Path $lgpl)) { throw "The LGPL-2.1 text is missing at $lgpl; it must ship with the runtime." }
 Copy-Item $lgpl -Destination $licDir -Force
 

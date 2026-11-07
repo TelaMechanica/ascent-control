@@ -1805,7 +1805,7 @@
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mount.ubifs": "175df527fa9406e1dc8784d34112dc624ce7e2bd6eee70dfd75ddc2cecb967c4",
     "tools/Build-Installer.ps1": "f1d1dd6ad8a210c3a64eec77e9e04a882184b42c027e2958059b816c75d758e9",
     "tools/PreservedBuildOutputs.targets": "2656fa2b9d11961684626c052d0c62d01192202be6b34ffca5f06d2ce32fa378",
-    "tools/Stage-GStreamer.ps1": "fe1642fa88c62acba0d44c71ee76c4398ee298c952fd6d8418eb03fcc4cdfd89",
+    "tools/Stage-GStreamer.ps1": "efd46029ad208beba0372c6cb315fae2ec1d07cbb796d9d5ab0695a82b82ea97",
     "tools/Stage-PythonRuntime.ps1": "a59f170e595a8824242d114ac702afc28c7d599628f47feca1ee59e29233b643",
     "tools/Test-GStreamerPayload.ps1": "81249b363384445e701a96b7feb192f68da180346a0b7591553e91c28c54c2b4",
     "tools/check_camera_source.py": "11f21a9bb55dd2862e4a6f3867e83c1e0ddc7f562dea7d315049359207c7ce9f",
