@@ -66,7 +66,7 @@ def verify(root,reference,phase):
     for name in ('pyembed','gstreamer'):
         pins=profile['dependencies'][name]
         found={p.relative_to(root/name).as_posix() for p in (root/name).rglob('*') if p.is_file()}
-        if found!=set(pins):raise ValueError(name+': dependency inventory differs')
+        if found!=set(pins):raise ValueError(name+': dependency inventory differs; missing='+repr(sorted(set(pins)-found))+'; unexpected='+repr(sorted(found-set(pins))))
         for rel,want in pins.items():
             path=root/name/rel;plain(path)
             if sha(path)!=want:raise ValueError(name+': dependency file differs')
