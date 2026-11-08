@@ -243,6 +243,11 @@ function setNav(view){
  if(!allowed.includes(view))return;state.view=view;
  $$('.nav').forEach(n=>n.classList.toggle('active',n.dataset.view===view));
  for(const key of (VIEW_RELOADS[view]||[]))state[key]=null;
+ if(view==='diagnostics'){
+   state.deviceHistoryLoading=false;
+   state.deviceHistoryRequest=(state.deviceHistoryRequest||0)+1;
+   const n=netState();n.doc=null;n.error=null;n.busy=false;n.request=(n.request||0)+1;
+ }
  state.fwLoading=false;if(view==='fleet')reloadFleetPage();render();
 }
 
@@ -2463,6 +2468,52 @@ async function applySaveDir(reset){
   render();
 }
 
+function backgroundImageState(){
+  return state.backgroundImage||(state.backgroundImage={busy:false,prepared:null,error:null,message:null});
+}
+
+function backgroundImagePanel(){
+  const w=backgroundImageState();
+  let body='<p>Prepare a 1920×1080 JPEG for the goggles no-signal background.</p>'
+    +`<button class="action" id="backgroundChoose"${w.busy?' disabled':''}>${w.busy?'PREPARING…':'CHOOSE IMAGE…'}</button>`;
+  if(w.error)body+=notice(w.error,'error');
+  if(w.prepared){
+    const p=w.prepared;
+    body+=kv('Source',`${p.source.width}×${p.source.height}`,false);
+    if(p.plan.mode==='crop')body+=notice('The image was centre-cropped to 16:9. Review the preview before saving.');
+    body+=`<img alt="Prepared no-signal background" style="max-width:100%;height:auto" src="data:image/jpeg;base64,${esc(p.jpeg_base64)}">`
+      +`<div class="toolbar"><button class="action" id="backgroundSave">SAVE JPEG</button><span>${esc(p.filename)}</span></div>`;
+  }
+  if(w.message)body+=notice(w.message);
+  body+=notice('Image preparation runs on this PC. Receiver upload and apply use Service Mode in AC+.');
+  return panel('GOGGLES BACKGROUND IMAGE',body);
+}
+
+async function prepareBackgroundImage(){
+  const w=backgroundImageState();if(w.busy)return;
+  w.busy=true;w.error=null;w.message=null;render();
+  try{
+    const chosen=await fetchJson('/api/wallpaper/browse',false,0,undefined,{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
+    if(!chosen.cancelled){
+      w.prepared=null;
+      const prepared=await fetchJson('/api/wallpaper/prepare',false,75000,'Background image preparation timed out.',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({path:chosen.path})});
+      if(!prepared.ok||!prepared.prepared||!prepared.jpeg_base64)
+        throw Error(prepared.message||'The background image could not be prepared.');
+      w.prepared=prepared;
+    }
+  }catch(e){w.error=humanError(e);}
+  finally{w.busy=false;if(state.view==='settings')render();}
+}
+
+function saveBackgroundImage(){
+  const w=backgroundImageState(),p=w.prepared;if(!p)return;
+  const data=Uint8Array.from(atob(p.jpeg_base64),c=>c.charCodeAt(0));
+  const url=URL.createObjectURL(new Blob([data],{type:'image/jpeg'}));
+  const link=document.createElement('a');link.href=url;link.download=p.filename;link.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  w.message='JPEG download requested.';render();
+}
+
 function renderSettings(){
   let out=pageHead('APPLICATION SETTINGS','LOCAL PREFERENCES');
   const theme=document.body.classList.contains('day')?'day':'night';
@@ -2474,14 +2525,13 @@ function renderSettings(){
       + Object.entries(i18n.locales()).map(([code,m])=>
           `<option value="${code}"${i18n.locale()===code?' selected':''}>${esc(m.native)}</option>`).join('')
       + `</select></div></div>`)}${panel('LOCAL SAVE DIRECTORY',saveDirBody())}${''}${panel('BATTERY WARNINGS',batteryWarningsBody())}${panel('NETWORK DEVICES',networkDevicesBody())}${''}${panel('CONNECTION',kv('Ground address',state.app?.ground||'192.168.3.102')+`<div class="notice">Ground address is supplied by the launcher in this alpha. Editable connection profiles come after device discovery is qualified.</div>`)}</div>`;
-  // Goggles wallpaper lives here by the user's call (2026-10-11). It returns ''
-  // unless a goggles is connected AND Service Mode is active, so on an ordinary
-  // Settings visit with no such device it simply does not appear.
-  out+='';
-  out+='';
+  // Local preparation is available independently of receiver access.
+  out+=backgroundImagePanel();
   $('#content').innerHTML=out;
   '';
   '';
+  $('#backgroundChoose')?.addEventListener('click',prepareBackgroundImage);
+  $('#backgroundSave')?.addEventListener('click',saveBackgroundImage);
   $('#nightBtn').onclick=()=>setTheme('night'); $('#dayBtn').onclick=()=>setTheme('day');
   const ls=$('#langSel'); if(ls) ls.onchange=e=>setLanguage(e.target.value);
   $('#saveDirApply')?.addEventListener('click',()=>applySaveDir(false));
@@ -2521,21 +2571,36 @@ function renderSettings(){
 
 function netState(){ state.net=state.net||{doc:null,busy:false,error:null,drvBusy:false,drvResult:null}; return state.net; }
 
+const DIAGNOSTICS_READ_TIMEOUT_MS=25000;
+
 async function reloadUsbDriver(){
-  try{ state.usbDriver=await fetchJson('/api/usb-driver',true); }
-  catch(e){ state.usbDriver=null; }
+  const request=state.usbDriverRequest=(state.usbDriverRequest||0)+1;
+  try{
+    const doc=await fetchJson('/api/usb-driver',true,DIAGNOSTICS_READ_TIMEOUT_MS,
+      'USB driver information could not be read in time.');
+    if(request===state.usbDriverRequest)state.usbDriver=doc?.error?null:doc;
+  }catch(e){if(request===state.usbDriverRequest)state.usbDriver=null;}
 }
 
 async function reloadNet(){
-  const n=netState();
+  const n=netState(),request=n.request=(n.request||0)+1;
+  n.busy=true;n.error=null;
   try{
-    const d=await fetchJson('/api/network/adapters',true);
-    if(!d||d.error||d.ok===false){ n.doc=null; n.error=d?.error||d?.message||'ADAPTER STATE UNAVAILABLE'; return; }
-    n.doc=d; n.error=null;
-  }catch(e){ n.doc=null; n.error=e; }
-  // The driver read is separate and must not take the adapter panel down with
-  // it: an adapter list is still worth showing when the PnP scan fails.
-  await reloadUsbDriver();
+    const d=await fetchJson('/api/network/adapters',false,DIAGNOSTICS_READ_TIMEOUT_MS,
+      'Network adapter information could not be read in time.');
+    if(!d||d.error||d.ok===false||typeof d.supported!=='boolean'
+       ||(d.supported&&!Array.isArray(d.adapters)))
+      throw Error(d?.message||d?.error||'Network adapter information could not be read.');
+    if(request===n.request){n.doc=d;n.error=null;}
+  }catch(e){if(request===n.request){n.doc=null;n.error=e;}}
+  finally{
+    if(request===n.request){
+      n.busy=false;
+      if(state.view==='diagnostics')render();
+      // Driver enumeration is independent of the adapter result and its deadline.
+      reloadUsbDriver().then(()=>{if(state.view==='diagnostics')render();});
+    }
+  }
 }
 
 function usbDriverSection(){
@@ -2632,7 +2697,7 @@ function bindNet(){
      different thing from the routine reload that arriving on the page now
      does by itself. */
   const r=$('#netReload');
-  if(r) r.onclick=()=>{ n.error=null; n.doc=null; render(); reloadNet().then(render); };
+  if(r) r.onclick=()=>{ n.error=null; n.doc=null; render(); };
   (document.querySelectorAll('[data-usb-repair]')||[]).forEach(b=>{
     b.onclick=async()=>{
       const iid=b.dataset.usbRepair;
@@ -2677,18 +2742,32 @@ function bindNet(){
   });
 }
 
+async function reloadDeviceHistory(){
+  const request=state.deviceHistoryRequest=(state.deviceHistoryRequest||0)+1;
+  state.deviceHistoryLoading=true;
+  try{
+    const doc=await fetchJson('/api/device-history',false,DIAGNOSTICS_READ_TIMEOUT_MS,
+      'Device history could not be read in time.');
+    if(!doc||doc.ok!==true||!Array.isArray(doc.devices))
+      throw Error(doc?.message||doc?.error||'Device history could not be read.');
+    if(request===state.deviceHistoryRequest)state.deviceHistory=doc;
+  }catch(e){
+    if(request===state.deviceHistoryRequest)state.deviceHistory={ok:false,message:humanError(e)};
+  }finally{
+    if(request===state.deviceHistoryRequest){
+      state.deviceHistoryLoading=false;
+      if(state.view==='diagnostics')render();
+    }
+  }
+}
+
 function deviceHistoryPanel(){
   const d=state.deviceHistory;
-  if(d===undefined){
-    state.deviceHistory=null;
-    fetch('/api/device-history',{cache:'no-store'}).then(r=>r.json())
-      .then(j=>{state.deviceHistory=j; render();})
-      .catch(()=>{state.deviceHistory={ok:false,
-        message:'The backend did not answer.'}; render();});
-  }
+  if(d==null&&!state.deviceHistoryLoading)reloadDeviceHistory();
   if(!d) return panel('DEVICE HISTORY',loadingValues());
   if(!d.ok) return panel('DEVICE HISTORY',
-    notice(safeErr(d.message||'It could not be read.'),'error'));
+    notice(safeErr(d.message||'It could not be read.'),'error')
+    +'<button class="secondary" id="histRetry">RETRY</button>');
 
   const rows=(d.devices||[]);
   let body=kv('Devices remembered',String(d.count||0))
@@ -2722,6 +2801,7 @@ function renderDiagnostics(){
  let out=pageHead('DIAGNOSTICS','STOCK PROTOCOL AND HOST STATE');
  out+=deviceHistoryPanel();out+=netPanel();out+=AscentRfDiagnostics.video(vendorRfMetadata(),{panel,kv});
  $('#content').innerHTML=out;bindNet();bindDeviceHistory();
+ const n=netState();if(!n.doc&&!n.error&&!n.busy)reloadNet();
 }
 
 function liveState(){
@@ -3754,21 +3834,21 @@ function render(){
  applyNavVisibility();(views[state.view]||renderDevice)();
 }
 
-async function fetchJson(url, allowError=false, timeoutMs=0){
+async function fetchJson(url, allowError=false, timeoutMs=0, timeoutMessage='Status read timed out; current receiver state is unknown.', requestOptions={}){
   const controller=timeoutMs>0&&typeof AbortController!=='undefined'?new AbortController():null;
-  let timer=null;
+  let timer=null,timedOut=false;
   try{
     const read=(async()=>{
-      const r=await fetch(url,{cache:'no-store',...(controller?{signal:controller.signal}:{})});
+      const r=await fetch(url,{cache:'no-store',...requestOptions,...(controller?{signal:controller.signal}:{})});
       const d=await r.json();
       if(!r.ok&&!allowError) throw Error(d.error||`${r.status}`);
       return d;
     })();
-    return timeoutMs>0&&controller?await Promise.race([read,new Promise((_,reject)=>{
-      timer=setTimeout(()=>{controller?.abort();reject(Error('Status read timed out; current receiver state is unknown.'));},timeoutMs);
+    return timeoutMs>0?await Promise.race([read,new Promise((_,reject)=>{
+      timer=setTimeout(()=>{timedOut=true;controller?.abort();reject(Error(timeoutMessage));},timeoutMs);
     })]):await read;
   }catch(e){
-    const error=controller?.signal.aborted?Error('Status read timed out; current receiver state is unknown.'):e;
+    const error=(timedOut||controller?.signal.aborted)?Error(timeoutMessage):e;
     if(allowError)return {error:String(error)};
     throw error;
   }finally{if(timer!==null)clearTimeout(timer);}
@@ -4228,6 +4308,7 @@ loadAutoConnect();
 })();
 
 function bindDeviceHistory(){
+ $('#histRetry')?.addEventListener('click',()=>{state.deviceHistory=null;render();});
  const histExport=fmt=>fetch('/api/device-history/export',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({format:fmt}),cache:'no-store'}).then(r=>r.json()).then(j=>{
  const text=fmt==='csv'?(j.csv||''):JSON.stringify(j.document,null,1);const blob=new Blob([text],{type:fmt==='csv'?'text/csv':'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='ascent-device-history.'+fmt;a.click();URL.revokeObjectURL(a.href);
  }).catch(e=>{const st=$('#histState');if(st)st.textContent=safeErr(e);});
