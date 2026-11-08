@@ -5,7 +5,7 @@ param(
   [string]$NativeArchive,
   [string]$CameraArchive,
   [string]$DependencyCache,
-  [int]$BuildRevision=2
+  [int]$BuildRevision=1
 )
 $ErrorActionPreference='Stop'
 $repo=(Resolve-Path (Join-Path $PSScriptRoot '..')).ProviderPath

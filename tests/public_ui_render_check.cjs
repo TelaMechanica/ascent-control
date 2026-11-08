@@ -36,13 +36,13 @@ function classList() {
 function mk(e) {
   const el = { innerHTML: '', textContent: '', className: '', dataset: {}, style: {},
                options: [], value: '', checked: false, disabled: false, onclick: null, onchange: null,
-               addEventListener() {}, removeAttribute() {}, querySelector() { return mk(); },
+               addEventListener(type,listener) { this['on'+type]=listener; }, removeAttribute() {}, querySelector() { return mk(); },
                parentElement: { querySelector() { return mk(); }, classList: classList() } };
   el.classList = classList();
   return Object.assign(el, e || {});
 }
 
-function boot() {
+function boot(options={}) {
   const nodes = new Map();
   const ctx = {
     document: { querySelector(s) { if (!nodes.has(s)) nodes.set(s, mk()); return nodes.get(s); },
@@ -51,9 +51,10 @@ function boot() {
                 documentElement: mk() },
     window: {}, console,
     localStorage: { getItem() { return null; }, setItem() {}, removeItem() {} },
-    fetch: async () => ({ ok: true, json: async () => ({}) }),
+    fetch: options.fetch || (async () => ({ ok: true, json: async () => ({}) })),
+    AbortController, atob: value=>Buffer.from(value,'base64').toString('binary'),
     URL: { createObjectURL: () => 'blob:', revokeObjectURL() {} }, Blob: class {},
-    setInterval: () => 0, clearInterval() {}, setTimeout: () => 0,
+    setInterval: () => 0, clearInterval() {}, setTimeout: options.setTimeout || (() => 0), clearTimeout: options.clearTimeout || (() => {}),
     Number, Math, Object, Array, String, JSON, Boolean, Date, isNaN, parseInt,
     parseFloat, Error, RegExp, Promise, Set, Map,
   };
@@ -61,12 +62,14 @@ function boot() {
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync('runtime/www/i18n.js', 'utf8'), ctx, { filename: 'i18n.js' });
   vm.runInContext(require(require('path').join(process.cwd(),'tests/helpers/ui_source.js'))() +
-                  '\n;globalThis.__ui={state,fwVariantPanel,fwVariantBuildGate,advancedOn,renderDevice,renderFirmware,renderFleet,renderSettings,renderDiagnostics,renderLive,setMode,setNav,render};\n',
+                  '\n;globalThis.__ui={state,fwVariantPanel,fwVariantBuildGate,netState,reloadDeviceHistory,backgroundImagePanel,prepareBackgroundImage,backgroundImageState,saveBackgroundImage,advancedOn,renderDevice,renderFirmware,renderFleet,renderSettings,renderDiagnostics,renderLive,setMode,setNav,render};\n',
                   ctx, { filename: 'app.js' });
   return ctx;
 }
 
 
+module.exports={boot};
+if(require.main===module){
 const ctx=boot(),ui=ctx.__ui;
 for(const fn of ['renderDevice','renderFleet','renderSettings','renderDiagnostics']){
  try{ui[fn]();ok(ctx.document.querySelector('#content').innerHTML.length>10,fn+' renders');}
@@ -84,3 +87,5 @@ ok(!ui.fwVariantBuildGate(hdpro,{state:'AVAILABLE',acknowledged:false}).ok,'HD P
 hdpro.plan.buildable=false;
 ok(!ui.fwVariantBuildGate(hdpro,{state:'AVAILABLE',acknowledged:true}).ok,'HD Pro retains donor refusal');
 process.exitCode=failed?1:0;
+
+}
