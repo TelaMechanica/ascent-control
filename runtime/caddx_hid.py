@@ -349,6 +349,8 @@ class CrsfStream:
                     self._axes=None;self._buttons=[];self._raw_axes=[];self._last_frame_hex=None
                 return True
             if body.get('action')!='connect':raise HidError('HID_SOURCE_ACTION','Unknown source action')
+            if hid_source.restricted_public_device(body.get('device') or {}):
+                raise HidError('HID_AC_PLUS_ONLY','This controller is available in AC+.')
             try:layout,fingerprint=hid_source.descriptor(body['descriptor'])
             except (KeyError,ValueError,TypeError) as exc:raise HidError('HID_DESCRIPTOR_INVALID',str(exc)) from exc
             order=body.get('epoch_order')

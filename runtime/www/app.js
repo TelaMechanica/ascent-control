@@ -2824,8 +2824,8 @@ function startLivePoll(mode){
     // OSD, which do not change at this rate and would make the poll expensive.
     try{
       const st=await fetchJson('/api/cgc/hid',true);
-      if(st && !st.error){ liveState().hidStream=acceptHidObservation(st); if(state.mode==='live') render(); }
-    }catch{ liveState().hidStatusUnavailable=true; if(state.mode==='live') render(); }
+      if(st && !st.error){ liveState().hidStream=acceptHidObservation(st); if(state.mode==='live') paintLiveTelemetry(); }
+    }catch{ liveState().hidStatusUnavailable=true; if(state.mode==='live') paintLiveTelemetry(); }
   },200);
 }
 
@@ -3176,6 +3176,7 @@ function liveVideoPanel(){
       +`<label>Buffer <select id="videoBuffer" class="text-input">${[20,100,200,500].map(ms=>`<option value="${ms}"${playback.latencyMs===ms?' selected':''}>${ms} ms</option>`).join('')}</select></label></div>`;
     if(playback.endpoint==='manual') body+=`<label>RTSP endpoint <input id="videoManualUrl" class="text-input" value="${esc(playback.manualUrl)}" placeholder="rtsp://receiver-address/live.ch01"></label><p class="muted">Manual endpoint identity is not verified. Windows routing selects the network interface. For Wi-Fi testing, compare TCP with a 200 ms buffer; these choices affect host playback only.</p>`;
   }
+  body+='<div id="liveVideoStatus">';
   body+=kv('Stream',url||'Enter an RTSP endpoint');
   if(v?.playback){
     const label={'decoded-input':'Decoded frames arriving','frames-stale':'Decoded frames stale','waiting-for-frames':'Waiting for decoded frames',starting:'Playback requested',ended:'Stream ended',failed:'Playback failed',warning:'Playback warning','source-timeout':'RTSP source timeout'};
@@ -3190,7 +3191,7 @@ function liveVideoPanel(){
   }
   if(!host){
     body+=notice('Video is only available in the Ascent Control desktop application. This page is not running inside the WebView2 host, so there is no native window for the video sink to draw into.','warn');
-    return panel('VIDEO (RTSP)',body);
+    return panel('VIDEO (RTSP)',body+'</div>');
   }
   if(advancedOn() && v?.pipeline) body+=kv('Pipeline',v.pipeline);
   // THE PLAIN SENTENCE FIRST. `plain` is set by the host only when video failed for
@@ -3226,7 +3227,7 @@ function liveVideoPanel(){
       +'screen — MAPSTER, the OSD — appears here.');
   }
   body+=noticeDetail('Video opens in its own window: WebView2 composes above all other content, so it cannot be layered inside this page.');
-  return panel('VIDEO (RTSP)',body);
+  return panel('VIDEO (RTSP)',body+'</div>');
 }
 
 function acceptHidObservation(document){
@@ -3265,7 +3266,7 @@ function liveSticksPanel(){
   if(!host) return panel('STICKS (HID)',
     notice('Raw HID access needs the desktop application. This page is not running inside the WebView2 host.','warn'));
 
-  let body='';
+  let body='<div id="liveHidReader">';
   // The reader half, in the host.
   body+=kv('Reader',!l.hidStatusUnavailable&&l.hidStream?.rc_source?.device_present
       ? `REGISTERED — ${hid?.product||'device'} (${hid?.axisCount??0} axes`
@@ -3280,6 +3281,7 @@ function liveSticksPanel(){
   // VALUE, not a stored error, so pressing USE on a device the host declines
   // looked exactly like pressing a dead button. Reported from the bench.
   if(hid && hid.ok === false && hid.message) body+=notice(safeErr(hid.message),'error');
+  body+='</div>';
   const devs=hid?.devices;
   if(Array.isArray(devs)){
     body+=devs.length
@@ -3296,6 +3298,7 @@ function liveSticksPanel(){
     +`<button class="secondary" id="hidList">FIND STICKS</button>`
     +`<button class="secondary" id="hidStop"${hid?.running?'':' disabled'}>STOP READER</button></div>`;
 
+  body+='<div id="liveHidAxes">';
   // Live axes, as the CRSF chain sees them.
   const axes=st?.axes||hid?.lastAxes;
   const inputCurrent=!l.hidStatusUnavailable&&RcSource.present(l.hidStream?.rc_source).input==='Input live';
@@ -3307,6 +3310,7 @@ function liveSticksPanel(){
       +`</tbody></table>`;
   }
 
+  body+='</div>';
   // Calibration. CGC has none -- its parser trusts the descriptor -- so a stick
   // that does not reach its declared endpoints never produces full CRSF travel.
   const cal=st?.calibration;
@@ -3315,6 +3319,7 @@ function liveSticksPanel(){
     if(st?.calibrating){
       cb+=notice('SWEEP EVERY AXIS to its limits, then release the sticks and press MARK CENTRE.','warn');
     }
+    cb+='<div id="liveHidCalibration">';
     if(cal){
       cb+=`<table><thead><tr><th>AXIS</th><th>OBSERVED</th><th>TRAVEL</th><th>STATE</th></tr></thead><tbody>`
         +cal.axes.map(a=>`<tr><td><code>${a.axis}</code></td>`
@@ -3349,6 +3354,7 @@ function liveSticksPanel(){
             + 'fewer axis than this page.');
       }
     } else cb+='<div class="empty">NOT CALIBRATED — THE DECLARED DESCRIPTOR RANGE IS IN USE</div>';
+    cb+='</div>';
     cb+=`<div class="toolbar" style="justify-content:flex-start;flex-wrap:wrap">`
       +(st?.calibrating
         ? `<button class="secondary" id="calCentre">MARK CENTRE</button>`
@@ -3411,7 +3417,7 @@ function liveSticksPanel(){
         +`</td>`
         +`<td><input type="checkbox" data-maplatch="${r.channel}"`
         +`${isBtn&&r.mode==='toggle'?' checked':''}${isBtn?'':' disabled'}></td>`
-        +`<td><code>${esc(st.channels?st.channels[r.channel-1]:'—')}</code></td></tr>`;
+        +`<td><code data-live-channel="${r.channel}">${esc(st.channels?st.channels[r.channel-1]:'—')}</code></td></tr>`;
     }).join('');
     let eb=`<table><thead><tr><th>OUTPUT 1–16</th><th>SOURCE</th><th>LATCHING</th><th>VALUE</th></tr></thead><tbody>${rows}</tbody></table>`;
     eb+=`<div class="toolbar" style="justify-content:flex-start;flex-wrap:wrap">`
@@ -3430,6 +3436,7 @@ function liveSticksPanel(){
   // The transmit half, in the backend.
   // The channel map. No default exists, and the reason is on the page.
   const mapOk=st?.map_complete===true;
+  body+='<div id="liveHidMap">';
   body+=kv('Channel map',mapOk?'COMPLETE — 16 of 16 assigned':`INCOMPLETE — channels ${(st?.map_unassigned||[]).join(', ')||'?'} unassigned`,false);
   if(st?.channel_map){
     body+=`<table><thead><tr><th>OUTPUT 1–16</th><th>INPUT SOURCE</th><th>VALUE</th></tr></thead><tbody>`
@@ -3443,10 +3450,12 @@ function liveSticksPanel(){
     body+=`<details><summary>Previous mapping (historical, inactive)</summary><table><thead><tr><th>OUTPUT</th><th>PREVIOUS INPUT</th></tr></thead><tbody>`
       +st.mapping_revalidation.channels.map(r=>`<tr><td>${r.channel}</td><td>${esc(r.assigned?`${r.source} ${r.index??r.value??''}`:'Unassigned')}</td></tr>`).join('')+`</tbody></table></details>`;
   }
+  body+='</div>';
   if(!mapOk){
     body+=notice('Assign every output channel before transmitting. Unassigned channels are never centred or zeroed: either can change a switch, including ARM. Filling from axes in order is an explicit camera/gimbal choice, never a default.','warn');
     body+=`<div class="toolbar" style="justify-content:flex-start"><button class="secondary" id="hidVendorMap">FILL FROM AXES IN ORDER (CAMERA / GIMBAL WORK ONLY)</button></div>`;
   }
+  body+='<div id="liveHidStream">';
   body+=kv('Stream',RcSource.present(l.hidStatusUnavailable?null:l.hidStream?.rc_source).output,false)
     +kv('Frames sent',st?.frames_sent??0)
     +kv('Stick age',st?.axes_age_ms!=null?`${st.axes_age_ms} ms${st.axes_stale?' — STALE':''}`:'—',false)
@@ -3454,6 +3463,7 @@ function liveSticksPanel(){
     +kv('Times stopped on stale',st?.stale_stops??0);
   if(st?.halt_reason) body+=notice(safeErr(st.halt_reason),'warn');
   if(st?.last_error) body+=notice(safeErr(st.last_error),'error');
+  body+='</div>';
   body+=`<div class="toolbar" style="justify-content:flex-start;flex-wrap:wrap">`
     +`<select id="crsfRate"><option value="50">50 Hz</option><option value="100">100 Hz</option>`
     +`<option value="150">150 Hz</option></select>`
@@ -3461,7 +3471,7 @@ function liveSticksPanel(){
     +`<button class="secondary" id="crsfStreamStop"${st?.running?'':' disabled'}>STOP TRANSMITTING</button></div>`;
   body+=notice('TRANSMISSION STOPS WHEN THE STICKS GO STALE. It does not hold the last position and it does not send centre — centre is a real command, whereas silence lets the receiver’s own configured failsafe take over, which is the one set up for exactly this case. CGC has no staleness handling at all; this is ours.','warn');
   body+=noticeDetail('Input axes use their HID usage identities and normalized range 0–2048. EdgeTX input CH1–CH32 are separate from the 16 ASCENT/CRSF output slots. Output follows the explicit channel map; nothing is assigned or centred automatically.');
-  return rcIdentityPanel(l.hidStatusUnavailable?null:l.hidStream?.rc_source)+panel('STICKS (HID)',body);
+  return '<div id="liveRcIdentity">'+rcIdentityPanel(l.hidStatusUnavailable?null:l.hidStream?.rc_source)+'</div>'+panel('STICKS (HID)',body);
 }
 
 function liveCrsfPanel(){
@@ -3515,43 +3525,58 @@ function renderLive(){
   out+=liveReadPanel();
   if(ok){ out+=liveOsdPanel(); out+=liveKeysPanel();
           out+=liveChannelPanel(); out+=livePowerPanel(); out+=liveModePanel();
-          out+=liveSticksPanel(); out+=liveCrsfPanel(); }
+          out+='<div id="liveHidControls">'+liveSticksPanel()+'</div>'; out+=liveCrsfPanel(); }
   else out+=notice('Controls are hidden because live control is not available for the selected device. Nothing here would reach the right unit.','warn');
   $('#content').innerHTML=out;
+  l.hidControlsKey=liveHidControlsKey();
   bindLive();
 }
 
-function bindLive(){
-  const l=liveState();
-  const ex=$('#liveExport'); if(ex) ex.onclick=exportLiveCapture;
-  $('#liveAdvOff')?.addEventListener('click',()=>setAdvanced(false));
-  $('#liveAdvOn')?.addEventListener('click',()=>setAdvanced(true));
-  const post=async(url,body)=>{
-    const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(body||{}),cache:'no-store'});
-    const d=await r.json(); if(!r.ok) throw Error(d.message||d.error||`${r.status}`); return d;
-  };
-  const act=async fn=>{ l.busy=true; l.error=null; render();
-    try{ l.result=await fn(); await reloadLive(); }catch(e){ l.error=e }
-    l.busy=false; render(); };
-
-  $('#osdStart')?.addEventListener('click',()=>act(async()=>{
-    await post('/api/cgc/osd',{action:'start'}); l.osd=await fetchJson('/api/cgc/osd',true); return l.result; }));
-  $('#osdStop')?.addEventListener('click',()=>act(async()=>{
-    await post('/api/cgc/osd',{action:'stop'}); l.osd=await fetchJson('/api/cgc/osd',true); return l.result; }));
-  $('#crsfCentre')?.addEventListener('click',()=>act(async()=>{
-    l.crsf=await post('/api/cgc/crsf',{apply:true}); return l.crsf; }));
-  const prof=l.doc?.eligibility?.profiles||{};
-  for(const [id,key] of [['videoEndpoint','endpoint'],['videoTransport','transport'],['videoBuffer','latencyMs']]){
-    $('#'+id)?.addEventListener('change',e=>{liveVideoSelection();l.videoOptions[key]=key==='latencyMs'?Number(e.target.value):e.target.value;render();});
+// Polling must not replace buttons, input drafts or their event handlers.
+function liveHidControlsKey(){
+  const l=liveState(), st=l.hidStream?.stream;
+  return JSON.stringify([l.hidStream?.rc_source?.epoch,l.hid?.running,
+    st?.calibrating,!!st?.calibration,st?.detecting,st?.map_complete,
+    (st?.channel_map||[]).map(r=>[r.source,r.index,r.value,r.mode,r.assigned])]);
+}
+function paintLiveVideoStatus(){
+  const target=$('#liveVideoStatus'); if(!target)return;
+  const fragment=document.createElement('div');fragment.innerHTML=liveVideoPanel();
+  const source=fragment.querySelector('#liveVideoStatus');
+  if(source)target.innerHTML=source.innerHTML;
+}
+function paintLiveTelemetry(forceControls=false){
+  const l=liveState(), key=liveHidControlsKey();
+  const target=$('#liveHidControls');if(!target)return;
+  if(forceControls||key!==l.hidControlsKey){
+    target.innerHTML=liveSticksPanel();l.hidControlsKey=key;
+    bindLiveHid(livePost,liveAction);return;
   }
-  $('#videoManualUrl')?.addEventListener('input',e=>{liveVideoSelection();l.videoOptions.manualUrl=e.target.value;const button=$('#videoStart');if(button)button.disabled=!e.target.value.trim();});
-  $('#videoStart')?.addEventListener('click',()=>{
-    const h=hostChannel(); if(!h) return;
-    l.video={ok:null,message:'Opening the video window…'}; render();
-    const playback=liveVideoSelection();
-    h.postMessage({type:'video',action:'start',url:playback.url,transport:playback.transport,latencyMs:playback.latencyMs});
+  const fragment=document.createElement('div');fragment.innerHTML=liveSticksPanel();
+  for(const id of ['liveRcIdentity','liveHidReader','liveHidAxes','liveHidCalibration','liveHidMap','liveHidStream']){
+    const source=fragment.querySelector('#'+id), destination=$('#'+id);
+    if(source&&destination)destination.innerHTML=source.innerHTML;
+  }
+  for(const id of ['crsfStreamStart','crsfStreamStop','hidStop']){
+    const source=fragment.querySelector('#'+id), destination=$('#'+id);
+    if(source&&destination)destination.disabled=source.disabled;
+  }
+  $$('[data-live-channel]').forEach(node=>{
+    node.textContent=l.hidStream?.stream?.channels?.[Number(node.dataset.liveChannel)-1]??'—';
   });
+}
+async function livePost(url,body){
+  const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(body||{}),cache:'no-store'});
+  const d=await r.json();if(!r.ok)throw Error(d.message||d.error||`${r.status}`);return d;
+}
+async function liveAction(fn){
+  const l=liveState();l.busy=true;l.error=null;render();
+  try{l.result=await fn();await reloadLive();}catch(e){l.error=e;}
+  l.busy=false;render();
+}
+function bindLiveHid(post,act){
+  const l=liveState();
   $('#hidList')?.addEventListener('click',()=>{
     const h=hostChannel(); if(h) h.postMessage({type:'hid',action:'list'}); });
   $('#hidStop')?.addEventListener('click',()=>{
@@ -3602,6 +3627,34 @@ function bindLive(){
     l.hidStream=acceptHidObservation(await post('/api/cgc/hid/map',hidSourceRequest({channels}))); return l.hidStream; }));
   $('#crsfStreamStop')?.addEventListener('click',()=>act(async()=>{
     l.hidStream=acceptHidObservation(await post('/api/cgc/hid/stream',{action:'stop'})); return l.hidStream; }));
+}
+
+function bindLive(){
+  const l=liveState();
+  const ex=$('#liveExport'); if(ex) ex.onclick=exportLiveCapture;
+  $('#liveAdvOff')?.addEventListener('click',()=>setAdvanced(false));
+  $('#liveAdvOn')?.addEventListener('click',()=>setAdvanced(true));
+  const post=livePost, act=liveAction;
+
+  $('#osdStart')?.addEventListener('click',()=>act(async()=>{
+    await post('/api/cgc/osd',{action:'start'}); l.osd=await fetchJson('/api/cgc/osd',true); return l.result; }));
+  $('#osdStop')?.addEventListener('click',()=>act(async()=>{
+    await post('/api/cgc/osd',{action:'stop'}); l.osd=await fetchJson('/api/cgc/osd',true); return l.result; }));
+  $('#crsfCentre')?.addEventListener('click',()=>act(async()=>{
+    l.crsf=await post('/api/cgc/crsf',{apply:true}); return l.crsf; }));
+  const prof=l.doc?.eligibility?.profiles||{};
+  for(const [id,key] of [['videoEndpoint','endpoint'],['videoTransport','transport'],['videoBuffer','latencyMs']]){
+    $('#'+id)?.addEventListener('change',e=>{liveVideoSelection();l.videoOptions[key]=key==='latencyMs'?Number(e.target.value):e.target.value;render();});
+  }
+  $('#videoManualUrl')?.addEventListener('input',e=>{liveVideoSelection();l.videoOptions.manualUrl=e.target.value;const button=$('#videoStart');if(button)button.disabled=!e.target.value.trim();});
+  $('#videoStart')?.addEventListener('click',()=>{
+    const h=hostChannel(); if(!h) return;
+    const playback=liveVideoSelection();
+    l.video={ok:null,message:'Opening the video window…'};paintLiveVideoStatus();
+    try{h.postMessage({type:'video',action:'start',url:playback.url,transport:playback.transport,latencyMs:playback.latencyMs});}
+    catch(e){l.video={ok:false,message:'Unable to open the video window: '+safeErr(e)};paintLiveVideoStatus();}
+  });
+  bindLiveHid(post,act);
   $('#videoStop')?.addEventListener('click',()=>{
     const h=hostChannel(); if(!h) return;
     h.postMessage({type:'video',action:'stop'});
@@ -4222,7 +4275,9 @@ $('#connectionSelect')?.addEventListener?.('change',()=>{
       // table does not vanish the moment a stick is selected.
       liveState().hid={...prev,...d,devices:d.devices??prev.devices};
     } else return;
-    if(state.mode==='live') render();
+    if(state.mode==='live'){
+      if(d.type==='video')paintLiveVideoStatus();else paintLiveTelemetry(true);
+    }
   });
 })();
 
