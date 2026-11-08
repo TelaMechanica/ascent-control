@@ -2,7 +2,7 @@
   "schema": "ascent.public.release.validation.v1",
   "version": "0.43.54",
   "tests": {
-    "passed": 521,
+    "passed": 522,
     "subtests_passed": 55
   },
   "source_checks": [

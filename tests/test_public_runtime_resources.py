@@ -34,3 +34,9 @@ def test_inventory_worker_runs_as_an_actual_child_process():
     else:
         assert result.returncode == 3
         assert 'requires Windows' in result.stderr
+
+
+def test_mandatory_embedded_runtime_files_have_pins():
+    profile = json.loads((ROOT / 'release/public-payload.json').read_text())
+    assert {'python.exe', 'pythonw.exe', 'python312.zip', 'python312._pth'} <= set(profile['dependencies']['pyembed'])
+    assert {'bin/gstreamer-1.0-0.dll', 'bin/gstvideo-1.0-0.dll', 'licenses/LGPL-2.1.txt'} <= set(profile['dependencies']['gstreamer'])

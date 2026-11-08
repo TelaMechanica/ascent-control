@@ -10,6 +10,10 @@ param(
 $ErrorActionPreference='Stop'
 $repo=(Resolve-Path (Join-Path $PSScriptRoot '..')).ProviderPath
 $payloadSpec=Get-Content -LiteralPath (Join-Path $repo 'release\public-payload.json') -Raw|ConvertFrom-Json
+foreach($required in @('python.exe','pythonw.exe','python312.zip','python312._pth')){
+ if(-not $payloadSpec.dependencies.pyembed.PSObject.Properties[$required]){throw ('Embedded Python pin is missing: '+$required)}
+}
+if(-not $payloadSpec.dependencies.gstreamer.PSObject.Properties['bin/gstreamer-1.0-0.dll']){throw 'Pinned media runtime inventory is missing'}
 $version=$payloadSpec.version
 if($BuildRevision -lt 1 -or $BuildRevision -gt 65535){throw 'BuildRevision must be between 1 and 65535'}
 if(-not $OutputDir){$OutputDir=Join-Path $repo 'artifacts\release'}

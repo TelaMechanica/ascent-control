@@ -7,7 +7,7 @@ Service Mode and dependent receiver/widget operations remain private in AC+.
 
 The native Windows HD Pro donor-only build passed with WSL refused. Its image
 passed donor round-trip, pinned application patch, filesystem readback and
-unchanged-component checks. The final combined suite passed 521 tests and 55 subtests. Runtime inventory,
+unchanged-component checks. The final combined suite passed 522 tests and 55 subtests. Runtime inventory,
 camera source/import and privacy checks also pass.
 The Git-source MSI includes the enabled HD Pro tester builder. Build revision 2
 adds the native Windows inventory worker omitted from the initial local candidate;
