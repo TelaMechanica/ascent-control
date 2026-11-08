@@ -1,6 +1,6 @@
 """Check the explicit public payload, private boundary and staged dependencies."""
 from pathlib import Path
-import argparse, ast, hashlib, json, os, stat, sys
+import argparse, ast, hashlib, json, os, stat, subprocess, sys
 
 sys.dont_write_bytecode=True
 BLOCKED=('service_mode','private_receiver','widget_','picker','netrunner','caddx_picker',
@@ -79,6 +79,12 @@ def verify(root,reference,phase):
     sys.path.insert(0,str(runtime))
     import firmware_builder as builder
     if os.name=='nt':
+        worker=runtime/'windows_device_inventory.py'
+        observed=subprocess.run([sys.executable,'-I',str(worker),r'VID_1D(6[B-F]|7[0-9A-F]|8[0-4])'],capture_output=True,text=True,timeout=10)
+        if observed.returncode!=0:raise ValueError('Packaged Windows inventory worker did not run')
+        inventory=json.loads(observed.stdout)
+        if inventory.get('platform')!='Windows' or inventory.get('supported') is not True or not all(isinstance(inventory.get(k),list) for k in ('usb','network')):
+            raise ValueError('Packaged Windows inventory worker returned an invalid document')
         probe=builder.preflight(builder_dir=str(runtime/'device_tools/mode_a'),use_cache=False)
         if probe.get('via')!='windows-native' or not probe.get('can_build'):raise ValueError('Public native builder preflight failed')
         for target in ('z8','z40','hub'):

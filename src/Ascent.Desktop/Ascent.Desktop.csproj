@@ -508,6 +508,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="..\..\runtime\windows_device_inventory.py">
+      <Link>runtime\windows_device_inventory.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="..\..\runtime\windows_driver_repair.py">
       <Link>runtime\windows_driver_repair.py</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
