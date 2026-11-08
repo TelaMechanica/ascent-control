@@ -27,30 +27,21 @@ including the application version, steps and sanitized error text. For image
 builder reports include the target, donor hash and output hash. Remove personal
 paths and device identifiers before uploading logs.
 
-## Tested firmware and upgrade history
+## Tested hardware and firmware
 
-**19.2.14 is AC's primary bench-tested firmware baseline.** Development testing
-has covered conventional VRX, VRX Max, GT Pro/Sky, custom Z40 images and Relay on
-that firmware line. VRX Pro testing used **18.21.10**. Available operations depend
-on the connected device and firmware; this does not qualify every feature on every model.
+**19.2.14 is AC's primary tested firmware baseline.** The following hardware was
+connected to AC on the listed firmware and updated using the corresponding image:
 
-Historical AC firmware-update records include:
-
-| Device / firmware family | Previous firmware | Recorded update target |
+| Hardware | Firmware when connected | Image installed using AC |
 |---|---|---|
-| Conventional VRX / Ground | 16.5.3, 17.5.3, 18.21.3, 19.2.4 | 19.2.14 |
-| VRX Max | 18.21.7, 19.2.4 | 19.2.14 |
-| GT Pro / Sky | 19.2.13 | 19.2.14 |
-| Relay | 19.2.9 | 19.2.14 |
-| GT Pro Z40 | 16.5.8; later 19.2.14 custom-image reflashes | Custom 19.2.14 Z40 image |
+| Conventional VRX / Ground | 16.5.3, 17.5.3, 18.21.3, 19.2.4 | `Ascent_G_Gnd_19_2_14.img` |
+| VRX Max HF | 18.21.7 | `Ascent_VRX_Max_19_2_14.img` |
+| VRX Max WF | 19.2.4 | `Ascent_VRX_Max_19_2_14.img` |
+| GT Pro / Sky | 19.2.13 | `Ascent_G_Sky_19_2_14.img` |
+| Relay | 19.2.9 | `Ascent_Relay_19_2_14.img` |
+| GT Pro Z40 | 16.5.8; subsequent custom 19.2.14 reflashes | `Ascent_G_Sky_19_2_14_z40_1.img` |
 
-Stock-image entries are supported by AC pre-flash backups and subsequent device
-identity observations. The custom Z40 history also includes terminal transfer
-results and later operator camera/zoom checks. These records include earlier AC
-development versions; they are update history, not blanket feature qualification
-or a hardware pass for every newly generated camera image. Firmware files examined
-only offline or selected without a confirmed later target identity are not listed
-as completed stock updates.
+Connection testing also includes **VRX Pro on 18.21.10**.
 
 ## Build the Windows MSI
 
