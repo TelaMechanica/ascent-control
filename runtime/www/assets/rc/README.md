@@ -6,8 +6,7 @@ hashes; SOURCE_README.txt retains supplied notes. All PNG/SVG bytes are unchange
 from the source archive. No redraw, conversion or normalization was performed.
 
 The corrected `rog_ally` pair depicts an Xbox-style handheld. Public AC retains
-its presentation key and the seven transmitter model pairs. controller artwork and
-recognition are confined to AC+. Generic HID identity does not establish an
+its presentation key and the seven transmitter model pairs. Generic HID identity does not establish an
 integrated-host model.
 
 Art cannot authorize control or establish physical identity/compatibility. Unknown

@@ -5,10 +5,6 @@ the video button or unsaved input controls. A 200 ms page replacement could
 interrupt a click before it reached the desktop host. Endpoint choices, transport,
 buffering and Stop remain available; host dispatch errors are shown.
 
-Public AC excludes controller and controller controllers from discovery and refuses direct
-reader starts and backend source registration. Their support remains in AC+.
-Generic HID and EdgeTX controllers retain their existing source and CRSF guards.
-
 Diagnostics and local background JPEG preparation fixes from 0.43.55 are retained.
 Native camera support, HD Pro tester builds and pinned input archives are unchanged.
 Host regression checks do not establish receiver or physical controller qualification.

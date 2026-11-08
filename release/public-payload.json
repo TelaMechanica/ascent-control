@@ -486,8 +486,8 @@
     {
       "source": "runtime/hid_source.py",
       "target": "runtime/hid_source.py",
-      "sha256": "2dc7509374780d8a855b293548722e96bc0fb2d4c0384e509e64532bf8abdb2b",
-      "bytes": 7503
+      "sha256": "7b832aa16e2a7fcd2456d1b77ad96d986cc7eb3b2516427893379313bcff6d27",
+      "bytes": 7866
     },
     {
       "source": "runtime/known_receivers.py",
@@ -756,14 +756,14 @@
     {
       "source": "runtime/www/assets/rc/README.md",
       "target": "runtime/www/assets/rc/README.md",
-      "sha256": "ead4037cbc7227b2f1200ebf84ce35545feac1ffc20736d3bc96b84c47592c17",
-      "bytes": 829
+      "sha256": "2335a394d10c3b633c5bbd09e41e293c266a9ff265ed89b63a37398cfee03260",
+      "bytes": 779
     },
     {
       "source": "runtime/www/assets/rc/SOURCE_README.txt",
       "target": "runtime/www/assets/rc/SOURCE_README.txt",
-      "sha256": "c639745f9520df80a7586e49603dfeed44627d5333692b724e6580d63c57de85",
-      "bytes": 598
+      "sha256": "9e39c6bacadde28af67ab91290f084c245d0acebd9f7b40f012a3faf452d2dd3",
+      "bytes": 463
     },
     {
       "source": "runtime/www/assets/rc/png/radiomaster_ax12.png",
@@ -1080,11 +1080,11 @@
     "docs/PUBLICATION_POLICY.md": "211878b21f67da66f8a07daa02b09510d4ee5454bed8c02659632bffa193d727",
     "docs/RELEASE_0.43.54.md": "c4ae990251ebdca9310d65ef1dc5619dafebe7a1f044a5bb449e9e724c74a5bc",
     "docs/RELEASE_0.43.55.md": "9a48fb803bd5fca4486345e882baa0ab762ba47934026e1a3f2094c78f4f598c",
-    "docs/RELEASE_0.43.56.md": "da9aebf2a4dce3a3968885c8c776fec7d11d36411a2bd5b84923c5bdc59ed1db",
+    "docs/RELEASE_0.43.56.md": "55a105505cbeae96f1f0e6b2eee93fc8d4a74309a668982e946d587e5fc37f48",
     "docs/RELEASE_VALIDATION_0.43.54.json": "8295a7226453dc2f91f4d1d69d26c4b15a23f159703c171c4049cf7ef539f1be",
     "docs/SHARED_SOURCE_IMPORT.json": "76206d3ceab3302c76e17a3afd2531f6e06b41655c5c932dc7f1236793b993ee",
     "docs/SOURCE_REVIEW.md": "6f08de97f00d27fc1a8094d516cee51032bc696b671de1b930b6822c5fe9a731",
-    "docs/STATUS.md": "34a92d8e91b9e57bb17929b9c7fbe19aad975f7d24905f76a3b4faa9cd025f5e",
+    "docs/STATUS.md": "7a24b591f26867ec0203ff8e11ec785e7e1d02880dc1c1604cdb405683d57685",
     "docs/TASKS.md": "2de70516e76c33fdb27715f240728f1932c9102555ed24d530e86783fdcfb687",
     "firmware/hdpro/README.md": "6bdbb441b9866222ad2c855600db3e6d45dc47c310d20c4b35886b4286897a37",
     "firmware/hdpro/assets.json": "e6ff9d8350f06b0638abcf52cfad9c5f3ec0d41571c8ee60eca79f37f8b01249",
@@ -1184,7 +1184,7 @@
     "runtime/firmware_camera_support.py": "f138340e2c53567fa595f1849d4224900eb7d664973add75fdbb2115e9d5f4e4",
     "runtime/firmware_native_backend.py": "31d1eee7d268b7c88d197b53367c8420c643102773ab903a3b67c6908737539b",
     "runtime/first_run.py": "dc5c6309a975b1872ecc6d212309c3ed733e59443250e264d59e0513ce041cee",
-    "runtime/hid_source.py": "2dc7509374780d8a855b293548722e96bc0fb2d4c0384e509e64532bf8abdb2b",
+    "runtime/hid_source.py": "7b832aa16e2a7fcd2456d1b77ad96d986cc7eb3b2516427893379313bcff6d27",
     "runtime/known_receivers.py": "4ae0f0273687fc53852eb6dbfc8f557c4e7d9080895f97d01a6ea597e4766fa9",
     "runtime/local_settings.py": "21eb8ff54829f66cb814e2445b08dde08815f0fe4c435854274f0fda7bcd2576",
     "runtime/log_redaction.py": "ba8d4ae2cc848efca461fd4c71d20c1067527069191d2495ab2df7bd61b36c28",
@@ -1229,8 +1229,8 @@
     "runtime/www/assets/devices/Ascent_VRX_MAX_WF.png": "9f49702ecaf0addbe6657443bda4afd0d9e749ab945f582436a769cd79e0e23f",
     "runtime/www/assets/devices/ascent_repeater.png": "f807cdb88f4468912d2f32900921a795de32d1f8466c73c77cb96aef3f67bd14",
     "runtime/www/assets/rc/PROVENANCE.json": "3aaa1e8feb84fbc7afd3966d62144b2c352af7feda1d790b71294ab4377c5bb2",
-    "runtime/www/assets/rc/README.md": "ead4037cbc7227b2f1200ebf84ce35545feac1ffc20736d3bc96b84c47592c17",
-    "runtime/www/assets/rc/SOURCE_README.txt": "c639745f9520df80a7586e49603dfeed44627d5333692b724e6580d63c57de85",
+    "runtime/www/assets/rc/README.md": "2335a394d10c3b633c5bbd09e41e293c266a9ff265ed89b63a37398cfee03260",
+    "runtime/www/assets/rc/SOURCE_README.txt": "9e39c6bacadde28af67ab91290f084c245d0acebd9f7b40f012a3faf452d2dd3",
     "runtime/www/assets/rc/png/radiomaster_ax12.png": "fcbccfc52bd6135a5f40db708b10ceadfee599057777101936a57c71ea3be77b",
     "runtime/www/assets/rc/png/radiomaster_boxer.png": "e9e71ec998d637485af484de41e175dc746ec8a67e49fc9d5084e53d8ff8b8ae",
     "runtime/www/assets/rc/png/radiomaster_gx12.png": "8db7e25fad80bad54e8986131473ac830a0463fed5312cdff7027ceeceb93fc5",
@@ -1267,7 +1267,7 @@
     "src/Ascent.Desktop/GstRuntimeLocator.cs": "f3bb8c9f314922b508b5043d2404b1177985a1053d4c7078471d7b3d54ed33d7",
     "src/Ascent.Desktop/GstVideoController.cs": "8cc457ad984df224d174977883d19e19b04048c4d6530b977c935cae20c62e89",
     "src/Ascent.Desktop/HidJoystick.cs": "9f42e0bcfcad0982b06c7f946495ec95fbac09f5d4e6c985e8bf65959a03be54",
-    "src/Ascent.Desktop/HidPump.cs": "5c57326ca5aff9ea16885fddb91b5560ecae4962b4d2f53d17306570bb3beb0d",
+    "src/Ascent.Desktop/HidPump.cs": "24aeb9d9c5042ca5d6cee324ab729e45f8283ab6472bb5eb8bf132f51ed92432",
     "src/Ascent.Desktop/MainWindow.xaml": "cd0a845fcc1e3e5810a2b5e426947e927e341061ad0fa7c5c8a6ea0bc2515cb2",
     "src/Ascent.Desktop/MainWindow.xaml.cs": "9ffbe75c300e4162e4a6971dd7797da744cd6fe33acfefe87a1d5407598a9459",
     "src/Ascent.Desktop/VideoPlaybackOptions.cs": "95b6dedbfc3933f629a2eb1b64cf57354864489c02f5dfb4d4c25cbc473aa8d0",
@@ -1290,7 +1290,7 @@
     "tests/test_firmware_upgrade.py": "aad85fa4c937f24f239d2db1de5a264912e38cdb9336db2f615b1f9293259a6b",
     "tests/test_hdpro_tester_build.py": "4397f141f9831c5265c96fb616807c2ab31a96a6c8607b14de52bf76086ba2d9",
     "tests/test_hid_crsf_stream.py": "0442524dc5cf004fd156c1b2be117b5f808b371b707c1f6d430b834538cd66f2",
-    "tests/test_hid_source_identity.py": "617f6dad17d0e04e305989195a0f9e0c93880023009be07071d96414fdb67057",
+    "tests/test_hid_source_identity.py": "cac14846d8f3a076a2a49f1ab0dbe2a67a58d0dab4275cfd58f87c73f15b399a",
     "tests/test_local_background_image.py": "25e644a6f714dfcaf2138e03b26fefb9fd45857aeac62347e3c3c250e3015945",
     "tests/test_mode_a_got_provenance.py": "f9ee33d3b340d4866b46cd038dd08e277d98483e5e9fb3b58ff58ee5b6b7a7ab",
     "tests/test_mode_a_plt_entries.py": "065f4f95b281c4cf4b91fb25242f87842ad778b9b81a79b6edcf476c10877b83",
@@ -1300,7 +1300,7 @@
     "tests/test_phase475_hid_encoding.py": "eed233b67a0f9da44121df096f332e0311a22d7a84a8a02919f4ab67fde45081",
     "tests/test_public_desktop_boundary.py": "d9bfeb16071fe14caa2670ad55fcb22d7607a9dfebb9a229819da171da4e209f",
     "tests/test_public_firmware_staging.py": "d0b071807754628e30b7d75b17e8ac97f30f1f2d0682e7bb9f5340d3edde7308",
-    "tests/test_public_live_interaction.py": "e717fcb145d00f8b1ffb63dfb42a64cfd51ed1255a96c969fcd1b3a4b22061a2",
+    "tests/test_public_live_interaction.py": "63795ed51cffe7d8fcbe708ea710a7e149f50eac7090c4057b81bfb0034cd0cf",
     "tests/test_public_runtime_resources.py": "876da1c2a00e2d22b601e019584f44500817d5fc1bace27b2624b91b627204c0",
     "tests/test_rf_band_plans.py": "7d8675cc25eff9275a14ef8cdd2e2524d9453c9e4719f576edfd3245e60e2af4",
     "tests/test_shared_import.py": "ca3c244f53ed026db7533c9c0f54b5971f14abdb9980406503db42d2f0cf0178",

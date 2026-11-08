@@ -5,6 +5,8 @@ import pytest
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'runtime'))
 import caddx_hid as H
+import hid_source
+import hashlib
 from test_hid_source_identity import connection,stream
 
 
@@ -13,8 +15,9 @@ def test_live_buttons_survive_poll_and_host_status():
     assert result.returncode==0,result.stdout+result.stderr
 
 
-@pytest.mark.parametrize('product',['controller X1','controller_x1','controllerX1','UXV controller','controller Controller','controller'])
-def test_ac_plus_controllers_refused_before_identity_change(product):
+@pytest.mark.parametrize('product',['Contoso X1','contoso_x1','ContosoX1','Example Fabrikam','FABRIKAM Controller','Fabrikam'])
+def test_restricted_controllers_refused_before_identity_change(product,monkeypatch):
+    monkeypatch.setattr(hid_source,'_PRIVATE_CONTROLLER_FAMILIES',frozenset(hashlib.sha256(s.encode()).hexdigest() for s in ('contoso','fabrikam')))
     current=stream();current.source_event(connection())
     with pytest.raises(H.HidError) as error:current.source_event(connection('other',product=product))
     assert error.value.code=='HID_AC_PLUS_ONLY'

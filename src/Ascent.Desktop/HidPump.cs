@@ -41,9 +41,20 @@ internal sealed class HidPump : IDisposable
 
     internal void SetBackend(Uri baseUri) => _baseUri = baseUri;
 
-    internal static bool IsPublicDevice(string? product) => !System.Text.RegularExpressions.Regex.IsMatch(
-        product ?? "", @"(?<![a-z])(?:controller|controller)(?![a-z])|controller(?=x[0-9])",
-        System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+    internal static bool IsPublicDevice(string? product)
+    {
+        var text = product ?? "";
+        foreach (System.Text.RegularExpressions.Match match in System.Text.RegularExpressions.Regex.Matches(
+            text, @"[a-z]+", System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant))
+        {
+            var token = match.Value.ToLowerInvariant();
+            if (token.EndsWith("x", StringComparison.Ordinal) && match.Index + match.Length < text.Length
+                && char.IsAsciiDigit(text[match.Index + match.Length])) token = token[..^1];
+            var fingerprint = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(Encoding.UTF8.GetBytes(token)));
+            if (fingerprint is "2FD02CB5903E6608BCB7499A38B9204D0CAE711687E7A8F4866F96494AFA735D" or "0BB09D80600EEC3EB9D7793A6F859BEDDE2A2D83899B70BD78E961ED674B32F4") return false;
+        }
+        return true;
+    }
 
     internal static List<HidJoystick.DeviceInfo> Enumerate() => HidJoystick.Enumerate().Where(d => IsPublicDevice(d.Product)).ToList();
 

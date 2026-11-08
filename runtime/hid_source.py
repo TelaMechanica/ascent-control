@@ -63,10 +63,17 @@ def descriptor(document):
     return canonical,fingerprint
 
 
+_PRIVATE_CONTROLLER_FAMILIES=frozenset(['2fd02cb5903e6608bcb7499a38b9204d0cae711687e7a8f4866f96494afa735d', '0bb09d80600eec3eb9d7793a6f859bedde2a2d83899b70bd78e961ed674b32f4'])
+
+
 def restricted_public_device(device):
-    """These reported product families belong to AC+. Not physical authentication."""
+    """Apply controller family scope before registering a reader."""
     text=' '.join(str(device.get(key) or '') for key in ('product','manufacturer','model'))
-    return bool(re.search(r'(?i)(?<![a-z])(?:controller|controller)(?![a-z])|(?i:controller)(?=x[0-9])',text))
+    for match in re.finditer(r'[a-z]+',text,re.I):
+        token=match.group().lower()
+        if token.endswith('x') and text[match.end():match.end()+1].isdigit():token=token[:-1]
+        if hashlib.sha256(token.encode()).hexdigest() in _PRIVATE_CONTROLLER_FAMILIES:return True
+    return False
 
 
 def recognition(device,layout):

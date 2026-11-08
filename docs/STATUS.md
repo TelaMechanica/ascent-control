@@ -1,4 +1,4 @@
-Public 0.43.56 test build fixes Live control replacement during telemetry and confines controller/Shadow HID support to AC+. See [release notes](RELEASE_0.43.56.md).
+Public 0.43.56 test build fixes Live control replacement during telemetry. See [release notes](RELEASE_0.43.56.md).
 
 # Current status
 
