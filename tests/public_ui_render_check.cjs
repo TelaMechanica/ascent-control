@@ -49,12 +49,12 @@ function boot(options={}) {
                 querySelectorAll() { return []; }, createElement() { return mk(); },
                 body: { classList: classList() }, addEventListener() {},
                 documentElement: mk() },
-    window: {}, console,
+    window: options.window || {}, console,
     localStorage: { getItem() { return null; }, setItem() {}, removeItem() {} },
     fetch: options.fetch || (async () => ({ ok: true, json: async () => ({}) })),
     AbortController, atob: value=>Buffer.from(value,'base64').toString('binary'),
     URL: { createObjectURL: () => 'blob:', revokeObjectURL() {} }, Blob: class {},
-    setInterval: () => 0, clearInterval() {}, setTimeout: options.setTimeout || (() => 0), clearTimeout: options.clearTimeout || (() => {}),
+    setInterval: options.setInterval || (() => 0), clearInterval() {}, setTimeout: options.setTimeout || (() => 0), clearTimeout: options.clearTimeout || (() => {}),
     Number, Math, Object, Array, String, JSON, Boolean, Date, isNaN, parseInt,
     parseFloat, Error, RegExp, Promise, Set, Map,
   };
@@ -62,7 +62,7 @@ function boot(options={}) {
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync('runtime/www/i18n.js', 'utf8'), ctx, { filename: 'i18n.js' });
   vm.runInContext(require(require('path').join(process.cwd(),'tests/helpers/ui_source.js'))() +
-                  '\n;globalThis.__ui={state,fwVariantPanel,fwVariantBuildGate,netState,reloadDeviceHistory,backgroundImagePanel,prepareBackgroundImage,backgroundImageState,saveBackgroundImage,advancedOn,renderDevice,renderFirmware,renderFleet,renderSettings,renderDiagnostics,renderLive,setMode,setNav,render};\n',
+                  '\n;globalThis.__ui={state,fwVariantPanel,fwVariantBuildGate,netState,reloadDeviceHistory,backgroundImagePanel,prepareBackgroundImage,backgroundImageState,saveBackgroundImage,advancedOn,renderDevice,renderFirmware,renderFleet,renderSettings,renderDiagnostics,renderLive,liveState,startLivePoll,paintLiveTelemetry,paintLiveVideoStatus,setMode,setNav,render};\n',
                   ctx, { filename: 'app.js' });
   return ctx;
 }
