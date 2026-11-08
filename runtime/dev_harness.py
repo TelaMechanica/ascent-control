@@ -54,7 +54,7 @@ TEMPLATES = ROOT / "vendor_templates"
 
 RNDIS_HELPER = ROOT / "Configure-AscentRNDIS.ps1"
 
-APP_VERSION = '0.43.54'
+APP_VERSION = '0.43.55'
 
 def _resolve_edition() -> str:
     return 'consumer'
@@ -106,6 +106,7 @@ HOST_STATE = {"shutting_down": False}
 import operation_audit as smaudit
 
 import firmware_builder
+import wallpaper_image
 
 import caddx_repeater as rep
 
@@ -4474,6 +4475,42 @@ def firmware_browse(title: str = _VENDOR_BROWSE_TITLE,
         return {"ok": True, "cancelled": True}
     return {"ok": True, "cancelled": False, "path": str(obj["path"])}
 
+def wallpaper_prepare(body: dict) -> dict:
+    """Prepare a local JPEG; temporary pixels are removed before returning."""
+    path = Path(str((body or {}).get('path') or '').strip().strip('"'))
+    try:
+        if not path.is_file():
+            return {'ok': False, 'error': 'IMAGE_PATH_REQUIRED', 'message': 'Choose a PNG or JPEG image.'}
+        if path.stat().st_size > 32 * 1024 * 1024:
+            return {'ok': False, 'error': 'IMAGE_TOO_LARGE', 'message': 'Choose an image smaller than 32 MB.'}
+        source = wallpaper_image.measure(path.read_bytes())
+        if source['width'] * source['height'] > 80000000:
+            return {'ok': False, 'error': 'IMAGE_TOO_LARGE', 'message': 'Choose an image smaller than 80 megapixels.'}
+        plan = wallpaper_image.plan_fit(source['width'], source['height'])
+        if os.name != 'nt':
+            return {'ok': True, 'prepared': False, 'source': source, 'plan': plan,
+                    'message': 'Image preparation requires Windows.'}
+        with tempfile.TemporaryDirectory(prefix='ascent-wallpaper-') as work:
+            output = Path(work) / wallpaper_image.REMOTE_NAME
+            script = wallpaper_image.resize_powershell(str(path), str(output), plan)
+            result = subprocess.run(['powershell.exe', '-NoProfile', '-NonInteractive', '-Command', script],
+                                    capture_output=True, text=True, timeout=60, **_hidden_subprocess_kwargs())
+            if result.returncode or not output.is_file():
+                return {'ok': False, 'error': 'IMAGE_PREPARATION_FAILED',
+                        'message': 'The image could not be prepared. Choose another PNG or JPEG.'}
+            data = output.read_bytes()
+            measured = wallpaper_image.measure(data)
+            if measured['format'] != wallpaper_image.tile.JPEG or (measured['width'], measured['height']) != (1920, 1080):
+                return {'ok': False, 'error': 'IMAGE_OUTPUT_INVALID', 'message': 'The prepared image did not match the required format.'}
+        return {'ok': True, 'prepared': True, 'source': source, 'plan': plan,
+                'filename': wallpaper_image.REMOTE_NAME, 'jpeg_base64': base64.b64encode(data).decode('ascii'),
+                'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
+    except wallpaper_image.WallpaperError as exc:
+        return {'ok': False, 'error': exc.code, 'message': exc.message}
+    except (OSError, subprocess.SubprocessError) as exc:
+        return {'ok': False, 'error': 'IMAGE_PREPARATION_FAILED', 'message': sanitize_error(str(exc))}
+
+
 def firmware_variant_plan(body: dict) -> dict:
     """What building a product variant from this donor would take, and what stops it.
 
@@ -5381,6 +5418,13 @@ class Handler(SimpleHTTPRequestHandler):
             except Exception as e:
                 self.json_response({"ok": False, "error": "CONFIG_WRITE_FAILED",
                                     "message": sanitize_error(f"{type(e).__name__}: {e}")}, 502)
+            return
+        if p == '/api/wallpaper/browse':
+            self.json_response(firmware_browse(title='Choose a background image',
+                file_filter='Images (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg|All files (*.*)|*.*'))
+            return
+        if p == '/api/wallpaper/prepare':
+            self.json_response(wallpaper_prepare(self._read_json_body()))
             return
         if p.startswith("/api/device-history/"):
             action = p[len("/api/device-history/"):]
