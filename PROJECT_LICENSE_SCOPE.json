@@ -2,11 +2,16 @@
   "schema": "ascent.project.license_scope.v1",
   "licensor": "TelaMechanica",
   "sole_ac_contributor": "TelaMechanica",
-  "license": "LicenseRef-ASCENT-Private-Use",
+  "license": "GPL-3.0-only",
   "scope": "Original material in these files, only to the extent TelaMechanica holds the necessary rights; existing third-party material and notices retain their terms. Byte-identical packaged copies retain the same scope.",
   "covered_source_files": [
+    "COPYRIGHT",
+    "FIRMWARE-LINKING-PERMISSION.txt",
+    "README.md",
     "ascent_core/__init__.py",
     "ascent_core/packages.py",
+    "docs/LICENSING.md",
+    "docs/RELEASE_0.43.57.md",
     "firmware/hdpro/hdpro_build.py",
     "firmware/hdpro/legacy_pro_capture.py",
     "firmware/hdpro/legacy_pro_clock.c",
@@ -167,6 +172,7 @@
     "tests/test_phase475_hid_encoding.py",
     "tests/test_public_desktop_boundary.py",
     "tests/test_public_firmware_staging.py",
+    "tests/test_public_license.py",
     "tests/test_public_live_interaction.py",
     "tests/test_public_runtime_resources.py",
     "tests/test_rf_band_plans.py",
@@ -191,5 +197,12 @@
     "embedded interpreter/media/framework dependencies",
     "vendor camera applications/reference/tuning assets",
     "separately licensed material and vendor-origin portions wherever located"
+  ],
+  "copyright_notice": "COPYRIGHT",
+  "additional_permissions": [
+    {
+      "file": "FIRMWARE-LINKING-PERMISSION.txt",
+      "applies_to": "Original TelaMechanica code inserted into or linked with vendor firmware by the image builders; vendor rights are not granted."
+    }
   ]
 }

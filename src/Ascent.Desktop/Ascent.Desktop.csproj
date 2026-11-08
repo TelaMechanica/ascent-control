@@ -854,4 +854,16 @@
     </Content>
   </ItemGroup>
   <Import Project="..\..\release\PublicRuntimeInputs.props" />
+  <ItemGroup>
+    <Content Include="..\..\COPYRIGHT">
+      <Link>COPYRIGHT</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\FIRMWARE-LINKING-PERMISSION.txt">
+      <Link>FIRMWARE-LINKING-PERMISSION.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
 </Project>
