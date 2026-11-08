@@ -27,6 +27,31 @@ including the application version, steps and sanitized error text. For image
 builder reports include the target, donor hash and output hash. Remove personal
 paths and device identifiers before uploading logs.
 
+## Tested firmware and upgrade history
+
+**19.2.14 is AC's primary bench-tested firmware baseline.** Development testing
+has covered conventional VRX, VRX Max, GT Pro/Sky, custom Z40 images and Relay on
+that firmware line. VRX Pro testing used **18.21.10**. Available operations depend
+on the connected device and firmware; this does not qualify every feature on every model.
+
+Historical AC firmware-update records include:
+
+| Device / firmware family | Previous firmware | Recorded update target |
+|---|---|---|
+| Conventional VRX / Ground | 16.5.3, 17.5.3, 18.21.3, 19.2.4 | 19.2.14 |
+| VRX Max | 18.21.7, 19.2.4 | 19.2.14 |
+| GT Pro / Sky | 19.2.13 | 19.2.14 |
+| Relay | 19.2.9 | 19.2.14 |
+| GT Pro Z40 | 16.5.8; later 19.2.14 custom-image reflashes | Custom 19.2.14 Z40 image |
+
+Stock-image entries are supported by AC pre-flash backups and subsequent device
+identity observations. The custom Z40 history also includes terminal transfer
+results and later operator camera/zoom checks. These records include earlier AC
+development versions; they are update history, not blanket feature qualification
+or a hardware pass for every newly generated camera image. Firmware files examined
+only offline or selected without a confirmed later target identity are not listed
+as completed stock updates.
+
 ## Build the Windows MSI
 
 Install .NET SDK 8.0.424 on Windows x64. From PowerShell in a fresh checkout:
