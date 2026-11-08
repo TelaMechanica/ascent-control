@@ -1,25 +1,25 @@
 {
   "schema": "ascent.public.payload.v1",
-  "version": "0.43.56",
+  "version": "0.43.57",
   "licensor": "TelaMechanica",
   "files": [
     {
       "source": "LICENSE",
       "target": "LICENSE",
-      "sha256": "988efcda7fcb436dcbecae6c90d12c1f4e012ec1aa478623cdfff477be03fd02",
-      "bytes": 3531
+      "sha256": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+      "bytes": 35147
     },
     {
       "source": "PROJECT_LICENSE_SCOPE.json",
       "target": "PROJECT_LICENSE_SCOPE.json",
-      "sha256": "1e5b3f0d0a4e9c60c2f753f2481738034c8e4faededac7abb19a94af16044d7a",
-      "bytes": 7876
+      "sha256": "3f52f6e916afbf6f5a9e4a1ad2a025e3e1955801e96c28c103dbebd79e21f7e3",
+      "bytes": 8304
     },
     {
       "source": "THIRD-PARTY-NOTICES.md",
       "target": "THIRD-PARTY-NOTICES.md",
-      "sha256": "29068c8f13606090caa5b1e152cf71a2372c6fde89d1394cab4a527cbbf43cc5",
-      "bytes": 3033
+      "sha256": "ac6135111a101013434aacd9e763965ef4a15a40273ba0db62b995478a3cfc0f",
+      "bytes": 3178
     },
     {
       "source": "THIRD-PARTY-SOURCES.json",
@@ -426,7 +426,7 @@
     {
       "source": "runtime/dev_harness.py",
       "target": "runtime/dev_harness.py",
-      "sha256": "4b51c1742bb0dc95142e2880126eb114f5335b3c50047d2a1a7a855008c4adc0",
+      "sha256": "fd9ee2bb8a41a27e3676856ea4344636d7f0c1e2c7020fac3836ee9e490ff175",
       "bytes": 296916
     },
     {
@@ -974,6 +974,18 @@
       "target": "third_party/licenses/plugin-licenses.json",
       "sha256": "ad6a3c526ab3481ecee5499a2d6fc576a3533b68d0a6a8b70c6516c29136aa13",
       "bytes": 1428
+    },
+    {
+      "source": "COPYRIGHT",
+      "target": "COPYRIGHT",
+      "sha256": "3b79bf9894429d47d2071e14f3a71e82fd9d0616af2a900b53186dce0a91f688",
+      "bytes": 925
+    },
+    {
+      "source": "FIRMWARE-LINKING-PERMISSION.txt",
+      "target": "FIRMWARE-LINKING-PERMISSION.txt",
+      "sha256": "4e36a241313818e923ab2f661141760b7397b449481294f9f9a1ae232ed8e943",
+      "bytes": 1214
     }
   ],
   "dependencies": {
@@ -1065,10 +1077,10 @@
     ".gitignore": "d47bc9c9a965d2826ffd034993a7f1b96dbe03ff29368410b434793f11cc90aa",
     "AGENTS.md": "1aa9b5a0de93ada288e26112634232b198cdc31c33abbfd2034ffb19c02d3c59",
     "CLAUDE.md": "6b7a588984f9f1b30041bad3e0292a8188d38c520c803fc82169ee6941605d4c",
-    "LICENSE": "988efcda7fcb436dcbecae6c90d12c1f4e012ec1aa478623cdfff477be03fd02",
-    "PROJECT_LICENSE_SCOPE.json": "1e5b3f0d0a4e9c60c2f753f2481738034c8e4faededac7abb19a94af16044d7a",
-    "README.md": "9bf9af12011d6071d79a0aec11de419157a654a5f0586088c73e39fe30d2f6bc",
-    "THIRD-PARTY-NOTICES.md": "29068c8f13606090caa5b1e152cf71a2372c6fde89d1394cab4a527cbbf43cc5",
+    "LICENSE": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
+    "PROJECT_LICENSE_SCOPE.json": "3f52f6e916afbf6f5a9e4a1ad2a025e3e1955801e96c28c103dbebd79e21f7e3",
+    "README.md": "a7611d7cf9efd5c45a34a6eafe0d894741f8bc7334b64a4a7657a5cd662e4ae5",
+    "THIRD-PARTY-NOTICES.md": "ac6135111a101013434aacd9e763965ef4a15a40273ba0db62b995478a3cfc0f",
     "THIRD-PARTY-SOURCES.json": "3c3d43dd128bfe194a65b8360be6001fb4b25d5a5a00bd7b8f7118eba0c2b03c",
     "ascent_core/__init__.py": "b5e396cc9012ed81e60d6e2b4a0e72e995c46e5a73abde3ab3c973cf540c4cdc",
     "ascent_core/packages.py": "de12022f2d3ed772b78fc888f7aff687a9661405b80cc8ed3f68a11327a95246",
@@ -1084,7 +1096,7 @@
     "docs/RELEASE_VALIDATION_0.43.54.json": "8295a7226453dc2f91f4d1d69d26c4b15a23f159703c171c4049cf7ef539f1be",
     "docs/SHARED_SOURCE_IMPORT.json": "76206d3ceab3302c76e17a3afd2531f6e06b41655c5c932dc7f1236793b993ee",
     "docs/SOURCE_REVIEW.md": "6f08de97f00d27fc1a8094d516cee51032bc696b671de1b930b6822c5fe9a731",
-    "docs/STATUS.md": "7a24b591f26867ec0203ff8e11ec785e7e1d02880dc1c1604cdb405683d57685",
+    "docs/STATUS.md": "795561fedc9efbad121a938aa860c6185bb678f5769b161261546b69be37000b",
     "docs/TASKS.md": "2de70516e76c33fdb27715f240728f1932c9102555ed24d530e86783fdcfb687",
     "firmware/hdpro/README.md": "6bdbb441b9866222ad2c855600db3e6d45dc47c310d20c4b35886b4286897a37",
     "firmware/hdpro/assets.json": "e6ff9d8350f06b0638abcf52cfad9c5f3ec0d41571c8ee60eca79f37f8b01249",
@@ -1174,7 +1186,7 @@
     "runtime/caddx_sky_user_cfg.py": "ae564e925856ccb8a483c9df477bfbf2c50472ff75af51af8a588c6b935352f4",
     "runtime/caddx_tile_image.py": "3362291ff44cbf09ed44d4814fe5efb198925eed66689e033d4f411b93fdd568",
     "runtime/caddx_vendor_write.py": "f22b3d83106beb88c69b04339537830ace2535ce1bdda5fc4d2d4b9b316f5af7",
-    "runtime/dev_harness.py": "4b51c1742bb0dc95142e2880126eb114f5335b3c50047d2a1a7a855008c4adc0",
+    "runtime/dev_harness.py": "fd9ee2bb8a41a27e3676856ea4344636d7f0c1e2c7020fac3836ee9e490ff175",
     "runtime/device_capability.py": "fa9d47b46e2922ca5dfb0de1e65566c7bf691d7e7c332954a5c0216811af2911",
     "runtime/device_config_store.py": "979e2e28e0068b22ceff62a3eb8ed745f2535275369a19dc05450845a0e73415",
     "runtime/device_naming.py": "83e5e3b7a732ed35c3e7262d6a5140b34e8a04293e6e6a2b3e082fc9133e1274",
@@ -1257,7 +1269,7 @@
     "runtime/www/index.html": "1c2cfc6d24ca6d8f5aa0a00334a3004f1df18a6416d7bc17a2a692da19072df2",
     "src/Ascent.Desktop/App.xaml": "c224747501fff732ca28f968e11c59109f726e60d69c9668843a3f232552c054",
     "src/Ascent.Desktop/App.xaml.cs": "c6011d45cdad7c170a0c4c0c3038316f2db8313183e0354dab943b2a9cfe0b93",
-    "src/Ascent.Desktop/Ascent.Desktop.csproj": "0f56d49115aa657536ce7fb0f3edf0a3a48a0a7b48a138788497ccea6a5efac3",
+    "src/Ascent.Desktop/Ascent.Desktop.csproj": "ceff80bcd1272337c4e40ae8c0717230b7f17e5684f5c2f9293bc1ac5e540526",
     "src/Ascent.Desktop/Assets/AscentControl.ico": "b1bb2afcf46f9fbf8d233ff84958ccf17596021ab639f11313801ae5f3da652e",
     "src/Ascent.Desktop/Assets/AscentControlIcon.png": "03d93cfd69f86cfe17591f04de53afbdb0d49113e22016838089e9271cb36060",
     "src/Ascent.Desktop/BackendHost.cs": "44eddb003c2f853d6790fad6456b5889340b9df0db3fabf8ad330c23885115c1",
@@ -1822,6 +1834,11 @@
     "tools/hdpro_port_assets.json": "e6ff9d8350f06b0638abcf52cfad9c5f3ec0d41571c8ee60eca79f37f8b01249",
     "tools/inspect_local.py": "abfc8c82a21918505049b3b2da1b0cf24108161a2a480b7f79de4723802205f6",
     "tools/stage_public_inputs.py": "0fa2749ddb23714f4ae8402edbb88940b519c21c661fe12630b40d8154e9b6b7",
-    "tools/verify_public_build.py": "db9d0ad53ed73cf8cb3918ea06486d4f9e189282b0c40aabd291ff11e07c98a1"
+    "tools/verify_public_build.py": "244b19e1cf776a5b42576b11a188582c48cd6c56000fe6d8e6166766addf7cba",
+    "COPYRIGHT": "3b79bf9894429d47d2071e14f3a71e82fd9d0616af2a900b53186dce0a91f688",
+    "FIRMWARE-LINKING-PERMISSION.txt": "4e36a241313818e923ab2f661141760b7397b449481294f9f9a1ae232ed8e943",
+    "docs/LICENSING.md": "a4c80aebafae508a885559bf986825b0db87c975f29c54a1ee24d474fe2ff087",
+    "tests/test_public_license.py": "b8f3bfc678a017b394aa050b14e3722996bb513c6da16ce00dee658659839262",
+    "docs/RELEASE_0.43.57.md": "fe54d1f64119ac3ba33d5d7d16bd2c811fe3e7d73f171f2c15ec01d263ae7849"
   }
 }

@@ -1,7 +1,9 @@
 # ASCENT Control third party notices
 
 Original ASCENT Control code is attributed to its sole contributor, TelaMechanica,
-and is covered only as specified by LICENSE and PROJECT_LICENSE_SCOPE.json.
+and is licensed under GPL-3.0-only as specified by LICENSE, COPYRIGHT and
+PROJECT_LICENSE_SCOPE.json. FIRMWARE-LINKING-PERMISSION.txt grants a narrow
+additional permission for original code combined with vendor firmware.
 The following material retains separate terms and attribution.
 
 | Component | Pinned version | Use and applicable terms |

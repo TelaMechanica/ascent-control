@@ -1,0 +1,21 @@
+Additional permission under GNU GPL version 3 section 7
+
+Copyright (c) 2026 TelaMechanica.
+
+For original ASCENT Control code authored by TelaMechanica that is inserted into
+or linked with a vendor firmware image by the project's firmware builders,
+TelaMechanica additionally permits conveying that code in combination with the
+vendor firmware runtime, provided the person conveying the combination has all
+permissions otherwise required for the vendor material.
+
+This permission does not require the independent vendor runtime to be licensed
+under the GNU GPL. The GNU GPL version 3 continues to apply to the original
+ASCENT Control code and modifications to it, including corresponding-source and
+notice obligations when conveying that code in a combined image. This additional
+permission does not extend to other proprietary applications or to modifications
+made by other copyright holders unless they independently grant it.
+
+No vendor copyright, patent, trademark or redistribution permission is granted.
+This permission does not establish that any particular firmware image may be
+redistributed. People modifying covered code may remove this additional
+permission as permitted by GNU GPL version 3 section 7.

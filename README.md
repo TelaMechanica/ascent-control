@@ -100,14 +100,18 @@ remain available through `tools/inspect_local.py`.
 
 ## Permissions and third-party material
 
-Copyright 2026 TelaMechanica, the sole ASCENT Control contributor. Original
-project material is provided under the [Personal and Private Use License](LICENSE):
-personal, hobbyist development, educational and private professional use, with
-attribution. Third-party sale, redistribution and product reuse are restricted.
-The [scope inventory](PROJECT_LICENSE_SCOPE.json) identifies original project
-material; separately licensed material retains its own terms.
+Copyright 2026 TelaMechanica, the sole ASCENT Control contributor. Original public
+AC code is licensed under **[GNU GPL version 3 only](LICENSE)**. Commercial use,
+modification and redistribution are allowed under its terms, including applicable
+copyright notices and corresponding-source obligations. See [COPYRIGHT](COPYRIGHT)
+and the [scope inventory](PROJECT_LICENSE_SCOPE.json).
+
+Original code inserted into vendor firmware by the image builders has a narrow
+[additional firmware-linking permission](FIRMWARE-LINKING-PERMISSION.txt). It keeps
+our code under GPLv3 while allowing combination with vendor firmware where the
+user has the required vendor rights. It grants no rights to vendor material.
 
 Read [third-party notices](THIRD-PARTY-NOTICES.md) and the
-[source inventory](THIRD-PARTY-SOURCES.json). Matching source archives accompany
-native helper/tool binaries in the release. Vendor-origin camera material retains
-its existing rights; the project license grants no rights to vendor IP.
+[source inventory](THIRD-PARTY-SOURCES.json). Third-party components retain their
+own licenses. Matching source archives accompany native helper/tool binaries.
+AC+ remains a separate private project and is outside this public license grant.

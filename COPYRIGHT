@@ -1,0 +1,18 @@
+ASCENT Control
+Copyright (c) 2026 TelaMechanica.
+
+SPDX-License-Identifier: GPL-3.0-only
+
+Original ASCENT Control material identified by PROJECT_LICENSE_SCOPE.json is
+licensed under GNU General Public License version 3 only. See LICENSE.
+Original code inserted into or linked with vendor firmware by the image builders
+also carries the additional permission in FIRMWARE-LINKING-PERMISSION.txt.
+
+Commercial use, modification and redistribution are permitted under these terms.
+Preserve applicable copyright/license notices and identify modifications.
+Conveying covered binaries requires satisfying GPL corresponding-source obligations.
+No later GPL version is granted by this project's notice.
+
+This grant covers only rights held by TelaMechanica. Third-party code, firmware,
+resources, trademarks and vendor-origin portions retain their own rights and
+terms; they are not relicensed by this grant. See THIRD-PARTY-NOTICES.md.
