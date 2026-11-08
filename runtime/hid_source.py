@@ -63,6 +63,12 @@ def descriptor(document):
     return canonical,fingerprint
 
 
+def restricted_public_device(device):
+    """These reported product families belong to AC+. Not physical authentication."""
+    text=' '.join(str(device.get(key) or '') for key in ('product','manufacturer','model'))
+    return bool(re.search(r'(?i)(?<![a-z])(?:sroc|shadow)(?![a-z])|(?i:sroc)(?=x[0-9])',text))
+
+
 def recognition(device,layout):
     usages=[(a['usage_page'],a['usage']) for a in layout.get('axes',[])]
     buttons=[(b['usage_page'],b['usage']) for b in layout.get('buttons',[])]
@@ -72,20 +78,18 @@ def recognition(device,layout):
     product=device.get('product') or ''
     manufacturer=device.get('manufacturer') or ''
     family=hint or bool(re.search(r'\b(open|edge)tx\b',manufacturer+' '+product,re.I))
-    integrated=bool(re.search(r'\bsroc\s*x1\b',product,re.I) and re.search(r'\buxv technologies\b',manufacturer,re.I))
     rc_shape=len(usages)==8 and len(buttons)==24
-    likely_rc=integrated or family or rc_shape or bool(re.search(r'\btbs\b',manufacturer+' '+product,re.I))
-    profile='integrated_rc_hid' if integrated else 'edgetx_classic' if family and classic else 'edgetx_variant' if family else 'generic_rc_hid' if likely_rc else 'generic_hid'
+    likely_rc=family or rc_shape or bool(re.search(r'\btbs\b',manufacturer+' '+product,re.I))
+    profile='edgetx_classic' if family and classic else 'edgetx_variant' if family else 'generic_rc_hid' if likely_rc else 'generic_hid'
     model=None
     if re.search(r'\bradiomaster\b',product,re.I):
         match=re.search(r'\b(zorro|boxer|pocket|gx12|ax12|tx16s?)\b',product,re.I)
         if match:model='radiomaster_'+match.group(1).lower()
     elif re.search(r'\btbs\b.*\btango\s*2\b',product,re.I):model='tbs_tango2'
-    if integrated:model='sroc'
     return dict(manufacturer=manufacturer or None,collection_usage_page=layout.get('collection_usage_page'),collection_usage=layout.get('collection_usage'),axis_count=len(usages),button_count=len(buttons),hat_count=len(layout.get('hats',[])),hat_mapping_supported=False,recognized_family='EdgeTX' if family else None,likely_rc=likely_rc,supported_hid=bool(usages),canonical_classic=classic,physical_identity_known=False,
                 profile_kind=profile,
                 recognition_basis='USB/text family inference; descriptor profile assessed separately' if family else 'RC-shaped HID; firmware family unknown' if likely_rc else 'HID observation; family unknown',
-                display_name=('UXV '+product if integrated else product) or 'HID controller',
+                display_name=product or 'HID controller',
                 graphic_key='generic_rc' if likely_rc else 'generic_controller',model=model,model_basis='reported product string; presentation only' if model else None)
 
 

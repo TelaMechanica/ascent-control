@@ -8,8 +8,7 @@ const RcSource = (()=>{
     radiomaster_ax12:'assets/rc/png/radiomaster_ax12.png',
     radiomaster_tx16s:'assets/rc/png/radiomaster_tx16s.png',
     tbs_tango2:'assets/rc/png/tbs_tango_2.png',
-    rog_ally:'assets/rc/png/rog_ally.png',
-    sroc:'assets/rc/png/sroc.png'
+    rog_ally:'assets/rc/png/rog_ally.png'
   }); // Operator-supplied originals; provenance is in assets/rc/PROVENANCE.json.
   function present(s,now=Date.now()){
     if(!s) return {name:'RC controller',detection:'Controller observation unavailable',profile:'Profile unknown',input:'Input unknown',mapping:'Mapping unknown',output:'Output unknown',features:[],graphic:'neutral'};
@@ -18,7 +17,7 @@ const RcSource = (()=>{
       &&s.input_age_ms+Math.max(0,now-s.generated_at_ms)<=s.stale_after_ms);
     return {name:s.display_name||'HID controller',
       detection:!observed?'Reader observation stale':s.device_present?'Controller detected':'No RC reader connected',
-      profile:s.profile_kind==='integrated_rc_hid'?'Integrated RC controller':s.profile_kind==='edgetx_classic'?'EdgeTX Classic profile (inferred)':s.profile_kind==='edgetx_variant'?'EdgeTX-compatible variant (inferred)':s.recognized_family==='EdgeTX'?'EdgeTX RC detected (inferred)':s.likely_rc?'Generic RC HID':'Game controller · generic HID',
+      profile:s.profile_kind==='edgetx_classic'?'EdgeTX Classic profile (inferred)':s.profile_kind==='edgetx_variant'?'EdgeTX-compatible variant (inferred)':s.recognized_family==='EdgeTX'?'EdgeTX RC detected (inferred)':s.likely_rc?'Generic RC HID':'Game controller · generic HID',
       input:fresh?'Input live':s.device_present?'Input stale or not yet observed':'Input unavailable',
       mapping:s.mapping_present?'Mapped · 16 output slots':'Mapping requires assignment or revalidation',
       output:!observed?'CRSF output observation stale':s.stream_running?'CRSF output active · send-only':'CRSF output stopped',

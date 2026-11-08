@@ -1,3 +1,5 @@
+Public 0.43.56 test build fixes Live control replacement during telemetry and confines SROC/Shadow HID support to AC+. See [release notes](RELEASE_0.43.56.md).
+
 # Current status
 
 Public 0.43.54 build 2 is released. The 0.43.55 test build fixes diagnostic page

@@ -1,6 +1,6 @@
 {
   "schema": "ascent.public.payload.v1",
-  "version": "0.43.55",
+  "version": "0.43.56",
   "licensor": "TelaMechanica",
   "files": [
     {
@@ -12,8 +12,8 @@
     {
       "source": "PROJECT_LICENSE_SCOPE.json",
       "target": "PROJECT_LICENSE_SCOPE.json",
-      "sha256": "d1e57b74022c1bd96768b57e37094045f2e845455f47bb18bd5237d4364decc8",
-      "bytes": 7915
+      "sha256": "1e5b3f0d0a4e9c60c2f753f2481738034c8e4faededac7abb19a94af16044d7a",
+      "bytes": 7876
     },
     {
       "source": "THIRD-PARTY-NOTICES.md",
@@ -336,8 +336,8 @@
     {
       "source": "runtime/caddx_hid.py",
       "target": "runtime/caddx_hid.py",
-      "sha256": "49679e617bf42329e4d8b83a9cf3315a09040e90058d9413f048e1a228e113c7",
-      "bytes": 42721
+      "sha256": "65d9aea364c692cf583645471d8fcbe45f2aa286b1919cb9c96240a3387dba4d",
+      "bytes": 42889
     },
     {
       "source": "runtime/caddx_legacy_serial.py",
@@ -426,7 +426,7 @@
     {
       "source": "runtime/dev_harness.py",
       "target": "runtime/dev_harness.py",
-      "sha256": "2ebff2f9e2e5ba43123ad7efcd39ab0ce7815182902d3d70d35209c1982231ca",
+      "sha256": "4b51c1742bb0dc95142e2880126eb114f5335b3c50047d2a1a7a855008c4adc0",
       "bytes": 296916
     },
     {
@@ -486,8 +486,8 @@
     {
       "source": "runtime/hid_source.py",
       "target": "runtime/hid_source.py",
-      "sha256": "dca7d3750648dc559df13c6ef1412841d51b285d5bf3eb99db81d10474a44d90",
-      "bytes": 7429
+      "sha256": "2dc7509374780d8a855b293548722e96bc0fb2d4c0384e509e64532bf8abdb2b",
+      "bytes": 7503
     },
     {
       "source": "runtime/known_receivers.py",
@@ -606,8 +606,8 @@
     {
       "source": "runtime/www/app.js",
       "target": "runtime/www/app.js",
-      "sha256": "1c07faa2bd69fcd1d35977b63acff6a9e3d814acff748a66cc470b0cc0abadec",
-      "bytes": 251078
+      "sha256": "07d43d2246cc39773c0895dc3a579a042d4b63875783e91e5b180cd704f56295",
+      "bytes": 253576
     },
     {
       "source": "runtime/www/assets/ascent_skull.png",
@@ -750,14 +750,14 @@
     {
       "source": "runtime/www/assets/rc/PROVENANCE.json",
       "target": "runtime/www/assets/rc/PROVENANCE.json",
-      "sha256": "16f2b09d801ce3d9b469eeee1e6fd204e4195fb3231e1a825f6f9c128c7abe11",
-      "bytes": 3780
+      "sha256": "3aaa1e8feb84fbc7afd3966d62144b2c352af7feda1d790b71294ab4377c5bb2",
+      "bytes": 3481
     },
     {
       "source": "runtime/www/assets/rc/README.md",
       "target": "runtime/www/assets/rc/README.md",
-      "sha256": "410eb827c49be1e72e052c68c8af654212d7111ea0b27f4ecc08b9d3b747602f",
-      "bytes": 978
+      "sha256": "ead4037cbc7227b2f1200ebf84ce35545feac1ffc20736d3bc96b84c47592c17",
+      "bytes": 829
     },
     {
       "source": "runtime/www/assets/rc/SOURCE_README.txt",
@@ -808,12 +808,6 @@
       "bytes": 731321
     },
     {
-      "source": "runtime/www/assets/rc/png/sroc.png",
-      "target": "runtime/www/assets/rc/png/sroc.png",
-      "sha256": "0101da08e5417f79c6dd29deb7eced1a543a055aed17f3040f884825f43ee2aa",
-      "bytes": 1195628
-    },
-    {
       "source": "runtime/www/assets/rc/png/tbs_tango_2.png",
       "target": "runtime/www/assets/rc/png/tbs_tango_2.png",
       "sha256": "ab1396d1f64a97e9d0b421f577a8310d6980ca54d2343262c3abb3d16b816ce5",
@@ -862,12 +856,6 @@
       "bytes": 109648
     },
     {
-      "source": "runtime/www/assets/rc/svg/sroc.svg",
-      "target": "runtime/www/assets/rc/svg/sroc.svg",
-      "sha256": "b421cf74732b503ea6fb38837705ec6e94c53c9a30be7f300ad335a584f332c8",
-      "bytes": 179428
-    },
-    {
       "source": "runtime/www/assets/rc/svg/tbs_tango_2.svg",
       "target": "runtime/www/assets/rc/svg/tbs_tango_2.svg",
       "sha256": "a9909b5e5e44a8f050373916bbdc2f31b6ea2480e6b6217bc6706fe71589f0ee",
@@ -876,8 +864,8 @@
     {
       "source": "runtime/www/domains/rc_source.js",
       "target": "runtime/www/domains/rc_source.js",
-      "sha256": "b76cd0f67c608f80c87a7759a62e0389641e66b8f7aad59a463aefb4d33043b4",
-      "bytes": 2802
+      "sha256": "626067c547b1a74947a089c981598f941389a512137643677bd18f94363d09eb",
+      "bytes": 2703
     },
     {
       "source": "runtime/www/domains/rf_diagnostics.js",
@@ -1078,7 +1066,7 @@
     "AGENTS.md": "1aa9b5a0de93ada288e26112634232b198cdc31c33abbfd2034ffb19c02d3c59",
     "CLAUDE.md": "6b7a588984f9f1b30041bad3e0292a8188d38c520c803fc82169ee6941605d4c",
     "LICENSE": "988efcda7fcb436dcbecae6c90d12c1f4e012ec1aa478623cdfff477be03fd02",
-    "PROJECT_LICENSE_SCOPE.json": "d1e57b74022c1bd96768b57e37094045f2e845455f47bb18bd5237d4364decc8",
+    "PROJECT_LICENSE_SCOPE.json": "1e5b3f0d0a4e9c60c2f753f2481738034c8e4faededac7abb19a94af16044d7a",
     "README.md": "c1b644ec20407f110f3c6667078bc80114a184ca904dd75dd64c58d19a84131d",
     "THIRD-PARTY-NOTICES.md": "29068c8f13606090caa5b1e152cf71a2372c6fde89d1394cab4a527cbbf43cc5",
     "THIRD-PARTY-SOURCES.json": "3c3d43dd128bfe194a65b8360be6001fb4b25d5a5a00bd7b8f7118eba0c2b03c",
@@ -1092,10 +1080,11 @@
     "docs/PUBLICATION_POLICY.md": "211878b21f67da66f8a07daa02b09510d4ee5454bed8c02659632bffa193d727",
     "docs/RELEASE_0.43.54.md": "c4ae990251ebdca9310d65ef1dc5619dafebe7a1f044a5bb449e9e724c74a5bc",
     "docs/RELEASE_0.43.55.md": "9a48fb803bd5fca4486345e882baa0ab762ba47934026e1a3f2094c78f4f598c",
+    "docs/RELEASE_0.43.56.md": "da9aebf2a4dce3a3968885c8c776fec7d11d36411a2bd5b84923c5bdc59ed1db",
     "docs/RELEASE_VALIDATION_0.43.54.json": "8295a7226453dc2f91f4d1d69d26c4b15a23f159703c171c4049cf7ef539f1be",
     "docs/SHARED_SOURCE_IMPORT.json": "76206d3ceab3302c76e17a3afd2531f6e06b41655c5c932dc7f1236793b993ee",
     "docs/SOURCE_REVIEW.md": "6f08de97f00d27fc1a8094d516cee51032bc696b671de1b930b6822c5fe9a731",
-    "docs/STATUS.md": "95b479a78f27897f637e8172dc5bcf79f60996af819b7e933999d1e8aa124d3e",
+    "docs/STATUS.md": "34a92d8e91b9e57bb17929b9c7fbe19aad975f7d24905f76a3b4faa9cd025f5e",
     "docs/TASKS.md": "2de70516e76c33fdb27715f240728f1932c9102555ed24d530e86783fdcfb687",
     "firmware/hdpro/README.md": "6bdbb441b9866222ad2c855600db3e6d45dc47c310d20c4b35886b4286897a37",
     "firmware/hdpro/assets.json": "e6ff9d8350f06b0638abcf52cfad9c5f3ec0d41571c8ee60eca79f37f8b01249",
@@ -1170,7 +1159,7 @@
     "runtime/caddx_firmware_upgrade.py": "6fb98b26502e6f77b8acb1b6ddb4f233220b3f9c2a31c3ce056757b0974cc7c2",
     "runtime/caddx_firmware_variant.py": "5f77b115a49e1eea5e2bdd87c26af7049ff301639ed3b5081cc6e72408bad512",
     "runtime/caddx_fw_version.py": "d85c61227e2543f4a5eafa55a1ed4d9461effa850185ec2bd58ca1a4563ec820",
-    "runtime/caddx_hid.py": "49679e617bf42329e4d8b83a9cf3315a09040e90058d9413f048e1a228e113c7",
+    "runtime/caddx_hid.py": "65d9aea364c692cf583645471d8fcbe45f2aa286b1919cb9c96240a3387dba4d",
     "runtime/caddx_legacy_serial.py": "9306d277a3c20d05762e54ee6d3eba793566dca60058160a34f83eeda60aa746",
     "runtime/caddx_mgrs.py": "2af9c14ce8246c7cebedf14bb91dd4c7c12abe9335b5fa3f0ca83cdcca429c7e",
     "runtime/caddx_msp.py": "a357886345a2dd76b88efce8eeaa9b96484a78f795675f389b8190845387795f",
@@ -1185,7 +1174,7 @@
     "runtime/caddx_sky_user_cfg.py": "ae564e925856ccb8a483c9df477bfbf2c50472ff75af51af8a588c6b935352f4",
     "runtime/caddx_tile_image.py": "3362291ff44cbf09ed44d4814fe5efb198925eed66689e033d4f411b93fdd568",
     "runtime/caddx_vendor_write.py": "f22b3d83106beb88c69b04339537830ace2535ce1bdda5fc4d2d4b9b316f5af7",
-    "runtime/dev_harness.py": "2ebff2f9e2e5ba43123ad7efcd39ab0ce7815182902d3d70d35209c1982231ca",
+    "runtime/dev_harness.py": "4b51c1742bb0dc95142e2880126eb114f5335b3c50047d2a1a7a855008c4adc0",
     "runtime/device_capability.py": "fa9d47b46e2922ca5dfb0de1e65566c7bf691d7e7c332954a5c0216811af2911",
     "runtime/device_config_store.py": "979e2e28e0068b22ceff62a3eb8ed745f2535275369a19dc05450845a0e73415",
     "runtime/device_naming.py": "83e5e3b7a732ed35c3e7262d6a5140b34e8a04293e6e6a2b3e082fc9133e1274",
@@ -1195,7 +1184,7 @@
     "runtime/firmware_camera_support.py": "f138340e2c53567fa595f1849d4224900eb7d664973add75fdbb2115e9d5f4e4",
     "runtime/firmware_native_backend.py": "31d1eee7d268b7c88d197b53367c8420c643102773ab903a3b67c6908737539b",
     "runtime/first_run.py": "dc5c6309a975b1872ecc6d212309c3ed733e59443250e264d59e0513ce041cee",
-    "runtime/hid_source.py": "dca7d3750648dc559df13c6ef1412841d51b285d5bf3eb99db81d10474a44d90",
+    "runtime/hid_source.py": "2dc7509374780d8a855b293548722e96bc0fb2d4c0384e509e64532bf8abdb2b",
     "runtime/known_receivers.py": "4ae0f0273687fc53852eb6dbfc8f557c4e7d9080895f97d01a6ea597e4766fa9",
     "runtime/local_settings.py": "21eb8ff54829f66cb814e2445b08dde08815f0fe4c435854274f0fda7bcd2576",
     "runtime/log_redaction.py": "ba8d4ae2cc848efca461fd4c71d20c1067527069191d2495ab2df7bd61b36c28",
@@ -1215,7 +1204,7 @@
     "runtime/windows_device_inventory.py": "2de7f8ab7904613aece0b9bec7c3021a2ead5fd8a71637f73235710b486d0f12",
     "runtime/windows_driver_repair.py": "4ae8a03dc9023b0136a3f57d8e991ac31d28b2fe6776739c23b403ee25f77ba3",
     "runtime/www/app.css": "818bfaad22f893a66a5f3fffcb37b220cc39c683fa61893f44692661a10cd5ad",
-    "runtime/www/app.js": "1c07faa2bd69fcd1d35977b63acff6a9e3d814acff748a66cc470b0cc0abadec",
+    "runtime/www/app.js": "07d43d2246cc39773c0895dc3a579a042d4b63875783e91e5b180cd704f56295",
     "runtime/www/assets/ascent_skull.png": "d79322bd44bc6c22780daf17301018ec3f61eb31b6a0151d1e900ba159161d02",
     "runtime/www/assets/devices/Ascent_CamHub.png": "d64ab39a6567f2bb6e948098f89a7b6970d8f9ea41c60e01778b5a0b5d735acf",
     "runtime/www/assets/devices/Ascent_GT.png": "45a704c782577b4c909898672a4b2ca9c51b9220e51bdfd87447b519d2dc62a0",
@@ -1239,8 +1228,8 @@
     "runtime/www/assets/devices/Ascent_VRX_Cine.png": "8110f5d09920fbff04fdad42f3f5cecfa5744931b9bf3a2fdbfd797ff3a2b0b5",
     "runtime/www/assets/devices/Ascent_VRX_MAX_WF.png": "9f49702ecaf0addbe6657443bda4afd0d9e749ab945f582436a769cd79e0e23f",
     "runtime/www/assets/devices/ascent_repeater.png": "f807cdb88f4468912d2f32900921a795de32d1f8466c73c77cb96aef3f67bd14",
-    "runtime/www/assets/rc/PROVENANCE.json": "16f2b09d801ce3d9b469eeee1e6fd204e4195fb3231e1a825f6f9c128c7abe11",
-    "runtime/www/assets/rc/README.md": "410eb827c49be1e72e052c68c8af654212d7111ea0b27f4ecc08b9d3b747602f",
+    "runtime/www/assets/rc/PROVENANCE.json": "3aaa1e8feb84fbc7afd3966d62144b2c352af7feda1d790b71294ab4377c5bb2",
+    "runtime/www/assets/rc/README.md": "ead4037cbc7227b2f1200ebf84ce35545feac1ffc20736d3bc96b84c47592c17",
     "runtime/www/assets/rc/SOURCE_README.txt": "c639745f9520df80a7586e49603dfeed44627d5333692b724e6580d63c57de85",
     "runtime/www/assets/rc/png/radiomaster_ax12.png": "fcbccfc52bd6135a5f40db708b10ceadfee599057777101936a57c71ea3be77b",
     "runtime/www/assets/rc/png/radiomaster_boxer.png": "e9e71ec998d637485af484de41e175dc746ec8a67e49fc9d5084e53d8ff8b8ae",
@@ -1249,7 +1238,6 @@
     "runtime/www/assets/rc/png/radiomaster_tx16s.png": "40a305975c1b14e5b6b168a9f1b096c3da270eef957f0fbdc7d5b978219848de",
     "runtime/www/assets/rc/png/radiomaster_zorro.png": "b86e5f1e2eb996100a9356c5a045700dbc69f5ad87f13c6dbee3b855e89924da",
     "runtime/www/assets/rc/png/rog_ally.png": "0ed82535b6ce4a3ed411a744b3c3536cc44b29537b12dcfd2cfcd66725cfe5c4",
-    "runtime/www/assets/rc/png/sroc.png": "0101da08e5417f79c6dd29deb7eced1a543a055aed17f3040f884825f43ee2aa",
     "runtime/www/assets/rc/png/tbs_tango_2.png": "ab1396d1f64a97e9d0b421f577a8310d6980ca54d2343262c3abb3d16b816ce5",
     "runtime/www/assets/rc/svg/radiomaster_ax12.svg": "91297d7fa5ce421e4a02d943515fec4c9864d2444af9d8511bed4a6c6773046d",
     "runtime/www/assets/rc/svg/radiomaster_boxer.svg": "462eabf966216e739eccb696c242365c912b96af79d30be75fdaf2448e3f80cf",
@@ -1258,9 +1246,8 @@
     "runtime/www/assets/rc/svg/radiomaster_tx16s.svg": "8b32af34a0c769ce7f210d5248efc23ebeaa2477727ced51eb1276f43840ed88",
     "runtime/www/assets/rc/svg/radiomaster_zorro.svg": "bd2ab73a6dca746849eb620e8f638a2f30f3e5d853b0c6119bf3cb839adc547a",
     "runtime/www/assets/rc/svg/rog_ally.svg": "c42786cf529217daf7352621265b9198f3e5a517e1cac01d04d45f53b75a4fbf",
-    "runtime/www/assets/rc/svg/sroc.svg": "b421cf74732b503ea6fb38837705ec6e94c53c9a30be7f300ad335a584f332c8",
     "runtime/www/assets/rc/svg/tbs_tango_2.svg": "a9909b5e5e44a8f050373916bbdc2f31b6ea2480e6b6217bc6706fe71589f0ee",
-    "runtime/www/domains/rc_source.js": "b76cd0f67c608f80c87a7759a62e0389641e66b8f7aad59a463aefb4d33043b4",
+    "runtime/www/domains/rc_source.js": "626067c547b1a74947a089c981598f941389a512137643677bd18f94363d09eb",
     "runtime/www/domains/rf_diagnostics.js": "3cc20d9288144e879fcf49e00dee92f878724dcda8188055e5faf722b8f57561",
     "runtime/www/i18n/en.json": "26cc8dfd85c7cfabe5fcc98a292d83346e6f5b155c95b7022e2a30ed65328dc6",
     "runtime/www/i18n/ru.json": "cd46b5ccdc0748c209c4b0936dadb28a6b320727104b74d7cb3a23c9855ffbb5",
@@ -1270,7 +1257,7 @@
     "runtime/www/index.html": "1c2cfc6d24ca6d8f5aa0a00334a3004f1df18a6416d7bc17a2a692da19072df2",
     "src/Ascent.Desktop/App.xaml": "c224747501fff732ca28f968e11c59109f726e60d69c9668843a3f232552c054",
     "src/Ascent.Desktop/App.xaml.cs": "c6011d45cdad7c170a0c4c0c3038316f2db8313183e0354dab943b2a9cfe0b93",
-    "src/Ascent.Desktop/Ascent.Desktop.csproj": "404e45a6176c9b942b6a543059443cbba09223b6177f9b0ea60981f45ef8dbc1",
+    "src/Ascent.Desktop/Ascent.Desktop.csproj": "0f56d49115aa657536ce7fb0f3edf0a3a48a0a7b48a138788497ccea6a5efac3",
     "src/Ascent.Desktop/Assets/AscentControl.ico": "b1bb2afcf46f9fbf8d233ff84958ccf17596021ab639f11313801ae5f3da652e",
     "src/Ascent.Desktop/Assets/AscentControlIcon.png": "03d93cfd69f86cfe17591f04de53afbdb0d49113e22016838089e9271cb36060",
     "src/Ascent.Desktop/BackendHost.cs": "44eddb003c2f853d6790fad6456b5889340b9df0db3fabf8ad330c23885115c1",
@@ -1280,7 +1267,7 @@
     "src/Ascent.Desktop/GstRuntimeLocator.cs": "f3bb8c9f314922b508b5043d2404b1177985a1053d4c7078471d7b3d54ed33d7",
     "src/Ascent.Desktop/GstVideoController.cs": "8cc457ad984df224d174977883d19e19b04048c4d6530b977c935cae20c62e89",
     "src/Ascent.Desktop/HidJoystick.cs": "9f42e0bcfcad0982b06c7f946495ec95fbac09f5d4e6c985e8bf65959a03be54",
-    "src/Ascent.Desktop/HidPump.cs": "78ef8d05f64a5baab6955f2403cd2ccaae96247d6b5c0d2ed53ffdedfb554f11",
+    "src/Ascent.Desktop/HidPump.cs": "5c57326ca5aff9ea16885fddb91b5560ecae4962b4d2f53d17306570bb3beb0d",
     "src/Ascent.Desktop/MainWindow.xaml": "cd0a845fcc1e3e5810a2b5e426947e927e341061ad0fa7c5c8a6ea0bc2515cb2",
     "src/Ascent.Desktop/MainWindow.xaml.cs": "9ffbe75c300e4162e4a6971dd7797da744cd6fe33acfefe87a1d5407598a9459",
     "src/Ascent.Desktop/VideoPlaybackOptions.cs": "95b6dedbfc3933f629a2eb1b64cf57354864489c02f5dfb4d4c25cbc473aa8d0",
@@ -1290,9 +1277,10 @@
     "src/Ascent.Desktop/app.manifest": "ccf1b8cf234c9df0324a8166959149a4d2b245c3907fdc684e08b61b1cb355cb",
     "tests/helpers/ui_source.js": "caa4924df81af5827be167a2e510d36e23626fc912b458c959e172c410ae51d6",
     "tests/local_identity.py": "b1c4635b2777869a104ce291f8a32a06f9c11c3c89674d3e2b7dcf8b48fc9e19",
-    "tests/locked_ui.py": "3c1bd519e9130c5b70d093ff1d985f939d3416f52933109055ebe451d53371bb",
+    "tests/locked_ui.py": "f25e4e2652ae14665614d0da97a1c645f32205e2a67bef5aac7665441086f359",
     "tests/public_diagnostics_flow.cjs": "d2fd1468bce578182bc81dac7d16fd40b49071f77a411790479f62b0786b4396",
-    "tests/public_ui_render_check.cjs": "12695080d5073d36980ccc48ebdec601ad566eaa5912f24ced1b47e59d1dcd61",
+    "tests/public_live_interaction.cjs": "56a71f9bb168ab0af163cde6c0bed1e26e1102dcf9bb2ad95b026630f71b51ae",
+    "tests/public_ui_render_check.cjs": "d44730dbf5b02dcfa55abed4179ce27f2723adf529506279fcf7116bd8647be5",
     "tests/test_caddx_cgc.py": "bd99a26982177365f7cc0e61143f74aa25f6ffca0e141d665178811cb2ca7250",
     "tests/test_camera_identity_hooks.py": "1ecf5b194904d17c2f0f0cbf3b3a669c118dd2043316caee460989c066a40887",
     "tests/test_camera_source_contract.py": "a9d358feb5c9ac1ec7926aafd59caf0099c2f37d2e3c4f704ed3bd2036d5f82f",
@@ -1302,7 +1290,7 @@
     "tests/test_firmware_upgrade.py": "aad85fa4c937f24f239d2db1de5a264912e38cdb9336db2f615b1f9293259a6b",
     "tests/test_hdpro_tester_build.py": "4397f141f9831c5265c96fb616807c2ab31a96a6c8607b14de52bf76086ba2d9",
     "tests/test_hid_crsf_stream.py": "0442524dc5cf004fd156c1b2be117b5f808b371b707c1f6d430b834538cd66f2",
-    "tests/test_hid_source_identity.py": "712a4a80d02577f96d3e7bbf98e25550e22b554bf30ed562efe089aa5806856a",
+    "tests/test_hid_source_identity.py": "617f6dad17d0e04e305989195a0f9e0c93880023009be07071d96414fdb67057",
     "tests/test_local_background_image.py": "25e644a6f714dfcaf2138e03b26fefb9fd45857aeac62347e3c3c250e3015945",
     "tests/test_mode_a_got_provenance.py": "f9ee33d3b340d4866b46cd038dd08e277d98483e5e9fb3b58ff58ee5b6b7a7ab",
     "tests/test_mode_a_plt_entries.py": "065f4f95b281c4cf4b91fb25242f87842ad778b9b81a79b6edcf476c10877b83",
@@ -1312,6 +1300,7 @@
     "tests/test_phase475_hid_encoding.py": "eed233b67a0f9da44121df096f332e0311a22d7a84a8a02919f4ab67fde45081",
     "tests/test_public_desktop_boundary.py": "d9bfeb16071fe14caa2670ad55fcb22d7607a9dfebb9a229819da171da4e209f",
     "tests/test_public_firmware_staging.py": "d0b071807754628e30b7d75b17e8ac97f30f1f2d0682e7bb9f5340d3edde7308",
+    "tests/test_public_live_interaction.py": "e717fcb145d00f8b1ffb63dfb42a64cfd51ed1255a96c969fcd1b3a4b22061a2",
     "tests/test_public_runtime_resources.py": "876da1c2a00e2d22b601e019584f44500817d5fc1bace27b2624b91b627204c0",
     "tests/test_rf_band_plans.py": "7d8675cc25eff9275a14ef8cdd2e2524d9453c9e4719f576edfd3245e60e2af4",
     "tests/test_shared_import.py": "ca3c244f53ed026db7533c9c0f54b5971f14abdb9980406503db42d2f0cf0178",
@@ -1833,6 +1822,6 @@
     "tools/hdpro_port_assets.json": "e6ff9d8350f06b0638abcf52cfad9c5f3ec0d41571c8ee60eca79f37f8b01249",
     "tools/inspect_local.py": "abfc8c82a21918505049b3b2da1b0cf24108161a2a480b7f79de4723802205f6",
     "tools/stage_public_inputs.py": "0fa2749ddb23714f4ae8402edbb88940b519c21c661fe12630b40d8154e9b6b7",
-    "tools/verify_public_build.py": "d5deed27fe14e9dd848dcc5ef1a86a0b25dcf6e0014972f91d6953ae5ddec2c6"
+    "tools/verify_public_build.py": "db9d0ad53ed73cf8cb3918ea06486d4f9e189282b0c40aabd291ff11e07c98a1"
   }
 }

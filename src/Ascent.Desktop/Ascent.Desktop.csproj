@@ -698,11 +698,6 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
-    <Content Include="..\..\runtime\www\assets\rc\png\sroc.png">
-      <Link>runtime\www\assets\rc\png\sroc.png</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
     <Content Include="..\..\runtime\www\assets\rc\png\tbs_tango_2.png">
       <Link>runtime\www\assets\rc\png\tbs_tango_2.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -740,11 +735,6 @@
     </Content>
     <Content Include="..\..\runtime\www\assets\rc\svg\rog_ally.svg">
       <Link>runtime\www\assets\rc\svg\rog_ally.svg</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-    <Content Include="..\..\runtime\www\assets\rc\svg\sroc.svg">
-      <Link>runtime\www\assets\rc\svg\sroc.svg</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>

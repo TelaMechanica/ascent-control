@@ -41,15 +41,23 @@ internal sealed class HidPump : IDisposable
 
     internal void SetBackend(Uri baseUri) => _baseUri = baseUri;
 
-    internal static List<HidJoystick.DeviceInfo> Enumerate() => HidJoystick.Enumerate();
+    internal static bool IsPublicDevice(string? product) => !System.Text.RegularExpressions.Regex.IsMatch(
+        product ?? "", @"(?<![a-z])(?:sroc|shadow)(?![a-z])|sroc(?=x[0-9])",
+        System.Text.RegularExpressions.RegexOptions.IgnoreCase | System.Text.RegularExpressions.RegexOptions.CultureInvariant);
+
+    internal static List<HidJoystick.DeviceInfo> Enumerate() => HidJoystick.Enumerate().Where(d => IsPublicDevice(d.Product)).ToList();
 
     /// <summary>Open a stick and start pumping. Returns null on success, or a reason.</summary>
     internal string? Start(string devicePath)
     {
         Stop();
         if (_baseUri is null) return "The backend is not running yet.";
+        var observed = HidJoystick.Enumerate().FirstOrDefault(d => d.Path == devicePath);
+        if (observed is null) return "The selected controller is no longer available. Find sticks again.";
+        if (!IsPublicDevice(observed.Product)) return "This controller is available in AC+.";
         var reason = _stick.Open(devicePath);
         if (reason is not null) { _log?.WriteLine($"[hid] refused {devicePath}: {reason}"); return reason; }
+        if (!IsPublicDevice(_stick.Product)) { _stick.Close(); return "This controller is available in AC+."; }
         // NO EIGHT-AXIS MINIMUM. A seven-axis gamepad was refused here on the bench
         // and the refusal was invisible, so pressing USE looked like a dead button.
         //

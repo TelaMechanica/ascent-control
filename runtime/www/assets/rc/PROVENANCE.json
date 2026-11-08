@@ -41,11 +41,6 @@
       "sha256": "c42786cf529217daf7352621265b9198f3e5a517e1cac01d04d45f53b75a4fbf"
     },
     {
-      "path": "svg/sroc.svg",
-      "bytes": 179428,
-      "sha256": "b421cf74732b503ea6fb38837705ec6e94c53c9a30be7f300ad335a584f332c8"
-    },
-    {
       "path": "svg/tbs_tango_2.svg",
       "bytes": 164090,
       "sha256": "a9909b5e5e44a8f050373916bbdc2f31b6ea2480e6b6217bc6706fe71589f0ee"
@@ -84,11 +79,6 @@
       "path": "png/rog_ally.png",
       "bytes": 731321,
       "sha256": "0ed82535b6ce4a3ed411a744b3c3536cc44b29537b12dcfd2cfcd66725cfe5c4"
-    },
-    {
-      "path": "png/sroc.png",
-      "bytes": 1195628,
-      "sha256": "0101da08e5417f79c6dd29deb7eced1a543a055aed17f3040f884825f43ee2aa"
     },
     {
       "path": "png/tbs_tango_2.png",
