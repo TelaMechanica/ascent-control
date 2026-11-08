@@ -297,3 +297,6 @@ $manifest = [ordered]@{
 
 Write-Host ("Staged GStreamer {0}: {1} runtime DLLs + {2} plugins, {3:N1} MB -> {4}" -f `
   $GstVersion, $need.Count, $Plugins.Count, ($bytes / 1MB), $Destination)
+
+# Report success explicitly for standalone callers as well as the installer build.
+exit 0

@@ -16,6 +16,9 @@ if(-not $OutputDir){$OutputDir=Join-Path $repo 'artifacts\release'}
 if(-not $WorkDir){$WorkDir=Join-Path $env:TEMP ('ascent-public-'+[guid]::NewGuid().ToString('N'))}
 if(Test-Path -LiteralPath $WorkDir){throw 'Select a fresh work directory; previous build evidence is preserved'}
 New-Item -ItemType Directory -Path $WorkDir|Out-Null
+# File enumeration expands Windows 8.3 aliases. Use that same canonical root
+# before deriving relative inventory paths or compiler path mappings.
+$WorkDir=(Get-Item -LiteralPath $WorkDir).FullName
 $source=Join-Path $WorkDir 'source'
 New-Item -ItemType Directory -Path $source|Out-Null
 foreach($entry in $payloadSpec.source_files.PSObject.Properties){

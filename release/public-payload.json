@@ -1803,9 +1803,9 @@
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/sign.h": "3d1450dd9bb4160689b9d160d5a7876e37b61b6c894641f794fa591f67069ddf",
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/ubifs.h": "610a90a227b27e3c22c2ab7f12e947dd2355f1361d09c41bfc9d0ee331398af3",
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mount.ubifs": "175df527fa9406e1dc8784d34112dc624ce7e2bd6eee70dfd75ddc2cecb967c4",
-    "tools/Build-Installer.ps1": "f1d1dd6ad8a210c3a64eec77e9e04a882184b42c027e2958059b816c75d758e9",
+    "tools/Build-Installer.ps1": "e62ef7559208f97e79e5124524a76fa1fe45b97d33b16851ae719f8fe74bf3b0",
     "tools/PreservedBuildOutputs.targets": "2656fa2b9d11961684626c052d0c62d01192202be6b34ffca5f06d2ce32fa378",
-    "tools/Stage-GStreamer.ps1": "efd46029ad208beba0372c6cb315fae2ec1d07cbb796d9d5ab0695a82b82ea97",
+    "tools/Stage-GStreamer.ps1": "e7f9bd809b4ce27522855ba3c75183bf6dffca379458db3d6c219836ce52e927",
     "tools/Stage-PythonRuntime.ps1": "a59f170e595a8824242d114ac702afc28c7d599628f47feca1ee59e29233b643",
     "tools/Test-GStreamerPayload.ps1": "81249b363384445e701a96b7feb192f68da180346a0b7591553e91c28c54c2b4",
     "tools/check_camera_source.py": "11f21a9bb55dd2862e4a6f3867e83c1e0ddc7f562dea7d315049359207c7ce9f",
@@ -1814,6 +1814,6 @@
     "tools/hdpro_port_assets.json": "e6ff9d8350f06b0638abcf52cfad9c5f3ec0d41571c8ee60eca79f37f8b01249",
     "tools/inspect_local.py": "abfc8c82a21918505049b3b2da1b0cf24108161a2a480b7f79de4723802205f6",
     "tools/stage_public_inputs.py": "0fa2749ddb23714f4ae8402edbb88940b519c21c661fe12630b40d8154e9b6b7",
-    "tools/verify_public_build.py": "6af5c278dc4649cee53c97bf0a0e6ae498df1195ab0b58532cba5463bf5f7d3e"
+    "tools/verify_public_build.py": "5ef31c1e5de6812e7199c5480ecf8adf1a6cc4290df3ff7b6c0125a8aa08890c"
   }
 }
