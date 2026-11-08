@@ -29,19 +29,41 @@ paths and device identifiers before uploading logs.
 
 ## Tested hardware and firmware
 
-**19.2.14 is AC's primary tested firmware baseline.** The following hardware was
-connected to AC on the listed firmware and updated using the corresponding image:
+**19.2.14 is AC's primary tested firmware baseline.** Our development records
+include these hardware connections and firmware-update paths:
 
-| Hardware | Firmware when connected | Image installed using AC |
+| Hardware | Firmware when connected | Target image / firmware | Recorded result |
+|---|---|---|---|
+| VRX | 16.5.3, 17.5.3, 18.21.3, 19.2.4 | `Ascent_G_Gnd_19_2_14.img` | Updated; 19.2.14 subsequently observed |
+| VRX Max HF | 18.21.7 | `Ascent_VRX_Max_19_2_14.img` | Updated; 19.2.14 subsequently observed |
+| VRX Max WF | 19.2.4 | `Ascent_VRX_Max_19_2_14.img` | Updated; 19.2.14 subsequently observed |
+| VRX Max WF | 18.20.5 | `Ascent_VRX_Max_19_2_14.img` | Flash attempt recorded |
+| VRX Pro | 18.21.10 | 18.21.10 | Connected and tested |
+| GT Pro / GT Max | 19.2.13 | `Ascent_G_Sky_19_2_14.img` | Updated; 19.2.14 subsequently observed |
+| GT Pro / GT Max | 17.5.3, 17.5.14, 17.5.15, 19.2.4, 19.2.5 | `Ascent_G_Sky_19_2_14.img` | Additional flash attempts recorded |
+| Relay | 19.2.9 | `Ascent_Relay_19_2_14.img` | Updated; 19.2.14 subsequently observed |
+| GT Pro Z40 | 16.5.8; subsequent custom 19.2.14 reflashes | `Ascent_G_Sky_19_2_14_z40_1.img` | Transfer completed; later camera/zoom checks recorded |
+
+A recorded attempt means AC captured the connected device and selected image;
+it does not imply that the update completed.
+
+### HiSilicon platform coverage
+
+GT Pro / GT Max, Z40 and Relay development includes the **Hi3516CV610** application
+and video platform. Firmware analysis also established distinct **20S, 10B and 00S**
+compatibility classes, each with legacy and V1 silicon identities:
+
+| Hi3516CV610 class | Identities examined | Evidence |
 |---|---|---|
-| Conventional VRX / Ground | 16.5.3, 17.5.3, 18.21.3, 19.2.4 | `Ascent_G_Gnd_19_2_14.img` |
-| VRX Max HF | 18.21.7 | `Ascent_VRX_Max_19_2_14.img` |
-| VRX Max WF | 19.2.4 | `Ascent_VRX_Max_19_2_14.img` |
-| GT Pro / Sky | 19.2.13 | `Ascent_G_Sky_19_2_14.img` |
-| Relay | 19.2.9 | `Ascent_Relay_19_2_14.img` |
-| GT Pro Z40 | 16.5.8; subsequent custom 19.2.14 reflashes | `Ascent_G_Sky_19_2_14_z40_1.img` |
+| 20S | Legacy and V1 | Firmware boot tables and compatibility checks |
+| 10B | Legacy and V1 | Firmware boot tables and compatibility checks |
+| 00S | Legacy and V1 | Firmware boot tables and compatibility checks |
 
-Connection testing also includes **VRX Pro on 18.21.10**.
+These six identities are firmware-analysis coverage; individual silicon steppings
+were not recorded for every physical flash above. One finding was the expansion
+from compatibility mask `0x07` in the examined stock 19.2.4 image to `0x3F` in
+18.21.8: firmware version numbering alone does not establish silicon compatibility.
+VRX, VRX Max and VRX Pro use the separate **Rockchip RK3568** receiver platform.
 
 ## Build the Windows MSI
 
