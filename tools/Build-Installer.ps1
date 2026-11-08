@@ -5,17 +5,24 @@ param(
   [string]$NativeArchive,
   [string]$CameraArchive,
   [string]$DependencyCache,
-  [int]$BuildRevision=1
+  [int]$BuildRevision=2
 )
 $ErrorActionPreference='Stop'
 $repo=(Resolve-Path (Join-Path $PSScriptRoot '..')).ProviderPath
 $payloadSpec=Get-Content -LiteralPath (Join-Path $repo 'release\public-payload.json') -Raw|ConvertFrom-Json
+foreach($required in @('python.exe','pythonw.exe','python312.zip','python312._pth')){
+ if(-not $payloadSpec.dependencies.pyembed.PSObject.Properties[$required]){throw ('Embedded Python pin is missing: '+$required)}
+}
+if(-not $payloadSpec.dependencies.gstreamer.PSObject.Properties['bin/gstreamer-1.0-0.dll']){throw 'Pinned media runtime inventory is missing'}
 $version=$payloadSpec.version
 if($BuildRevision -lt 1 -or $BuildRevision -gt 65535){throw 'BuildRevision must be between 1 and 65535'}
 if(-not $OutputDir){$OutputDir=Join-Path $repo 'artifacts\release'}
 if(-not $WorkDir){$WorkDir=Join-Path $env:TEMP ('ascent-public-'+[guid]::NewGuid().ToString('N'))}
 if(Test-Path -LiteralPath $WorkDir){throw 'Select a fresh work directory; previous build evidence is preserved'}
 New-Item -ItemType Directory -Path $WorkDir|Out-Null
+# File enumeration expands Windows 8.3 aliases. Use that same canonical root
+# before deriving relative inventory paths or compiler path mappings.
+$WorkDir=(Get-Item -LiteralPath $WorkDir).FullName
 $source=Join-Path $WorkDir 'source'
 New-Item -ItemType Directory -Path $source|Out-Null
 foreach($entry in $payloadSpec.source_files.PSObject.Properties){

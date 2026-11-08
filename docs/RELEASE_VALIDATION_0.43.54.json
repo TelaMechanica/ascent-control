@@ -2,7 +2,7 @@
   "schema": "ascent.public.release.validation.v1",
   "version": "0.43.54",
   "tests": {
-    "passed": 515,
+    "passed": 522,
     "subtests_passed": 55
   },
   "source_checks": [
@@ -27,5 +27,12 @@
   "hardware_executed": false,
   "application_installed": false,
   "private_service_mode_included": false,
-  "msi_validation": "Final public-checkout build recorded with release assets."
+  "msi_validation": "Final public-checkout build recorded with release assets.",
+  "build_revision": 2,
+  "windows_inventory_worker": {
+    "included": true,
+    "executed_by_package_verifier": true,
+    "host_provider": "SetupAPI+IPHelper",
+    "receiver_configuration_changed": false
+  }
 }

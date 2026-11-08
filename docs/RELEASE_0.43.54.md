@@ -3,6 +3,7 @@
 First public desktop source and Windows x64 MSI release.
 
 - Configuration, live status, device information and firmware management.
+- Native Windows device inventory included and exercised from the package.
 - RF management and RC/HID management where supported.
 - Local fleet records and nicknames; receiver membership and Picker remain in AC+.
 - Native Windows Z8, Z40 and Hub image creation from a supplied exact normal

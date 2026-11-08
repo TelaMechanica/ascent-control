@@ -12,8 +12,8 @@
     {
       "source": "PROJECT_LICENSE_SCOPE.json",
       "target": "PROJECT_LICENSE_SCOPE.json",
-      "sha256": "bc0ae283559324c7f96e2791dc5f1b1efd5b31ad7002dce51630d30688e0b27c",
-      "bytes": 7695
+      "sha256": "38908f731c35ef530f7fa972dc86c956466b55764f7f7cfc0ae1cfe1b921d012",
+      "bytes": 7837
     },
     {
       "source": "THIRD-PARTY-NOTICES.md",
@@ -580,6 +580,12 @@
       "bytes": 25283
     },
     {
+      "source": "runtime/windows_device_inventory.py",
+      "target": "runtime/windows_device_inventory.py",
+      "sha256": "2de7f8ab7904613aece0b9bec7c3021a2ead5fd8a71637f73235710b486d0f12",
+      "bytes": 11186
+    },
+    {
       "source": "runtime/windows_driver_repair.py",
       "target": "runtime/windows_driver_repair.py",
       "sha256": "4ae8a03dc9023b0136a3f57d8e991ac31d28b2fe6776739c23b403ee25f77ba3",
@@ -1066,7 +1072,7 @@
     "AGENTS.md": "1aa9b5a0de93ada288e26112634232b198cdc31c33abbfd2034ffb19c02d3c59",
     "CLAUDE.md": "6b7a588984f9f1b30041bad3e0292a8188d38c520c803fc82169ee6941605d4c",
     "LICENSE": "988efcda7fcb436dcbecae6c90d12c1f4e012ec1aa478623cdfff477be03fd02",
-    "PROJECT_LICENSE_SCOPE.json": "bc0ae283559324c7f96e2791dc5f1b1efd5b31ad7002dce51630d30688e0b27c",
+    "PROJECT_LICENSE_SCOPE.json": "38908f731c35ef530f7fa972dc86c956466b55764f7f7cfc0ae1cfe1b921d012",
     "README.md": "c1b644ec20407f110f3c6667078bc80114a184ca904dd75dd64c58d19a84131d",
     "THIRD-PARTY-NOTICES.md": "29068c8f13606090caa5b1e152cf71a2372c6fde89d1394cab4a527cbbf43cc5",
     "THIRD-PARTY-SOURCES.json": "3c3d43dd128bfe194a65b8360be6001fb4b25d5a5a00bd7b8f7118eba0c2b03c",
@@ -1078,11 +1084,11 @@
     "docs/CAMERA_VALIDATION.json": "e6d527a0d83ea8939f549134372e15b8bf264205c99c3ed3eabe51a3d7c43c1b",
     "docs/DEVELOPER_PREVIEW.md": "911815b658322d32c4b81405f086c952831af9a907554d47b18e070aa46da6d8",
     "docs/PUBLICATION_POLICY.md": "211878b21f67da66f8a07daa02b09510d4ee5454bed8c02659632bffa193d727",
-    "docs/RELEASE_0.43.54.md": "ff5f384e424ff03156dbfa5a4e3ba07cfe58bca69e5c2f44cf48adc1af804904",
-    "docs/RELEASE_VALIDATION_0.43.54.json": "d01d12436e1c684535a38825e4dd2b0c0442abf56bd5d5eac9c20d3fcf5786fd",
+    "docs/RELEASE_0.43.54.md": "c4ae990251ebdca9310d65ef1dc5619dafebe7a1f044a5bb449e9e724c74a5bc",
+    "docs/RELEASE_VALIDATION_0.43.54.json": "8295a7226453dc2f91f4d1d69d26c4b15a23f159703c171c4049cf7ef539f1be",
     "docs/SHARED_SOURCE_IMPORT.json": "76206d3ceab3302c76e17a3afd2531f6e06b41655c5c932dc7f1236793b993ee",
     "docs/SOURCE_REVIEW.md": "6f08de97f00d27fc1a8094d516cee51032bc696b671de1b930b6822c5fe9a731",
-    "docs/STATUS.md": "0339698dcf30aaf8ee03a8281405efb0e7917534db0c936d97d95047a132b871",
+    "docs/STATUS.md": "60e54a170e1e4495d0883bb11cb7c4477252d6b2100541a9fb14a95c26e4916d",
     "docs/TASKS.md": "2de70516e76c33fdb27715f240728f1932c9102555ed24d530e86783fdcfb687",
     "firmware/hdpro/README.md": "6bdbb441b9866222ad2c855600db3e6d45dc47c310d20c4b35886b4286897a37",
     "firmware/hdpro/assets.json": "e6ff9d8350f06b0638abcf52cfad9c5f3ec0d41571c8ee60eca79f37f8b01249",
@@ -1198,6 +1204,7 @@
     "runtime/vendor_templates/mipi_hub.json": "3eee126ec70341e497142d1586ffbfa76571b9a80b998683e8e06f53396cd648",
     "runtime/vendor_templates/msp_rc_cfg.json": "af1902ff00855299a63b4316d0a8537814c11a0b9f55accfc266423b104445c2",
     "runtime/vtx_nicknames.py": "46357d40b4802375ebdfc00798ed4fe88253cb17c772a74bded6980cc0bca81f",
+    "runtime/windows_device_inventory.py": "2de7f8ab7904613aece0b9bec7c3021a2ead5fd8a71637f73235710b486d0f12",
     "runtime/windows_driver_repair.py": "4ae8a03dc9023b0136a3f57d8e991ac31d28b2fe6776739c23b403ee25f77ba3",
     "runtime/www/app.css": "818bfaad22f893a66a5f3fffcb37b220cc39c683fa61893f44692661a10cd5ad",
     "runtime/www/app.js": "4082d8debf322331a31db5ccb9e5a15a6296aea542b4d469e605f54441316f3b",
@@ -1255,7 +1262,7 @@
     "runtime/www/index.html": "1c2cfc6d24ca6d8f5aa0a00334a3004f1df18a6416d7bc17a2a692da19072df2",
     "src/Ascent.Desktop/App.xaml": "c224747501fff732ca28f968e11c59109f726e60d69c9668843a3f232552c054",
     "src/Ascent.Desktop/App.xaml.cs": "c6011d45cdad7c170a0c4c0c3038316f2db8313183e0354dab943b2a9cfe0b93",
-    "src/Ascent.Desktop/Ascent.Desktop.csproj": "3be831ffd5cbbfb9bf885fb7ef5613a75da117c5954c6a57fe81c0955cfe7f2b",
+    "src/Ascent.Desktop/Ascent.Desktop.csproj": "9dce1e8b269e633cbc106d29906c7dd41b6cddde0af54c6b06620698a7179ee3",
     "src/Ascent.Desktop/Assets/AscentControl.ico": "b1bb2afcf46f9fbf8d233ff84958ccf17596021ab639f11313801ae5f3da652e",
     "src/Ascent.Desktop/Assets/AscentControlIcon.png": "03d93cfd69f86cfe17591f04de53afbdb0d49113e22016838089e9271cb36060",
     "src/Ascent.Desktop/BackendHost.cs": "44eddb003c2f853d6790fad6456b5889340b9df0db3fabf8ad330c23885115c1",
@@ -1295,8 +1302,10 @@
     "tests/test_phase475_hid_encoding.py": "eed233b67a0f9da44121df096f332e0311a22d7a84a8a02919f4ab67fde45081",
     "tests/test_public_desktop_boundary.py": "d9bfeb16071fe14caa2670ad55fcb22d7607a9dfebb9a229819da171da4e209f",
     "tests/test_public_firmware_staging.py": "d0b071807754628e30b7d75b17e8ac97f30f1f2d0682e7bb9f5340d3edde7308",
+    "tests/test_public_runtime_resources.py": "876da1c2a00e2d22b601e019584f44500817d5fc1bace27b2624b91b627204c0",
     "tests/test_rf_band_plans.py": "7d8675cc25eff9275a14ef8cdd2e2524d9453c9e4719f576edfd3245e60e2af4",
     "tests/test_shared_import.py": "ca3c244f53ed026db7533c9c0f54b5971f14abdb9980406503db42d2f0cf0178",
+    "tests/test_windows_device_inventory_native.py": "88ecfa16d21a59dd343b181c545fee2e0e6ada5752dbc6d478d0803feba1997d",
     "third_party/licenses/LGPL-2.1.txt": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2",
     "third_party/licenses/NOTICE-GStreamer.txt": "8d9d48950a5ee7e25fcfce624d5bda6e658fc0d1ebf2e2da559343c7d25414ed",
     "third_party/licenses/Python-3.12.7-LICENSE.txt": "e502c6b880ff58d614901495a9009c136539cd0b1e2a2abb8fc00b934c203419",
@@ -1803,9 +1812,9 @@
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/sign.h": "3d1450dd9bb4160689b9d160d5a7876e37b61b6c894641f794fa591f67069ddf",
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/ubifs.h": "610a90a227b27e3c22c2ab7f12e947dd2355f1361d09c41bfc9d0ee331398af3",
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mount.ubifs": "175df527fa9406e1dc8784d34112dc624ce7e2bd6eee70dfd75ddc2cecb967c4",
-    "tools/Build-Installer.ps1": "f1d1dd6ad8a210c3a64eec77e9e04a882184b42c027e2958059b816c75d758e9",
+    "tools/Build-Installer.ps1": "fd3fd606cf68d33fd276cf6269d281fccf0229dd8b30cc42f4fa5af747059e1d",
     "tools/PreservedBuildOutputs.targets": "2656fa2b9d11961684626c052d0c62d01192202be6b34ffca5f06d2ce32fa378",
-    "tools/Stage-GStreamer.ps1": "efd46029ad208beba0372c6cb315fae2ec1d07cbb796d9d5ab0695a82b82ea97",
+    "tools/Stage-GStreamer.ps1": "e7f9bd809b4ce27522855ba3c75183bf6dffca379458db3d6c219836ce52e927",
     "tools/Stage-PythonRuntime.ps1": "a59f170e595a8824242d114ac702afc28c7d599628f47feca1ee59e29233b643",
     "tools/Test-GStreamerPayload.ps1": "81249b363384445e701a96b7feb192f68da180346a0b7591553e91c28c54c2b4",
     "tools/check_camera_source.py": "11f21a9bb55dd2862e4a6f3867e83c1e0ddc7f562dea7d315049359207c7ce9f",
@@ -1814,6 +1823,6 @@
     "tools/hdpro_port_assets.json": "e6ff9d8350f06b0638abcf52cfad9c5f3ec0d41571c8ee60eca79f37f8b01249",
     "tools/inspect_local.py": "abfc8c82a21918505049b3b2da1b0cf24108161a2a480b7f79de4723802205f6",
     "tools/stage_public_inputs.py": "0fa2749ddb23714f4ae8402edbb88940b519c21c661fe12630b40d8154e9b6b7",
-    "tools/verify_public_build.py": "6af5c278dc4649cee53c97bf0a0e6ae498df1195ab0b58532cba5463bf5f7d3e"
+    "tools/verify_public_build.py": "266228d393e7e11b2054b1113d51ea44e027f791f734de403539997fe8307751"
   }
 }
