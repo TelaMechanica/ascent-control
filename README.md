@@ -30,22 +30,19 @@ paths and device identifiers before uploading logs.
 ## Tested hardware and firmware
 
 **19.2.14 is AC's primary tested firmware baseline.** Our development records
-include these hardware connections and firmware-update paths:
+include these hardware connections and images used in firmware-update tests:
 
-| Hardware | Firmware when connected | Target image / firmware | Recorded result |
-|---|---|---|---|
-| VRX | 16.5.3, 17.5.3, 18.21.3, 19.2.4 | `Ascent_G_Gnd_19_2_14.img` | Updated; 19.2.14 subsequently observed |
-| VRX Max HF | 18.21.7 | `Ascent_VRX_Max_19_2_14.img` | Updated; 19.2.14 subsequently observed |
-| VRX Max WF | 19.2.4 | `Ascent_VRX_Max_19_2_14.img` | Updated; 19.2.14 subsequently observed |
-| VRX Max WF | 18.20.5 | `Ascent_VRX_Max_19_2_14.img` | Flash attempt recorded |
-| VRX Pro | 18.21.10 | 18.21.10 | Connected and tested |
-| GT Pro / GT Max | 19.2.13 | `Ascent_G_Sky_19_2_14.img` | Updated; 19.2.14 subsequently observed |
-| GT Pro / GT Max | 17.5.3, 17.5.14, 17.5.15, 19.2.4, 19.2.5 | `Ascent_G_Sky_19_2_14.img` | Additional flash attempts recorded |
-| Relay | 19.2.9 | `Ascent_Relay_19_2_14.img` | Updated; 19.2.14 subsequently observed |
-| GT Pro Z40 | 16.5.8; subsequent custom 19.2.14 reflashes | `Ascent_G_Sky_19_2_14_z40_1.img` | Transfer completed; later camera/zoom checks recorded |
+| Hardware | Firmware when connected | Target Firmware |
+|---|---|---|
+| VRX | 16.5.3, 17.5.3, 18.21.3, 19.2.4 | `Ascent_G_Gnd_19_2_14.img` |
+| VRX Max HF | 18.21.7 | `Ascent_VRX_Max_19_2_14.img` |
+| VRX Max WF | 18.20.5, 19.2.4 | `Ascent_VRX_Max_19_2_14.img` |
+| VRX Pro | 18.21.10 | N/A |
+| GT Pro / GT Max | 17.5.3, 17.5.14, 17.5.15, 19.2.4, 19.2.5, 19.2.13 | `Ascent_G_Sky_19_2_14.img` |
+| Relay | 19.2.9 | `Ascent_Relay_19_2_14.img` |
+| GT Pro Z40 | 16.5.8; subsequent custom 19.2.14 reflashes | `Ascent_G_Sky_19_2_14_z40_1.img` |
 
-A recorded attempt means AC captured the connected device and selected image;
-it does not imply that the update completed.
+The history includes completed flashes and recorded attempts.
 
 ### HiSilicon platform coverage
 
