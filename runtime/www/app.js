@@ -1217,6 +1217,85 @@ function deviceHasGroundServices(){
   return !['air','camera_hub','gimbal'].includes(state.capabilities?.role);
 }
 
+// Ethernet observations have their own scope; they never qualify USB actions.
+function maxEthernetTarget(){
+  const t=state.activeConnection?.network_target;
+  return t?.id==='network:max_eth'&&t.kind==='vrx'?t:null;
+}
+function maxEthernetState(){
+  const key=maxEthernetTarget()?.connection_token||null;
+  if(!state.maxEthernet||state.maxEthernet.key!==key)state.maxEthernet={key,doc:null,loading:false,error:null,busy:false,result:null};
+  return state.maxEthernet;
+}
+function maxEthernetPanel(controls=false){
+  const t=maxEthernetTarget(),s=maxEthernetState();if(!t)return '';
+  if(s.key&&!s.doc&&!s.loading&&!s.error)reloadMaxEthernet();
+  let body=`<div class="toolbar"><button class="secondary" id="maxEthRead"${s.loading||s.busy?' disabled':''}>${s.loading?'READING…':'READ ETHERNET STATUS'}</button></div>`;
+  if(s.error)body+=notice(safeErr(s.error),'warn');
+  const d=s.doc,r=d?.reads||{},v=r.status?.values||{};
+  if(d){
+    body+=kv('Last read',d.captured_at||'Not recorded')
+      +kv('Link state',r.status?.ok?v.link:'Not available')
+      +kv('Receiver BBID (network read)',r.status?.ok?v.local_bb_id:'Not available');
+    if(v.rx_mcs_raw!=null)body+=kv('RX MCS (raw)',v.rx_mcs_raw);
+    if(r.mcs?.ok)body+=kv('MCS report (raw)',r.mcs.values.mcs_encoded_raw)+kv('Throughput report (raw)',r.mcs.values.throughput_raw);
+    if(r.power?.ok)body+=kv('Power report (raw)',r.power.values.power_raw);
+    if(r.channels?.ok)body+=kv('Work channel IDs',(r.channels.values.channel_ids||[]).join(', ')||'None reported');
+    if(r.rf_raw?.ok){const rf=r.rf_raw.values;body+=kv('Local SNR / AGC (raw)',`${rf.local_ground.snr_raw} / ${rf.local_ground.agc_a_raw}`);}
+    body+=kv('RTSP server',d.rtsp?.responding?d.rtsp.status:'No response to the read')
+      +kv('Product / firmware identity','Not read over this connection');
+    if(advancedOn())for(const [name,read]of Object.entries(r)){if(!read.ok)body+=kv(name+' read',safeErr(read.error||'Not available'));}
+    body+='<p class="muted">Network observations do not establish USB identity, aircraft membership or calibrated RF units. Video playback and receiver key effects are checked separately.</p>';
+  }else if(s.loading)body+=notice('Reading the selected receiver.');
+  if(controls){
+    const available=!!d?.controls?.eligible&&!s.error&&!s.loading&&!s.busy;
+    body+='<div id="maxEthKeyPad" tabindex="0" aria-label="Receiver menu controls"><div class="toolbar">'
+      +[['UP','↑ UP'],['DOWN','↓ DOWN'],['LEFT','← LEFT'],['RIGHT','→ RIGHT'],['CONFIRM','OK'],['BACK','BACK'],['PAIRING','BIND']].map(([key,label])=>`<button class="secondary" data-maxethkey="${key}"${available?'':' disabled'}>${label}</button>`).join('')+'</div></div>'
+      +'<p class="muted">Focus the menu controls to use arrow keys, Enter and Escape. BIND asks before starting pairing. Sending a request does not verify the receiver action.</p>';
+  }
+  if(s.result)body+=notice(safeErr(s.result.message||s.result.error||'Receiver outcome is unknown.'),s.result.ok?'':'warn');
+  return panel('RECEIVER ETHERNET',body);
+}
+function paintMaxEthernet(){
+  const target=$('#maxEthPanel');if(!target)return;
+  target.innerHTML=maxEthernetPanel(state.mode==='live');bindMaxEthernet();
+}
+async function reloadMaxEthernet(){
+  const s=maxEthernetState(),key=s.key;if(!key||s.loading||s.busy)return;
+  s.loading=true;s.error=null;
+  try{
+    const d=await fetchJson('/api/network/max/status?connection_token='+encodeURIComponent(key),true,12000,'Ethernet status read timed out.');
+    if(maxEthernetTarget()?.connection_token!==key)return;
+    if(!d?.ok||d.connection_token!==key)throw Error(d?.message||'Ethernet read did not complete for this connection.');
+    s.doc=d;
+  }catch(e){if(maxEthernetTarget()?.connection_token===key)s.error=safeErr(e);}
+  finally{if(maxEthernetTarget()?.connection_token===key){s.loading=false;paintMaxEthernet();}}
+}
+async function sendMaxEthernetKey(key){
+  const s=maxEthernetState(),token=s.key;
+  if(!token||s.busy||s.loading||s.error||!s.doc?.controls?.eligible)return;
+  if(key==='PAIRING'&&!confirm('Start pairing on the selected receiver? This can interrupt the existing video link.'))return;
+  s.busy=true;s.result=null;paintMaxEthernet();
+  try{
+    const result=await fetchJson('/api/network/max/key',true,12000,'Key request timed out. Receiver outcome is unknown.',{
+      method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key,connection_token:token,
+        ...(key==='PAIRING'?{confirm_pairing:true,acknowledge_non_stock:true}:{})})});
+    if(maxEthernetTarget()?.connection_token!==token)return;
+    s.result=result;
+    if(!result?.ok&&/^MAX_ETH_(TARGET|ROUTE|IDENTITY|RECONNECT)/.test(result?.error||''))s.error=result.message;
+  }catch(e){if(maxEthernetTarget()?.connection_token===token)s.result={ok:false,message:safeErr(e)+' Receiver outcome is unknown.'};}
+  finally{if(maxEthernetTarget()?.connection_token===token){s.busy=false;paintMaxEthernet();}}
+}
+function bindMaxEthernet(){
+  const read=$('#maxEthRead');if(read)read.onclick=()=>{reloadMaxEthernet();paintMaxEthernet();};
+  $$('[data-maxethkey]').forEach(b=>{b.onclick=()=>sendMaxEthernetKey(b.dataset.maxethkey);});
+  const pad=$('#maxEthKeyPad');if(pad)pad.onkeydown=e=>{
+    if(e.repeat||['INPUT','TEXTAREA','SELECT'].includes(e.target?.tagName))return;
+    const key={ArrowUp:'UP',ArrowDown:'DOWN',ArrowLeft:'LEFT',ArrowRight:'RIGHT',Enter:'CONFIRM',Escape:'BACK'}[e.key];
+    if(key){e.preventDefault();e.stopPropagation();sendMaxEthernetKey(key);}
+  };
+}
+
 function renderDevice(){
   const i=ident(); const s=state.status; const d=state.devices||{}; const c=state.activeConnection?.candidate||{};
   const pd=productDoc(); const t=state.activeConnection?.transport||{};
@@ -1232,7 +1311,9 @@ function renderDevice(){
       +kv('PC interface',String(nt.if_index??'—'),false)+kv('Observed at',nt.captured_at||'—',false)
       +(seen.factory?kv('Factory serial',seen.factory.factory_serial,false)+kv('Saved role mode',String(seen.factory.cur_mode),false):'')
       +(seen.status?.decoded?.local_mac4?kv('Local BBID',seen.status.decoded.local_mac4,false):'')
-      +'<p class="muted">The preset selects an address. Product and firmware identity have not been read over this transport. USB-only operations are unavailable.</p>');
+      +'<p class="muted">The preset selects an address. Product and firmware identity have not been read over this transport. USB-only operations are unavailable.</p>')
+      +(maxEthernetTarget()?'<div id="maxEthPanel">'+maxEthernetPanel(false)+'</div>':'');
+    bindMaxEthernet();
     return;
   }
 
@@ -3126,7 +3207,10 @@ function hostChannel(){
 function liveVideoSelection(){
   const l=liveState(), profiles=l.doc?.eligibility?.profiles||{};
   const options=l.videoOptions||(l.videoOptions={endpoint:'default',manualUrl:'',transport:'auto',latencyMs:20});
-  const profile=options.endpoint==='default'?(profiles.usbc||profiles.rj45):profiles[options.endpoint];
+  const ethernet=maxEthernetTarget();
+  const profile=ethernet&&(options.endpoint==='default'||options.endpoint==='rj45')
+    ?{rtsp_url:'rtsp://'+ethernet.device_ip+'/live.ch01'}
+    :options.endpoint==='default'?(profiles.usbc||profiles.rj45):profiles[options.endpoint];
   return {...options,url:options.endpoint==='manual'?options.manualUrl.trim():(profile?.rtsp_url||'')};
 }
 
@@ -3148,7 +3232,7 @@ function liveVideoPanel(){
      The backend already knows: `eligibility.profiles` carries an rtsp_url only
      for a receiver that has one. An endpoint template is not listener evidence; subtype-gated startup and
      runtime availability are reported separately in diagnostics. */
-  if(!(prof.usbc||prof.rj45||{}).rtsp_url && !advancedOn()) return '';
+  if(!maxEthernetTarget()&&!(prof.usbc||prof.rj45||{}).rtsp_url && !advancedOn()) return '';
   // SOURCE IS SHOWN ALWAYS, not behind ADVANCED. Which runtime ran decides whether
   // a bug reproduces, so it is the one technical fact worth an operator's attention:
   // "Bundled" means the copy we ship and test against, "External fallback" means a
@@ -3504,6 +3588,10 @@ function liveCrsfPanel(){
 function renderLive(){
   const l=liveState();
   let out=pageHead('LIVE','CGC v0.3.5 CONTROL PLANE — UDP 9001');
+  if(maxEthernetTarget()){
+    out+=liveVideoPanel()+'<div id="maxEthPanel">'+maxEthernetPanel(true)+'</div>'+liveResultPanel();
+    $('#content').innerHTML=out;bindLive();bindMaxEthernet();return;
+  }
   if(!l.doc){ out+=notice('READING LIVE STATE…'); $('#content').innerHTML=out; return; }
   /* ADVANCED is reachable here too. The toggle lives in the config nav, which is
      hidden in LIVE, yet several rows below gate on advancedOn() -- so without a

@@ -1,6 +1,6 @@
 {
   "schema": "ascent.public.payload.v1",
-  "version": "0.43.57",
+  "version": "0.43.59",
   "licensor": "TelaMechanica",
   "files": [
     {
@@ -12,8 +12,8 @@
     {
       "source": "PROJECT_LICENSE_SCOPE.json",
       "target": "PROJECT_LICENSE_SCOPE.json",
-      "sha256": "3f52f6e916afbf6f5a9e4a1ad2a025e3e1955801e96c28c103dbebd79e21f7e3",
-      "bytes": 8304
+      "sha256": "080ae8f96900bb95eccbd6e642fc1404a447a12b9ca47c7450250a406d190e58",
+      "bytes": 8519
     },
     {
       "source": "THIRD-PARTY-NOTICES.md",
@@ -426,8 +426,8 @@
     {
       "source": "runtime/dev_harness.py",
       "target": "runtime/dev_harness.py",
-      "sha256": "fd9ee2bb8a41a27e3676856ea4344636d7f0c1e2c7020fac3836ee9e490ff175",
-      "bytes": 296916
+      "sha256": "cfa9965da88acbedc84b223d22396587345ce00a452d4a3b4c2f2d2f3c14d05d",
+      "bytes": 303610
     },
     {
       "source": "runtime/device_capability.py",
@@ -606,8 +606,8 @@
     {
       "source": "runtime/www/app.js",
       "target": "runtime/www/app.js",
-      "sha256": "07d43d2246cc39773c0895dc3a579a042d4b63875783e91e5b180cd704f56295",
-      "bytes": 253576
+      "sha256": "fcb7c0ac3be678c0dc83cd04e1dc46c72c0d6ce51e05de4ed8ec47f8252945b9",
+      "bytes": 259621
     },
     {
       "source": "runtime/www/assets/ascent_skull.png",
@@ -986,6 +986,18 @@
       "target": "FIRMWARE-LINKING-PERMISSION.txt",
       "sha256": "4e36a241313818e923ab2f661141760b7397b449481294f9f9a1ae232ed8e943",
       "bytes": 1214
+    },
+    {
+      "source": "runtime/max_ethernet.py",
+      "target": "runtime/max_ethernet.py",
+      "sha256": "387d64d6eac14e312514839f9db75b3886aacca386c192110799f9309356e415",
+      "bytes": 10828
+    },
+    {
+      "source": "docs/MAX_ETHERNET.md",
+      "target": "docs/MAX_ETHERNET.md",
+      "sha256": "c943276aca855c6de135ce2ab8fc4b6999f5e837b7f2d9b703ec48b581255cb7",
+      "bytes": 1860
     }
   ],
   "dependencies": {
@@ -1078,8 +1090,8 @@
     "AGENTS.md": "1aa9b5a0de93ada288e26112634232b198cdc31c33abbfd2034ffb19c02d3c59",
     "CLAUDE.md": "6b7a588984f9f1b30041bad3e0292a8188d38c520c803fc82169ee6941605d4c",
     "LICENSE": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
-    "PROJECT_LICENSE_SCOPE.json": "3f52f6e916afbf6f5a9e4a1ad2a025e3e1955801e96c28c103dbebd79e21f7e3",
-    "README.md": "a7611d7cf9efd5c45a34a6eafe0d894741f8bc7334b64a4a7657a5cd662e4ae5",
+    "PROJECT_LICENSE_SCOPE.json": "080ae8f96900bb95eccbd6e642fc1404a447a12b9ca47c7450250a406d190e58",
+    "README.md": "9dd6969cbc45d62a8bdb5a5ccc1e986c8556fd3d66777beccc20cd87f2c286ad",
     "THIRD-PARTY-NOTICES.md": "ac6135111a101013434aacd9e763965ef4a15a40273ba0db62b995478a3cfc0f",
     "THIRD-PARTY-SOURCES.json": "3c3d43dd128bfe194a65b8360be6001fb4b25d5a5a00bd7b8f7118eba0c2b03c",
     "ascent_core/__init__.py": "b5e396cc9012ed81e60d6e2b4a0e72e995c46e5a73abde3ab3c973cf540c4cdc",
@@ -1186,7 +1198,7 @@
     "runtime/caddx_sky_user_cfg.py": "ae564e925856ccb8a483c9df477bfbf2c50472ff75af51af8a588c6b935352f4",
     "runtime/caddx_tile_image.py": "3362291ff44cbf09ed44d4814fe5efb198925eed66689e033d4f411b93fdd568",
     "runtime/caddx_vendor_write.py": "f22b3d83106beb88c69b04339537830ace2535ce1bdda5fc4d2d4b9b316f5af7",
-    "runtime/dev_harness.py": "fd9ee2bb8a41a27e3676856ea4344636d7f0c1e2c7020fac3836ee9e490ff175",
+    "runtime/dev_harness.py": "cfa9965da88acbedc84b223d22396587345ce00a452d4a3b4c2f2d2f3c14d05d",
     "runtime/device_capability.py": "fa9d47b46e2922ca5dfb0de1e65566c7bf691d7e7c332954a5c0216811af2911",
     "runtime/device_config_store.py": "979e2e28e0068b22ceff62a3eb8ed745f2535275369a19dc05450845a0e73415",
     "runtime/device_naming.py": "83e5e3b7a732ed35c3e7262d6a5140b34e8a04293e6e6a2b3e082fc9133e1274",
@@ -1216,7 +1228,7 @@
     "runtime/windows_device_inventory.py": "2de7f8ab7904613aece0b9bec7c3021a2ead5fd8a71637f73235710b486d0f12",
     "runtime/windows_driver_repair.py": "4ae8a03dc9023b0136a3f57d8e991ac31d28b2fe6776739c23b403ee25f77ba3",
     "runtime/www/app.css": "818bfaad22f893a66a5f3fffcb37b220cc39c683fa61893f44692661a10cd5ad",
-    "runtime/www/app.js": "07d43d2246cc39773c0895dc3a579a042d4b63875783e91e5b180cd704f56295",
+    "runtime/www/app.js": "fcb7c0ac3be678c0dc83cd04e1dc46c72c0d6ce51e05de4ed8ec47f8252945b9",
     "runtime/www/assets/ascent_skull.png": "d79322bd44bc6c22780daf17301018ec3f61eb31b6a0151d1e900ba159161d02",
     "runtime/www/assets/devices/Ascent_CamHub.png": "d64ab39a6567f2bb6e948098f89a7b6970d8f9ea41c60e01778b5a0b5d735acf",
     "runtime/www/assets/devices/Ascent_GT.png": "45a704c782577b4c909898672a4b2ca9c51b9220e51bdfd87447b519d2dc62a0",
@@ -1289,7 +1301,7 @@
     "src/Ascent.Desktop/app.manifest": "ccf1b8cf234c9df0324a8166959149a4d2b245c3907fdc684e08b61b1cb355cb",
     "tests/helpers/ui_source.js": "caa4924df81af5827be167a2e510d36e23626fc912b458c959e172c410ae51d6",
     "tests/local_identity.py": "b1c4635b2777869a104ce291f8a32a06f9c11c3c89674d3e2b7dcf8b48fc9e19",
-    "tests/locked_ui.py": "f25e4e2652ae14665614d0da97a1c645f32205e2a67bef5aac7665441086f359",
+    "tests/locked_ui.py": "aee04005d78ca8dfc2f4cdc8674d2b0f5538265f96942431d227873419c593f4",
     "tests/public_diagnostics_flow.cjs": "d2fd1468bce578182bc81dac7d16fd40b49071f77a411790479f62b0786b4396",
     "tests/public_live_interaction.cjs": "56a71f9bb168ab0af163cde6c0bed1e26e1102dcf9bb2ad95b026630f71b51ae",
     "tests/public_ui_render_check.cjs": "d44730dbf5b02dcfa55abed4179ce27f2723adf529506279fcf7116bd8647be5",
@@ -1834,11 +1846,17 @@
     "tools/hdpro_port_assets.json": "e6ff9d8350f06b0638abcf52cfad9c5f3ec0d41571c8ee60eca79f37f8b01249",
     "tools/inspect_local.py": "abfc8c82a21918505049b3b2da1b0cf24108161a2a480b7f79de4723802205f6",
     "tools/stage_public_inputs.py": "0fa2749ddb23714f4ae8402edbb88940b519c21c661fe12630b40d8154e9b6b7",
-    "tools/verify_public_build.py": "244b19e1cf776a5b42576b11a188582c48cd6c56000fe6d8e6166766addf7cba",
+    "tools/verify_public_build.py": "d7587c86ea3a0e82e37f3dbe0a8d568cd94d24dbe30441554124db3e2453e56f",
     "COPYRIGHT": "3b79bf9894429d47d2071e14f3a71e82fd9d0616af2a900b53186dce0a91f688",
     "FIRMWARE-LINKING-PERMISSION.txt": "4e36a241313818e923ab2f661141760b7397b449481294f9f9a1ae232ed8e943",
     "docs/LICENSING.md": "a4c80aebafae508a885559bf986825b0db87c975f29c54a1ee24d474fe2ff087",
     "tests/test_public_license.py": "b8f3bfc678a017b394aa050b14e3722996bb513c6da16ce00dee658659839262",
-    "docs/RELEASE_0.43.57.md": "fe54d1f64119ac3ba33d5d7d16bd2c811fe3e7d73f171f2c15ec01d263ae7849"
+    "docs/RELEASE_0.43.57.md": "fe54d1f64119ac3ba33d5d7d16bd2c811fe3e7d73f171f2c15ec01d263ae7849",
+    "runtime/max_ethernet.py": "387d64d6eac14e312514839f9db75b3886aacca386c192110799f9309356e415",
+    "tests/test_max_ethernet.py": "546bacc9517398bd0b29d3cbfc4ad979fd3a90677beb2354be7fbd5c529b6a78",
+    "tests/helpers/ethernet_ui_boot.cjs": "b020ee01a475daecc712492892293e8736aa6291cfa9f47f72a6f7ed67078a4f",
+    "tests/max_ethernet_ui_check.cjs": "5f50a4df7125f2667fa886d772bf5a8e1d14f3c48804baf0ac39689b732752a8",
+    "tests/test_http_request_origin.py": "c1305f18722cd559759d992426b39032a4b5a734d7aec95b2b6056b825698e83",
+    "docs/MAX_ETHERNET.md": "c943276aca855c6de135ce2ab8fc4b6999f5e837b7f2d9b703ec48b581255cb7"
   }
 }
