@@ -606,8 +606,8 @@
     {
       "source": "runtime/www/app.js",
       "target": "runtime/www/app.js",
-      "sha256": "fcb7c0ac3be678c0dc83cd04e1dc46c72c0d6ce51e05de4ed8ec47f8252945b9",
-      "bytes": 259621
+      "sha256": "bed54b4d80088c295c9e54d46a7d97d9167344a81404ef2c28b99662ddb08267",
+      "bytes": 259651
     },
     {
       "source": "runtime/www/assets/ascent_skull.png",
@@ -1228,7 +1228,7 @@
     "runtime/windows_device_inventory.py": "2de7f8ab7904613aece0b9bec7c3021a2ead5fd8a71637f73235710b486d0f12",
     "runtime/windows_driver_repair.py": "4ae8a03dc9023b0136a3f57d8e991ac31d28b2fe6776739c23b403ee25f77ba3",
     "runtime/www/app.css": "818bfaad22f893a66a5f3fffcb37b220cc39c683fa61893f44692661a10cd5ad",
-    "runtime/www/app.js": "fcb7c0ac3be678c0dc83cd04e1dc46c72c0d6ce51e05de4ed8ec47f8252945b9",
+    "runtime/www/app.js": "bed54b4d80088c295c9e54d46a7d97d9167344a81404ef2c28b99662ddb08267",
     "runtime/www/assets/ascent_skull.png": "d79322bd44bc6c22780daf17301018ec3f61eb31b6a0151d1e900ba159161d02",
     "runtime/www/assets/devices/Ascent_CamHub.png": "d64ab39a6567f2bb6e948098f89a7b6970d8f9ea41c60e01778b5a0b5d735acf",
     "runtime/www/assets/devices/Ascent_GT.png": "45a704c782577b4c909898672a4b2ca9c51b9220e51bdfd87447b519d2dc62a0",
@@ -1301,7 +1301,7 @@
     "src/Ascent.Desktop/app.manifest": "ccf1b8cf234c9df0324a8166959149a4d2b245c3907fdc684e08b61b1cb355cb",
     "tests/helpers/ui_source.js": "caa4924df81af5827be167a2e510d36e23626fc912b458c959e172c410ae51d6",
     "tests/local_identity.py": "b1c4635b2777869a104ce291f8a32a06f9c11c3c89674d3e2b7dcf8b48fc9e19",
-    "tests/locked_ui.py": "aee04005d78ca8dfc2f4cdc8674d2b0f5538265f96942431d227873419c593f4",
+    "tests/locked_ui.py": "e6890d8d5003d66371430b9f4033cfcb95f869079c3975ac811facc4c31ddc8e",
     "tests/public_diagnostics_flow.cjs": "d2fd1468bce578182bc81dac7d16fd40b49071f77a411790479f62b0786b4396",
     "tests/public_live_interaction.cjs": "56a71f9bb168ab0af163cde6c0bed1e26e1102dcf9bb2ad95b026630f71b51ae",
     "tests/public_ui_render_check.cjs": "d44730dbf5b02dcfa55abed4179ce27f2723adf529506279fcf7116bd8647be5",

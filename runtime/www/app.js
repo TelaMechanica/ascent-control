@@ -1231,7 +1231,7 @@ function maxEthernetPanel(controls=false){
   const t=maxEthernetTarget(),s=maxEthernetState();if(!t)return '';
   if(s.key&&!s.doc&&!s.loading&&!s.error)reloadMaxEthernet();
   let body=`<div class="toolbar"><button class="secondary" id="maxEthRead"${s.loading||s.busy?' disabled':''}>${s.loading?'READING…':'READ ETHERNET STATUS'}</button></div>`;
-  if(s.error)body+=notice(safeErr(s.error),'warn');
+  if(s.error)body+=kv('Read error',humanError(s.error));
   const d=s.doc,r=d?.reads||{},v=r.status?.values||{};
   if(d){
     body+=kv('Last read',d.captured_at||'Not recorded')
@@ -1244,16 +1244,16 @@ function maxEthernetPanel(controls=false){
     if(r.rf_raw?.ok){const rf=r.rf_raw.values;body+=kv('Local SNR / AGC (raw)',`${rf.local_ground.snr_raw} / ${rf.local_ground.agc_a_raw}`);}
     body+=kv('RTSP server',d.rtsp?.responding?d.rtsp.status:'No response to the read')
       +kv('Product / firmware identity','Not read over this connection');
-    if(advancedOn())for(const [name,read]of Object.entries(r)){if(!read.ok)body+=kv(name+' read',safeErr(read.error||'Not available'));}
+    if(advancedOn())for(const [name,read]of Object.entries(r)){if(!read.ok)body+=kv(name+' read',humanError(read.error||'Not available'));}
     body+='<p class="muted">Network observations do not establish USB identity, aircraft membership or calibrated RF units. Video playback and receiver key effects are checked separately.</p>';
-  }else if(s.loading)body+=notice('Reading the selected receiver.');
+  }else if(s.loading)body+=kv('Receiver read','In progress');
   if(controls){
     const available=!!d?.controls?.eligible&&!s.error&&!s.loading&&!s.busy;
     body+='<div id="maxEthKeyPad" tabindex="0" aria-label="Receiver menu controls"><div class="toolbar">'
       +[['UP','↑ UP'],['DOWN','↓ DOWN'],['LEFT','← LEFT'],['RIGHT','→ RIGHT'],['CONFIRM','OK'],['BACK','BACK'],['PAIRING','BIND']].map(([key,label])=>`<button class="secondary" data-maxethkey="${key}"${available?'':' disabled'}>${label}</button>`).join('')+'</div></div>'
       +'<p class="muted">Focus the menu controls to use arrow keys, Enter and Escape. BIND asks before starting pairing. Sending a request does not verify the receiver action.</p>';
   }
-  if(s.result)body+=notice(safeErr(s.result.message||s.result.error||'Receiver outcome is unknown.'),s.result.ok?'':'warn');
+  if(s.result)body+=kv('Control request',humanError(s.result.message||s.result.error||'Receiver outcome is unknown.'));
   return panel('RECEIVER ETHERNET',body);
 }
 function paintMaxEthernet(){
@@ -1287,6 +1287,7 @@ async function sendMaxEthernetKey(key){
   finally{if(maxEthernetTarget()?.connection_token===token){s.busy=false;paintMaxEthernet();}}
 }
 function bindMaxEthernet(){
+  if(!maxEthernetTarget())return;
   const read=$('#maxEthRead');if(read)read.onclick=()=>{reloadMaxEthernet();paintMaxEthernet();};
   $$('[data-maxethkey]').forEach(b=>{b.onclick=()=>sendMaxEthernetKey(b.dataset.maxethkey);});
   const pad=$('#maxEthKeyPad');if(pad)pad.onkeydown=e=>{
