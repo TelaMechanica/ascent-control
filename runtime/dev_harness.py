@@ -54,7 +54,7 @@ TEMPLATES = ROOT / "vendor_templates"
 
 RNDIS_HELPER = ROOT / "Configure-AscentRNDIS.ps1"
 
-APP_VERSION = '0.43.57'
+APP_VERSION = '0.43.59'
 
 def _resolve_edition() -> str:
     return 'consumer'
@@ -125,6 +125,7 @@ from caddx_vendor_write import CaddxWriteError, VendorWriteSession, qualify_rf_w
 from caddx_sky_user_cfg import SkyUserCfgError, SkyUserCfgSession, LABEL_PRIMARY as SKY_LABEL_PRIMARY, LABEL_FALLBACK as SKY_LABEL_FALLBACK, OPERATION_ID as SKY_USER_CFG_OPERATION_ID, build_user_cfg_document, compare_readback as sky_compare_readback, format_bb_id as sky_format_bb_id, parse_bb_id as sky_parse_bb_id, qualify_user_cfg_write
 
 import caddx_cgc as cgc
+import max_ethernet as maxeth
 
 import caddx_crsf as crsf
 
@@ -830,6 +831,80 @@ def _cgc_exchange(frame: bytes, *, expect_reply: bool, timeout: float = CGC_REPL
                     "plausibility": cgc.plausibility(parsed["wireless_cmd"], decoded),
                     "beyond_stock": decoded is not None}
     return out
+
+# Explicit Ethernet operations never qualify a USB or Service Mode binding.
+def _max_eth_context(connection_token=None):
+    import copy
+    dev, generation = SESSION.device, SESSION.generation
+    current = getattr(dev, 'network_target', None) if dev else None
+    if not current or not current.get('connection_token'):
+        raise maxeth.EthernetError('MAX_ETH_NOT_SELECTED', 'Select MAX ETH and connect first.')
+    if connection_token is not None and connection_token != current['connection_token']:
+        raise maxeth.EthernetError('MAX_ETH_TARGET_CHANGED', 'The selected Ethernet connection changed.')
+    if current.get('requires_reconnect'):
+        raise maxeth.EthernetError('MAX_ETH_RECONNECT', 'Reconnect before using this Ethernet target.')
+    target = copy.deepcopy(current)
+    maxeth.validate_target(target)
+    def check(*, route=False):
+        now = getattr(SESSION.device, 'network_target', None)
+        if (SESSION.device is not dev or SESSION.generation != generation or not now or
+                any(now.get(k) != target.get(k) for k in ('connection_token', 'device_ip', 'source_ip', 'if_index'))):
+            raise maxeth.EthernetError('MAX_ETH_TARGET_CHANGED', 'The selected Ethernet connection changed; discard this result.')
+        if route:
+            binding = maxeth.fast_route(target['device_ip']) or resolve_nic_for_ip(target['device_ip']) or {}
+            if (binding.get('source_ip'), binding.get('if_index')) != (target['source_ip'], target['if_index']):
+                raise maxeth.EthernetError('MAX_ETH_ROUTE_CHANGED', 'The PC network route changed. Reconnect before sending controls.')
+    check(route=True)
+    return target, current, check
+
+
+def max_ethernet_status(connection_token=None):
+    try:
+        target, current, check = _max_eth_context(connection_token)
+        result = maxeth.document(target, check=check)
+        check(route=True)
+        result['connection_token'] = target['connection_token']
+        result['rtsp_url'] = 'rtsp://' + target['device_ip'] + '/live.ch01'
+        return result
+    except (maxeth.EthernetError, OSError) as exc:
+        return {'ok': False, 'error': getattr(exc, 'code', 'MAX_ETH_READ_FAILED'),
+                'message': sanitize_error(str(exc)), 'controls': {'eligible': False}}
+
+
+def max_ethernet_key(body):
+    try:
+        key = maxeth.key_request(body)
+        if not body.get('connection_token'):
+            raise maxeth.EthernetError('MAX_ETH_TARGET_CHANGED', 'Read the current Ethernet connection before sending a key.')
+    except maxeth.EthernetError as exc:
+        return {'ok': False, 'error': exc.code, 'message': str(exc)}
+    if not NETWORK_SESSION_LOCK.acquire(blocking=False):
+        return {'ok': False, 'error': 'DEVICE_BUSY', 'message': 'A connection or network action is active.'}
+    try:
+        target, current, check = _max_eth_context(body['connection_token'])
+        if time.monotonic() < current.get('next_max_key_at', 0):
+            return {'ok': False, 'error': 'DEVICE_BUSY', 'message': 'Wait for the previous key request to finish.'}
+        with SERIAL_GATE.hold('max_ethernet_key', timeout=1):
+            if DEVICE_OPERATION_STATE.get('active') or not DEVICE_MUTATION_LOCK.acquire(blocking=False):
+                return {'ok': False, 'error': 'DEVICE_BUSY', 'message': 'A device operation is active.'}
+            try:
+                fresh = maxeth.decode('status', maxeth.read_rpc(target, 'status'))
+                check(route=True)
+                maxeth.require_same_receiver(target, fresh)
+                current['next_max_key_at'] = time.monotonic() + (30 if key == 'PAIRING' else 0.12)
+                result = maxeth.send_key(target, key)
+                check()
+                result['connection_token'] = target['connection_token']
+                return result
+            finally:
+                DEVICE_MUTATION_LOCK.release()
+    except (maxeth.EthernetError, OSError, SerialBusyError) as exc:
+        return {'ok': False, 'error': getattr(exc, 'code', 'MAX_ETH_KEY_NOT_COMPLETED'),
+                'message': sanitize_error(str(exc)), 'execution_verified': False,
+                'pairing_verified': False, 'retry': False, 'outcome': 'unknown'}
+    finally:
+        NETWORK_SESSION_LOCK.release()
+
 
 def cgc_eligibility() -> dict:
     """Live control needs a correlated network binding, not a serial session."""
@@ -2410,7 +2485,7 @@ def connect_network_profile(profile_id: str) -> dict:
         observed = repeater_network_read({'device_ip': profile['device_ip']})
         reachable = observed.get('reachable') is True
     else:
-        binding = resolve_nic_for_ip(profile['device_ip']) or {}
+        binding = maxeth.fast_route(profile['device_ip']) or resolve_nic_for_ip(profile['device_ip']) or {}
         source, index = (binding.get('source_ip'), binding.get('if_index'))
         status = relayqos.read_qos(profile['device_ip'], 0, 'status', source_ip=source, if_index=index) if source else None
         reachable = bool(status and (not status.get('error')) and status.get('length_match'))
@@ -4962,6 +5037,40 @@ def load_template(name: str) -> dict:
     }
 
 class Handler(SimpleHTTPRequestHandler):
+    def parse_request(self):
+        if not super().parse_request():
+            return False
+        # Guard before routing or reading a body, including GET actions. Native
+        # desktop clients may omit Origin; browser cross-site traffic may not.
+        hosts = self.headers.get_all('Host', [])
+        origins = self.headers.get_all('Origin', [])
+        try:
+            if len(hosts) != 1 or len(origins) > 1:
+                raise ValueError('ambiguous request authority')
+            host = urlparse('http://' + hosts[0])
+            address, port = self.connection.getsockname()[:2]
+            allowed = {address.lower()}
+            if ipaddress.ip_address(address).is_loopback:
+                allowed.add('localhost')
+            if (host.hostname not in allowed or (host.port or 80) != port or
+                    host.username is not None or host.password is not None or
+                    host.path or host.query or host.fragment):
+                raise ValueError('request authority does not match listener')
+            if origins:
+                origin = urlparse(origins[0])
+                if (origin.scheme != 'http' or origin.hostname != host.hostname or
+                        (origin.port or 80) != port or origin.username is not None or
+                        origin.password is not None or origin.path or origin.query or origin.fragment):
+                    raise ValueError('request origin does not match authority')
+            if self.headers.get('Sec-Fetch-Site', '').lower() == 'cross-site':
+                raise ValueError('cross-site browser request')
+        except (ValueError, TypeError):
+            self.close_connection = True
+            self.json_response({'ok': False, 'error': 'LOCAL_ORIGIN_REQUIRED',
+                                'message': 'Use the application local address.'}, 403)
+            return False
+        return True
+
     def end_headers(self):
         self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
         self.send_header("Pragma", "no-cache")
@@ -4994,6 +5103,11 @@ class Handler(SimpleHTTPRequestHandler):
         if not self._allow_local_request(write=False):
             return
         p = urlparse(self.path).path
+        if p == "/api/network/max/status":
+            query = parse_qs(urlparse(self.path).query)
+            result = max_ethernet_status((query.get('connection_token') or [None])[0])
+            self.json_response(result, 200 if result.get('ok') else 409)
+            return
         if p == "/api/app":
             self.json_response({
                 "name": "Ascent Control",
@@ -5202,6 +5316,10 @@ class Handler(SimpleHTTPRequestHandler):
         if not self._allow_local_request(write=True):
             return
         p = urlparse(self.path).path
+        if p == "/api/network/max/key":
+            result = max_ethernet_key(self._read_json_body())
+            self.json_response(result, 200 if result.get('ok') else 409)
+            return
         if p == "/api/usb-driver/repair":
             try:
                 self.json_response(usb_driver_repair(self._read_json_body()))

@@ -51,7 +51,7 @@ def verify(root,reference,phase):
     profile=json.loads((reference/'release/public-payload.json').read_text())
     deps=json.loads((reference/'release/dependencies.json').read_text())
     expected=expected_files(profile,deps)
-    if profile['version']!='0.43.57' or profile['licensor']!='TelaMechanica':raise ValueError('Unexpected public release identity')
+    if profile['version']!='0.43.59' or profile['licensor']!='TelaMechanica':raise ValueError('Unexpected public release identity')
     for target,entry in expected.items():
         path=root/(entry.get('source',target) if phase=='source' and 'source' in entry else target)
         plain(path)
