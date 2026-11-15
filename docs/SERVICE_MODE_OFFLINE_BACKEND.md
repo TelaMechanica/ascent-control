@@ -64,3 +64,12 @@ The 24 new tests are offline proofs only. Key storage, real enrollment and hands
 legacy migration, binary/metadata review, widget confinement, signing, installer
 preservation and hardware qualification remain open. No alternate session-access
 key or key-path diagnostics are imported.
+
+## R3 review notes retained
+
+Record and observation suppliers may raise OSError or ValueError for expected
+read/parse failures; the backend converts these to stable refusal codes. Other
+exceptions are programmer errors: they abort the operation, are not authorized
+results, and must not be serialized directly into user diagnostics. The session
+registry intentionally holds strong references until close; do not change it to
+id-only bookkeeping that could permit object-id reuse.

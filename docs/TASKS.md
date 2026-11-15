@@ -23,3 +23,9 @@ tests/test_service_records.py and docs/SERVICE_MODE_OFFLINE_BACKEND.md. Review
 legacy pin migration and additional key types before adopting this in the app;
 review real enrollment/credential storage and transport authentication separately.
 Do not add signing or production widget execution through this increment.
+
+Codex owns the loopback-only SSH proof in ascent_core/service_loopback_ssh.py,
+tests/test_service_loopback_ssh.py and docs/SERVICE_MODE_LOOPBACK_SSH.md. SSH tests
+are opt-in and use temporary owned localhost fixtures. Before real receiver work,
+review Windows/Dropbear transport, source-interface binding and actual credentials;
+fixture SFTP support must not be mistaken for receiver capability.

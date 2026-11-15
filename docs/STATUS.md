@@ -52,3 +52,16 @@ subtests passed; new backend tests: 24 passed. Public privacy/runtime/camera che
 pass. Fingerprint output agrees with an independent offline OpenSSH utility test.
 Legacy abbreviated pins and unsupported key algorithms are explicitly refused;
 compatibility migration remains open. See SERVICE_MODE_OFFLINE_BACKEND.md.
+
+## R4 localhost authenticated SSH proof
+
+Loopback-only OpenSSH integration now proves pinned host-key possession and
+synthetic client-key authentication, with a fresh connection per guarded step.
+The channel opens/closes internal read-only SFTP with no file requests or user
+shell. This is a fixture mechanism, not receiver SFTP support or transport release.
+Opt-in full suite: 690 passed and 55 subtests passed. Eight new fixture cases pass
+(six real integration, two injected error paths); default targeted run skips all
+eight as designed. Source privacy/runtime/camera checks pass; 35 known identity
+tokens across797files, zero findings. No installed state, receiver or MSI change.
+Expected supplier exceptions and session-registry strong-reference ownership are
+now documented. See SERVICE_MODE_LOOPBACK_SSH.md for limits and opt-in command.

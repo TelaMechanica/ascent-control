@@ -81,3 +81,12 @@ This is not a real transport authentication proof or live app integration. Revie
 missing enrollment, stale binding, revision changes, redacted supplier failures
 and the independent OpenSSH fingerprint cross-check. The legacy abbreviated pin
 format and additional key algorithms are held for explicit compatibility review.
+
+## R4 localhost authenticated transport checkpoint
+
+See SERVICE_MODE_LOOPBACK_SSH.md and service_loopback_ssh.py. This is a real
+OpenSSH fixture handshake with pinned server key and authorized synthetic client
+key, followed by an empty internal read-only SFTP channel. No receiver or installed
+credentials are used. The SFTP fixture is not a receiver protocol recommendation.
+Review fresh-connection semantics, isolated client options, post-operation refusal,
+fixture cleanup, timeout/error handling and the explicit remaining receiver gates.
