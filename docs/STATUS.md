@@ -1,5 +1,11 @@
 # Current status
 
+Future installer builds include an unchecked Launch AC completion checkbox.
+Only successful full-UI installs can launch it after an explicit selection;
+quiet installs, repair and removal never do. Full source regression: 622 passed
+and 55 subtests; runtime inventory/privacy passed. The released 0.43.62 MSI
+and its existing assets are unchanged. No application or hardware was launched.
+
 The 0.43.62 maintenance candidate includes shared MAX Ethernet functions and
 withholds the defective HD Pro tester build. See RELEASE_0.43.62.md for scope.
 Local full host regression: 620 passed and 55 subtests passed. Source/privacy,
