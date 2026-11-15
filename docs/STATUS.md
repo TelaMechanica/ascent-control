@@ -22,3 +22,12 @@ scaffolds only. No private runtime, installer change or hardware operation is
 included. See ACPLUS_SERVICE_MODE_REVIEW.md and sdk/README.md. Publication is held
 for the requested Claude review checkpoint. GitHub issue/PR creation is deferred
 until publication is authorized; this candidate is kept local.
+
+Review verification: 647 host tests and 55 subtests passed; the 27 new scaffold
+cases pass. Source privacy, public runtime inventory, camera dependency checks
+and whitespace validation passed. A separate local scan checked 35 known identity
+tokens from earlier contaminated data and found none in 789 candidate files.
+The initial sandbox run could not open synthetic localhost sockets; its failed
+record is retained separately from the passing unrestricted host retest. These
+checks do not establish hardware qualification or production widget isolation.
+Implementation checkpoint: 25899cdfce29a42eacf09d7cdfc91e1aff08ff9c.
