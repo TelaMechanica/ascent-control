@@ -29,3 +29,8 @@ tests/test_service_loopback_ssh.py and docs/SERVICE_MODE_LOOPBACK_SSH.md. SSH te
 are opt-in and use temporary owned localhost fixtures. Before real receiver work,
 review Windows/Dropbear transport, source-interface binding and actual credentials;
 fixture SFTP support must not be mistaken for receiver capability.
+
+Windows parity owner: Codex. Scope includes Windows path/environment/diagnostic
+handling, portable worker, opt-in WSL/Windows integration test and clear fixture
+ancestor skips. Carry results into the consolidated product milestone review;
+do not require another external review for each small implementation increment.

@@ -6,6 +6,7 @@ import os
 from pathlib import Path
 import shutil
 import socket
+import stat
 import subprocess
 import tempfile
 from threading import RLock
@@ -27,6 +28,9 @@ def fixture_server():
     # fixture beneath this owned workspace; do not weaken StrictModes to pass.
     parent = Path(__file__).resolve().parents[1] / 'artifacts'
     parent.mkdir(exist_ok=True)
+    for ancestor in (parent, *parent.parents):
+        if ancestor.stat().st_mode & (stat.S_IWGRP | stat.S_IWOTH):
+            pytest.skip('OpenSSH StrictModes requires fixture ancestors without group/other write permission; relocate checkout')
     with tempfile.TemporaryDirectory(prefix='ssh-fixture-', dir=parent) as folder:
         root = Path(folder)
         for name in ('host', 'client', 'wrong-client', 'wrong-host'):

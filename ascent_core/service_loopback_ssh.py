@@ -7,12 +7,47 @@ This module is deliberately not packaged or wired into the desktop application.
 import hmac
 import ipaddress
 import os
-from pathlib import Path
+from pathlib import Path, PureWindowsPath
 import re
 import subprocess
 import tempfile
+from threading import Thread
 from .service_access import AccessDenied
 from .service_records import HostKeyObservation, OfflineServiceBackend, host_key_fingerprint
+
+
+def _environment(root, *, windows, system_root=None):
+    environment = {'LANG': 'C', 'LC_ALL': 'C', 'PATH': os.defpath}
+    if windows:
+        if not system_root or not PureWindowsPath(system_root).is_absolute():
+            raise AccessDenied('SSH_WINDOWS_ENVIRONMENT_REQUIRED')
+        environment['SystemRoot'] = system_root
+        environment['PATH'] = str(PureWindowsPath(system_root)/'System32')
+        # Windows OpenSSH needs ProgramData even with an explicit -F.
+        # Both profile roots point to the empty task-owned directory.
+        for name in ('ProgramData', 'USERPROFILE', 'TEMP', 'TMP'):
+            environment[name] = str(root)
+    return environment
+
+
+def _windows_run(args, environment):
+    # This Windows OpenSSH build rejects NUL stderr. Drain a pipe without keeping
+    # bytes, printing them or writing potentially identifying diagnostics to disk.
+    with subprocess.Popen(args, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                          stderr=subprocess.PIPE, env=environment) as process:
+        def discard():
+            while process.stderr.read(8192):
+                pass
+        reader = Thread(target=discard, daemon=True)
+        reader.start()
+        try:
+            return process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait()
+            raise
+        finally:
+            reader.join(timeout=1)
 
 
 class LoopbackSshProbe:
@@ -30,6 +65,7 @@ class LoopbackSshProbe:
         self._ssh = Path(ssh_binary)
 
     def noop(self, binding, public_key):
+        # Trusted backend must compare this key to the enrollment pin first.
         if binding != self._binding:
             raise AccessDenied('SSH_FIXTURE_BINDING_CHANGED')
         host_key_fingerprint(public_key)
@@ -43,7 +79,7 @@ class LoopbackSshProbe:
                 known.write_text('ascent-loopback-fixture ' + key + '\n')
                 known.chmod(0o600)
                 def option_path(path):
-                    value = str(path)
+                    value = path.as_posix()
                     if any(c in value for c in ('\r', '\n', '\x00', '%', '"', '\\')):
                         raise AccessDenied('SSH_FIXTURE_PATH_UNSUPPORTED')
                     return '"' + value + '"'
@@ -66,14 +102,18 @@ class LoopbackSshProbe:
                     args += ['-o', name + '=' + value]
                 args += ['-i', str(self._identity_file), '-p', str(self._port), '-l', self._username,
                          str(ipaddress.IPv4Address(0x7f000001)), 'sftp']
-                completed = subprocess.run(args, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL, timeout=5, check=False,
-                    env={'LANG': 'C', 'LC_ALL': 'C', 'PATH': os.defpath})
+                environment = _environment(root, windows=os.name == 'nt',
+                                           system_root=os.environ.get('SystemRoot'))
+                if os.name == 'nt':
+                    returncode = _windows_run(args, environment)
+                else:
+                    returncode = subprocess.run(args, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
+                        stderr=subprocess.DEVNULL, timeout=5, check=False, env=environment).returncode
         except subprocess.TimeoutExpired:
             raise AccessDenied('SSH_STEP_TIMEOUT') from None
         except OSError:
             raise AccessDenied('SSH_STEP_UNAVAILABLE') from None
-        if completed.returncode != 0:
+        if returncode != 0:
             raise AccessDenied('SSH_AUTHENTICATED_NOOP_FAILED')
 
 

@@ -65,3 +65,17 @@ eight as designed. Source privacy/runtime/camera checks pass; 35 known identity
 tokens across797files, zero findings. No installed state, receiver or MSI change.
 Expected supplier exceptions and session-registry strong-reference ownership are
 now documented. See SERVICE_MODE_LOOPBACK_SSH.md for limits and opt-in command.
+
+## Windows localhost client parity
+
+Five Windows worker cases pass with OpenSSH9.5p2 and packaged Python3.12.7: fresh
+handshakes, impostor host/client rejection, provider revocation and revision-change
+refusal. Windows requires a task-owned ProgramData and a discard pipe for stderr
+on this setup. R4 comments and writable-ancestor fixture handling are addressed.
+See SERVICE_MODE_WINDOWS_PARITY.md. The transport remains outside the shipped app;
+real credentials, receiver binding and installer/bench gates remain open.
+
+Final combined Linux/Windows opt-in suite:698passed/55subtests,36.88seconds.
+Source privacy/runtime/camera checks pass;35known identity tokens across801files,
+zero findings. Seven new environment/process unit checks plus the Windows parity
+integration test are included. Results are host proofs, not hardware qualification.
