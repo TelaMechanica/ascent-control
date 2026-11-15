@@ -17,3 +17,9 @@ tools/widget_sdk.py, release/product-bases.json, tests/test_framework_scaffold.p
 and their review/SDK documentation. Review Service Mode backend and credential
 handling before importing implementation. Complete publisher trust, confinement,
 updates and installer preservation before calling this a released SDK/AC+ base.
+
+Offline backend increment ownership: Codex owns ascent_core/service_records.py,
+tests/test_service_records.py and docs/SERVICE_MODE_OFFLINE_BACKEND.md. Review
+legacy pin migration and additional key types before adopting this in the app;
+review real enrollment/credential storage and transport authentication separately.
+Do not add signing or production widget execution through this increment.

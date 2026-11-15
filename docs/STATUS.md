@@ -42,3 +42,13 @@ SSH. Final full host suite: 658 passed and 55 subtests passed. Combined scaffold
 checks: 38 passed. Public privacy/runtime/camera checks remain green. The proposed
 open publisher-trust contract is documented before any signing implementation.
 No publication, installed app change, credential access or receiver action.
+
+## Offline Service Mode record backend
+
+Actual record parsing and host-key pin comparison now connect to ServiceAccess,
+using fixture-fed trusted host suppliers. The backend has no SSH, enrollment/key
+writes, command dispatch or installed app wiring. Full suite: 682 passed and 55
+subtests passed; new backend tests: 24 passed. Public privacy/runtime/camera checks
+pass. Fingerprint output agrees with an independent offline OpenSSH utility test.
+Legacy abbreviated pins and unsupported key algorithms are explicitly refused;
+compatibility migration remains open. See SERVICE_MODE_OFFLINE_BACKEND.md.

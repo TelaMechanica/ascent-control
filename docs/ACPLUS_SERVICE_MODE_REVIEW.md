@@ -72,3 +72,12 @@ transport or credential protection. See sdk/PUBLISHER_TRUST.md before signing wo
 The lease API now yields a ServiceLease object rather than a bare session; this is
 an intentional change within the unpublished 0.x scaffold. No installed caller is
 migrated or affected. Blocking operations still cannot be forcibly interrupted.
+
+## Next bounded increment: offline record backend
+
+See SERVICE_MODE_OFFLINE_BACKEND.md. Actual bounded JSON/SSH-public-key parsing and
+pin comparison now back the host seam; fixtures supply the records/observations.
+This is not a real transport authentication proof or live app integration. Review
+missing enrollment, stale binding, revision changes, redacted supplier failures
+and the independent OpenSSH fingerprint cross-check. The legacy abbreviated pin
+format and additional key algorithms are held for explicit compatibility review.
