@@ -5,7 +5,7 @@ No enrollment, credential storage, network transport or executor is implemented.
 """
 from contextlib import contextmanager
 from dataclasses import dataclass
-from typing import Protocol
+from typing import Callable, Protocol
 
 
 class AccessDenied(RuntimeError):
@@ -31,12 +31,21 @@ class ReceiverBackend(Protocol):
     def close(self, session): ...
 
 
+@dataclass(frozen=True)
+class ServiceLease:
+    """Trusted-host session plus cooperative liveness check; never a widget API."""
+    session: object
+    check: Callable[[], None]
+
+
 class ServiceAccess:
     """Recheck application-owned state before and after session acquisition.
 
     The caller holds the selected-device operation lock throughout the lease.
     The backend must preserve enrollment, pinned host key and identity checks.
-    Python object privacy is not a sandbox or a cryptographic trust root.
+    Call lease.check() between bounded backend steps. Blocking calls cannot be
+    preempted by this cooperative hook. Python object privacy is not a sandbox
+    or a cryptographic trust root.
     """
     def __init__(self, *, state, backend: ReceiverBackend, operation_lock):
         self._state = state
@@ -57,8 +66,14 @@ class ServiceAccess:
         with self._lock:
             self._require(binding)
             session = self._backend.acquire(binding)
-            try:
+            active = True
+            def check():
+                if not active:
+                    raise AccessDenied('SERVICE_LEASE_CLOSED')
                 self._require(binding)
-                yield session
+            try:
+                check()
+                yield ServiceLease(session, check)
             finally:
+                active = False
                 self._backend.close(session)

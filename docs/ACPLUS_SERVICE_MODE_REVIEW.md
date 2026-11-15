@@ -60,3 +60,15 @@ proof. Check these questions before recommending the next increment:
 Do not approve publication merely because host tests pass. Installer/provider
 preservation, current-schema data migration, private dependency review and hardware
 qualification retain their separate gates. The existing release remains intact.
+
+## Independent review follow-up
+
+The operator supplied Claude's independently verified conditional GO for the next
+bounded increment, explicitly not publication. The follow-up normalizes corrupt
+DEFLATE/EOF failures, adds cooperative lease liveness and tests a synthetic backend
+for missing enrollment, pinned-key mismatch, binding changes and revocation at the
+next step. These fixture comparisons do not qualify real cryptography, enrollment,
+transport or credential protection. See sdk/PUBLISHER_TRUST.md before signing work.
+The lease API now yields a ServiceLease object rather than a bare session; this is
+an intentional change within the unpublished 0.x scaffold. No installed caller is
+migrated or affected. Blocking operations still cannot be forcibly interrupted.

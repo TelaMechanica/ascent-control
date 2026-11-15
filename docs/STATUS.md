@@ -31,3 +31,14 @@ The initial sandbox run could not open synthetic localhost sockets; its failed
 record is retained separately from the passing unrestricted host retest. These
 checks do not establish hardware qualification or production widget isolation.
 Implementation checkpoint: 25899cdfce29a42eacf09d7cdfc91e1aff08ff9c.
+
+## Conditional-GO review follow-up
+
+Corrupt DEFLATE and EOF now produce PackageInvalid. Cooperative ServiceLease.check
+observes revocation/selection changes between bounded steps and rejects closed
+leases. Synthetic backend tests cover absent enrollment, pinned-key mismatch,
+independent binding refusal and liveness; they do not verify actual enrollment or
+SSH. Final full host suite: 658 passed and 55 subtests passed. Combined scaffold
+checks: 38 passed. Public privacy/runtime/camera checks remain green. The proposed
+open publisher-trust contract is documented before any signing implementation.
+No publication, installed app change, credential access or receiver action.

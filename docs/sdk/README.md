@@ -76,3 +76,12 @@ The 0.x contract may change with documented migration notes. A stable SDK releas
 requires an independently authored example, production isolation findings,
 per-operation authorization, updates/rollback and conformance tests. Receiver-side
 third-party execution is outside this preview.
+
+## Review follow-up: cooperative session liveness
+
+A trusted host lease now yields `ServiceLease(session, check)`. The backend calls
+`check()` before each bounded step. It observes provider/enablement or selection
+changes at that boundary and refuses use after the lease closes. It cannot abort
+a blocking operation or undo an already committed device change. Only synthetic
+backend tests currently exercise enrollment and host-key refusal; no real backend
+is wired. The proposed open publisher-trust contract is in PUBLISHER_TRUST.md.

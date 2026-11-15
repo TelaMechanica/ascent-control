@@ -9,6 +9,7 @@ from pathlib import PurePosixPath
 import re
 import stat
 import zipfile
+import zlib
 
 SDK_VERSION = '0.1.0-dev'
 MAX_ARCHIVE_BYTES = 2 * 1024 * 1024
@@ -95,5 +96,5 @@ def inspect_package(path):
                 raise PackageInvalid('This prototype accepts only a declarative view')
             return {'id': manifest['id'], 'version': manifest['version'], 'sdk': SDK_VERSION,
                     'validated': True, 'publisher_verified': False, 'executable': False}
-    except (zipfile.BadZipFile, KeyError, UnicodeError, json.JSONDecodeError, RuntimeError, NotImplementedError) as exc:
+    except (zipfile.BadZipFile, zlib.error, EOFError, KeyError, UnicodeError, json.JSONDecodeError, RuntimeError, NotImplementedError) as exc:
         raise PackageInvalid('Malformed package') from exc
