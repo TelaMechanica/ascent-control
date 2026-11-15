@@ -28,6 +28,7 @@ def build(donor_path, mode_a, helper, work, output, report_path):
     require(not output.exists() and not report_path.exists(), 'Output already exists')
     donor = donor_path.read_bytes()
     require(sha(donor) == DONOR_SHA256, 'HD Pro requires the exact normal 19.2.14 donor')
+    raise ValueError('HDPRO_BUILD_WITHHELD: earlier tester payload has confirmed CPU and boot defects; corrected payload qualification is pending')
     work.mkdir(parents=True, exist_ok=False)
     sys.dont_write_bytecode = True
     sys.path.insert(0, str(mode_a))

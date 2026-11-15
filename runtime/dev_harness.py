@@ -54,7 +54,7 @@ TEMPLATES = ROOT / "vendor_templates"
 
 RNDIS_HELPER = ROOT / "Configure-AscentRNDIS.ps1"
 
-APP_VERSION = '0.43.59'
+APP_VERSION = '0.43.62'
 
 def _resolve_edition() -> str:
     return 'consumer'

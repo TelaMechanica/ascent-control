@@ -2,10 +2,10 @@
   "schema": "ascent.hdpro.assets.v1",
   "application_sha256": "3ebdc5825e018da16c7c07101324568d35fd846eb41aaf4caad96749061974ad",
   "hardware_qualified": false,
-  "ac_target_admitted": true,
+  "ac_target_admitted": false,
   "files": {
-    "README.md": "6bdbb441b9866222ad2c855600db3e6d45dc47c310d20c4b35886b4286897a37",
-    "hdpro_build.py": "0abd1fa56173d5798a32cc61b950c9f6240756b2168c82698f62302f78973e57",
+    "README.md": "2137ae7da86a6f723765d08549495585f3a93ac4bbdd16dca7a8b13b806f0b0c",
+    "hdpro_build.py": "4b56721cff332920774dfad4db1031626d64b01da7dc3da2b09d33bb86aeb071",
     "legacy_pro_capture.py": "b291c8d45a3c9fa402af575c0dc72559a68057c00a418a744c8b6e58f1e71ef1",
     "legacy_pro_clock.c": "4bb4647fbf63bcbcaaf9a74c8af8bad4c7b2db412ca9da5ee67a233944d6a005",
     "legacy_pro_clock.h": "add5e48df192766e278ec10617f875e314fcf5041a9f19b73ec5f3356fbaa173",
@@ -24,5 +24,5 @@
     "portable_patch/hdpro-19.2.14-extension.bin": "2c00799bdecb4abf74320bda5935704516315ff8d07f8c68054ee646e66a5a4f",
     "portable_patch/hdpro-19.2.14-patch.json": "8601be60d43e9db6a1832faeaec4101421097fe58afabff8f426f915c813da42"
   },
-  "build_availability": "TESTING"
+  "build_availability": "WITHHELD"
 }

@@ -51,7 +51,7 @@ def verify(root,reference,phase):
     profile=json.loads((reference/'release/public-payload.json').read_text())
     deps=json.loads((reference/'release/dependencies.json').read_text())
     expected=expected_files(profile,deps)
-    if profile['version']!='0.43.59' or profile['licensor']!='TelaMechanica':raise ValueError('Unexpected public release identity')
+    if profile['version']!='0.43.62' or profile['licensor']!='TelaMechanica':raise ValueError('Unexpected public release identity')
     for target,entry in expected.items():
         path=root/(entry.get('source',target) if phase=='source' and 'source' in entry else target)
         plain(path)
@@ -89,9 +89,10 @@ def verify(root,reference,phase):
         if probe.get('via')!='windows-native' or not probe.get('can_build'):raise ValueError('Public native builder preflight failed')
         for target in ('z8','z40','hub'):
             if builder.inspect_camera_support(str(runtime/'device_tools/mode_a'),target) is None:raise ValueError('Public camera support is absent')
-        if not builder.preflight(target='hdpro')['can_build']:raise ValueError('HD Pro tester build preflight failed')
+        hdpro=builder.preflight(target='hdpro')
+        if hdpro.get('can_build') or hdpro.get('error')!='HDPRO_BUILD_WITHHELD':raise ValueError('HD Pro build hold is not enforced')
     return {'version':profile['version'],'payload_files':len(expected),'camera_payloads':19,
-            'hdpro':'tester builds available; hardware NOT_TESTED','private_runtime_modules':0,'wsl_required':False}
+            'hdpro':'image build withheld; prior tester payload has confirmed defects','private_runtime_modules':0,'wsl_required':False}
 
 
 def main():

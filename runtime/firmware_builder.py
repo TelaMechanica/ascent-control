@@ -83,10 +83,14 @@ TARGETS = {
     },
 }
 
-# HD Pro is available for tester builds; hardware qualification remains separate.
-CAMERA_PORTS = {}
+# The previously admitted tester payload has confirmed CPU/boot defects.
+# Keep donor inspection available, but refuse image creation at every entry point.
+CAMERA_PORTS = {'hdpro': {
+    'id': 'HDPRO_BUILD_WITHHELD', 'label': 'HD Pro (legacy Walksnail)',
+    'what': 'HD Pro image building is withheld: the earlier tester payload has confirmed CPU and boot defects.',
+    'clears_when': 'a corrected payload passes CPU/startup checks and a separately authorized camera retest'}}
 TARGETS['hdpro'] = {'label': 'HD Pro (legacy Walksnail)', 'script': 'hdpro_build.py',
-                    'inputs': ('donor',), 'describe': 'Build the exact 19.2.14 HD Pro test profile.'}
+                    'inputs': ('donor',), 'describe': 'Inspect the donor; HD Pro image building is withheld pending a corrected payload.'}
 
 
 def hdpro_assets_dir():
@@ -444,7 +448,7 @@ def preflight(*, runner=_hidden_run, builder_dir: str | None = None,
     Every answer names the thing and what fixes it. "It did not work" is the
     one output this function must never produce.
     """
-    if target == 'hdpro':
+    if target == 'hdpro' and not camera_port_blocker(target):
         try:
             inspect_hdpro_assets()
         except (OSError, ValueError, KeyError, BuilderError) as exc:
@@ -987,6 +991,7 @@ def run_variant_build(target: str, *, donor: str, sources: dict, work_dir: str,
     reported as `app`, never as `image`. A failing stage stops the job and is
     reported with the builder's own output, unaltered.
     """
+    _require_camera_payload(target)
     if target == 'hdpro':
         assets = inspect_hdpro_assets()
         out_name = check_output_name(out_name, target)
