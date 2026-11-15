@@ -372,14 +372,14 @@
     {
       "source": "runtime/caddx_relay_factory.py",
       "target": "runtime/caddx_relay_factory.py",
-      "sha256": "79642a8bf81e9ebf717d6829a940b255aee03e02362e235ed616ed3e53a22bf2",
-      "bytes": 3110
+      "sha256": "f6705f930d3b65967fbdaa0594dbf3f01e4dd4348a1ba0652885b9443222219a",
+      "bytes": 3102
     },
     {
       "source": "runtime/caddx_relay_network_control.py",
       "target": "runtime/caddx_relay_network_control.py",
-      "sha256": "e72647ec905340970c2caf101a7bb973bd96f2600673c2907d9ffda32ff520b3",
-      "bytes": 6873
+      "sha256": "2f7cd9e71d44caf0c496f1c2782012c20837394a178149b639136f460eb806eb",
+      "bytes": 6881
     },
     {
       "source": "runtime/caddx_relay_press.py",
@@ -606,8 +606,8 @@
     {
       "source": "runtime/www/app.js",
       "target": "runtime/www/app.js",
-      "sha256": "dbd4fba1218d567f775ced36ee53e0eba85b1050fc9765f6b893e79ca859b52f",
-      "bytes": 259730
+      "sha256": "eae2ca88ba2e6b694949d2b9ffbe797baa67102518f3de41ba1ad4ab4a198f72",
+      "bytes": 259654
     },
     {
       "source": "runtime/www/assets/ascent_skull.png",
@@ -1091,7 +1091,7 @@
     "CLAUDE.md": "6b7a588984f9f1b30041bad3e0292a8188d38c520c803fc82169ee6941605d4c",
     "LICENSE": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
     "PROJECT_LICENSE_SCOPE.json": "080ae8f96900bb95eccbd6e642fc1404a447a12b9ca47c7450250a406d190e58",
-    "README.md": "ebba44b3ac1314c1c22cdeda54e1b28b5cb38f7d294903194b92878c435c3350",
+    "README.md": "12025c83f3e432edbb7e24e1ef4854397e1fd479bbac37b47aed47ebfa9762b3",
     "THIRD-PARTY-NOTICES.md": "ac6135111a101013434aacd9e763965ef4a15a40273ba0db62b995478a3cfc0f",
     "THIRD-PARTY-SOURCES.json": "3c3d43dd128bfe194a65b8360be6001fb4b25d5a5a00bd7b8f7118eba0c2b03c",
     "ascent_core/__init__.py": "b5e396cc9012ed81e60d6e2b4a0e72e995c46e5a73abde3ab3c973cf540c4cdc",
@@ -1108,7 +1108,7 @@
     "docs/RELEASE_VALIDATION_0.43.54.json": "8295a7226453dc2f91f4d1d69d26c4b15a23f159703c171c4049cf7ef539f1be",
     "docs/SHARED_SOURCE_IMPORT.json": "76206d3ceab3302c76e17a3afd2531f6e06b41655c5c932dc7f1236793b993ee",
     "docs/SOURCE_REVIEW.md": "6f08de97f00d27fc1a8094d516cee51032bc696b671de1b930b6822c5fe9a731",
-    "docs/STATUS.md": "99ed057f50de0e143b7ed0b0dd6ba6ac5f03a25b3b60bdf93d6aff7833021ae2",
+    "docs/STATUS.md": "478c4230b648f082b02cd8bd0d12d141a57ebd6c9fccd3d926b8f1864f362546",
     "docs/TASKS.md": "629a36bf94492263f31c355881004b4bb5d95c29f053fa91b1e0351fca3223b1",
     "firmware/hdpro/README.md": "2137ae7da86a6f723765d08549495585f3a93ac4bbdd16dca7a8b13b806f0b0c",
     "firmware/hdpro/assets.json": "02125930eb46334d11619d0f51d75505fa6c6560438ca8b790add20307a10645",
@@ -1189,8 +1189,8 @@
     "runtime/caddx_msp.py": "a357886345a2dd76b88efce8eeaa9b96484a78f795675f389b8190845387795f",
     "runtime/caddx_msp_osd.py": "59219ab0eef22d4c70927c3937fd3091e0bea1c394682e28ec0f61017bdd4bc8",
     "runtime/caddx_read_bundle.py": "9c9e43be2c63a9b8b75d0bbbf6a09fd9b5341c48d44bfc2ab9e69e4827099efc",
-    "runtime/caddx_relay_factory.py": "79642a8bf81e9ebf717d6829a940b255aee03e02362e235ed616ed3e53a22bf2",
-    "runtime/caddx_relay_network_control.py": "e72647ec905340970c2caf101a7bb973bd96f2600673c2907d9ffda32ff520b3",
+    "runtime/caddx_relay_factory.py": "f6705f930d3b65967fbdaa0594dbf3f01e4dd4348a1ba0652885b9443222219a",
+    "runtime/caddx_relay_network_control.py": "2f7cd9e71d44caf0c496f1c2782012c20837394a178149b639136f460eb806eb",
     "runtime/caddx_relay_press.py": "8eefca957ab1eca483dec13ee6874a8f136e08c5bcb58868e6af48ff92b457c8",
     "runtime/caddx_relay_qos.py": "b19780c06a853d0e8bf517bdbbc0c3493dc98b4a3c9a42e750b0a2de0baca973",
     "runtime/caddx_repeater.py": "4a085856c15bd562e64cadc69b9473e197be015ac7163bde9f55fa70f78989e9",
@@ -1228,7 +1228,7 @@
     "runtime/windows_device_inventory.py": "2de7f8ab7904613aece0b9bec7c3021a2ead5fd8a71637f73235710b486d0f12",
     "runtime/windows_driver_repair.py": "4ae8a03dc9023b0136a3f57d8e991ac31d28b2fe6776739c23b403ee25f77ba3",
     "runtime/www/app.css": "818bfaad22f893a66a5f3fffcb37b220cc39c683fa61893f44692661a10cd5ad",
-    "runtime/www/app.js": "dbd4fba1218d567f775ced36ee53e0eba85b1050fc9765f6b893e79ca859b52f",
+    "runtime/www/app.js": "eae2ca88ba2e6b694949d2b9ffbe797baa67102518f3de41ba1ad4ab4a198f72",
     "runtime/www/assets/ascent_skull.png": "d79322bd44bc6c22780daf17301018ec3f61eb31b6a0151d1e900ba159161d02",
     "runtime/www/assets/devices/Ascent_CamHub.png": "d64ab39a6567f2bb6e948098f89a7b6970d8f9ea41c60e01778b5a0b5d735acf",
     "runtime/www/assets/devices/Ascent_GT.png": "45a704c782577b4c909898672a4b2ca9c51b9220e51bdfd87447b519d2dc62a0",
@@ -1281,7 +1281,7 @@
     "runtime/www/index.html": "1c2cfc6d24ca6d8f5aa0a00334a3004f1df18a6416d7bc17a2a692da19072df2",
     "src/Ascent.Desktop/App.xaml": "c224747501fff732ca28f968e11c59109f726e60d69c9668843a3f232552c054",
     "src/Ascent.Desktop/App.xaml.cs": "c6011d45cdad7c170a0c4c0c3038316f2db8313183e0354dab943b2a9cfe0b93",
-    "src/Ascent.Desktop/Ascent.Desktop.csproj": "ceff80bcd1272337c4e40ae8c0717230b7f17e5684f5c2f9293bc1ac5e540526",
+    "src/Ascent.Desktop/Ascent.Desktop.csproj": "3e96a82ff32771673af22413f202ea017cd111abc9256bb60f9ba8cb468153d9",
     "src/Ascent.Desktop/Assets/AscentControl.ico": "b1bb2afcf46f9fbf8d233ff84958ccf17596021ab639f11313801ae5f3da652e",
     "src/Ascent.Desktop/Assets/AscentControlIcon.png": "03d93cfd69f86cfe17591f04de53afbdb0d49113e22016838089e9271cb36060",
     "src/Ascent.Desktop/BackendHost.cs": "44eddb003c2f853d6790fad6456b5889340b9df0db3fabf8ad330c23885115c1",
@@ -1301,7 +1301,7 @@
     "src/Ascent.Desktop/app.manifest": "ccf1b8cf234c9df0324a8166959149a4d2b245c3907fdc684e08b61b1cb355cb",
     "tests/helpers/ui_source.js": "caa4924df81af5827be167a2e510d36e23626fc912b458c959e172c410ae51d6",
     "tests/local_identity.py": "b1c4635b2777869a104ce291f8a32a06f9c11c3c89674d3e2b7dcf8b48fc9e19",
-    "tests/locked_ui.py": "4e5e55cf4ed93285cf66e43901504ee1c83e1d250a8b9915af4b871f8d7f4fcb",
+    "tests/locked_ui.py": "bbe2839c91834d5680b3d20c61182342df577357366a2ea5f07d33082c1010c6",
     "tests/public_diagnostics_flow.cjs": "d2fd1468bce578182bc81dac7d16fd40b49071f77a411790479f62b0786b4396",
     "tests/public_live_interaction.cjs": "56a71f9bb168ab0af163cde6c0bed1e26e1102dcf9bb2ad95b026630f71b51ae",
     "tests/public_ui_render_check.cjs": "d44730dbf5b02dcfa55abed4179ce27f2723adf529506279fcf7116bd8647be5",
@@ -1325,7 +1325,7 @@
     "tests/test_public_desktop_boundary.py": "d9bfeb16071fe14caa2670ad55fcb22d7607a9dfebb9a229819da171da4e209f",
     "tests/test_public_firmware_staging.py": "d0b071807754628e30b7d75b17e8ac97f30f1f2d0682e7bb9f5340d3edde7308",
     "tests/test_public_live_interaction.py": "63795ed51cffe7d8fcbe708ea710a7e149f50eac7090c4057b81bfb0034cd0cf",
-    "tests/test_public_runtime_resources.py": "876da1c2a00e2d22b601e019584f44500817d5fc1bace27b2624b91b627204c0",
+    "tests/test_public_runtime_resources.py": "b3dc7635a934bac299580f35cc27fbcf41cce83b0babf6591b2d6899129f2284",
     "tests/test_rf_band_plans.py": "7d8675cc25eff9275a14ef8cdd2e2524d9453c9e4719f576edfd3245e60e2af4",
     "tests/test_shared_import.py": "ca3c244f53ed026db7533c9c0f54b5971f14abdb9980406503db42d2f0cf0178",
     "tests/test_windows_device_inventory_native.py": "88ecfa16d21a59dd343b181c545fee2e0e6ada5752dbc6d478d0803feba1997d",
@@ -1858,6 +1858,8 @@
     "tests/max_ethernet_ui_check.cjs": "5f50a4df7125f2667fa886d772bf5a8e1d14f3c48804baf0ac39689b732752a8",
     "tests/test_http_request_origin.py": "c1305f18722cd559759d992426b39032a4b5a734d7aec95b2b6056b825698e83",
     "docs/MAX_ETHERNET.md": "c943276aca855c6de135ce2ab8fc4b6999f5e837b7f2d9b703ec48b581255cb7",
-    "docs/RELEASE_0.43.62.md": "f4278bcb9e5b0f1f722d083af5cc24b640e0c7d0c0fe83e8d0ebedafcc7d38f0"
+    "docs/RELEASE_0.43.62.md": "a1e3fe57e7a5e7774397c32568553e16609465f2e20fb5153ba1fffcb26b3e45",
+    "tests/test_network_connection_presets.py": "847497d0c355c48a490742bf9bea777260d934f29990afcb9061500a0a1acc9e",
+    "tests/test_relay_network_control.py": "005519011ccdda56e29b84af23f268da4d01281dfb721a964b4a88193166183c"
   }
 }

@@ -2,6 +2,8 @@
 
 - Packages MAX Ethernet RTSP viewing, scoped status/channel observations and
   short menu/pairing requests, with selected-interface and stale-result guards.
+- Retains Repeater Ethernet identity/role/QoS reads, HF/MF bind requests and
+  confirmed role reversal/reboot, with fresh target and route checks.
 - Withholds HD Pro image creation after confirmed defects in the earlier tester
   payload. Donor inspection explains the blocker; Z8/Z40/Hub builders remain.
 - Retains Live controls, diagnostics, local background preparation, native Windows

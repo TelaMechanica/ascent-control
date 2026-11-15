@@ -1878,7 +1878,7 @@ function fwVariantPanel(){
      + `</select></span></div>`;
 
   if (v.target === 'hdpro' && !v.plan){
-    b += notice('HD Pro image building withheld: the earlier tester payload has confirmed CPU and boot defects.', 'warn');
+    b += notice('HD Pro build held.', 'warn');
   }
 
   b += `<div class="toolbar" style="justify-content:flex-start;flex-wrap:wrap">`

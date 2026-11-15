@@ -125,3 +125,8 @@ observations and confirmed short menu/pairing requests already in source.
 Operator-confirmed Ethernet playback is bounded evidence; physical menu/pairing
 and other firmware combinations remain unqualified. Pro telemetry tap, receiver
 widgets and Picker remain AC+ work and are not included in public AC.
+
+Repeater Ethernet is also included: identity/role and per-radio QoS reads,
+HF/MF bind requests, and explicitly confirmed role reversal/reboot. The selected
+interface, current connection token and fresh target checks remain mandatory.
+USB shell-based button control and privileged deployment stay outside public AC.
