@@ -48,6 +48,36 @@
         AllowSameVersionUpgrades="yes"
         DowngradeErrorMessage="A newer version of Ascent Control is already installed. Uninstall it first if you intend to go back." />
 
+    <!-- Launch is reachable only from a successful interactive completion.
+         No execute-sequence action runs it during quiet installs or removal. -->
+    <CustomAction Id="LaunchAC" Directory="INSTALLFOLDER"
+                  ExeCommand="&quot;[INSTALLFOLDER]AscentControl.exe&quot;"
+                  Execute="immediate" Return="asyncNoWait" Impersonate="yes" />
+    <UI>
+      <TextStyle Id="ACNormal" FaceName="Segoe UI" Size="9" />
+      <TextStyle Id="ACTitle" FaceName="Segoe UI" Size="12" Bold="yes" />
+      <Property Id="DefaultUIFont" Value="ACNormal" />
+      <Dialog Id="ACExitDialog" Width="340" Height="160"
+              Title="[ProductName] Setup" NoMinimize="yes">
+        <Control Id="Title" Type="Text" X="18" Y="18" Width="304" Height="24"
+                 Text="{\ACTitle}AC installation complete" />
+        <Control Id="Description" Type="Text" X="18" Y="52" Width="304" Height="24"
+                 Text="[ProductName] [ProductVersion] is installed." />
+        <Control Id="Launch" Type="CheckBox" X="18" Y="88" Width="260" Height="18"
+                 Property="AC_LAUNCH" CheckBoxValue="1" Text="Launch AC" />
+        <Control Id="Finish" Type="PushButton" X="260" Y="126" Width="62" Height="20"
+                 Default="yes" Cancel="yes" Text="Finish">
+          <Publish Event="DoAction" Value="LaunchAC" Order="1"
+                   Condition="AC_LAUNCH = 1 AND NOT Installed AND NOT REMOVE~=&quot;ALL&quot; AND UILevel = 5" />
+          <Publish Event="EndDialog" Value="Return" Order="2" />
+        </Control>
+      </Dialog>
+    </UI>
+    <InstallUISequence>
+      <Show Dialog="ACExitDialog" OnExit="success"
+            Condition="NOT Installed AND NOT REMOVE~=&quot;ALL&quot; AND UILevel = 5" />
+    </InstallUISequence>
+
     <MediaTemplate EmbedCab="yes" />
 
     <Launch
