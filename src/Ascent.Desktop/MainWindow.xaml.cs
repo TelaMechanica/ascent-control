@@ -153,6 +153,20 @@ public partial class MainWindow : Window
         // The HID pump posts axes here; it has no other way to reach the backend.
         _backendBaseUri = result.BaseUri;
         SetStartupStatus("LOADING INTERFACE…");
+        // Only this trusted host WebView receives the preparation token. This is
+        // not widget confinement: future widget views must have no such hook.
+        Browser.CoreWebView2.AddWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.All);
+        Browser.CoreWebView2.WebResourceRequested += (_, request) =>
+        {
+            if (_backend is null || _backendBaseUri is null ||
+                !Uri.TryCreate(Browser.CoreWebView2.Source, UriKind.Absolute, out var page) ||
+                !Uri.TryCreate(request.Request.Uri, UriKind.Absolute, out var target)) return;
+            var origin = _backendBaseUri.GetLeftPart(UriPartial.Authority);
+            if (page.GetLeftPart(UriPartial.Authority) != origin ||
+                target.GetLeftPart(UriPartial.Authority) != origin ||
+                !target.AbsolutePath.StartsWith("/api/service-mode/local/", StringComparison.Ordinal)) return;
+            request.Request.Headers.SetHeader("X-Ascent-Host-Token", _backend.ServiceHostToken);
+        };
         Browser.CoreWebView2.Navigate(result.BaseUri.ToString());
     }
 

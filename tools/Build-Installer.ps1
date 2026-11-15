@@ -15,6 +15,7 @@ foreach($required in @('python.exe','pythonw.exe','python312.zip','python312._pt
 }
 if(-not $payloadSpec.dependencies.gstreamer.PSObject.Properties['bin/gstreamer-1.0-0.dll']){throw 'Pinned media runtime inventory is missing'}
 $version=$payloadSpec.version
+if($payloadSpec.release_channel -eq 'internal-development'){throw 'Internal development source is not approved for an MSI release; complete the publication review first'}
 if($BuildRevision -lt 1 -or $BuildRevision -gt 65535){throw 'BuildRevision must be between 1 and 65535'}
 if(-not $OutputDir){$OutputDir=Join-Path $repo 'artifacts\release'}
 if(-not $WorkDir){$WorkDir=Join-Path $env:TEMP ('ascent-public-'+[guid]::NewGuid().ToString('N'))}

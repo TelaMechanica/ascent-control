@@ -14,9 +14,12 @@ public sealed class BoundedLogWriter
     private readonly object _lock = new();
     private readonly string _path;
 
-    public BoundedLogWriter(string fileName)
+    public BoundedLogWriter(string fileName) : this(fileName, null) { }
+
+    // Internal host tests supply an owned temporary directory, never installed logs.
+    internal BoundedLogWriter(string fileName, string? directory)
     {
-        var dir = Path.Combine(
+        var dir = directory ?? Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
             "Ascent Control", "logs");
         Directory.CreateDirectory(dir);

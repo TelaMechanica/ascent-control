@@ -19,6 +19,13 @@ const hx = v => typeof v === 'number' ? `0x${v.toString(16).toUpperCase().padSta
 const safeErr = v => { const x=String(v??'').replace(/[A-Z]:\\[^:\r\n]+/gi,'<local-path>').replace(/\\\\[^:\r\n]+/g,'<network-path>'); if(/failed to fetch/i.test(x)) return 'LOCAL RUNTIME REQUEST FAILED'; return x.slice(0,240); };
 
 const ERROR_SENTENCES = {
+  DESKTOP_HOST_SESSION_REQUIRED: 'Open this workflow in the desktop application.',
+  WINDOWS_PROTECTION_REQUIRED: 'Local credential preparation requires Windows account protection.',
+  CREDENTIAL_ALREADY_PRESENT: 'A credential already exists on this PC. Check preparation to read its status.',
+  CREDENTIAL_PROTECT_FAILED: 'Windows could not protect the credential. Preparation stopped.',
+  CREDENTIAL_FILE_INVALID: 'The saved credential could not be read. Its existing file has been preserved.',
+  CREDENTIAL_GENERATION_FAILED: 'Local credential preparation failed. Check preparation before trying again.',
+  KEY_DIRECTORY_PROTECTION_FAILED: 'Windows could not restrict the temporary key directory. Preparation stopped.',
   UNAVAILABLE: 'Not available right now.',
   UNKNOWN: 'Not known.',
   UNQUALIFIED: 'This unit is not qualified for that operation.',
@@ -2596,6 +2603,38 @@ function saveBackgroundImage(){
   w.message='JPEG download requested.';render();
 }
 
+function localServiceState(){
+  state.localService=state.localService||{doc:null,busy:false,error:null};
+  return state.localService;
+}
+
+function localServicePanel(){
+  if(!state.app?.local_credential_preparation)return '';
+  const w=localServiceState(),credential=w.doc?.local_credential;
+  const checked=credential?.credential_present;
+  let body='<p>Prepare a new credential on this PC for future Service Mode setup. Existing credentials stay unchanged. Receiver setup is not available in this development build.</p>';
+  body+=kv('Credential for this setup',w.busy?(w.phase||'Checking local preparation'):checked===true?'Protected for your Windows account':checked===false?'Not prepared':'Not checked');
+  if(checked===true)body+=kv('Key fingerprint',credential.fingerprint);
+  if(w.error)body+=`<div class="notice">${esc(w.error)}</div>`;
+  body+=`<div class="actions"><button id="serviceLocalCheck" ${w.busy?'disabled':''}>Check preparation</button>`;
+  body+=`<button id="serviceLocalCreate" ${w.busy||checked!==false?'disabled':''}>Create credential on this PC</button></div>`;
+  return panel('SERVICE MODE PREPARATION',body);
+}
+
+async function localServiceRequest(create=false){
+  const w=localServiceState();if(w.busy)return;
+  if(create&&!window.confirm('Create a credential protected for your Windows account? Receiver setup is a separate step.'))return;
+  w.busy=true;w.phase=create?'Creating local credential':'Checking local preparation';w.error=null;render();
+  try{
+    const response=await fetch(create?'/api/service-mode/local/prepare':'/api/service-mode/local/status',create?
+      {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({confirmed:true})}:{cache:'no-store'});
+    const doc=await response.json();
+    if(!response.ok||!doc.ok)throw new Error(humanError(doc));
+    w.doc=doc;
+  }catch(error){w.doc=null;w.error=humanError(error.message||error);}
+  finally{w.busy=false;w.phase=null;render();}
+}
+
 function renderSettings(){
   let out=pageHead('APPLICATION SETTINGS','LOCAL PREFERENCES');
   const theme=document.body.classList.contains('day')?'day':'night';
@@ -2609,9 +2648,12 @@ function renderSettings(){
       + `</select></div></div>`)}${panel('LOCAL SAVE DIRECTORY',saveDirBody())}${''}${panel('BATTERY WARNINGS',batteryWarningsBody())}${panel('NETWORK DEVICES',networkDevicesBody())}${''}${panel('CONNECTION',kv('Ground address',state.app?.ground||'192.168.3.102')+`<div class="notice">Ground address is supplied by the launcher in this alpha. Editable connection profiles come after device discovery is qualified.</div>`)}</div>`;
   // Local preparation is available independently of receiver access.
   out+=backgroundImagePanel();
+  out+=localServicePanel();
   $('#content').innerHTML=out;
   '';
   '';
+  $('#serviceLocalCheck')?.addEventListener('click',()=>localServiceRequest(false));
+  $('#serviceLocalCreate')?.addEventListener('click',()=>localServiceRequest(true));
   $('#backgroundChoose')?.addEventListener('click',prepareBackgroundImage);
   $('#backgroundSave')?.addEventListener('click',saveBackgroundImage);
   $('#nightBtn').onclick=()=>setTheme('night'); $('#dayBtn').onclick=()=>setTheme('day');

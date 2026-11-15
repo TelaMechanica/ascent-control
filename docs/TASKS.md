@@ -34,3 +34,12 @@ Windows parity owner: Codex. Scope includes Windows path/environment/diagnostic
 handling, portable worker, opt-in WSL/Windows integration test and clear fixture
 ancestor skips. Carry results into the consolidated product milestone review;
 do not require another external review for each small implementation increment.
+
+Local preparation integration owner: Codex. Files owned include service_credentials,
+windows_tools, runtime local-preparation routes/Settings UI, desktop launch proof
+and scoped WebView header hook, explicit payload/project inputs, and accompanying
+storage/HTTP/render/Windows checks. Preserve failed compile/test/cache evidence.
+Next product work is receiver enrollment/transport integration with protected state
+and source-interface binding; no hardware action until separately authorized.
+Consolidate security/product review before publication rather than external review
+for each small increment. No installer release from development-channel source.

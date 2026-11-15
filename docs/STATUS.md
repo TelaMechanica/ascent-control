@@ -79,3 +79,28 @@ Final combined Linux/Windows opt-in suite:698passed/55subtests,36.88seconds.
 Source privacy/runtime/camera checks pass;35known identity tokens across801files,
 zero findings. Seven new environment/process unit checks plus the Windows parity
 integration test are included. Results are host proofs, not hardware qualification.
+
+## Service Mode local preparation integrated — internal0.43.63-dev.1
+
+Settings now owns check/create of a new current-user DPAPI credential. Receiver
+setup remains unavailable and service_mode_available remains false. The trusted
+desktop proves backend possession of a fresh launch secret before loading its
+page; local preparation requests require that secret and explicit creation consent.
+No key import, raw fallback, alternate session key or receiver write is included.
+
+Final full host suite:724passed/55subtests,52.86seconds, including real temporary
+Windows DPAPI, actual packaged-backend HTTP preparation and Linux/Windows SSH
+fixtures. Actual C# BackendHost separately passed authenticated startup, impostor
+backend refusal, denied anonymous HTTP, real local preparation, existing-credential
+preservation, no secret in logs and clean shutdown. Post-run payload verification
+passes with no bytecode caches. The initial old UI digest failure is retained;
+previous pin preserved and scoped render/HTTP tests accompany the new pin.
+
+Portable development publish and376explicit payload entries verify. Source privacy,
+runtime/camera checks pass. Across807source and921package files,35known identity
+tokens have zero matches. Two vendor test-path strings in the unchanged pinned
+CPython DLL are the same reviewed literals from the previous public package;
+no new/operator identity finding or old private repository URL remains. GUI visual
+acceptance, receiver enrollment/transport, legacy migration, extra key types,
+installer/provider/data preservation, signing and widget execution remain open.
+The MSI script refuses the internal-development channel; publication stays held.
