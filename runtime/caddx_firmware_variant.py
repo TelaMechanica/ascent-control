@@ -697,7 +697,8 @@ def plan_variant_build(donor: str | Path, target: str) -> dict:
         report = analyse(donor)
         import hashlib
         exact = hashlib.sha256(Path(donor).read_bytes()).hexdigest() == 'f166927ff1e0090666236f6003bdd306961304e7dec606d347a63d3894fbd7d0'
-        blockers = [] if exact else [{'id':'DONOR_HASH_MISMATCH', 'what':'HD Pro requires the exact normal 19.2.14 donor.'}]
+        port = firmware_builder.camera_port_blocker(target)
+        blockers = ([port] if port else []) + ([] if exact else [{'id':'DONOR_HASH_MISMATCH', 'what':'HD Pro requires the exact normal 19.2.14 donor.'}])
         try:
             firmware_builder.inspect_hdpro_assets()
         except (OSError, ValueError, KeyError, firmware_builder.BuilderError) as exc:
@@ -706,7 +707,7 @@ def plan_variant_build(donor: str | Path, target: str) -> dict:
                 'donor_product':report['verdict']['product'], 'donor_version':report['app_version'].get('APP_VERSION',''),
                 'buildable':not blockers, 'outcome':'BUILDABLE' if not blockers else 'BLOCKED', 'blockers':blockers,
                 'payload_files':1, 'payload_adds':'the HD Pro camera profile', 'authentic_payloads_held':[],
-                'observations':[], 'notes':['Available for tester builds. Physical camera operation and image quality are not yet qualified.'],
+                'observations':[], 'notes':['Image building is withheld because the earlier tester payload has confirmed CPU and boot defects. Corrected hardware behavior remains unqualified.'],
                 'cautions':[], 'packer':{}, 'hardware_qualified':False, 'verdict':report['verdict']}
     port = firmware_builder.camera_port_blocker(target)
     if port:

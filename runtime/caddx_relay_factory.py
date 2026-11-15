@@ -4,7 +4,7 @@ ar_fpvhs_mp_service (5751d7ca...): main binds TCP/6835; worker 0x184b4
 dispatches system messages. IDs 3 and 22 read factory SN and saved cur_mode.
 No write, reboot, security, shell or button commands are exposed here.
 Live Ethernet replies are retained in phase4.75-relay-dual-side-deep-dive-2026-10-31.
-Factory SN is raw (0150); updater USB identity adds a type prefix (4_0150).
+Factory SN is raw; updater USB identity adds the Relay type prefix.
 That relationship alone is not a unique physical-device correlation.
 """
 from __future__ import annotations

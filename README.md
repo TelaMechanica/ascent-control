@@ -12,14 +12,14 @@ deployment and Picker, belong to AC+ and are excluded from this repository.
 
 Download the Windows x64 MSI from [Releases](https://github.com/TelaMechanica/ascent-control/releases).
 The installer includes its Python and media runtimes, native firmware tools,
-Z8/Z40/Hub camera support and the HD Pro tester profile. WSL and separate camera
+Z8/Z40/Hub camera support and HD Pro donor inspection. WSL and separate camera
 source images are unnecessary for the included donor-only builders. Supply your
 own exact normal 19.2.14 donor image. The app does not include that full image.
 
-HD Pro is included for tester builds in this first release. Its output is
-`Ascent_G_Sky_19_2_14_HDPro_1.img`. Build checks establish donor identity,
-application patch identity and image/filesystem integrity; physical boot, capture,
-timing and image quality remain unqualified. See [HD Pro details](firmware/hdpro/README.md).
+HD Pro image building is withheld after confirmed CPU and boot defects in the
+earlier tester payload. Donor inspection remains available; corrected camera
+operation is not yet qualified. Z8, Z40 and Hub retain their separate builders.
+See [HD Pro status](firmware/hdpro/README.md).
 
 The MSI is unsigned. Microsoft Edge WebView2 Runtime is required by the desktop
 host. Report reproducible problems through [Issues](https://github.com/TelaMechanica/ascent-control/issues),
@@ -117,3 +117,16 @@ own licenses. Matching source archives accompany native helper/tool binaries.
 AC+ remains a separate private project and is outside this public license grant.
 
 MAX Ethernet connections also offer RTSP viewing, scoped link/channel information and confirmed short menu/pairing requests. See [Ethernet coverage and bench limits](docs/MAX_ETHERNET.md).
+
+## Maintenance update
+
+The 0.43.62 maintenance release packages MAX Ethernet RTSP, scoped receiver
+observations and confirmed short menu/pairing requests already in source.
+Operator-confirmed Ethernet playback is bounded evidence; physical menu/pairing
+and other firmware combinations remain unqualified. Pro telemetry tap, receiver
+widgets and Picker remain AC+ work and are not included in public AC.
+
+Repeater Ethernet is also included: identity/role and per-radio QoS reads,
+HF/MF bind requests, and explicitly confirmed role reversal/reboot. The selected
+interface, current connection token and fresh target checks remain mandatory.
+USB shell-based button control and privileged deployment stay outside public AC.

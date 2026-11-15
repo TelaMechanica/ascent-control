@@ -40,3 +40,15 @@ def test_mandatory_embedded_runtime_files_have_pins():
     profile = json.loads((ROOT / 'release/public-payload.json').read_text())
     assert {'python.exe', 'pythonw.exe', 'python312.zip', 'python312._pth'} <= set(profile['dependencies']['pyembed'])
     assert {'bin/gstreamer-1.0-0.dll', 'bin/gstvideo-1.0-0.dll', 'licenses/LGPL-2.1.txt'} <= set(profile['dependencies']['gstreamer'])
+
+
+def test_reviewed_payload_targets_are_in_the_desktop_publish_inventory():
+    import xml.etree.ElementTree as ET
+    profile=json.loads((ROOT/'release/public-payload.json').read_text())
+    links=set()
+    for file in ('src/Ascent.Desktop/Ascent.Desktop.csproj','release/PublicRuntimeInputs.props'):
+        for entry in ET.parse(ROOT/file).iter('Content'):
+            link=entry.findtext('Link')
+            if link:links.add(link.replace(chr(92),'/'))
+    required={row['target'] for row in profile['files']}
+    assert required <= links, 'Reviewed files omitted from desktop publish: '+repr(sorted(required-links))

@@ -1,6 +1,6 @@
 """Bounded Relay Ethernet buttons and role reversal; no general command API.
 
-Bench: Relay4_0150 /19.2.14, 2026-10-31. HF GPIO0 and MF GPIO48 five-second
+Bench: an anonymized Relay /19.2.14, 2026-10-31. HF GPIO0 and MF GPIO48 five-second
 presses were physically confirmed. Factory role23 + reboot9 was confirmed by
 physical observation and network readback. The current one-second bind hold is operator-requested and awaits physical verification.
 No files or services are installed.

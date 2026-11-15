@@ -1878,7 +1878,7 @@ function fwVariantPanel(){
      + `</select></span></div>`;
 
   if (v.target === 'hdpro' && !v.plan){
-    b += notice('HD Pro camera untested.');
+    b += notice('HD Pro build held.', 'warn');
   }
 
   b += `<div class="toolbar" style="justify-content:flex-start;flex-wrap:wrap">`

@@ -853,6 +853,20 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\runtime\max_ethernet.py">
+      <Link>runtime\max_ethernet.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\..\docs\MAX_ETHERNET.md">
+      <Link>docs\MAX_ETHERNET.md</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="..\..\release\PublicRuntimeInputs.props" />
   <ItemGroup>
     <Content Include="..\..\COPYRIGHT">
