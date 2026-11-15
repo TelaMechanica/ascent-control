@@ -9,3 +9,11 @@
 - Preserve the private Service Mode/dependent widget boundary and failed evidence.
 
 Default checks are offline. Hardware execution needs separate authorization.
+
+## Local AC+ scaffold ownership
+
+Codex owns ascent_core/service_access.py, ascent_core/widget_sdk.py,
+tools/widget_sdk.py, release/product-bases.json, tests/test_framework_scaffold.py,
+and their review/SDK documentation. Review Service Mode backend and credential
+handling before importing implementation. Complete publisher trust, confinement,
+updates and installer preservation before calling this a released SDK/AC+ base.

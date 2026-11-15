@@ -13,3 +13,12 @@ and package validation do not establish hardware qualification.
 Repeater Ethernet identity/role/QoS and guarded bind/role requests remain public.
 Desktop publish inputs now include the MAX Ethernet worker and coverage document;
 manifest-to-publish regression checks guard against future omissions.
+
+## AC+ and SDK development review
+
+Local review branch starts from published public v0.43.62. The Service Mode host
+boundary, empty product-base manifest and non-executing SDK inspector are review
+scaffolds only. No private runtime, installer change or hardware operation is
+included. See ACPLUS_SERVICE_MODE_REVIEW.md and sdk/README.md. Publication is held
+for the requested Claude review checkpoint. GitHub issue/PR creation is deferred
+until publication is authorized; this candidate is kept local.

@@ -114,7 +114,10 @@ user has the required vendor rights. It grants no rights to vendor material.
 Read [third-party notices](THIRD-PARTY-NOTICES.md) and the
 [source inventory](THIRD-PARTY-SOURCES.json). Third-party components retain their
 own licenses. Matching source archives accompany native helper/tool binaries.
-AC+ remains a separate private project and is outside this public license grant.
+Private AC+ components remain outside this public license grant. The proposed
+public AC+ base and widget SDK scaffold are documented in
+[the review checkpoint](docs/ACPLUS_SERVICE_MODE_REVIEW.md); they are not included
+in the current MSI.
 
 MAX Ethernet connections also offer RTSP viewing, scoped link/channel information and confirmed short menu/pairing requests. See [Ethernet coverage and bench limits](docs/MAX_ETHERNET.md).
 
