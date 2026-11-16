@@ -5,8 +5,12 @@ status, firmware inspection and management, RF and RC management where supported
 and a local fleet registry. This repository contains the public desktop source,
 Windows MSI build tooling, shared protocol helpers and camera-image builders.
 
-Service Mode and operations that depend on it, including receiver widget
-deployment and Picker, belong to AC+ and are excluded from this repository.
+The released 0.43.62 MSI excludes AC+ receiver-access functions and receiver widget
+deployment. This development branch adds public AC+ host credential preparation,
+guarded receiver-readiness checks and a non-executing widget SDK preview; see the
+[consolidated development review](docs/CONSOLIDATED_REVIEW_0.43.63_DEV3.md).
+Private initial-access installation, receiver widget implementations and production
+widget execution remain outside this candidate.
 
 ## Download and test
 

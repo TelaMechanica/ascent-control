@@ -48,8 +48,10 @@ never receive its backend, session, credentials or raw receiver commands. It
 requires application-owned provider/enabled state and a current receiver binding,
 and rechecks both after acquiring a session. The selected-device lock is held
 through the lease. A production backend must retain verified enrollment, pinned
-host keys and existing device/transport guards. There is no such backend wired in
-this scaffold. It does not activate Service Mode on a receiver.
+host keys and existing device/transport guards. The shared application now has a
+separate guarded [receiver-readiness no-op](../SERVICE_MODE_LOCAL_PREPARATION.md);
+that host controller is not exposed to SDK packages. This inspector has no widget
+operation dispatcher and does not activate Service Mode on a receiver.
 
 Revocation during an already running operation requires cancellation and bounded
 operation semantics in the eventual backend; the lease alone does not solve that
@@ -82,6 +84,8 @@ third-party execution is outside this preview.
 A trusted host lease now yields `ServiceLease(session, check)`. The backend calls
 `check()` before each bounded step. It observes provider/enablement or selection
 changes at that boundary and refuses use after the lease closes. It cannot abort
-a blocking operation or undo an already committed device change. Only synthetic
-backend tests currently exercise enrollment and host-key refusal; no real backend
-is wired. The proposed open publisher-trust contract is in PUBLISHER_TRUST.md.
+a blocking operation or undo an already committed device change. Owned synthetic and localhost SSH
+backend tests exercise this lease contract. The application's separately tested
+readiness controller does not make the lease or a package manifest a widget
+execution authority. The proposed open publisher-trust contract is in
+PUBLISHER_TRUST.md.
