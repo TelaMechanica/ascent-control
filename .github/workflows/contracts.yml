@@ -18,4 +18,5 @@ jobs:
         env:
           ASCENT_ARM_TOOLCHAIN_DIR: /usr/bin
       - run: python tools/check_tree.py
+      - run: python tools/privacy_review.py --root . --git-source --reviewed-findings release/privacy-findings.json
       - run: python tools/check_public_runtime.py

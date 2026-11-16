@@ -19,6 +19,17 @@ const hx = v => typeof v === 'number' ? `0x${v.toString(16).toUpperCase().padSta
 const safeErr = v => { const x=String(v??'').replace(/[A-Z]:\\[^:\r\n]+/gi,'<local-path>').replace(/\\\\[^:\r\n]+/g,'<network-path>'); if(/failed to fetch/i.test(x)) return 'LOCAL RUNTIME REQUEST FAILED'; return x.slice(0,240); };
 
 const ERROR_SENTENCES = {
+  SSH_READINESS_NOT_VERIFIED: 'SSH authentication or its fixed no-op did not complete. The matching client public key must already be authorized on this receiver. No receiver trust record was created by this attempt.',
+  HOST_KEY_CHANGED: 'The receiver host key differs from the saved trust record. The saved key was preserved. Verify the receiver identity before any separate trust replacement.',
+  RECEIVER_OBSERVATION_EXPIRED: 'The fingerprint observation expired or was already used. Read the selected receiver fingerprint again.',
+  RECEIVER_BINDING_CHANGED: 'The selected receiver or its connection changed. Read its fingerprint again before checking SSH.',
+  RECEIVER_SELECTION_REQUIRED: 'Select a USB receiver before reading its SSH fingerprint.',
+  SERVICE_MODE_USB_IDENTITY_REQUIRED: 'This readiness check requires a qualified USB receiver selection. An Ethernet address alone does not establish that identity.',
+  RECEIVER_TRANSPORT_UNQUALIFIED: 'The selected receiver does not currently have a qualified USB serial and network binding.',
+  CREDENTIAL_NOT_PRESENT: 'No local credential of the selected type is prepared. Check or create it before attempting SSH.',
+  SSH_HOST_IDENTITY_UNOBSERVED: 'No supported SSH host key was observed on the selected receiver. Its SSH capability is not established.',
+  TRUST_RECORD_SAVED_CONTEXT_CHANGED: 'The trust record was saved for the receiver checked, but selection or access changed before completion. Current receiver readiness is unknown. Read the selected receiver fingerprint again.',
+
   DESKTOP_HOST_SESSION_REQUIRED: 'Open this workflow in the desktop application.',
   WINDOWS_PROTECTION_REQUIRED: 'Local credential preparation requires Windows account protection.',
   CREDENTIAL_ALREADY_PRESENT: 'A credential already exists on this PC. Check preparation to read its status.',
@@ -2604,7 +2615,7 @@ function saveBackgroundImage(){
 }
 
 function localServiceState(){
-  state.localService=state.localService||{doc:null,busy:false,error:null};
+  state.localService=state.localService||{doc:null,busy:false,error:null,keyType:'ed25519',observation:null,receiverResult:null};
   return state.localService;
 }
 
@@ -2612,12 +2623,28 @@ function localServicePanel(){
   if(!state.app?.local_credential_preparation)return '';
   const w=localServiceState(),credential=w.doc?.local_credential;
   const checked=credential?.credential_present;
-  let body='<p>Prepare a new credential on this PC for future Service Mode setup. Existing credentials stay unchanged. Receiver setup is not available in this development build.</p>';
+  let body='<p>Prepare a credential protected for your Windows account. Receiver setup is not available: the matching public key must already be authorized on the receiver. These checks do not install keys or enable receiver changes.</p>';
+  body+=`<label>Credential type <select id="serviceKeyType" ${w.busy?'disabled':''}><option value="ed25519" ${w.keyType==='ed25519'?'selected':''}>Ed25519</option><option value="ecdsa" ${w.keyType==='ecdsa'?'selected':''}>ECDSA P-256</option></select></label>`;
   body+=kv('Credential for this setup',w.busy?(w.phase||'Checking local preparation'):checked===true?'Protected for your Windows account':checked===false?'Not prepared':'Not checked');
   if(checked===true)body+=kv('Key fingerprint',credential.fingerprint);
+  if(credential?.public_key)body+=kv('Public key for authorized receiver setup',credential.public_key);
   if(w.error)body+=`<div class="notice">${esc(w.error)}</div>`;
   body+=`<div class="actions"><button id="serviceLocalCheck" ${w.busy?'disabled':''}>Check preparation</button>`;
   body+=`<button id="serviceLocalCreate" ${w.busy||checked!==false?'disabled':''}>Create credential on this PC</button></div>`;
+  body+='<p>Read the selected USB receiver’s SSH host fingerprint, then compare it with a trusted reference before confirming. Observing a fingerprint does not authenticate the receiver.</p>';
+  const observed=w.observation;
+  if(observed){
+    body+=kv('Observed receiver',observed.receiver_name)+kv('Observed firmware',observed.firmware||'Not reported');
+    body+=kv('Observed SSH host fingerprint',observed.host_fingerprint);
+    body+='<p>SSH authentication has not been established by this observation.</p>';
+  }
+  body+=`<div class="actions"><button id="serviceReceiverInspect" ${w.busy?'disabled':''}>Read selected receiver fingerprint</button>`;
+  body+=`<button id="serviceReceiverVerify" ${w.busy||!observed||checked!==true?'disabled':''}>Confirm fingerprint and check SSH</button></div>`;
+  if(checked!==true)body+='<p>Check or create the local credential before attempting SSH authentication.</p>';
+  if(w.receiverResult){
+    body+=kv('Last completed SSH check',w.receiverResult.receiver_name);
+    body+='<p>Pinned SSH authentication and the fixed no-op completed for that receiver. Its trust record was saved on this PC. This result is not a live session or authorization for receiver changes.</p>';
+  }
   return panel('SERVICE MODE PREPARATION',body);
 }
 
@@ -2626,12 +2653,30 @@ async function localServiceRequest(create=false){
   if(create&&!window.confirm('Create a credential protected for your Windows account? Receiver setup is a separate step.'))return;
   w.busy=true;w.phase=create?'Creating local credential':'Checking local preparation';w.error=null;render();
   try{
-    const response=await fetch(create?'/api/service-mode/local/prepare':'/api/service-mode/local/status',create?
-      {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({confirmed:true})}:{cache:'no-store'});
+    const response=await fetch('/api/service-mode/local/credential',
+      {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:create?'prepare':'status',key_type:w.keyType,confirmed:create})});
     const doc=await response.json();
     if(!response.ok||!doc.ok)throw new Error(humanError(doc));
     w.doc=doc;
   }catch(error){w.doc=null;w.error=humanError(error.message||error);}
+  finally{w.busy=false;w.phase=null;render();}
+}
+
+async function receiverServiceRequest(action){
+  const w=localServiceState();if(w.busy)return;
+  const observed=w.observation;
+  if(action==='verify'&&(!observed||!window.confirm('Confirm that this SSH fingerprint matches your trusted reference for '+observed.receiver_name+': '+observed.host_fingerprint+'? This attempts a fixed SSH no-op; it does not install keys.')))return;
+  const body=action==='inspect'?{}:{observation_id:observed.observation_id,host_fingerprint:observed.host_fingerprint,confirmed:true,key_type:w.keyType};
+  w.busy=true;w.phase=action==='inspect'?'Reading selected receiver SSH fingerprint':'Checking pinned SSH authentication';w.error=null;w.receiverResult=null;
+  if(action==='inspect')w.observation=null;
+  render();
+  try{
+    const path=action==='inspect'?'/api/service-mode/local/receiver/inspect':'/api/service-mode/local/receiver/verify';
+    const response=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+    const doc=await response.json();
+    if(!response.ok||!doc.ok)throw new Error(humanError(doc));
+    if(action==='inspect')w.observation=doc;else{w.receiverResult=doc;w.observation=null;}
+  }catch(error){w.observation=null;w.error=humanError(error.message||error);}
   finally{w.busy=false;w.phase=null;render();}
 }
 
@@ -2652,6 +2697,12 @@ function renderSettings(){
   $('#content').innerHTML=out;
   '';
   '';
+  $('#serviceKeyType')?.addEventListener('change',event=>{
+    const w=localServiceState();if(w.busy)return;
+    w.keyType=event.target.value;w.doc=null;w.observation=null;w.receiverResult=null;w.error=null;render();
+  });
+  $('#serviceReceiverInspect')?.addEventListener('click',()=>receiverServiceRequest('inspect'));
+  $('#serviceReceiverVerify')?.addEventListener('click',()=>receiverServiceRequest('verify'));
   $('#serviceLocalCheck')?.addEventListener('click',()=>localServiceRequest(false));
   $('#serviceLocalCreate')?.addEventListener('click',()=>localServiceRequest(true));
   $('#backgroundChoose')?.addEventListener('click',prepareBackgroundImage);

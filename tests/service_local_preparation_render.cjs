@@ -17,3 +17,12 @@ assert(html.includes('id="serviceLocalCreate" disabled'));
 assert(!html.includes('Receiver connected'));
 ui.localServiceState().busy=true;assert(ui.localServicePanel().includes('id="serviceLocalCheck" disabled'));
 console.log('Local preparation render and scope checks passed');
+
+ui.localServiceState().busy=false;
+ui.localServiceState().observation={receiver_name:'<synthetic receiver>',firmware:'synthetic',host_fingerprint:'<synthetic fingerprint>'};
+html=ui.localServicePanel();
+assert(html.includes('&lt;synthetic receiver&gt;')&&html.includes('&lt;synthetic fingerprint&gt;'));
+assert(html.includes('SSH authentication has not been established'));
+ui.localServiceState().receiverResult={receiver_name:'<synthetic result>'};
+html=ui.localServicePanel();assert(html.includes('not a live session'));
+assert(html.includes('&lt;synthetic result&gt;'));

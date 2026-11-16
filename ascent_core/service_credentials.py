@@ -99,11 +99,12 @@ class ManagedCredential:
             raise CredentialError('CREDENTIAL_DATA_INVALID') from None
 
 
-class ProtectedCredentialStore:
-    """Single protected envelope, create-only; preserves existing and corrupt data."""
-    def __init__(self, root, *, protector=None):
+class ProtectedEnvelopeStore:
+    """Trusted-host codec over one create-only protected envelope; not a widget API."""
+    def __init__(self, root, *, name, codec, protector=None):
         self._root = Path(root)
-        self._path = self._root/'credential.dpapi'
+        self._path = self._root/name
+        self._codec = codec
         self._protector = protector if protector is not None else CurrentUserDpapi()
         self._lock = RLock()
 
@@ -126,7 +127,7 @@ class ProtectedCredentialStore:
             try: raw = self._protector.unprotect(self._read())
             except CredentialError: raise
             except Exception: raise CredentialError('CREDENTIAL_UNPROTECT_FAILED') from None
-            return ManagedCredential.decode(raw)
+            return self._codec.decode(raw)
 
     def create(self, credential):
         with self._lock:
@@ -160,6 +161,16 @@ class ProtectedCredentialStore:
                 raise CredentialError('CREDENTIAL_ALREADY_PRESENT') from None
             except OSError:
                 raise CredentialError('CREDENTIAL_WRITE_FAILED') from None
+        return self.load()
+
+
+class ProtectedCredentialStore(ProtectedEnvelopeStore):
+    """Only managed host private-key store. Enrollment storage contains no private key."""
+    def __init__(self, root, *, protector=None):
+        super().__init__(root, name='credential.dpapi', codec=ManagedCredential, protector=protector)
+
+    def create(self, credential):
+        super().create(credential)
         return self.status()
 
     def status(self):
@@ -173,48 +184,26 @@ class ProtectedCredentialStore:
                 'protection': 'dpapi-current-user', 'receiver_access': False}
 
 
-def generate_windows_credential(store):
-    """Explicit local preparation, not enrollment; no imported or alternate key.
-
-    Plaintext exists only in an ACL-restricted temporary generation directory and
-    process memory. This does not promise crash cleanup or Python memory wiping.
-    """
+def generate_windows_credential(store, *, key_type='ed25519'):
+    """Explicit local preparation; no imported, replacement or alternate plaintext key."""
+    if key_type not in {'ed25519', 'ecdsa'}:
+        raise CredentialError('CREDENTIAL_KEY_TYPE_UNSUPPORTED')
     if os.name != 'nt':
         raise CredentialError('WINDOWS_PROTECTION_REQUIRED')
     if store.status().get('credential_present'):
         raise CredentialError('CREDENTIAL_ALREADY_PRESENT')
-    import csv
-    import re
-    from .windows_tools import _environment, _windows_run
+    from .windows_key_material import private_key_directory
+    from .windows_tools import _windows_run
     from .service_access import AccessDenied
-    system = os.environ.get('SystemRoot')
-    if not system:
-        raise CredentialError('WINDOWS_PROTECTION_REQUIRED')
     try:
-        with tempfile.TemporaryDirectory(prefix='ascent-managed-key-') as folder:
-            root = Path(folder)
-            env = _environment(root, windows=True, system_root=system)
-            tools = Path(system)/'System32'
-            result = subprocess.run([str(tools/'whoami.exe'), '/user', '/fo', 'csv', '/nh'],
-                stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=5,
-                check=True, env=env, creationflags=subprocess.CREATE_NO_WINDOW)
-            sid = list(csv.reader(result.stdout.splitlines()))[0][-1]
-            if not re.fullmatch(r'S-1-(?:[0-9]+-)*[0-9]+', sid):
-                raise CredentialError('KEY_DIRECTORY_PROTECTION_FAILED')
-            restricted = subprocess.run([str(tools/'icacls.exe'), str(root), '/inheritance:r',
-                '/grant:r', '*' + sid + ':(OI)(CI)F'], stdin=subprocess.DEVNULL,
-                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, timeout=5,
-                env=env, creationflags=subprocess.CREATE_NO_WINDOW)
-            if restricted.returncode:
-                raise CredentialError('KEY_DIRECTORY_PROTECTION_FAILED')
+        with private_key_directory() as (root, env, tools):
             private = root/'managed-key'
-            args = [str(tools/'OpenSSH/ssh-keygen.exe'), '-q', '-t', 'ed25519', '-N', '',
+            args = [str(tools/'OpenSSH/ssh-keygen.exe'), '-q', '-t', key_type,
+                    *(['-b', '256'] if key_type == 'ecdsa' else []), '-N', '',
                     '-C', 'ascent-control-service-mode', '-f', str(private)]
-            if _windows_run(args, env):
-                raise CredentialError('CREDENTIAL_GENERATION_FAILED')
+            if _windows_run(args, env): raise CredentialError('CREDENTIAL_GENERATION_FAILED')
             credential = ManagedCredential((root/'managed-key.pub').read_text().strip(), private.read_bytes())
             return store.create(credential)
-    except CredentialError:
-        raise
-    except (OSError, ValueError, IndexError, subprocess.SubprocessError, AccessDenied):
+    except CredentialError: raise
+    except (OSError, ValueError, subprocess.SubprocessError, AccessDenied):
         raise CredentialError('CREDENTIAL_GENERATION_FAILED') from None

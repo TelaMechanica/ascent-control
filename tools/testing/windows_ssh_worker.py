@@ -7,6 +7,28 @@ sys.path.insert(0,config['source'])
 from ascent_core.service_access import ServiceAccess,ServiceState,ReceiverBinding,AccessDenied
 from ascent_core.service_records import HostKeyObservation,host_key_fingerprint
 from ascent_core.service_loopback_ssh import LoopbackReadOnlySshBackend,LoopbackSshProbe
+# Test-only bounded diagnostics retained privately on a failed fixture call.
+# Production clients continue to discard diagnostics. No receiver is contacted.
+import ascent_core.service_loopback_ssh as fixture_transport
+from threading import Thread
+def fixture_run(args,environment):
+ with subprocess.Popen(args,stdin=subprocess.DEVNULL,stdout=subprocess.DEVNULL,
+      stderr=subprocess.PIPE,env=environment,creationflags=subprocess.CREATE_NO_WINDOW) as process:
+  diagnostic=bytearray()
+  def drain():
+   while True:
+    chunk=process.stderr.read(4096)
+    if not chunk:break
+    diagnostic.extend(chunk[:max(0,8192-len(diagnostic))])
+  reader=Thread(target=drain,daemon=True);reader.start()
+  try:code=process.wait(timeout=5)
+  except subprocess.TimeoutExpired:
+   process.kill();process.wait();raise
+  finally:reader.join(timeout=1)
+  if code:
+   (Path(config['fixture'])/'private-ssh-client.log').write_bytes(bytes(diagnostic))
+  return code
+fixture_transport._windows_run=fixture_run
 with tempfile.TemporaryDirectory(prefix='ascent-windows-ssh-') as folder:
  root=Path(folder)
  for name in ('client','wrong-client'):
@@ -82,6 +104,63 @@ with tempfile.TemporaryDirectory(prefix='ascent-protected-store-test-') as folde
  else:raise AssertionError('Malformed DPAPI envelope accepted')
 
 
+# Qualify the new P-256 credential and receiver record codec with real DPAPI.
+# These records are serialization fixtures, not evidence of receiver enrollment.
+from ascent_core.service_enrollment import ProtectedEnrollments, ReceiverEnrollment
+from ascent_core.windows_key_material import materialized_credential
+with tempfile.TemporaryDirectory(prefix='ascent-p256-record-test-') as folder:
+ root=Path(folder)
+ vault=ProtectedCredentialStore(root/'p256')
+ generate_windows_credential(vault,key_type='ecdsa')
+ credential=vault.load()
+ assert credential.public_key.startswith('ecdsa-sha2-nistp256 ')
+ client_pin=host_key_fingerprint(credential.public_key)
+ with materialized_credential(credential) as (identity,environment,tools):
+  assert identity.read_bytes()==credential.private_key
+  assert 'SSH_AUTH_SOCK' not in environment
+ assert not identity.exists()
+ enrollments=ProtectedEnrollments(root/'receivers')
+ record=ReceiverEnrollment('synthetic-receiver',credential.public_key,client_pin)
+ enrollments.save_new(record)
+ assert enrollments.lookup('synthetic-receiver')==ReceiverEnrollment.decode(record.encode())
+ before={p.name:p.read_bytes() for p in (root/'receivers').iterdir()}
+ assert len(before)==1 and all(b'synthetic-receiver' not in data for data in before.values())
+ enrollments.save_new(record)
+ assert before=={p.name:p.read_bytes() for p in (root/'receivers').iterdir()}
+
+
+# Exercise real Winsock interface/source pinning against our owned listener.
+# Loopback qualification is not USB/NIC or physical receiver qualification.
+import ctypes,socket,ipaddress
+from types import SimpleNamespace
+from ascent_core.service_channel import windows_source_socket
+loopback=str(ipaddress.IPv4Address(0x7f000001))
+index=ctypes.c_ulong()
+api=ctypes.WinDLL('iphlpapi')
+get_interface=api.GetBestInterface
+get_interface.argtypes=[ctypes.c_ulong,ctypes.POINTER(ctypes.c_ulong)]
+get_interface.restype=ctypes.c_ulong
+assert get_interface(int.from_bytes(socket.inet_aton(loopback),'little'),ctypes.byref(index))==0
+with socket.socket() as listener:
+ listener.bind((loopback,0));listener.listen(1);listener.settimeout(2)
+ fixture_port=listener.getsockname()[1]
+ class FixtureSocket:
+  def __init__(self,*args):self.stream=socket.socket(*args)
+  def setsockopt(self,*args):return self.stream.setsockopt(*args)
+  def bind(self,*args):return self.stream.bind(*args)
+  def settimeout(self,*args):return self.stream.settimeout(*args)
+  def connect(self,address):
+   assert address==(loopback,22)
+   self.stream.connect((loopback,fixture_port))
+  def close(self):self.stream.close()
+ selected=SimpleNamespace(interface_index=index.value,source_ip=loopback,host=loopback)
+ stream=windows_source_socket(selected,lambda:None,socket_factory=FixtureSocket)
+ try:
+  peer,address=listener.accept()
+  with peer:assert address[0]==loopback and stream.stream.getsockname()[0]==loopback
+ finally:stream.close()
+
+
 # Exercise the actual application HTTP backend in a new profile. No GUI launch,
 # discovery request, receiver request or installed settings/credential access.
 import socket,http.client,secrets,hmac,hashlib,time,ipaddress
@@ -142,6 +221,8 @@ with tempfile.TemporaryDirectory(prefix='ascent-local-app-test-') as folder:
    if child.poll() is None:child.terminate();child.wait(timeout=5)
  print(json.dumps({'platform':'Windows','python':sys.version.split()[0],'results':results,
   'receiver_actions':0,'fixture_only':True,'installed_credentials_accessed':False,
+  'windows_loopback_source_binding':True,
+  'receiver_storage_checks':{'p256_generated':True,'temporary_key_removed':True,'real_dpapi_record_roundtrip':True,'existing_record_preserved':True},
   'credential_checks':{'real_dpapi_roundtrip':True,'malformed_envelope_denied':True,
    'generated_key_encrypted_at_rest':True,'existing_credential_preserved':True},
   'app_checks':{'backend_host_proof':True,'unauthorized_http_denied':True,

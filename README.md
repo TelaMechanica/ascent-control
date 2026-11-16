@@ -93,7 +93,7 @@ python tools/check_camera_source.py
 python tools/check_tree.py
 ```
 
-Camera relocation tests use ARM binutils. No default test connects to hardware.
+Camera relocation tests use ARM binutils. No default test connects to hardware. See [publication privacy review](docs/PRIVACY_REVIEW.md) before posting source, history or attachments.
 See [camera CLI instructions](docs/CAMERA_GRAFTING.md) for standalone source tools.
 The original six standard-library shared helpers and their source-hash contract
 remain available through `tools/inspect_local.py`.

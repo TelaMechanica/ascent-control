@@ -550,7 +550,7 @@ class DeviceSession:
         self._ground_local_bb_id: str | None = None
         self._serial_bundle: dict | None = None
         self._connect_diagnostics: dict = {}
-        # Monotonic token bumped on every connect and every clear-of-a-device. An async
+        # Monotonic token bumped on connect, clear and material identity change. An async
         # device query captures it before the call and discards its result if the token
         # has moved (the session was cleared or switched to another device meanwhile), so
         # a slow read for device A can never overwrite state now belonging to device B.
@@ -834,6 +834,10 @@ class DeviceSession:
             if self._device is not None and identity:
                 fields=('device_name','serial_number','hardware','hardware_version','firmware')
                 changed=any(self._device.identity.get(k)!=identity.get(k)for k in fields)
+                if changed:
+                    # Identity can move A->B->A while the selected object stays the
+                    # same. Async access/read guards must still reject the old epoch.
+                    self._generation += 1
                 self._device.identity = dict(identity)
             self._sync_mirror()
         # Never call another owner while holding the selected-device lock.

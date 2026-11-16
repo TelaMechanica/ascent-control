@@ -178,3 +178,20 @@ def test_invalid_archive_denied(tmp_path):
     candidate.write_bytes(b'not a ZIP')
     with pytest.raises(PackageInvalid, match='Malformed'):
         inspect_package(candidate)
+
+
+@pytest.mark.parametrize('entry_name', ['widget.json', 'view.json'])
+@pytest.mark.parametrize('payload', [b'[' * 2000 + b'0' + b']' * 2000,
+                                     b'{"value":' + b'1' * 5000 + b'}'],
+                         ids=['deep-nesting', 'oversized-integer'])
+def test_adversarial_json_is_normalized_to_package_rejection(tmp_path, entry_name, payload):
+    def change(entries):
+        result = dict(entries)
+        result[entry_name] = payload
+        if entry_name == 'view.json':
+            manifest = json.loads(result['widget.json'])
+            manifest['files']['view.json'] = hashlib.sha256(payload).hexdigest()
+            result['widget.json'] = json.dumps(manifest).encode()
+        return list(result.items())
+    with pytest.raises(PackageInvalid):
+        inspect_package(mutate(tmp_path, change))

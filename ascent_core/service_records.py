@@ -17,24 +17,46 @@ from .service_access import AccessDenied, ReceiverBinding
 MAX_RECORD_BYTES = 16384
 
 
-def host_key_fingerprint(line):
-    """Full OpenSSH-style SHA256 over an Ed25519 SSH wire-format public key.
+SUPPORTED_HOST_KEYS = frozenset({'ssh-ed25519', 'ecdsa-sha2-nistp256'})
 
-    Deliberately limited to Ed25519 for this offline increment. Other algorithms
-    and old abbreviated application fingerprints require separate review.
+
+def host_key_fingerprint(line):
+    """Full OpenSSH SHA256 over a strictly parsed Ed25519 or NIST P-256 key.
+
+    This validates a public-key representation, never a signature or device.
+    Actual private-key possession remains the SSH transport's responsibility.
     """
     if not isinstance(line, str) or len(line) > 4096 or '\n' in line or '\r' in line:
         raise AccessDenied('HOST_KEY_INVALID')
     parts = line.split()
-    if len(parts) < 2 or parts[0] != 'ssh-ed25519':
+    if len(parts) < 2 or parts[0] not in SUPPORTED_HOST_KEYS:
         raise AccessDenied('HOST_KEY_UNSUPPORTED')
     try:
         raw = base64.b64decode(parts[1], validate=True)
-    except (binascii.Error, ValueError):
+        if base64.b64encode(raw).decode('ascii') != parts[1]: raise ValueError('noncanonical encoding')
+        offset = 0
+        def field():
+            nonlocal offset
+            if offset + 4 > len(raw): raise ValueError('truncated')
+            size = struct.unpack_from('>I', raw, offset)[0]; offset += 4
+            if size > 1024 or offset + size > len(raw): raise ValueError('length')
+            value = raw[offset:offset + size]; offset += size
+            return value
+        if field() != parts[0].encode('ascii'): raise ValueError('algorithm mismatch')
+        if parts[0] == 'ssh-ed25519':
+            if len(field()) != 32: raise ValueError('key size')
+        else:
+            if field() != b'nistp256': raise ValueError('curve')
+            point = field()
+            if len(point) != 65 or point[0] != 4: raise ValueError('point encoding')
+            x, y = int.from_bytes(point[1:33], 'big'), int.from_bytes(point[33:], 'big')
+            prime = 2**256 - 2**224 + 2**192 + 2**96 - 1
+            b = int('5ac635d8aa3a93e7b3ebbd55769886bc651d06b0cc53b0f63bce3c3e27d2604b', 16)
+            if not (x < prime and y < prime) or (y*y - (x*x*x - 3*x + b)) % prime:
+                raise ValueError('point not on curve')
+        if offset != len(raw): raise ValueError('trailing data')
+    except (binascii.Error, ValueError, struct.error):
         raise AccessDenied('HOST_KEY_INVALID') from None
-    expected = struct.pack('>I', 11) + b'ssh-ed25519' + struct.pack('>I', 32)
-    if len(raw) != len(expected) + 32 or not raw.startswith(expected):
-        raise AccessDenied('HOST_KEY_INVALID')
     return 'SHA256:' + base64.b64encode(hashlib.sha256(raw).digest()).decode('ascii').rstrip('=')
 
 
@@ -45,6 +67,17 @@ def _unique(pairs):
             raise AccessDenied('ENROLLMENT_RECORD_INVALID')
         result[key] = value
     return result
+
+
+def validate_sha256_fingerprint(pin):
+    """Representation validation only; never publisher/device authentication."""
+    if not isinstance(pin, str) or not re.fullmatch(r'SHA256:[A-Za-z0-9+/]{43}', pin):
+        raise AccessDenied('ENROLLMENT_PIN_INVALID')
+    # Reject noncanonical base64 pad bits rather than accepting aliases.
+    digest = base64.b64decode(pin[7:] + '=', validate=True)
+    if base64.b64encode(digest).decode().rstrip('=') != pin[7:]:
+        raise AccessDenied('ENROLLMENT_PIN_INVALID')
+    return pin
 
 
 @dataclass(frozen=True)
@@ -73,12 +106,7 @@ class EnrollmentRecord:
             raise AccessDenied('ENROLLMENT_RECORD_INVALID')
         if type(revision) is not int or revision < 1:
             raise AccessDenied('ENROLLMENT_RECORD_INVALID')
-        if not isinstance(pin, str) or not re.fullmatch(r'SHA256:[A-Za-z0-9+/]{43}', pin):
-            raise AccessDenied('ENROLLMENT_PIN_INVALID')
-        # Reject noncanonical base64 pad bits rather than accepting aliases.
-        digest = base64.b64decode(pin[7:] + '=', validate=True)
-        if base64.b64encode(digest).decode().rstrip('=') != pin[7:]:
-            raise AccessDenied('ENROLLMENT_PIN_INVALID')
+        validate_sha256_fingerprint(pin)
         return cls(identity, revision, pin)
 
 

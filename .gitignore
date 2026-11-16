@@ -9,3 +9,6 @@ localdata/
 *.bundle
 *.msi
 .private-migration/
+
+# Owned test fixtures and private failure diagnostics are never source exports.
+/artifacts/

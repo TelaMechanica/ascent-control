@@ -21,7 +21,7 @@ pytestmark = pytest.mark.skipif(os.environ.get('ASCENT_TEST_LOOPBACK_SSH') != '1
 
 
 @pytest.fixture
-def fixture_server():
+def fixture_server(request):
     ssh, sshd, keygen = (shutil.which(name) for name in ('ssh', 'sshd', 'ssh-keygen'))
     assert all((ssh, sshd, keygen)), 'Opt-in requires installed OpenSSH client/server/keygen'
     # AuthorizedKeys StrictModes rejects shared temporary ancestors. Keep the
@@ -36,19 +36,22 @@ def fixture_server():
         for name in ('host', 'client', 'wrong-client', 'wrong-host'):
             subprocess.run([keygen, '-q', '-t', 'ed25519', '-N', '', '-C', 'synthetic-fixture',
                             '-f', str(root/name)], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        (root/'authorized').write_bytes((root/'client.pub').read_bytes())
+        for name in ('ecdsa-host', 'ecdsa-client'):
+            subprocess.run([keygen, '-q', '-t', 'ecdsa', '-b', '256', '-N', '', '-C', 'synthetic-fixture',
+                            '-f', str(root/name)], check=True, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        (root/'authorized').write_bytes((root/'client.pub').read_bytes() + (root/'ecdsa-client.pub').read_bytes())
         (root/'authorized').chmod(0o600)
         host = str(ipaddress.IPv4Address(0x7f000001))
         with socket.socket() as reserve:
             reserve.bind((host, 0))
             port = reserve.getsockname()[1]
         config = '\n'.join([f'ListenAddress {host}', f'Port {port}', f'HostKey "{root/"host"}"',
-            f'PidFile "{root/"pid"}"', f'AuthorizedKeysFile "{root/"authorized"}"',
+            f'HostKey "{root/"ecdsa-host"}"', f'PidFile "{root/"pid"}"', f'AuthorizedKeysFile "{root/"authorized"}"',
             'PasswordAuthentication no', 'KbdInteractiveAuthentication no', 'UsePAM no',
             'StrictModes yes', 'PermitUserEnvironment no', 'AllowAgentForwarding no',
             'AllowTcpForwarding no', 'X11Forwarding no', 'PermitTTY no',
             'PermitUserRC no', 'Subsystem sftp internal-sftp -R',
-            'ForceCommand internal-sftp -R', 'LogLevel ERROR']) + '\n'
+            ('ForceCommand ' + shutil.which('true') if getattr(request, 'param', None) == 'noop' else 'ForceCommand internal-sftp -R'), 'LogLevel ERROR']) + '\n'
         (root/'sshd.conf').write_text(config)
         with (root/'private-server.log').open('wb') as log:
             server = subprocess.Popen([sshd, '-D', '-e', '-f', str(root/'sshd.conf')],

@@ -43,3 +43,46 @@ Next product work is receiver enrollment/transport integration with protected st
 and source-interface binding; no hardware action until separately authorized.
 Consolidate security/product review before publication rather than external review
 for each small increment. No installer release from development-channel source.
+
+Receiver readiness increment owner: Codex. Scope: service_target, service_channel,
+receiver_ssh, service_receiver, service_enrollment, windows_key_material, protected
+store/P-256 extensions, DeviceSession identity invalidation and synthetic tests.
+No initial-access adapter or receiver mutation is imported. Investigate the
+one-off full-suite Windows SSH failure; keep its evidence and subsequent passes.
+Connect the controller to the authenticated host Settings flow, qualify Windows
+source/interface pinning and validate a fresh package before any hardware gate.
+
+Current continuation: host routes, Settings and Windows loopback binding pass;
+787 tests/55 subtests pass. Freeze dev.2 documentation/source, scan the exact
+source and portable delivery for personal identifiers, then finish its internal
+delivery. Continue toward AC+ and the widget SDK in the public AC repository.
+All publication contents and metadata require the privacy review described in
+STATUS. Preserve existing SDK limits and hardware gates.
+
+Static follow-up ownership: widget_sdk JSON rejection, service_channel cooperative
+revocation and their adversarial tests. Final792tests/55subtests pass. Carry both
+fixes into the next frozen delivery; preserve the prior dev.2 ZIP. Remaining
+static/product gates include completed SDK confinement and update contracts,
+installer transition design, credential/trust migration and consolidated review.
+Do not represent source inspection as executed upgrade or hardware qualification.
+
+Publication-gate ownership: tools/privacy_review.py, tests/test_privacy_review.py,
+release/privacy-findings.json, source CI and docs/PRIVACY_REVIEW.md. Local denylists
+and raw scan evidence stay private. Installer data-boundary tests are host/static
+contracts only. Finish final combined regression and exact-source/commit review,
+then present the consolidated review candidate at the governing publication gate.
+Do not enable an executor or rewrite product architecture through this work.
+
+Interpreter-probe follow-up ownership: BackendHost bounded/concurrent probe reads,
+tools/testing/interpreter_probe, Test-InterpreterProbe.ps1 and its opt-in test.
+Six actual Windows fixture modes pass; retain pre-fix watchdog failures. Rebuild
+the real isolated desktop host, complete final regression, commit only reviewed
+candidate files with public identity and present the concrete consolidated review
+candidate before public posting. No hardware or MSI authorization is inferred.
+
+Consolidated dev.3 verification complete:853host tests/55subtests, fresh Windows
+publish and actual C# host workflow pass. Freeze exact reviewed source with public
+project commit identity; review outgoing history and PR text for personal data.
+Use a draft development PR for the operator-selected public AC destination. Keep
+merge/release, initial access, migration, installer transitions and production
+SDK execution gated; no hardware action or architecture freeze through this work.

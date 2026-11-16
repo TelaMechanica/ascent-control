@@ -104,3 +104,117 @@ no new/operator identity finding or old private repository URL remains. GUI visu
 acceptance, receiver enrollment/transport, legacy migration, extra key types,
 installer/provider/data preservation, signing and widget execution remain open.
 The MSI script refuses the internal-development channel; publication stays held.
+
+## Receiver readiness controller — host qualification in progress
+
+The next increment captures receiver identity and fresh source/interface binding
+from the existing DeviceSession owner, invalidates material identity changes,
+and adds strict P-256 host-key parsing alongside Ed25519. Protected receiver
+records are immutable and are saved by the host controller only after a live
+pinned SSH no-op and final context checks. This controller is not yet connected
+to application routes or Settings; no receiver access is enabled by these files.
+
+Owned Linux fixtures: 90 targeted checks pass. The new Windows P-256 key,
+transient-key cleanup and actual DPAPI record checks pass alongside existing
+Windows SSH/application checks. Full retest: 775 passed, 55 subtests passed.
+The preceding full run had one Windows SSH authentication failure; independent
+Windows runs and the full retest pass, but its cause remains unestablished. Failed
+evidence is retained privately; this intermittent result remains an investigation
+item rather than an inferred fix. No hardware test or publication occurred.
+
+Local artifact directories are excluded from Git/source snapshots. Next: native
+source-interface socket qualification, guarded application/Settings integration,
+packaged-build and privacy validation, then operator bench qualification and
+consolidated pre-publication review. Existing preparation build remains dev.1.
+
+### Receiver readiness connected — internal 0.43.63-dev.2 host validated
+
+The previously host-only controller now has authenticated host routes and a
+Settings flow for explicit fingerprint observation/confirmation and a fixed SSH
+no-op. Credential type selects fixed separate Ed25519/P-256 stores; no path, login,
+command or endpoint is accepted from requests. The existing device-operation lock
+excludes readiness from firmware/RF work. No first-access installation or receiver
+mutation is implemented. Combined new HTTP/SSH/render checks:34passed. Actual
+Windows loopback source/interface socket pinning passes; USB receiver behavior
+remains NOT TESTED. Full regression passes: 787 tests and 55 subtests, including
+Windows SSH and the isolated packaged backend. Fresh internal portable output
+passes source/payload verification with 382 explicit files and 19 camera payloads.
+No GUI or receiver qualification is inferred. Documentation and delivery inventory
+are being reconciled before the frozen internal dev.2 delivery.
+
+## Public AC+ and widget SDK destination
+
+The operator-selected destination is the public AC repository, with AC+ and the
+widget SDK developed in the shared application. Every proposed new or changed
+publication file, attachment and commit metadata requires sanitization for personal
+names, account/computer names, personal paths, BBIDs/device identifiers, credentials
+and other personal data. Review source and extracted binaries/archives, including
+UTF-16 strings. Keep local denylist values and raw findings outside public history.
+Record bounded scan evidence and review unresolved findings before posting.
+The SDK remains a non-executing inspector; confinement, updates and release
+composition are unfinished. A public destination does not establish release readiness.
+
+## Static/security follow-up — 2026-11-16
+
+Two bounded findings reproduced and repaired: oversized JSON integer conversion
+now becomes PackageInvalid in the SDK inspector, and open SSH relay channels
+recheck provider/selection liveness while idle and before forwarding each chunk.
+These cooperative checks do not make blocking socket calls instantly cancellable.
+Failed reproductions remain local; no hardware operation was used.
+
+Targeted scaffold/channel checks:39passed. Full Linux/Windows opted-in host suite:
+792passed/55subtests in63.82seconds with the fresh isolated package. Static parsing:
+150Python,31JSON,11JavaScript,5XML/project and4PowerShell files pass. Deterministic
+SDK malformed-manifest screening:1000rejected, zero unexpected errors. Package
+verification382files/19camera payloads and source/runtime/camera checks pass.
+The earlier internal dev.2 ZIP is preserved and does not contain these two fixes.
+Installer inspection finds no credential/settings removal rule; actual upgrades,
+rollback, GUI acceptance and hardware compatibility remain unqualified. SDK
+confinement/execution/updates and final publication review remain open.
+
+## Publication privacy gate and installer boundary — 2026-11-16
+
+The public-source CI now runs tools/privacy_review.py with exact-content reviewed
+findings. It scans filenames/content, UTF-8/UTF-16 binary strings, bounded nested
+ZIP contents and optionally commit metadata/new historical blobs. Reports contain
+hashes/categories rather than matched values or names. Incomplete scans cannot
+be waived; changed content cannot inherit a prior disposition. Private operator
+identifier lists remain local and ignored. See PRIVACY_REVIEW.md.
+
+Current-source review retains seven documented false-positive/synthetic findings.
+The outgoing committed range adds three instances of the same validation/prose/
+synthetic-fixture patterns. Local scan with36known identifiers found zero known
+personal-identifier matches. Source CI has no private denylist; final local review
+remains mandatory. Historical screening is separate from current-tree screening.
+
+New installer tests preserve the existing public UpgradeCode, bound authored
+removal to the shortcut folder, reject user-data/custom-action cleanup and verify
+settings remain available after changing the application location. These are
+static/host contracts; actual installed transitions remain unqualified.
+
+## Bounded interpreter probing — internal 0.43.63-dev.3 candidate
+
+Actual owned Windows executable tests reproduced two startup stalls in the
+interpreter probe: a child that never exits and a child that fills stderr while
+the parent reads stdout to EOF. The host now drains both pipes concurrently,
+limits captured version output to64characters and applies the existing5second
+probe deadline before waiting indefinitely for either pipe. All6fixture modes
+pass after the fix; hung/excessive-output cases return in about5.1seconds.
+The test harness compiles the actual BackendHost/BoundedLogWriter sources and
+uses no Python, installed application state, credentials or receiver. Original
+failed/watchdog evidence is preserved. A new isolated desktop build and final
+combined regression are required before the consolidated candidate is frozen.
+
+## Consolidated dev.3 source review candidate — 2026-11-16
+
+Final853host tests/55subtests pass, including the actual owned C# probe. The fresh
+Windows desktop publish verifies382payload files/19camera payloads; a separate
+actual C# host workflow verifies authenticated backend startup, impostor/anonymous
+refusal, real disposable-profile credential preparation/preservation, clean
+shutdown and no secret/bytecode persistence. See CONSOLIDATED_REVIEW_0.43.63_DEV3.md.
+
+The operator's current destination is AC+ and SDK development in public AC GitHub,
+with an identifying-information scrub for all posted files. This candidate is
+prepared for a draft source-review PR. Merge, product release, MSI, production
+widget execution and hardware gates remain separate. Earlier local-review hold
+notes describe prior checkpoints; they do not establish a production release.

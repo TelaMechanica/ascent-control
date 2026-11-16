@@ -80,7 +80,7 @@ ok(html.includes('id="modeConfiguration"')&&html.includes('id="modeLive"'),'Conf
 for(const view of ['device','firmware','rf','hub','rc','fleet'])ok(html.includes('data-view="'+view+'"'),view+' navigation retained');
 for(const view of ['picker','netrunner','widgetmanager','widgetlayout'])ok(!html.includes('data-view="'+view+'"'),view+' navigation excluded');
 const code=fs.readFileSync('runtime/www/app.js','utf8');
-const reviewedLocalPaths=new Set(['/api/service-mode/local/status','/api/service-mode/local/prepare']);
+const reviewedLocalPaths=new Set(['/api/service-mode/local/status','/api/service-mode/local/prepare','/api/service-mode/local/credential','/api/service-mode/local/receiver/inspect','/api/service-mode/local/receiver/verify']);
 const restrictedRequests=code.match(/\/api\/(?:service-mode|widgets|picker|netrunner|cot|relay\/press)[A-Za-z0-9_/-]*/g)||[];
 ok(restrictedRequests.every(path=>reviewedLocalPaths.has(path)),'Only reviewed host-local preparation API requests; receiver operations remain absent');
 const hdpro={target:'hdpro',plan:{target:'hdpro',buildable:true,stage1:{mode:'bundled_support',complete:true}},job:null};

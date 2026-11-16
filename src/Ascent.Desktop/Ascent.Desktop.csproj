@@ -901,6 +901,36 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="..\..\ascent_core\windows_key_material.py">
+      <Link>ascent_core\windows_key_material.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\ascent_core\service_target.py">
+      <Link>ascent_core\service_target.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\ascent_core\service_channel.py">
+      <Link>ascent_core\service_channel.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\ascent_core\receiver_ssh.py">
+      <Link>ascent_core\receiver_ssh.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\ascent_core\service_enrollment.py">
+      <Link>ascent_core\service_enrollment.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\ascent_core\service_receiver.py">
+      <Link>ascent_core\service_receiver.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="..\..\ascent_core\windows_tools.py">
       <Link>ascent_core\windows_tools.py</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

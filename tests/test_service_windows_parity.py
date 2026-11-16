@@ -35,7 +35,7 @@ def test_windows_pinned_handshake_and_authority_guards(fixture_server):
     if result.returncode:
         # Local-only failure evidence; never include this ignored log in exports.
         log = source/'artifacts'/('private-windows-parity-' + uuid.uuid4().hex + '.log')
-        log.write_text(result.stdout + result.stderr + ((root/'private-backend-child.log').read_text(errors='replace') if (root/'private-backend-child.log').exists() else ''))
+        log.write_text(result.stdout + result.stderr + ''.join((root/name).read_text(errors='replace') for name in ('private-backend-child.log', 'private-server.log', 'private-ssh-client.log') if (root/name).exists()))
         pytest.fail('Windows fixture failed; inspect local-only private parity log under artifacts')
     report = json.loads(result.stdout)
     assert report['platform'] == 'Windows' and report['fixture_only'] is True
@@ -46,6 +46,9 @@ def test_windows_pinned_handshake_and_authority_guards(fixture_server):
         'windows_post_handshake_revision_change_denied'}
     assert all(case['passed'] is True for case in report['results'])
 
+    assert report['windows_loopback_source_binding'] is True
+    assert report['receiver_storage_checks'] == {'p256_generated': True, 'temporary_key_removed': True,
+        'real_dpapi_record_roundtrip': True, 'existing_record_preserved': True}
     assert report['installed_credentials_accessed'] is False
     assert report['credential_checks'] == {'real_dpapi_roundtrip': True,
         'malformed_envelope_denied': True, 'generated_key_encrypted_at_rest': True,

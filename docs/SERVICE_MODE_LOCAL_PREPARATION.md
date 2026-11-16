@@ -1,8 +1,9 @@
 # Service Mode local preparation in the application
 
-Development build0.43.63-dev.1 now adds a Settings workflow to check/create a new
-credential for this setup. Existing credentials are preserved; no key import,
-rotation, receiver enrollment or remote access is offered. The ordinary public
+Development build 0.43.63-dev.3 retains the Settings workflow to check/create a
+protected local credential and adds explicit receiver fingerprint observation,
+confirmation and a guarded SSH no-op. Existing credentials are preserved; key
+import, rotation and initial-access installation remain unavailable. The ordinary public
 device functions retain their current guards. Receiver Service Mode availability
 remains false, and unavailable receiver routes remain refused.
 
@@ -47,8 +48,13 @@ Settings owns local preparation; there is no new primary Service Mode destinatio
 or layout redesign. Unknown, absent, protected and busy states are explicit. Only a
 successful DPAPI read supports the protected-state claim. The new-store scope is
 named so absence does not imply old credentials elsewhere on the PC are absent.
-The page explicitly states that receiver setup is unavailable in this development
-build. Successful local preparation never implies enrollment or receiver access.
+Initial-access installation remains unavailable. Successful local preparation
+never implies receiver authentication. The readiness flow separately requires a
+selected receiver, fresh source/interface binding, explicit fingerprint confirmation
+and a pinned authenticated SSH no-op before saving an immutable protected record.
+It accepts no caller-selected endpoint, command, login or key path. Ed25519 and
+P-256 use separate fixed credential stores. The existing device-operation lock
+excludes concurrent firmware/RF operations. No receiver mutation is implemented.
 
 The previous app.js digest remains in pin history. New rendered scope/escaping and
 real-handler authorization checks accompany the intentional addition. Visual,
@@ -59,7 +65,8 @@ bounded addition and deferred terminology/navigation work.
 ## Package and release boundary
 
 The development payload explicitly allows only the shared credential dependencies:
-ascent_core init, service_access, service_records, service_credentials and windows_tools.
+the shared service-access, credential, protected-record, target, enrollment and
+SSH-channel modules explicitly enumerated in the payload manifest.
 The publisher checks exact shared-core inventory and Python import/execution rules.
 Loopback probes, SDK executors, test workers and private widgets are not packaged.
 Source and payload hashes are frozen. The internal-development release channel
@@ -73,9 +80,9 @@ backend workflow checks do not constitute GUI or hardware qualification.
 
 ## Remaining integration
 
-Receiver/source-interface binding, protected enrollment records, authenticated
-receiver operations, supported daemon/key types, legacy trust migration and
-installer/provider/data preservation remain open. Signing and isolated widget
+Source/interface binding and protected enrollment records pass synthetic host
+checks. Real USB receiver behavior, daemon compatibility, operational commands,
+legacy trust migration and installer/provider/data preservation remain open. Signing and isolated widget
 execution retain their separate decisions. AC/AC+ release composition/branding
 and independent widget updates are not established by this local preparation card.
 No Phase5 architecture freeze or publication approval is implied.

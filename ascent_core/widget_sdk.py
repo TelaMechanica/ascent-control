@@ -31,6 +31,18 @@ def _object(pairs):
     return result
 
 
+
+def _json(data):
+    try:
+        return json.loads(data, object_pairs_hook=_object)
+    except PackageInvalid:
+        raise
+    except (ValueError, RecursionError):
+        # Includes the interpreter's integer-conversion and nesting limits.
+        # Preserve package rejection without exposing a raw parser traceback.
+        raise PackageInvalid('Malformed package JSON') from None
+
+
 def _path(value):
     if not isinstance(value, str) or not value or not value.isascii() or len(value) > 160:
         raise PackageInvalid('Invalid package path')
@@ -62,7 +74,7 @@ def inspect_package(path):
                 raise PackageInvalid('Duplicate or case-colliding path')
             if 'widget.json' not in names:
                 raise PackageInvalid('Manifest missing')
-            manifest = json.loads(archive.read('widget.json'), object_pairs_hook=_object)
+            manifest = _json(archive.read('widget.json'))
             fields = {'schema', 'id', 'version', 'sdk', 'display_name', 'capabilities', 'files', 'view'}
             if not isinstance(manifest, dict) or set(manifest) != fields:
                 raise PackageInvalid('Manifest fields differ from SDK contract')
@@ -89,7 +101,7 @@ def inspect_package(path):
             view = manifest['view']
             if not isinstance(view, str) or view not in pins or not view.endswith('.json'):
                 raise PackageInvalid('Declarative view missing')
-            definition = json.loads(archive.read(view), object_pairs_hook=_object)
+            definition = _json(archive.read(view))
             if not isinstance(definition, dict) or set(definition) != {'type', 'text'} or definition['type'] != 'text' or not isinstance(definition['text'], str) or len(definition['text']) > 200:
                 raise PackageInvalid('Unsupported declarative view')
             if set(pins) != {view}:

@@ -158,24 +158,47 @@ public sealed class BackendHost : IDisposable
 
             using var proc = Process.Start(psi);
             if (proc is null) return false;
-            var stdout = proc.StandardOutput.ReadToEnd();
-            if (!proc.WaitForExit(5000))
+            // Drain both pipes concurrently; reading either to EOF before the
+            // deadline can hang on a child that fills the other pipe or never exits.
+            var stdout = ReadProbeVersionAsync(proc.StandardOutput);
+            var stderr = proc.StandardError.BaseStream.CopyToAsync(Stream.Null);
+            var exited = proc.WaitForExitAsync();
+            try
             {
-                try { proc.Kill(entireProcessTree: true); } catch { /* best effort */ }
-                return false;
+                if (!Task.WhenAll(stdout, stderr, exited).Wait(5000)) return false;
+                if (proc.ExitCode != 0) return false;
+                var parts = stdout.GetAwaiter().GetResult().Trim().Split('.');
+                if (parts.Length != 2) return false;
+                if (!int.TryParse(parts[0], out var major)) return false;
+                if (!int.TryParse(parts[1], out var minor)) return false;
+                return major > 3 || (major == 3 && minor >= MinPythonMinor);
             }
-            if (proc.ExitCode != 0) return false;
-
-            var parts = stdout.Trim().Split('.');
-            if (parts.Length < 2) return false;
-            if (!int.TryParse(parts[0], out var major)) return false;
-            if (!int.TryParse(parts[1], out var minor)) return false;
-            return major > 3 || (major == 3 && minor >= MinPythonMinor);
+            finally
+            {
+                if (!proc.HasExited)
+                {
+                    try { proc.Kill(entireProcessTree: true); proc.WaitForExit(1000); }
+                    catch { /* best effort for this owned probe only */ }
+                }
+            }
         }
         catch
         {
             return false;
         }
+    }
+
+    private static async Task<string> ReadProbeVersionAsync(StreamReader reader)
+    {
+        var output = new StringBuilder();
+        var buffer = new char[64];
+        int count;
+        while ((count = await reader.ReadAsync(buffer.AsMemory())) != 0)
+        {
+            if (output.Length + count > 64) throw new InvalidDataException("Interpreter probe output exceeds limit.");
+            output.Append(buffer, 0, count);
+        }
+        return output.ToString();
     }
 
     /// <summary>

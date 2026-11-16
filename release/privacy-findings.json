@@ -1,0 +1,61 @@
+{
+  "schema": "ascent.privacy-dispositions.v1",
+  "items": [
+    {
+      "item_id": "75bdc1473cde96513cf78c6990947d2f7b8ca2ea50ea35aa423ddb63d80f518d",
+      "sha256": "27e79a79d39e783f55d8078d154c9150ab166d9985df0c40408460836f219ed2",
+      "findings": [
+        "private-key-marker"
+      ],
+      "reason": "format-validation-code"
+    },
+    {
+      "item_id": "c765c97f594386b9693ebecdabd403483a4d96bb6c6f967ef1fd292aad4e345b",
+      "sha256": "bb6854eedb445973a67f0614445927179e865cb0a19c1711b2a4f83df4766332",
+      "findings": [
+        "computer-label"
+      ],
+      "reason": "public-product-prose"
+    },
+    {
+      "item_id": "5c6da1bb7ab8adf3256015ddadc33358e7181c9f8faf0da0b2e4639db0b86fbb",
+      "sha256": "f807cdb88f4468912d2f32900921a795de32d1f8466c73c77cb96aef3f67bd14",
+      "findings": [
+        "long-device-id"
+      ],
+      "reason": "binary-coincidence"
+    },
+    {
+      "item_id": "d82e89ea7ac1241462e0fd53685342ca562685fade8bca914643c31f214da3e4",
+      "sha256": "c6011d45cdad7c170a0c4c0c3038316f2db8313183e0354dab943b2a9cfe0b93",
+      "findings": [
+        "computer-label"
+      ],
+      "reason": "public-product-prose"
+    },
+    {
+      "item_id": "fc688ecad23203dae34d5b26f21e616bbd8d51d5e789e4b6127caf5c126a867b",
+      "sha256": "ccf1b8cf234c9df0324a8166959149a4d2b245c3907fdc684e08b61b1cb355cb",
+      "findings": [
+        "computer-label"
+      ],
+      "reason": "public-product-prose"
+    },
+    {
+      "item_id": "c7a9fffa7deb24e435d0ec22d5d915746f0620e6f7bad7046982e8bccc28b183",
+      "sha256": "10419db5e4acb5c221f56993234e818a08401bd96e7621d0badd3b5d94c5d9fc",
+      "findings": [
+        "device-address"
+      ],
+      "reason": "synthetic-test-fixture"
+    },
+    {
+      "item_id": "f22335dd2018db513727b0d808a47b0fd094fcf1a5e3036d00c4c24949d33daf",
+      "sha256": "a9b2a0cfab6816411c21031a9bd7669cc5bb38c939200f0214f87e6252640ea2",
+      "findings": [
+        "private-key-marker"
+      ],
+      "reason": "synthetic-test-fixture"
+    }
+  ]
+}
