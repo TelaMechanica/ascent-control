@@ -91,3 +91,7 @@ Implementation milestone:6eb6d0273523001e0146c71d7a220ae1338aa41f (45reviewed fi
 Preserve earlier failures and dev.1/dev.2 outputs. The next developer can start
 from the consolidated review document and remaining gates without importing old
 private history or treating fixture success as receiver qualification.
+
+Tracking/review: https://github.com/TelaMechanica/ascent-control/pull/24 (draft).
+Initial push/PR source CI passed at77efdaabb07c66998a78492eae635a6e0d768c04.
+Keep the draft review boundary and remaining product/hardware gates explicit.

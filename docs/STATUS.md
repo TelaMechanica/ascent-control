@@ -223,3 +223,9 @@ Reviewed implementation commit:6eb6d0273523001e0146c71d7a220ae1338aa41f.
 It commits45explicitly selected files; the isolated candidate tree is clean.
 Completion notes/source inventory are recorded separately. Final outgoing source,
 historical blobs, commit metadata and PR text are rechecked after committing.
+
+Public draft review PR: https://github.com/TelaMechanica/ascent-control/pull/24.
+The first push and pull-request source checks both passed at
+77efdaabb07c66998a78492eae635a6e0d768c04. The PR stays draft; no merge, release tag,
+MSI or public binary artifact was created. Final documentary checkpoint is
+rechecked separately; implementation remains6eb6d0273523001e0146c71d7a220ae1338aa41f.
