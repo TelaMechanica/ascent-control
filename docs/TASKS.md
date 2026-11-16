@@ -86,3 +86,8 @@ project commit identity; review outgoing history and PR text for personal data.
 Use a draft development PR for the operator-selected public AC destination. Keep
 merge/release, initial access, migration, installer transitions and production
 SDK execution gated; no hardware action or architecture freeze through this work.
+
+Implementation milestone:6eb6d0273523001e0146c71d7a220ae1338aa41f (45reviewed files).
+Preserve earlier failures and dev.1/dev.2 outputs. The next developer can start
+from the consolidated review document and remaining gates without importing old
+private history or treating fixture success as receiver qualification.
