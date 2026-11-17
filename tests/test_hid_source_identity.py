@@ -227,3 +227,54 @@ def test_receiver_change_during_start_preparation_refuses_before_thread(monkeypa
     monkeypatch.setattr(D,'_hid_receiver_scope',lambda:'prepared scope')
     with pytest.raises(H.HidError) as e:D.hid_stream(dict(action='start',apply=True,epoch='one',descriptor_id=s._hid_source['fingerprint'],receiver_token='initial'))
     assert e.value.code=='HID_RECEIVER_CHANGED' and not s.running
+
+
+@pytest.fixture
+def private_family_module(tmp_path, monkeypatch):
+    # A copied module gives the adjacent-file fallback a disposable synthetic root.
+    import importlib.util
+    import shutil
+    source=tmp_path/'hid_source.py'
+    shutil.copyfile(Path(S.__file__),source)
+    monkeypatch.delenv('ASCENT_PRIVATE_HID_FAMILIES',raising=False)
+    spec=importlib.util.spec_from_file_location('synthetic_hid_family_policy',source)
+    module=importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module,tmp_path
+
+
+def test_public_hid_without_private_configuration_retains_generic_devices(private_family_module):
+    module,_=private_family_module
+    assert module._PRIVATE_CONTROLLER_FAMILIES==frozenset()
+    assert not module.restricted_public_device({'product':'Synthetic controller'})
+
+
+@pytest.mark.parametrize('source',['environment','adjacent'])
+def test_private_hid_configuration_restricts_only_synthetic_family(private_family_module,monkeypatch,source):
+    import hashlib
+    module,root=private_family_module
+    name='syntheticfamily'
+    path=root/('fixture.txt' if source=='environment' else 'hid_private_families.txt')
+    path.write_text('# synthetic fixture only\n'+name.upper()+'\n'+hashlib.sha256(b'otherfixture').hexdigest()+'\n')
+    if source=='environment':monkeypatch.setenv('ASCENT_PRIVATE_HID_FAMILIES',str(path))
+    monkeypatch.setattr(module,'_PRIVATE_CONTROLLER_FAMILIES',module._load_private_controller_families())
+    assert module.restricted_public_device({'product':'SyntheticFamily X12'})
+    assert module.restricted_public_device({'manufacturer':'OtherFixture'})
+    assert not module.restricted_public_device({'product':'Unrelated fixture'})
+    assert not module.restricted_public_device({'product':'prefixsyntheticfamilysuffix'})
+
+
+def test_missing_optional_private_hid_path_does_not_invent_a_restriction(private_family_module,monkeypatch):
+    module,root=private_family_module
+    monkeypatch.setenv('ASCENT_PRIVATE_HID_FAMILIES',str(root/'missing.txt'))
+    assert module._load_private_controller_families()==frozenset()
+
+
+def test_private_hid_configuration_is_excluded_from_public_inventories():
+    root=Path(__file__).resolve().parents[1]
+    profile=json.loads((root/'release/public-payload.json').read_text())
+    names=set(profile['source_files'])|{row['source'] for row in profile['files']}|{row['target'] for row in profile['files']}
+    assert all(Path(name).name!='hid_private_families.txt' for name in names)
+    import subprocess
+    result=subprocess.run(['git','check-ignore','runtime/hid_private_families.txt'],cwd=root,capture_output=True,text=True)
+    assert result.returncode==0

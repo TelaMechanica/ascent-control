@@ -1,5 +1,33 @@
 # Work queue
 
+## Current continuation
+
+- Public transition cleanup owner: Codex. Scope: README, current status/queue,
+  transition handoff and synthetic HID private-configuration regression tests.
+  Preserve historical reports and existing runtime behavior.
+- AC+ foundations and SDK inspector are merged through PR #24; private HID
+  family configuration was separated through PR #25. Repeat privacy checks for
+  all new source, commit history and publication text.
+- Review confinement acceptance criteria before admitting an untrusted renderer
+  or executor. C03/C04 browser evidence and C05-C10 runtime/lifecycle evidence
+  remain incomplete. Keep execution disabled while these are unresolved.
+- Next safe work: bounded host-only test specifications, resource/message budgets
+  and a synthetic adversarial corpus. Do not call a proposal acceptance hardware
+  qualification or an architecture freeze.
+- Complete credential/trust migration, installed upgrade/rollback preservation,
+  publisher trust and independent widget conformance before release packaging.
+- Preserve private initial access and receiver widgets; no hardware operations.
+
+Cleanup validation: 140 targeted checks and full host 846 passed/24 skipped/
+55 subtests passed; source/runtime/camera checks pass. Issue #26 tracks the
+README/status/HID regression scope. Publish only after final source/history/
+metadata privacy review and green source CI on the exact outgoing head.
+
+## Historical ownership and checkpoints
+
+Earlier local-publication and draft-PR instructions below are superseded by the
+merged source checkpoint. Retain their implementation ownership and evidence.
+
 - Maintenance release owner: release/maintenance-04362; firmware admission,
   release identity/manifests, documentation and offline validation.
 - Complete full source regression, source/privacy inventory and Windows build,

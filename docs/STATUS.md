@@ -1,5 +1,48 @@
 # Current status
 
+## Current public checkpoint
+
+PRs #24 and #25 are merged. Public `main` contains the reviewed AC+ service-mode
+foundations and non-executing widget SDK preview. The reviewed follow-up is
+`8e5691c39d6b06287904bcacbf05daa024a44659`; the verified post-merge main checkpoint
+is `a6d87d63887fe46ab7b956de1ed649df0f0dddcc`.
+
+The downloadable release remains 0.43.62. Current development source is not a
+production AC+ release and intentionally cannot produce a release MSI. No widget
+executor or private initial-access/receiver widget implementation is published.
+See [transition status](PUBLIC_TRANSITION_STATUS.md) for the remaining work.
+
+The operator-supplied independent follow-up review reports no blocking findings
+on 8e5691c. Prior host validation was 865 tests/55 subtests with 21 compiled native
+policy cases; these are host evidence, not browser isolation or hardware approval.
+The privacy-cleared source snapshot was checked against 39 local identifiers with
+zero known matches across 982 source/history/metadata items. CI has no private
+operator denylist; every subsequent publication needs its own local check.
+
+## Public transition cleanup validation
+
+Tracking issue: [#26](https://github.com/TelaMechanica/ascent-control/issues/26).
+The README now separates current public source from the released 0.43.62 MSI and
+uses the release tag for release-build instructions. Current queue/transition docs
+supersede stale publication holds without deleting historical evidence.
+
+Synthetic HID private-configuration/inventory checks were added; runtime behavior
+is unchanged. Targeted checks: 140 passed. Full host suite: 846 passed, 24 skipped,
+55 subtests passed in 43.16 seconds. The first sandbox run could not open test
+sockets (16 failures/55 errors); its evidence is retained locally. The unrestricted
+host retest passes. Optional platform/SSH/native checks remain skipped in this
+run; prior opt-in Windows/native results above are separate historical evidence.
+Runtime/camera inventories, source privacy, local documentation links and whitespace
+checks pass. Local privacy review uses 39 identifiers, zero known matches and the
+same seven exact-current-source dispositions. No new suppression is introduced.
+No browser isolation, receiver operation, production MSI or hardware PASS is claimed.
+
+## Historical checkpoint log
+
+The entries below retain their original temporal scope. Earlier statements that
+publication is held, a branch is local or PR #24 is draft are superseded by the
+current checkpoint above. Earlier packaging and test counts remain historical.
+
 The 0.43.62 maintenance candidate includes shared MAX Ethernet functions and
 withholds the defective HD Pro tester build. See RELEASE_0.43.62.md for scope.
 Local full host regression: 620 passed and 55 subtests passed. Source/privacy,
