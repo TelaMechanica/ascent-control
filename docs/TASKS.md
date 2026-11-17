@@ -156,3 +156,10 @@ and OS containment remain acceptance work; see CLAUDE_REVIEW_RESPONSE_DEV3.md.
 Review follow-up implementation:cf6b2b0e1c386b2125c2f39f3d1b33c5bf8f314e.
 865host tests/55subtests and21compiled policy cases pass. Publish the scrubbed
 follow-up in PR24 and retain the explicit real-browser/worker acceptance gates.
+
+
+Catalog coordinator owner: Codex, issue #32. Scope: widget_catalog_host.py,
+concurrency/failure tests, SDK documentation and source/license inventories.
+Next: capture the host-owned Widgets directory once, wire authenticated startup/
+rescan/status/shutdown, then a text-only Widget Manager. Keep raw caller paths,
+package views, activation, installation and execution outside this interface.

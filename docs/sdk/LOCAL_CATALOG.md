@@ -76,8 +76,21 @@ contracts. Creation timestamps are not substituted for native change times.
 
 ## Next integration boundary
 
-The app still needs a trusted configured folder owner, bounded background startup/
-rescan scheduling, stale-result cancellation and a text-only Widget Manager view.
+A source-only `CatalogCoordinator` now supplies background scan coordination for
+a fixed host-supplied folder. It retains one worker and coalesces pending requests
+into a latest-generation rerun, discarding obsolete successes and failures. Status
+reads return independent snapshots; rescanning immediately invalidates the prior
+observation. Slow scans become SCAN_DELAYED after five seconds without claiming
+that filesystem I/O was cancelled. Closing invalidates observations and prevents
+new work; an already blocked daemon worker may finish later and cannot publish.
+Scanner failures and worker-start failures return fixed codes, not exception text
+or root paths. Serialized observations are limited to 256 KiB.
+
+The app still needs the configured folder owner, startup/shutdown wiring,
+authenticated HTTP routes and a text-only Widget Manager view. The coordinator
+is not shipped by the desktop project or connected to native token injection.
+Package filenames remain untrusted local data; snapshot copies are not sanitized
+support attachments.
 No raw caller-supplied path should become a privileged HTTP folder scan. Package
 registration and native deployment need their own reviewed contracts, target and
 operation guards, data preservation and explicit activation semantics. Neither

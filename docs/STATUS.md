@@ -344,3 +344,19 @@ Follow-up implementation commit:cf6b2b0e1c386b2125c2f39f3d1b33c5bf8f314e.
 The private pre-post history/metadata check covers978items/36known identifiers,
 with zero known matches and the same12reviewed generic findings. The confinement
 proposal is awaiting an operator decision; no worker/executor was implemented.
+
+
+## Trusted catalog coordinator source checkpoint
+
+Tracking issue: #32. A single-worker source-only coordinator now wraps the bounded
+folder scanner. It coalesces rescans, rejects obsolete results/failures, invalidates
+observations on close, exposes delayed scans honestly and returns detached JSON
+snapshots. Folder ownership is supplied by trusted host code, never a request.
+No startup, HTTP/native hook, UI, packaged runtime or receiver change is included.
+
+Validation: 45 targeted catalog/coordinator checks; 937 full host tests and
+55 subtests pass, with 25 optional checks skipped. This run does not repeat the
+prior Windows filesystem parity qualification. Source/runtime inventories and
+privacy checks pass. Complete package verification is not available in this
+source-only worktree because downloaded dependency payloads are absent; no
+packaged-build claim is made. Failed invocation evidence remains private.
