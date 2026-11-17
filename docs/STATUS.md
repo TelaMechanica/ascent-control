@@ -251,3 +251,8 @@ Final follow-up:865host tests/55subtests in82.07seconds, Windows desktop compile
 and explicit package verification pass. Owned fixture evidence is not receiver
 qualification, browser confinement, an operator merge decision or production GO.
 Prior evidence, accepted UI pins and dev.3 delivery remain intact.
+
+Follow-up implementation commit:cf6b2b0e1c386b2125c2f39f3d1b33c5bf8f314e.
+The private pre-post history/metadata check covers978items/36known identifiers,
+with zero known matches and the same12reviewed generic findings. The confinement
+proposal is awaiting an operator decision; no worker/executor was implemented.
