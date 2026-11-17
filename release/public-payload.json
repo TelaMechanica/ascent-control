@@ -486,8 +486,8 @@
     {
       "source": "runtime/hid_source.py",
       "target": "runtime/hid_source.py",
-      "sha256": "7b832aa16e2a7fcd2456d1b77ad96d986cc7eb3b2516427893379313bcff6d27",
-      "bytes": 7866
+      "sha256": "1a00fd0842bf8560c14a55b4c5d4fa3e34dff921b5c5b43c57f2208df2e93779",
+      "bytes": 9198
     },
     {
       "source": "runtime/known_receivers.py",
@@ -1305,7 +1305,7 @@
     "runtime/firmware_camera_support.py": "f138340e2c53567fa595f1849d4224900eb7d664973add75fdbb2115e9d5f4e4",
     "runtime/firmware_native_backend.py": "31d1eee7d268b7c88d197b53367c8420c643102773ab903a3b67c6908737539b",
     "runtime/first_run.py": "dc5c6309a975b1872ecc6d212309c3ed733e59443250e264d59e0513ce041cee",
-    "runtime/hid_source.py": "7b832aa16e2a7fcd2456d1b77ad96d986cc7eb3b2516427893379313bcff6d27",
+    "runtime/hid_source.py": "1a00fd0842bf8560c14a55b4c5d4fa3e34dff921b5c5b43c57f2208df2e93779",
     "runtime/known_receivers.py": "4ae0f0273687fc53852eb6dbfc8f557c4e7d9080895f97d01a6ea597e4766fa9",
     "runtime/local_settings.py": "21eb8ff54829f66cb814e2445b08dde08815f0fe4c435854274f0fda7bcd2576",
     "runtime/log_redaction.py": "ba8d4ae2cc848efca461fd4c71d20c1067527069191d2495ab2df7bd61b36c28",

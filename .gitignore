@@ -12,3 +12,7 @@ localdata/
 
 # Owned test fixtures and private failure diagnostics are never source exports.
 /artifacts/
+
+# Private AC+ controller-family identifiers; never in public source.
+hid_private_families.txt
+runtime/hid_private_families.txt
