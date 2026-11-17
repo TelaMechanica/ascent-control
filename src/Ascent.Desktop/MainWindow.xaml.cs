@@ -153,6 +153,20 @@ public partial class MainWindow : Window
         // The HID pump posts axes here; it has no other way to reach the backend.
         _backendBaseUri = result.BaseUri;
         SetStartupStatus("LOADING INTERFACE…");
+        // Bind the hook to this exact trusted view instance, never a widget view.
+        // Fetch/XHR eligibility does not prove initiating-frame identity. Untrusted
+        // frames/content must not enter this view; confinement acceptance is separate.
+        var trustedView = Browser.CoreWebView2;
+        trustedView.AddWebResourceRequestedFilter("*", CoreWebView2WebResourceContext.All);
+        trustedView.WebResourceRequested += (requestSender, request) =>
+        {
+            if (_backend is null || !ServiceHostRequestPolicy.ShouldAttach(
+                _backendBaseUri, trustedView, requestSender, trustedView.Source,
+                request.Request.Uri, request.Request.Method,
+                request.ResourceContext is CoreWebView2WebResourceContext.Fetch or
+                    CoreWebView2WebResourceContext.XmlHttpRequest)) return;
+            request.Request.Headers.SetHeader("X-Ascent-Host-Token", _backend.ServiceHostToken);
+        };
         Browser.CoreWebView2.Navigate(result.BaseUri.ToString());
     }
 

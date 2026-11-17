@@ -1,0 +1,28 @@
+const assert=require('assert');
+const {boot}=require('./public_ui_render_check.cjs');
+const ctx=boot(),ui=ctx.__ui;
+ui.state.app={};assert.equal(ui.localServicePanel(),'');
+ui.state.app={local_credential_preparation:true};
+let html=ui.localServicePanel();
+assert(html.includes('Not checked'));
+assert(html.includes('id="serviceLocalCreate" disabled'));
+assert(html.includes('Receiver setup is not available'));
+ui.localServiceState().doc={local_credential:{credential_present:false}};
+html=ui.localServicePanel();assert(html.includes('Not prepared'));
+assert(!html.includes('id="serviceLocalCreate" disabled'));
+ui.localServiceState().doc={local_credential:{credential_present:true,fingerprint:'<synthetic>'}};
+html=ui.localServicePanel();assert(html.includes('Protected for your Windows account'));
+assert(html.includes('&lt;synthetic&gt;'));
+assert(html.includes('id="serviceLocalCreate" disabled'));
+assert(!html.includes('Receiver connected'));
+ui.localServiceState().busy=true;assert(ui.localServicePanel().includes('id="serviceLocalCheck" disabled'));
+console.log('Local preparation render and scope checks passed');
+
+ui.localServiceState().busy=false;
+ui.localServiceState().observation={receiver_name:'<synthetic receiver>',firmware:'synthetic',host_fingerprint:'<synthetic fingerprint>'};
+html=ui.localServicePanel();
+assert(html.includes('&lt;synthetic receiver&gt;')&&html.includes('&lt;synthetic fingerprint&gt;'));
+assert(html.includes('SSH authentication has not been established'));
+ui.localServiceState().receiverResult={receiver_name:'<synthetic result>'};
+html=ui.localServicePanel();assert(html.includes('not a live session'));
+assert(html.includes('&lt;synthetic result&gt;'));

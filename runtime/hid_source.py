@@ -63,7 +63,35 @@ def descriptor(document):
     return canonical,fingerprint
 
 
-_PRIVATE_CONTROLLER_FAMILIES=frozenset(['2fd02cb5903e6608bcb7499a38b9204d0cae711687e7a8f4866f96494afa735d', '0bb09d80600eec3eb9d7793a6f859bedde2a2d83899b70bd78e961ed674b32f4'])
+def _load_private_controller_families():
+    """Private AC+ controller-family identifiers are deliberately NOT in public source.
+
+    A non-public build supplies them through a gitignored file -- one entry per line,
+    each a lowercase token or its lowercase sha256 hex -- named by the
+    ASCENT_PRIVATE_HID_FAMILIES environment variable or placed next to this module as
+    'hid_private_families.txt'. Public builds ship no such file, so this set is empty
+    and nothing is named or refused here by family. A short, low-entropy identifier is
+    never embedded in public source, hashed or otherwise: a dictionary-word sha256 is
+    trivially reversible and would leak the very name it is meant to withhold.
+    """
+    import os
+    families=set()
+    candidates=[os.environ.get('ASCENT_PRIVATE_HID_FAMILIES'),
+                os.path.join(os.path.dirname(os.path.abspath(__file__)),'hid_private_families.txt')]
+    for path in candidates:
+        if not path:continue
+        try:
+            with open(path,'r',encoding='utf-8') as handle:lines=handle.read(1<<16).splitlines()
+        except OSError:continue
+        for line in lines:
+            token=line.strip().lower()
+            if not token or token.startswith('#'):continue
+            families.add(token if len(token)==64 and all(c in '0123456789abcdef' for c in token)
+                         else hashlib.sha256(token.encode()).hexdigest())
+    return frozenset(families)
+
+
+_PRIVATE_CONTROLLER_FAMILIES=_load_private_controller_families()
 
 
 def restricted_public_device(device):

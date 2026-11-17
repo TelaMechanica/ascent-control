@@ -1,0 +1,21 @@
+{
+  "schema": "ascent.product-bases.v0",
+  "status": "review-only-not-packaged",
+  "shared_core": "ascent-control",
+  "products": [
+    {
+      "id": "ascent-control",
+      "display_name": "Ascent Control",
+      "bundled_widgets": []
+    },
+    {
+      "id": "ascent-control-plus",
+      "display_name": "Ascent Control+",
+      "bundled_widgets": [],
+      "first_capability": "service-mode",
+      "provider_included": false
+    }
+  ],
+  "edition_label_authorizes_operations": false,
+  "private_widget_publication_requires_operator_selection": true
+}

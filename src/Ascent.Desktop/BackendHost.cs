@@ -1,9 +1,11 @@
 using System.Diagnostics;
+using System.Security.Cryptography;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace Ascent.Desktop;
@@ -40,6 +42,9 @@ public sealed class BackendHost : IDisposable
     private const int PortAttempts = 3;
 
     private const int RecentOutputLines = 40;
+
+    // Per-host launch secret; never place it in URLs, logs, JSON or widget APIs.
+    internal string ServiceHostToken { get; } = Convert.ToHexString(RandomNumberGenerator.GetBytes(32)).ToLowerInvariant();
 
     private Process? _process;
     private Uri? _baseUri;
@@ -153,24 +158,47 @@ public sealed class BackendHost : IDisposable
 
             using var proc = Process.Start(psi);
             if (proc is null) return false;
-            var stdout = proc.StandardOutput.ReadToEnd();
-            if (!proc.WaitForExit(5000))
+            // Drain both pipes concurrently; reading either to EOF before the
+            // deadline can hang on a child that fills the other pipe or never exits.
+            var stdout = ReadProbeVersionAsync(proc.StandardOutput);
+            var stderr = proc.StandardError.BaseStream.CopyToAsync(Stream.Null);
+            var exited = proc.WaitForExitAsync();
+            try
             {
-                try { proc.Kill(entireProcessTree: true); } catch { /* best effort */ }
-                return false;
+                if (!Task.WhenAll(stdout, stderr, exited).Wait(5000)) return false;
+                if (proc.ExitCode != 0) return false;
+                var parts = stdout.GetAwaiter().GetResult().Trim().Split('.');
+                if (parts.Length != 2) return false;
+                if (!int.TryParse(parts[0], out var major)) return false;
+                if (!int.TryParse(parts[1], out var minor)) return false;
+                return major > 3 || (major == 3 && minor >= MinPythonMinor);
             }
-            if (proc.ExitCode != 0) return false;
-
-            var parts = stdout.Trim().Split('.');
-            if (parts.Length < 2) return false;
-            if (!int.TryParse(parts[0], out var major)) return false;
-            if (!int.TryParse(parts[1], out var minor)) return false;
-            return major > 3 || (major == 3 && minor >= MinPythonMinor);
+            finally
+            {
+                if (!proc.HasExited)
+                {
+                    try { proc.Kill(entireProcessTree: true); proc.WaitForExit(1000); }
+                    catch { /* best effort for this owned probe only */ }
+                }
+            }
         }
         catch
         {
             return false;
         }
+    }
+
+    private static async Task<string> ReadProbeVersionAsync(StreamReader reader)
+    {
+        var output = new StringBuilder();
+        var buffer = new char[64];
+        int count;
+        while ((count = await reader.ReadAsync(buffer.AsMemory())) != 0)
+        {
+            if (output.Length + count > 64) throw new InvalidDataException("Interpreter probe output exceeds limit.");
+            output.Append(buffer, 0, count);
+        }
+        return output.ToString();
     }
 
     /// <summary>
@@ -271,6 +299,7 @@ public sealed class BackendHost : IDisposable
             StandardOutputEncoding = Encoding.UTF8,
             StandardErrorEncoding = Encoding.UTF8,
         };
+        psi.ArgumentList.Add("-B"); // Do not persist bytecode containing local source paths.
         psi.ArgumentList.Add(script);
         psi.ArgumentList.Add("--listen");
         psi.ArgumentList.Add("127.0.0.1");
@@ -281,6 +310,7 @@ public sealed class BackendHost : IDisposable
         // Line-buffer the child's stdout/stderr. Without this the startup banner and
         // any traceback stay inside Python's pipe buffer while serve_forever() runs,
         // which makes a healthy backend look silent and a failing one look empty.
+        psi.Environment["ASCENT_HOST_SESSION_TOKEN"] = ServiceHostToken;
         psi.Environment["PYTHONUNBUFFERED"] = "1";
         psi.Environment["PYTHONIOENCODING"] = "utf-8";
 
@@ -379,9 +409,9 @@ public sealed class BackendHost : IDisposable
 
     /// <summary>
     /// Readiness is an answered HTTP request, not a printed line: the backend is only
-    /// usable once it is actually serving, and only that proves the port belongs to us
-    /// rather than to whatever else may have grabbed it. /api/app is a static JSON
-    /// response, so probing it neither touches a device nor opens a serial session.
+    /// serving. Static app JSON alone does not authenticate a local server; require
+    /// a fresh HMAC challenge using the launch secret before trusting the page.
+    /// Both checks are host-local and neither opens a device or credential store.
     /// </summary>
     private async Task<Uri?> WaitForBackendAsync(Process process, Uri expected, CancellationToken ct)
     {
@@ -390,6 +420,7 @@ public sealed class BackendHost : IDisposable
         while (!ct.IsCancellationRequested)
         {
             var target = _announcedUri ?? expected;
+            if (target.GetLeftPart(UriPartial.Authority) != expected.GetLeftPart(UriPartial.Authority)) return null;
             try
             {
                 using var response = await client.GetAsync(new Uri(target, "/api/app"), ct);
@@ -397,7 +428,18 @@ public sealed class BackendHost : IDisposable
                 {
                     var body = await response.Content.ReadAsStringAsync(ct);
                     if (body.Contains("Ascent Control", StringComparison.Ordinal))
-                        return target;
+                    {
+                        var challenge = Convert.ToHexString(RandomNumberGenerator.GetBytes(32)).ToLowerInvariant();
+                        using var proofReply = await client.GetAsync(new Uri(target, "/api/app/host-proof?challenge=" + challenge), ct);
+                        if (!proofReply.IsSuccessStatusCode) return null;
+                        using var doc = JsonDocument.Parse(await proofReply.Content.ReadAsStringAsync(ct));
+                        var supplied = doc.RootElement.GetProperty("proof").GetString();
+                        var expectedProof = HMACSHA256.HashData(Encoding.ASCII.GetBytes(ServiceHostToken),
+                            Encoding.ASCII.GetBytes("ascent-host-proof:" + challenge));
+                        if (supplied is not null && supplied.Length == 64 &&
+                            CryptographicOperations.FixedTimeEquals(Convert.FromHexString(supplied), expectedProof) &&
+                            !process.HasExited) return target;
+                    }
                 }
             }
             catch (OperationCanceledException) when (ct.IsCancellationRequested)

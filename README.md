@@ -5,8 +5,12 @@ status, firmware inspection and management, RF and RC management where supported
 and a local fleet registry. This repository contains the public desktop source,
 Windows MSI build tooling, shared protocol helpers and camera-image builders.
 
-Service Mode and operations that depend on it, including receiver widget
-deployment and Picker, belong to AC+ and are excluded from this repository.
+The released 0.43.62 MSI excludes AC+ receiver-access functions and receiver widget
+deployment. This development branch adds public AC+ host credential preparation,
+guarded receiver-readiness checks and a non-executing widget SDK preview; see the
+[consolidated development review](docs/CONSOLIDATED_REVIEW_0.43.63_DEV3.md).
+Private initial-access installation, receiver widget implementations and production
+widget execution remain outside this candidate.
 
 ## Download and test
 
@@ -93,7 +97,7 @@ python tools/check_camera_source.py
 python tools/check_tree.py
 ```
 
-Camera relocation tests use ARM binutils. No default test connects to hardware.
+Camera relocation tests use ARM binutils. No default test connects to hardware. See [publication privacy review](docs/PRIVACY_REVIEW.md) before posting source, history or attachments.
 See [camera CLI instructions](docs/CAMERA_GRAFTING.md) for standalone source tools.
 The original six standard-library shared helpers and their source-hash contract
 remain available through `tools/inspect_local.py`.
@@ -114,7 +118,10 @@ user has the required vendor rights. It grants no rights to vendor material.
 Read [third-party notices](THIRD-PARTY-NOTICES.md) and the
 [source inventory](THIRD-PARTY-SOURCES.json). Third-party components retain their
 own licenses. Matching source archives accompany native helper/tool binaries.
-AC+ remains a separate private project and is outside this public license grant.
+Private AC+ components remain outside this public license grant. The proposed
+public AC+ base and widget SDK scaffold are documented in
+[the review checkpoint](docs/ACPLUS_SERVICE_MODE_REVIEW.md); they are not included
+in the current MSI.
 
 MAX Ethernet connections also offer RTSP viewing, scoped link/channel information and confirmed short menu/pairing requests. See [Ethernet coverage and bench limits](docs/MAX_ETHERNET.md).
 

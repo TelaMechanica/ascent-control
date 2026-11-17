@@ -51,11 +51,16 @@ def verify(root,reference,phase):
     profile=json.loads((reference/'release/public-payload.json').read_text())
     deps=json.loads((reference/'release/dependencies.json').read_text())
     expected=expected_files(profile,deps)
-    if profile['version']!='0.43.62' or profile['licensor']!='TelaMechanica':raise ValueError('Unexpected public release identity')
+    if profile['version']!='0.43.63' or profile['licensor']!='TelaMechanica':raise ValueError('Unexpected public release identity')
     for target,entry in expected.items():
         path=root/(entry.get('source',target) if phase=='source' and 'source' in entry else target)
         plain(path)
         if path.stat().st_size!=entry['bytes'] or sha(path)!=entry['sha256']:raise ValueError('Public payload differs: '+target)
+        if target.startswith('ascent_core/') and path.suffix=='.py':check_python(path)
+    if phase=='publish':
+        core={p.relative_to(root).as_posix() for p in (root/'ascent_core').rglob('*') if p.is_file()}
+        wanted_core={name for name in expected if name.startswith('ascent_core/')}
+        if core!=wanted_core:raise ValueError('Shared core inventory differs from the public allowlist')
     runtime=root/'runtime'
     actual={p.relative_to(root).as_posix() for p in runtime.rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc'}
     wanted={p for p in expected if p.startswith('runtime/')}
@@ -91,7 +96,7 @@ def verify(root,reference,phase):
             if builder.inspect_camera_support(str(runtime/'device_tools/mode_a'),target) is None:raise ValueError('Public camera support is absent')
         hdpro=builder.preflight(target='hdpro')
         if hdpro.get('can_build') or hdpro.get('error')!='HDPRO_BUILD_WITHHELD':raise ValueError('HD Pro build hold is not enforced')
-    return {'version':profile['version'],'payload_files':len(expected),'camera_payloads':19,
+    return {'version':profile['version'],'release_channel':profile.get('release_channel'),'payload_files':len(expected),'camera_payloads':19,
             'hdpro':'image build withheld; prior tester payload has confirmed defects','private_runtime_modules':0,'wsl_required':False}
 
 

@@ -62,7 +62,7 @@ function boot(options={}) {
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync('runtime/www/i18n.js', 'utf8'), ctx, { filename: 'i18n.js' });
   vm.runInContext(require(require('path').join(process.cwd(),'tests/helpers/ui_source.js'))() +
-                  '\n;globalThis.__ui={state,fwVariantPanel,fwVariantBuildGate,netState,reloadDeviceHistory,backgroundImagePanel,prepareBackgroundImage,backgroundImageState,saveBackgroundImage,advancedOn,renderDevice,renderFirmware,renderFleet,renderSettings,renderDiagnostics,renderLive,liveState,startLivePoll,paintLiveTelemetry,paintLiveVideoStatus,setMode,setNav,render};\n',
+                  '\n;globalThis.__ui={state,localServicePanel,localServiceState,localServiceRequest,fwVariantPanel,fwVariantBuildGate,netState,reloadDeviceHistory,backgroundImagePanel,prepareBackgroundImage,backgroundImageState,saveBackgroundImage,advancedOn,renderDevice,renderFirmware,renderFleet,renderSettings,renderDiagnostics,renderLive,liveState,startLivePoll,paintLiveTelemetry,paintLiveVideoStatus,setMode,setNav,render};\n',
                   ctx, { filename: 'app.js' });
   return ctx;
 }
@@ -80,7 +80,9 @@ ok(html.includes('id="modeConfiguration"')&&html.includes('id="modeLive"'),'Conf
 for(const view of ['device','firmware','rf','hub','rc','fleet'])ok(html.includes('data-view="'+view+'"'),view+' navigation retained');
 for(const view of ['picker','netrunner','widgetmanager','widgetlayout'])ok(!html.includes('data-view="'+view+'"'),view+' navigation excluded');
 const code=fs.readFileSync('runtime/www/app.js','utf8');
-ok(!/\/api\/(service-mode|widgets|picker|netrunner|cot|relay\/press)/.test(code),'No private API requests in public interface');
+const reviewedLocalPaths=new Set(['/api/service-mode/local/status','/api/service-mode/local/prepare','/api/service-mode/local/credential','/api/service-mode/local/receiver/inspect','/api/service-mode/local/receiver/verify']);
+const restrictedRequests=code.match(/\/api\/(?:service-mode|widgets|picker|netrunner|cot|relay\/press)[A-Za-z0-9_/-]*/g)||[];
+ok(restrictedRequests.every(path=>reviewedLocalPaths.has(path)),'Only reviewed host-local preparation API requests; receiver operations remain absent');
 const hdpro={target:'hdpro',plan:{target:'hdpro',buildable:true,stage1:{mode:'bundled_support',complete:true}},job:null};
 ok(ui.fwVariantBuildGate(hdpro,{state:'AVAILABLE',acknowledged:true}).ok,'HD Pro tester build is enabled after donor check and risk acknowledgement');
 ok(!ui.fwVariantBuildGate(hdpro,{state:'AVAILABLE',acknowledged:false}).ok,'HD Pro keeps session risk acknowledgement');
