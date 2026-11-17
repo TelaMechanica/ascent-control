@@ -95,3 +95,9 @@ private history or treating fixture success as receiver qualification.
 Tracking/review: https://github.com/TelaMechanica/ascent-control/pull/24 (draft).
 Initial push/PR source CI passed at77efdaabb07c66998a78492eae635a6e0d768c04.
 Keep the draft review boundary and remaining product/hardware gates explicit.
+
+Claude consolidated-review follow-up owner: Codex; PR24 reviewed a11ed1b5. Scope:
+M2 correction, M4 exact prose verification, native token policy/negative tests,
+denylist regression, bounded M3 patterns and confinement proposal. No executor,
+merge, MSI or receiver operation through this increment. Browser/frame isolation
+and OS containment remain acceptance work; see CLAUDE_REVIEW_RESPONSE_DEV3.md.

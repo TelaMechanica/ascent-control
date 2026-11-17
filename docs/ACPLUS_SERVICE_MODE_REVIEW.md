@@ -1,6 +1,7 @@
 # AC+ Service Mode and public SDK review checkpoint
 
-Status: local review candidate; no publication, MSI or receiver action.
+Status: historical initial scaffold checkpoint; the current draft is PR #24.
+Packaging and host integration have advanced; see the dated supersession below.
 
 The operator selected public AC as the sanitized foundation, AC and AC+ public
 bases going forward, Service Mode first, and a public widget SDK. Individual
@@ -25,8 +26,12 @@ any existing private component by implication.
 This does not port or activate the old Service Mode implementation, build two
 installers, implement AC-to-AC+ upgrades, authenticate packages, render widgets,
 provide atomic widget updates, or prove isolation. Existing public app behavior
-and payload allowlists are unchanged. New files are not shipped by the desktop
-project. Do not advertise this as working Service Mode or a released SDK.
+and payload allowlists were unchanged at this initial scaffold checkpoint.
+**Superseded for dev.3:** the desktop now explicitly packages the trusted shared
+service-access/credential/receiver-readiness modules listed in the project and
+payload manifest. The loopback-only backend and SDK inspector remain source-only.
+See CONSOLIDATED_REVIEW_0.43.63_DEV3.md for current packaged-host evidence. This does
+not establish working receiver Service Mode or a released SDK.
 
 The old implementation must be reviewed component by component. In particular,
 its alternate long-lived session-access key, credential persistence, enrollment

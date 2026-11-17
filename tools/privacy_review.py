@@ -24,8 +24,11 @@ PATTERNS = {
     'computer-label': re.compile(r'\b(?:DESKTOP|LAPTOP|ANDROID)-[a-z0-9]{4,}\b', re.I),
     'device-address': re.compile(r'(?<![a-f0-9])(?:[a-f0-9]{2}[:-]){5}[a-f0-9]{2}(?![a-f0-9])', re.I),
     'bbid-shaped-value': re.compile(r'(?<![a-f0-9])(?:[a-f0-9]{2}:){3}[a-f0-9]{2}(?![a-f0-9])', re.I),
+    # Bare eight-hex values are ambiguous (colors/CRC/bit masks). Match named
+    # identity fields; unlabelled values still require the private denylist pass.
+    'bare-bbid-field': re.compile(r"\b(?:bbid|bb_id|bb_mac_addr(?:_\d+)?)['\"]?\s*[:=]\s*['\"]?(?:0x)?[a-f0-9]{8}(?![a-f0-9])", re.I),
     'long-device-id': re.compile(r'(?<![a-f0-9])[a-f0-9]{20}(?![a-f0-9])', re.I),
-    'private-key-marker': re.compile(r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----'),
+    'private-key-marker': re.compile(r'-----BEGIN (?:(?:RSA |EC |DSA |OPENSSH |ENCRYPTED )?PRIVATE KEY|PGP PRIVATE KEY BLOCK)-----'),
     'access-token': re.compile(r'\b(?:gh[pousr]_[a-z0-9]{20,}|github_pat_[a-z0-9_]{20,})\b', re.I),
 }
 

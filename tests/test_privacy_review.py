@@ -284,3 +284,40 @@ def test_known_personal_identifier_cannot_be_waived():
 def test_unicode_identifier_casefold_is_detected(encoding):
     token = 'synthetic-' + 'Stra' + '\u00dfe'
     assert 'known-personal-identifier' in privacy.categories(token.upper().encode(encoding), [token])
+
+
+def test_reviewed_machine_label_loses_disposition_when_denylist_identifies_it(tmp_path, capsys):
+    label = 'DESK' + 'TOP-' + 'TEST1234'
+    (tmp_path/'example.txt').write_text(label)
+    initial = privacy.review_tree(tmp_path);item = initial['items'][0]
+    rules = {'schema':'ascent.privacy-dispositions.v1', 'items':[
+        {key:item[key] for key in ('item_id','sha256','findings')} | {'reason':'public-product-prose'}]}
+    assert privacy.apply_review(initial, rules)['review_passed']
+    rechecked = privacy.review_tree(tmp_path, tokens=[label])
+    assert 'known-personal-identifier' in rechecked['items'][0]['findings']
+    with pytest.raises(ValueError):privacy.apply_review(rechecked, rules)
+    denylist = tmp_path.parent/(tmp_path.name+'-denylist.json')
+    dispositions = tmp_path.parent/(tmp_path.name+'-review.json')
+    denylist.write_text(json.dumps([label]));dispositions.write_text(json.dumps(rules))
+    assert privacy.main(['--root',str(tmp_path),'--denylist',str(denylist),
+                         '--reviewed-findings',str(dispositions)]) != 0
+    assert label not in capsys.readouterr().out
+
+
+@pytest.mark.parametrize('kind', ['DSA ', 'ENCRYPTED ', 'PGP PRIVATE KEY BLOCK'])
+def test_additional_private_key_markers(kind):
+    suffix = kind if kind.startswith('PGP') else kind+'PRIVATE KEY'
+    marker = '-----BEGIN '+suffix+'-----'
+    assert 'private-key-marker' in privacy.categories(marker.encode(), ())
+
+
+@pytest.mark.parametrize('field', ['bbid','bb_id','bb_mac_addr_0'])
+def test_named_bare_hex_identity_is_flagged(field):
+    value = ''.join(['a1','b2','c3','d4'])
+    assert 'bare-bbid-field' in privacy.categories(('"'+field+'":"'+value+'"').encode(), ())
+
+
+def test_unlabelled_hex_is_not_claimed_to_be_identifiable_without_denylist():
+    value = ''.join(['a1','b2','c3','d4'])
+    assert 'bare-bbid-field' not in privacy.categories(value.encode(), ())
+    assert 'known-personal-identifier' in privacy.categories(value.encode(), [value])

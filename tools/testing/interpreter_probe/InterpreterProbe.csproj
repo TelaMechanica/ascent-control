@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="../../../src/Ascent.Desktop/ServiceHostRequestPolicy.cs" Link="ServiceHostRequestPolicy.cs" />
     <Compile Include="../../../src/Ascent.Desktop/BackendHost.cs" Link="BackendHost.cs" />
     <Compile Include="../../../src/Ascent.Desktop/BoundedLogWriter.cs" Link="BoundedLogWriter.cs" />
   </ItemGroup>

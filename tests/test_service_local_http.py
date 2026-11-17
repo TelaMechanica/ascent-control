@@ -89,3 +89,12 @@ def test_settings_render_truth_and_escaping():
 def test_backend_disables_persistent_bytecode():
     # The actual packaged Windows workflow additionally checks the on-disk tree.
     assert app.sys.dont_write_bytecode is True
+
+
+@pytest.mark.parametrize('method,path', [('GET','/api/service-mode/local/status'),
+                                        ('POST','/api/service-mode/local/receiver/inspect')])
+def test_widget_origin_without_token_cannot_reach_privileged_adapters(server, monkeypatch, method, path):
+    monkeypatch.setattr(app,'_host_credential_store',lambda:pytest.fail('widget touched credentials'))
+    monkeypatch.setattr(app,'_receiver_service',lambda:pytest.fail('widget acquired controller'))
+    status, body = request(server,method,path,body={},origin='https://widget.invalid')
+    assert status == 403 and TOKEN not in json.dumps(body)

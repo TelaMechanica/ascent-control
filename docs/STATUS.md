@@ -229,3 +229,25 @@ The first push and pull-request source checks both passed at
 77efdaabb07c66998a78492eae635a6e0d768c04. The PR stays draft; no merge, release tag,
 MSI or public binary artifact was created. Final documentary checkpoint is
 rechecked separately; implementation remains6eb6d0273523001e0146c71d7a220ae1338aa41f.
+
+## Consolidated Claude review follow-up
+
+Operator-supplied review of a11ed1b5 found no HIGH defect and gave GO for a source
+checkpoint/proposal, with execution/production/MSI NO-GO. See
+CLAUDE_REVIEW_RESPONSE_DEV3.md and SDK_CONFINEMENT_PROPOSAL.md. Historical packaging
+prose is superseded; the three machine-label dispositions were re-inspected as
+actual comments, not workstation names. A real denylist recheck invalidates an old
+exact-content disposition when the label becomes a known identifier.
+
+The native hook now delegates to the actual compiled ServiceHostRequestPolicy:
+exact trusted-view identity, main document, Fetch/XHR and five method/path pairs.
+21native cases pass, plus source wiring/JS absence checks and2actual widget-origin
+HTTP negatives. Real initiating-frame/header-visibility behavior is NOT PROVEN.
+No executor is introduced. Contextual eight-hex identity fields and additional
+private-key markers are screened; anonymous hex/non-GitHub tokens still require
+local denylist/manual review. The private pre-post pass remains mandatory.
+
+Final follow-up:865host tests/55subtests in82.07seconds, Windows desktop compile
+and explicit package verification pass. Owned fixture evidence is not receiver
+qualification, browser confinement, an operator merge decision or production GO.
+Prior evidence, accepted UI pins and dev.3 delivery remain intact.

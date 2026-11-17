@@ -68,3 +68,9 @@ review commit metadata/history and attachments, retain the content hashes and
 record scope/limits. Pin any reviewed dependency finding to its verified bytes;
 never silently edit a third-party DLL or suppress a whole file type. Manual
 content review remains required even when automated checks pass.
+
+The consolidated-review follow-up adds named eight-hex identity-field checks and
+DSA/PGP/encrypted-private-key markers. Unlabelled eight-hex values remain ambiguous
+with CRC values, colors and masks; private denylist/manual review is still required.
+Non-GitHub service-token shapes are not comprehensively covered. Source CI cannot
+substitute for the local operator denylist pass before every posting.
