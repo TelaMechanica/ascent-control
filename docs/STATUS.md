@@ -58,6 +58,30 @@ remain mandatory. Extra widget-only exclusions apply to candidate exports and th
 new tooling delta; they do not waive ordinary product vocabulary in the old tree.
 No extracted native payload, capture or private integration is in this change.
 
+## Read-only local widget catalog preview
+
+The operator selected catalog discovery from a local Widgets folder at startup.
+This increment adds a bounded source/CLI scanner over the existing declarative
+SDK ZIP inspector. It does not wire startup/UI, register/activate packages or
+install receiver software. Links/reparse points/hardlinks, file/folder changes,
+ambiguous identities and scan limits cannot become automatically trusted entries.
+See sdk/LOCAL_CATALOG.md. Native Picker/Netrunner package composition remains open.
+
+Initial Linux catalog/SDK checks pass. Actual Windows owned-file/junction/sharing
+fixtures pass after replacing a cross-API ctime comparison with native identity/
+change-time snapshots. Failed setup and ordinary-file runs remain private evidence.
+A deterministic malformed-ZIP screen reproduced an uncaught negative seek value;
+path/byte regressions now reject it as PackageInvalid while preserving the original
+malformed-package error text. All 500 mutations are handled with no descriptor growth.
+Tracking issue: #30. Final combined catalog/SDK checks: 74 passed. Full host regression
+with the actual Windows catalog fixture: 925 passed, 24 skipped and 55 subtests in 41.93 seconds.
+The Windows fixture passes 18 owned-file/junction/sharing cases. Runtime/camera/tree
+and whitespace checks pass. Exact source/history/privacy review and source CI are
+required on the frozen head. A failed-snapshot reservation regression also prevents stale reads from evading
+the total byte limit. Earlier setup, Windows metadata and error-text failures
+are retained locally. No startup UI, private source, receiver operation, production
+MSI or executor is introduced.
+
 ## Historical checkpoint log
 
 The entries below retain their original temporal scope. Earlier statements that

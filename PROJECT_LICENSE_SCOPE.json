@@ -19,6 +19,8 @@
     "ascent_core/service_receiver.py",
     "ascent_core/service_records.py",
     "ascent_core/service_target.py",
+    "ascent_core/widget_catalog.py",
+    "ascent_core/widget_catalog_io.py",
     "ascent_core/widget_sdk.py",
     "ascent_core/windows_key_material.py",
     "ascent_core/windows_tools.py",
@@ -47,6 +49,7 @@
     "docs/STANDALONE_WIDGET_INVENTORY.md",
     "docs/STATUS.md",
     "docs/TASKS.md",
+    "docs/sdk/LOCAL_CATALOG.md",
     "docs/sdk/PUBLISHER_TRUST.md",
     "docs/sdk/README.md",
     "firmware/hdpro/hdpro_build.py",
@@ -243,6 +246,8 @@
     "tests/test_service_windows_environment.py",
     "tests/test_service_windows_parity.py",
     "tests/test_shared_import.py",
+    "tests/test_widget_catalog.py",
+    "tests/test_widget_catalog_windows.py",
     "tests/test_widget_source_inventory.py",
     "tests/test_windows_device_inventory_native.py",
     "tools/Build-Installer.ps1",
@@ -257,8 +262,10 @@
     "tools/testing/Test-InterpreterProbe.ps1",
     "tools/testing/Test-ServiceTokenPolicy.ps1",
     "tools/testing/interpreter_probe/Program.cs",
+    "tools/testing/widget_catalog_windows_worker.py",
     "tools/testing/windows_ssh_worker.py",
-    "tools/verify_public_build.py"
+    "tools/verify_public_build.py",
+    "tools/widget_sdk.py"
   ],
   "excluded_material": [
     "third_party/**",

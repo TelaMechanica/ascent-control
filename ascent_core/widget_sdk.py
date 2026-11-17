@@ -4,6 +4,7 @@ Digests detect corruption; they do not authenticate publishers. Runtime isolatio
 user grants and publisher verification remain separate production requirements.
 """
 import hashlib
+import io
 import json
 from pathlib import PurePosixPath
 import re
@@ -58,8 +59,20 @@ def _path(value):
 def inspect_package(path):
     if path.stat().st_size > MAX_ARCHIVE_BYTES:
         raise PackageInvalid('Archive exceeds limit')
+    return _inspect_archive(path)
+
+
+def inspect_package_bytes(data):
+    """Inspect an immutable, already bounded snapshot; never reopen a pathname."""
+    if not isinstance(data, bytes) or len(data) > MAX_ARCHIVE_BYTES:
+        raise PackageInvalid('Archive exceeds limit or is not immutable bytes')
+    with io.BytesIO(data) as stream:
+        return _inspect_archive(stream)
+
+
+def _inspect_archive(source):
     try:
-        with zipfile.ZipFile(path) as archive:
+        with zipfile.ZipFile(source) as archive:
             entries = archive.infolist()
             if not 2 <= len(entries) <= MAX_FILES or sum(e.file_size for e in entries) > MAX_EXPANDED_BYTES:
                 raise PackageInvalid('Expanded package exceeds limit')
@@ -108,5 +121,8 @@ def inspect_package(path):
                 raise PackageInvalid('This prototype accepts only a declarative view')
             return {'id': manifest['id'], 'version': manifest['version'], 'sdk': SDK_VERSION,
                     'validated': True, 'publisher_verified': False, 'executable': False}
-    except (zipfile.BadZipFile, zlib.error, EOFError, KeyError, UnicodeError, json.JSONDecodeError, RuntimeError, NotImplementedError) as exc:
+    except PackageInvalid:
+        raise
+    except (zipfile.BadZipFile, zlib.error, EOFError, KeyError, UnicodeError, ValueError,
+            OSError, OverflowError, RuntimeError, NotImplementedError) as exc:
         raise PackageInvalid('Malformed package') from exc

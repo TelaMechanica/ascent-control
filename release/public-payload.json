@@ -12,8 +12,8 @@
     {
       "source": "PROJECT_LICENSE_SCOPE.json",
       "target": "PROJECT_LICENSE_SCOPE.json",
-      "sha256": "63cf9e565a5931fb45ed7035b3c6897ec70c54a20bde0d84037a0839e87cef31",
-      "bytes": 11088
+      "sha256": "71f118c7bf81ed05cda9e69add56953fb1d25a51d39c3131e76b589c18d4d02b",
+      "bytes": 11359
     },
     {
       "source": "THIRD-PARTY-NOTICES.md",
@@ -1158,7 +1158,7 @@
     "COPYRIGHT": "3b79bf9894429d47d2071e14f3a71e82fd9d0616af2a900b53186dce0a91f688",
     "FIRMWARE-LINKING-PERMISSION.txt": "4e36a241313818e923ab2f661141760b7397b449481294f9f9a1ae232ed8e943",
     "LICENSE": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
-    "PROJECT_LICENSE_SCOPE.json": "63cf9e565a5931fb45ed7035b3c6897ec70c54a20bde0d84037a0839e87cef31",
+    "PROJECT_LICENSE_SCOPE.json": "71f118c7bf81ed05cda9e69add56953fb1d25a51d39c3131e76b589c18d4d02b",
     "README.md": "e1795b274ac0a9a51b9b739c36e6df1d79616ccee5a4fd03ddb578f319196e05",
     "THIRD-PARTY-NOTICES.md": "ac6135111a101013434aacd9e763965ef4a15a40273ba0db62b995478a3cfc0f",
     "THIRD-PARTY-SOURCES.json": "3c3d43dd128bfe194a65b8360be6001fb4b25d5a5a00bd7b8f7118eba0c2b03c",
@@ -1173,7 +1173,9 @@
     "ascent_core/service_receiver.py": "4d09b69afa0231cd09ad5ed77c6ae0f15bfe51d7af5926d0bff771b63363199a",
     "ascent_core/service_records.py": "2386ce224102734ca4bcd9a80f236a3a517d056e38fa65c5016b4368eecfd5e2",
     "ascent_core/service_target.py": "673255d8132d297f61ead2d4f974f6f744b1010455472ef01d7d984cc52de6c7",
-    "ascent_core/widget_sdk.py": "3bb2919302cd1551674a129f789c8e217897a30e128a2d66a9b05e8ead4e0445",
+    "ascent_core/widget_catalog.py": "0ee95fd67e3524afc39d8b31ced8c7a423d5a67892ca0c5773cfc0acb8f02c2a",
+    "ascent_core/widget_catalog_io.py": "a24c29c7d98150e39786b86bc10c96781eb814fe750efe87b5e89959c2fcf4f9",
+    "ascent_core/widget_sdk.py": "126e826f186abad962cde2bfed985c48a36bd594c66d8d35abc3e4da21d08e5b",
     "ascent_core/windows_key_material.py": "e8462aad3aa304078be9d32da74ba0cf92942a85849814b28417c32af4ea6b67",
     "ascent_core/windows_tools.py": "ad398d48e036aac7cff2fdd49d95cbeecde9d69a490245b858a38480be45d969",
     "docs/ACPLUS_SERVICE_MODE_REVIEW.md": "390b22e5963f41ef62aac98fe93a7c897c6a19493aaf8933dc8c0ba02422a4fa",
@@ -1203,10 +1205,11 @@
     "docs/SHARED_SOURCE_IMPORT.json": "76206d3ceab3302c76e17a3afd2531f6e06b41655c5c932dc7f1236793b993ee",
     "docs/SOURCE_REVIEW.md": "6f08de97f00d27fc1a8094d516cee51032bc696b671de1b930b6822c5fe9a731",
     "docs/STANDALONE_WIDGET_INVENTORY.md": "aacfd6823d1741077fa54a17a71c797ca9e6d7da3dfc8d1668aaf98fca8aba87",
-    "docs/STATUS.md": "28416d8f77e8816e4b4445db9c6c798c8e3e3fa2c404226a1ce92e3d8e20eca2",
-    "docs/TASKS.md": "e6fffaaa6894e016bf9125df6abcd4153b9109c13a26d562468cf8fba5a1aa39",
+    "docs/STATUS.md": "f019e9e8a51b1b3fc1f3c2da5af6fd7c7cb9efa41132e6c69e724c039414d6ca",
+    "docs/TASKS.md": "3944996ac4fa7fafec8eb25ec2b49d763c2efb5825814f1946e21f41ca74fd0b",
+    "docs/sdk/LOCAL_CATALOG.md": "677c84fa0401868db0014cc2eeded68b1052a83b8e70fb825946340ac1d9b864",
     "docs/sdk/PUBLISHER_TRUST.md": "681143d4ebf1c41280d7698a89ab21e8b710efbf87d404d70cd1f13343ca70fe",
-    "docs/sdk/README.md": "f638845a0ca8d26643b67e10d379a849f7040d6af0482d4806783d5b594ab274",
+    "docs/sdk/README.md": "8fe75bc2f3341c016b722c6893f2a87e96faf2376810f3c2b559b57ea1de90e7",
     "firmware/hdpro/README.md": "2137ae7da86a6f723765d08549495585f3a93ac4bbdd16dca7a8b13b806f0b0c",
     "firmware/hdpro/assets.json": "02125930eb46334d11619d0f51d75505fa6c6560438ca8b790add20307a10645",
     "firmware/hdpro/hdpro_build.py": "4b56721cff332920774dfad4db1031626d64b01da7dc3da2b09d33bb86aeb071",
@@ -1454,6 +1457,8 @@
     "tests/test_service_windows_environment.py": "616ca3f23b04f678430e8b8e6ef13f6db51b87a932c30c24184d26d617b6234d",
     "tests/test_service_windows_parity.py": "043ea06eac1a69fd1d5678425877a68413dcc8fbcbe89599940321b45812b901",
     "tests/test_shared_import.py": "ca3c244f53ed026db7533c9c0f54b5971f14abdb9980406503db42d2f0cf0178",
+    "tests/test_widget_catalog.py": "8ab992e9c1f7f82ccbf3a7da26a2db79588346a79f2c27e03d2b006656604afe",
+    "tests/test_widget_catalog_windows.py": "53b9f78653b3d271da151418c42bb398a21d36da1b69cfac3941aa4fa2af0e8b",
     "tests/test_widget_source_inventory.py": "6dd9c1ba464ab766d6a80ee5365ab46a3f67c58bb58ba27f3796ef9bb69aad80",
     "tests/test_windows_device_inventory_native.py": "88ecfa16d21a59dd343b181c545fee2e0e6ada5752dbc6d478d0803feba1997d",
     "third_party/licenses/LGPL-2.1.txt": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2",
@@ -1978,9 +1983,10 @@
     "tools/testing/Test-ServiceTokenPolicy.ps1": "ceceddee872f2dec2f4bdc8a380fdf7775548b382d74332d712dc804f7af1814",
     "tools/testing/interpreter_probe/InterpreterProbe.csproj": "30dd07de9c2120b14ad658c131d6536d7852875ce907ca01198340e9e7c53bd8",
     "tools/testing/interpreter_probe/Program.cs": "b8542561e463bf73d35f7597bf6916c160b0131cfebf95b2b6c44aa9c8e9818b",
+    "tools/testing/widget_catalog_windows_worker.py": "3a9d24b6bb39b54366d5f982f7f68ec62e654b0e1104ebc78af2734ea4326c37",
     "tools/testing/windows_ssh_worker.py": "011a6ccc5a5841c7e124f191702a1983122722429bbe0c69d354854966af5ce0",
     "tools/verify_public_build.py": "84ad60d683294c700eb9c43b73c417f7b12101bfa8d78ef0e74d0c1051cad9d1",
-    "tools/widget_sdk.py": "9abf766c1b8af61f56fe9e39e8cc70fc2205291dde88042abfcbd2c075375c0b"
+    "tools/widget_sdk.py": "c9655333d6d5c580cf79660f33bcfee1ff493e4d17ed3db2e0ebe094cf435f3e"
   },
   "release_channel": "internal-development"
 }

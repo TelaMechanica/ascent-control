@@ -1,4 +1,4 @@
-"""Build the synthetic SDK example or validate a package; no installation."""
+"""Build/validate the SDK example or scan a local catalog; no installation."""
 import argparse
 import hashlib
 import json
@@ -7,6 +7,7 @@ import sys
 import zipfile
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from ascent_core.widget_sdk import inspect_package
+from ascent_core.widget_catalog import scan_folder
 
 
 def build_example(output):
@@ -25,8 +26,12 @@ def build_example(output):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=('example', 'validate'))
+    parser.add_argument('action', choices=('example', 'validate', 'catalog'))
     parser.add_argument('package', type=Path)
     args = parser.parse_args()
-    result = build_example(args.package) if args.action == 'example' else inspect_package(args.package)
+    result = (build_example(args.package) if args.action == 'example' else
+              scan_folder(args.package) if args.action == 'catalog' else inspect_package(args.package))
     print(json.dumps(result, sort_keys=True))
+    if args.action == 'catalog' and (not result['complete'] or
+            any(row['status'] != 'VALIDATED_PREVIEW' for row in result['entries'])):
+        raise SystemExit(1)
