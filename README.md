@@ -5,12 +5,22 @@ status, firmware inspection and management, RF and RC management where supported
 and a local fleet registry. This repository contains the public desktop source,
 Windows MSI build tooling, shared protocol helpers and camera-image builders.
 
-The released 0.43.62 MSI excludes AC+ receiver-access functions and receiver widget
-deployment. This development branch adds public AC+ host credential preparation,
-guarded receiver-readiness checks and a non-executing widget SDK preview; see the
-[consolidated development review](docs/CONSOLIDATED_REVIEW_0.43.63_DEV3.md).
-Private initial-access installation, receiver widget implementations and production
-widget execution remain outside this candidate.
+## Release and development status
+
+| Version | Available now | Scope |
+|---|---|---|
+| [0.43.62 Windows release](https://github.com/TelaMechanica/ascent-control/releases/tag/v0.43.62) | Downloadable MSI | Public AC; excludes AC+ receiver access and receiver widget deployment |
+| Current `main` | Public development source | AC+ host credential preparation, guarded receiver-readiness checks and a non-executing widget SDK preview |
+
+The AC+ and SDK source checkpoint is merged into this repository. It is not a
+released AC+ installer. Private initial-access installation and receiver widget
+implementations are excluded. Third-party widget execution is disabled.
+
+Start with the [public transition status](docs/PUBLIC_TRANSITION_STATUS.md),
+[AC+ development review](docs/CONSOLIDATED_REVIEW_0.43.63_DEV3.md) or
+[widget SDK quick start](docs/sdk/README.md). The
+[confinement proposal](docs/SDK_CONFINEMENT_PROPOSAL.md) records the remaining
+isolation tests; merging source does not prove those tests or receiver behavior.
 
 ## Download and test
 
@@ -66,9 +76,19 @@ from compatibility mask `0x07` in the examined stock 19.2.4 image to `0x3F` in
 18.21.8: firmware version numbering alone does not establish silicon compatibility.
 VRX, VRX Max and VRX Pro use the separate **Rockchip RK3568** receiver platform.
 
-## Build the Windows MSI
+## Build the released Windows MSI
 
-Install .NET SDK 8.0.424 on Windows x64. From PowerShell in a fresh checkout:
+Current `main` is an internal-development source profile. Its MSI build script
+intentionally refuses release packaging. To reproduce the published maintenance
+version, use a fresh checkout of its release tag with .NET SDK 8.0.424 on Windows
+x64:
+
+```powershell
+git clone --branch v0.43.62 --single-branch https://github.com/TelaMechanica/ascent-control.git ascent-control-04362
+cd ascent-control-04362
+```
+
+Then run:
 
 ```powershell
 .\tools\Build-Installer.ps1 -OutputDir .\artifacts\release
@@ -118,20 +138,20 @@ user has the required vendor rights. It grants no rights to vendor material.
 Read [third-party notices](THIRD-PARTY-NOTICES.md) and the
 [source inventory](THIRD-PARTY-SOURCES.json). Third-party components retain their
 own licenses. Matching source archives accompany native helper/tool binaries.
-Private AC+ components remain outside this public license grant. The proposed
-public AC+ base and widget SDK scaffold are documented in
-[the review checkpoint](docs/ACPLUS_SERVICE_MODE_REVIEW.md); they are not included
-in the current MSI.
+Private components remain outside this public license grant. The public AC+
+foundations and SDK preview are included in current source; they are not included
+in the 0.43.62 MSI. See the [current transition status](docs/PUBLIC_TRANSITION_STATUS.md).
 
 MAX Ethernet connections also offer RTSP viewing, scoped link/channel information and confirmed short menu/pairing requests. See [Ethernet coverage and bench limits](docs/MAX_ETHERNET.md).
 
-## Maintenance update
+## Released maintenance scope
 
 The 0.43.62 maintenance release packages MAX Ethernet RTSP, scoped receiver
 observations and confirmed short menu/pairing requests already in source.
 Operator-confirmed Ethernet playback is bounded evidence; physical menu/pairing
 and other firmware combinations remain unqualified. Pro telemetry tap, receiver
-widgets and Picker remain AC+ work and are not included in public AC.
+widgets and Picker are not included in the 0.43.62 public MSI. The public source
+checkpoint does not add their private implementations.
 
 Repeater Ethernet is also included: identity/role and per-radio QoS reads,
 HF/MF bind requests, and explicitly confirmed role reversal/reboot. The selected
