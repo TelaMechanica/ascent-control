@@ -12,8 +12,8 @@
     {
       "source": "PROJECT_LICENSE_SCOPE.json",
       "target": "PROJECT_LICENSE_SCOPE.json",
-      "sha256": "a73914471348d2790416b3ab9d4922964dc33e938aed530eb26fc83c2ac1feec",
-      "bytes": 11000
+      "sha256": "63cf9e565a5931fb45ed7035b3c6897ec70c54a20bde0d84037a0839e87cef31",
+      "bytes": 11088
     },
     {
       "source": "THIRD-PARTY-NOTICES.md",
@@ -1158,7 +1158,7 @@
     "COPYRIGHT": "3b79bf9894429d47d2071e14f3a71e82fd9d0616af2a900b53186dce0a91f688",
     "FIRMWARE-LINKING-PERMISSION.txt": "4e36a241313818e923ab2f661141760b7397b449481294f9f9a1ae232ed8e943",
     "LICENSE": "8ceb4b9ee5adedde47b31e975c1d90c73ad27b6b165a1dcd80c7c545eb65b903",
-    "PROJECT_LICENSE_SCOPE.json": "a73914471348d2790416b3ab9d4922964dc33e938aed530eb26fc83c2ac1feec",
+    "PROJECT_LICENSE_SCOPE.json": "63cf9e565a5931fb45ed7035b3c6897ec70c54a20bde0d84037a0839e87cef31",
     "README.md": "e1795b274ac0a9a51b9b739c36e6df1d79616ccee5a4fd03ddb578f319196e05",
     "THIRD-PARTY-NOTICES.md": "ac6135111a101013434aacd9e763965ef4a15a40273ba0db62b995478a3cfc0f",
     "THIRD-PARTY-SOURCES.json": "3c3d43dd128bfe194a65b8360be6001fb4b25d5a5a00bd7b8f7118eba0c2b03c",
@@ -1202,8 +1202,9 @@
     "docs/SERVICE_MODE_WINDOWS_PARITY.md": "6b5adaf161bb7ad55f13612e46cad4a2de3f8b74f550e08159789df9d4510695",
     "docs/SHARED_SOURCE_IMPORT.json": "76206d3ceab3302c76e17a3afd2531f6e06b41655c5c932dc7f1236793b993ee",
     "docs/SOURCE_REVIEW.md": "6f08de97f00d27fc1a8094d516cee51032bc696b671de1b930b6822c5fe9a731",
-    "docs/STATUS.md": "45946a6957a31f9ada5a00e3b967240550a76bbb78af9373a863f9fc41de6e2b",
-    "docs/TASKS.md": "53193f841550ec83969c7b79b11a39813c9bdea582fe3bbb45eca3990b462721",
+    "docs/STANDALONE_WIDGET_INVENTORY.md": "aacfd6823d1741077fa54a17a71c797ca9e6d7da3dfc8d1668aaf98fca8aba87",
+    "docs/STATUS.md": "28416d8f77e8816e4b4445db9c6c798c8e3e3fa2c404226a1ce92e3d8e20eca2",
+    "docs/TASKS.md": "e6fffaaa6894e016bf9125df6abcd4153b9109c13a26d562468cf8fba5a1aa39",
     "docs/sdk/PUBLISHER_TRUST.md": "681143d4ebf1c41280d7698a89ab21e8b710efbf87d404d70cd1f13343ca70fe",
     "docs/sdk/README.md": "f638845a0ca8d26643b67e10d379a849f7040d6af0482d4806783d5b594ab274",
     "firmware/hdpro/README.md": "2137ae7da86a6f723765d08549495585f3a93ac4bbdd16dca7a8b13b806f0b0c",
@@ -1453,6 +1454,7 @@
     "tests/test_service_windows_environment.py": "616ca3f23b04f678430e8b8e6ef13f6db51b87a932c30c24184d26d617b6234d",
     "tests/test_service_windows_parity.py": "043ea06eac1a69fd1d5678425877a68413dcc8fbcbe89599940321b45812b901",
     "tests/test_shared_import.py": "ca3c244f53ed026db7533c9c0f54b5971f14abdb9980406503db42d2f0cf0178",
+    "tests/test_widget_source_inventory.py": "6dd9c1ba464ab766d6a80ee5365ab46a3f67c58bb58ba27f3796ef9bb69aad80",
     "tests/test_windows_device_inventory_native.py": "88ecfa16d21a59dd343b181c545fee2e0e6ada5752dbc6d478d0803feba1997d",
     "third_party/licenses/LGPL-2.1.txt": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2",
     "third_party/licenses/NOTICE-GStreamer.txt": "8d9d48950a5ee7e25fcfce624d5bda6e658fc0d1ebf2e2da559343c7d25414ed",
@@ -1966,7 +1968,7 @@
     "tools/Stage-PythonRuntime.ps1": "a59f170e595a8824242d114ac702afc28c7d599628f47feca1ee59e29233b643",
     "tools/Test-GStreamerPayload.ps1": "81249b363384445e701a96b7feb192f68da180346a0b7591553e91c28c54c2b4",
     "tools/check_camera_source.py": "11f21a9bb55dd2862e4a6f3867e83c1e0ddc7f562dea7d315049359207c7ce9f",
-    "tools/check_public_runtime.py": "1f420be6d0bad8985c12b48ef0ec29a7a443f923600ba383514edbb6dc983d25",
+    "tools/check_public_runtime.py": "9f627cccfeefec4dfb7a5257db7b89c31c11a5a149bdd3634e9517e3fa36b756",
     "tools/check_tree.py": "a6ebf4b947530b76345fccc453ff19c0730df7102cadd69e97b0cc678c6d73c0",
     "tools/hdpro_port_assets.json": "02125930eb46334d11619d0f51d75505fa6c6560438ca8b790add20307a10645",
     "tools/inspect_local.py": "abfc8c82a21918505049b3b2da1b0cf24108161a2a480b7f79de4723802205f6",

@@ -37,6 +37,27 @@ checks pass. Local privacy review uses 39 identifiers, zero known matches and th
 same seven exact-current-source dispositions. No new suppression is introduced.
 No browser isolation, receiver operation, production MSI or hardware PASS is claimed.
 
+## Standalone widget inventory profile
+
+Picker/Netrunner extraction now has an explicit source-inventory profile in the
+existing runtime checker. Desktop checks remain the default. The profile refuses
+file/hash drift, unsafe paths/links, ambiguous or escaping includes, runtime-to-test
+dependencies and undeclared Python imports. Native subsets still report
+release_approved:false. See STANDALONE_WIDGET_INVENTORY.md. This changes tooling,
+not the shipped runtime, and does not publish any extracted widget source.
+
+The operator-supplied independent review corroborates the r4 native-core privacy
+and artifact checks; complete widgets remain NOT READY. Mapster extraction is
+currently deferred. Tracking issue: #28. Standalone targeted tests: 46 passed;
+combined inventory/shared-source/license/resource checks: 60 passed, 27 subtests.
+Full host regression: 892 passed, 24 skipped, 55 subtests in 43.42 seconds. Desktop,
+camera and tree checks pass. Actual local native-subset exports pass the explicit
+profile, tree and generic/local privacy gates; they still have no release approval.
+The complete-tree personal-identifier gate and outgoing history/metadata review
+remain mandatory. Extra widget-only exclusions apply to candidate exports and the
+new tooling delta; they do not waive ordinary product vocabulary in the old tree.
+No extracted native payload, capture or private integration is in this change.
+
 ## Historical checkpoint log
 
 The entries below retain their original temporal scope. Earlier statements that

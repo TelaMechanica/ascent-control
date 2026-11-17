@@ -23,6 +23,17 @@ Cleanup validation: 140 targeted checks and full host 846 passed/24 skipped/
 README/status/HID regression scope. Publish only after final source/history/
 metadata privacy review and green source CI on the exact outgoing head.
 
+Standalone inventory tooling owner: Codex. Scope: tools/check_public_runtime.py,
+tests/test_widget_source_inventory.py, standalone schema documentation and checked
+source/license inventories. Preserve the existing desktop branch and publication
+privacy gates. Validate exact local native subsets without inventing desktop
+manifests. Complete host/control/display/package/license/lifecycle boundaries before
+creating widget repositories; no extraction publication or hardware operation.
+Issue #28 tracks this tooling scope. Targeted46/full892 pass (24 skipped,
+55 subtests); both actual native subsets pass the explicit inventory profile.
+Remaining work is full host/control/display, provenance and package lifecycle;
+Mapster extraction stays deferred.
+
 ## Historical ownership and checkpoints
 
 Earlier local-publication and draft-PR instructions below are superseded by the
