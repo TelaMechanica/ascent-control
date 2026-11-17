@@ -34,6 +34,18 @@ Issue #28 tracks this tooling scope. Targeted46/full892 pass (24 skipped,
 Remaining work is full host/control/display, provenance and package lifecycle;
 Mapster extraction stays deferred.
 
+Read-only catalog owner: Codex. Scope: source-only widget_catalog/widget_catalog_io,
+immutable-byte SDK inspection, catalog CLI, adversarial and owned Windows fixture
+tests and local-catalog documentation. Preserve the declarative SDK contract and
+native/receiver gates. No automatic registration, startup route, UI import flow or
+activation is introduced. Issue #30 tracks this source-only increment.
+74 combined catalog/SDK checks, 18 actual Windows cases and 925 full host tests pass
+(24 skipped, 55 subtests). The 500 malformed cases have no unexpected result or descriptor
+growth. Finish frozen history/privacy/source CI and the normal source merge.
+Next: trusted folder configuration/startup rescan ownership and text-only UI,
+without exposing arbitrary folder paths or admitting untrusted content to the
+trusted main WebView.
+
 ## Historical ownership and checkpoints
 
 Earlier local-publication and draft-PR instructions below are superseded by the

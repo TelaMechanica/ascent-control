@@ -11,6 +11,16 @@ python tools/widget_sdk.py example hello-widget.zip
 python tools/widget_sdk.py validate hello-widget.zip
 ```
 
+A read-only [local folder catalog preview](LOCAL_CATALOG.md) is also available:
+
+```sh
+python tools/widget_sdk.py catalog ./Widgets
+```
+
+It lists supported declarative ZIP packages without extraction, registration or
+execution. This is a source/CLI preview, not the application's startup scanner or
+an implemented Widget Manager installation flow.
+
 The example command creates a new file and refuses to overwrite one. It produces
 identical bytes on repeat builds with the same source. Keep generated archives
 outside source commits. Validation reports `publisher_verified: false` and
