@@ -66,7 +66,7 @@ APP_EDITION = _resolve_edition()
 
 SERVICE_MODE_AVAILABLE = False
 
-# Desktop-generated bearer secret, consumed once and never forwarded to children.
+# Native host bearer secret, consumed once and never forwarded to children.
 # A product/edition flag is not authority. This only protects local preparation;
 # receiver enrollment/authentication and future widget isolation remain separate.
 import hmac
@@ -5218,6 +5218,19 @@ class Handler(SimpleHTTPRequestHandler):
         if not self._allow_local_request(write=False):
             return
         p = urlparse(self.path).path
+        if p in ('/api/widgets/local/catalog', '/api/widgets/local/rescan'):
+            if not self._require_host_session(): return
+            if p != '/api/widgets/local/catalog':
+                self.json_response({'ok': False, 'error': 'METHOD_NOT_ALLOWED'}, 405)
+                return
+            if urlparse(self.path).query or urlparse(self.path).fragment:
+                self.json_response({'ok': False, 'error': 'INVALID_CATALOG_REQUEST'}, 400)
+                return
+            result = self.server.widget_catalog_status()
+            self.json_response(result if result is not None else
+                               {'ok': False, 'error': 'CATALOG_NOT_STARTED'},
+                               200 if result is not None else 503)
+            return
         if p == '/api/app/host-proof':
             values = parse_qs(urlparse(self.path).query).get('challenge', [])
             if not _HOST_SESSION_TOKEN or len(values) != 1 or not re.fullmatch(r'[a-f0-9]{64}', values[0]):
@@ -5446,6 +5459,22 @@ class Handler(SimpleHTTPRequestHandler):
         if not self._allow_local_request(write=True):
             return
         p = urlparse(self.path).path
+        if p in ('/api/widgets/local/catalog', '/api/widgets/local/rescan'):
+            if not self._require_host_session(): return
+            if p != '/api/widgets/local/rescan':
+                self.json_response({'ok': False, 'error': 'METHOD_NOT_ALLOWED'}, 405)
+                return
+            try:
+                if urlparse(self.path).query or urlparse(self.path).fragment or self._read_json_body() != {}:
+                    raise ValueError('Catalog requests have no parameters')
+            except (ValueError, UnicodeError):
+                self.json_response({'ok': False, 'error': 'INVALID_CATALOG_REQUEST'}, 400)
+                return
+            result = self.server.widget_catalog_status(rescan=True)
+            self.json_response(result if result is not None else
+                               {'ok': False, 'error': 'CATALOG_NOT_STARTED'},
+                               202 if result is not None else 503)
+            return
         if p == '/api/service-mode/local/credential':
             if not self._require_host_session(): return
             try: result = service_credential_request(self._read_json_body())
@@ -5517,7 +5546,7 @@ class Handler(SimpleHTTPRequestHandler):
         if p.startswith("/api/cgc/"):
             # Same fault the maps routes had: these read a JSON body, so they are POST
             # routes, but the block sat in do_GET where it both never ran as intended
-            # AND shadowed the Live-mode reads behind it -- /api/cgc/live and
+            # AND obscured the Live-mode reads behind it -- /api/cgc/live and
             # /api/cgc/eligibility answered 404 UNKNOWN_CGC_ROUTE, and /api/cgc/osd
             # reached the OSD *action* handler instead of the OSD read. Live mode
             # therefore showed nothing, silently, for the same reason MAPS did.
@@ -6042,9 +6071,38 @@ class AscentHTTPServer(ThreadingHTTPServer):
     disconnect_errors = (ConnectionAbortedError, ConnectionResetError, BrokenPipeError)
 
     def __init__(self, *a, **kw):
+        self._catalog_lock = threading.RLock()
+        self._catalog = None
+        self._catalog_closed = False
         super().__init__(*a, **kw)
         self.client_disconnects = 0
         self.last_disconnect = None
+
+    def start_widget_catalog(self):
+        # Trusted startup only. save_directory and HTTP input cannot choose this root.
+        with self._catalog_lock:
+            if self._catalog_closed or not _HOST_SESSION_TOKEN:
+                return None
+            if self._catalog is None:
+                from ascent_core.widget_catalog_host import CatalogCoordinator
+                folder = (local_settings.config_root() / 'Widgets').absolute()
+                self._catalog = CatalogCoordinator(folder)
+                self._catalog.request_scan()
+            return self._catalog.document()
+
+    def widget_catalog_status(self, *, rescan=False):
+        with self._catalog_lock:
+            if self._catalog is None:
+                return None
+            return self._catalog.request_scan() if rescan else self._catalog.document()
+
+    def server_close(self):
+        # Do not join potentially blocked filesystem I/O during application shutdown.
+        with self._catalog_lock:
+            self._catalog_closed = True
+            if self._catalog is not None:
+                self._catalog.close()
+        super().server_close()
 
     def handle_error(self, request, client_address):
         exc = sys.exc_info()[1]
@@ -6065,6 +6123,7 @@ def main():
 
     server = AscentHTTPServer((a.listen, a.port), Handler)
     SERVER_REF["server"] = server
+    server.start_widget_catalog()
     actual_port = server.server_address[1]
     url = f"http://{a.listen}:{actual_port}/"
     print(f"Ascent Control {APP_VERSION}: {url}")
@@ -6078,6 +6137,8 @@ def main():
         server.serve_forever()
     except KeyboardInterrupt:
         pass
+    finally:
+        server.server_close()
 
 def support_bundle(*, audience='public'):
     return {'schema': 'ascent.public.support.v1', 'app': {'name': 'Ascent Control', 'version': APP_VERSION}, 'firmware_divergences': FIRMWARE_DIVERGENCES, 'audience': 'public', 'identities_included': False, 'hardware_qualified': False}

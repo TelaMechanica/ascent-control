@@ -360,3 +360,28 @@ prior Windows filesystem parity qualification. Source/runtime inventories and
 privacy checks pass. Complete package verification is not available in this
 source-only worktree because downloaded dependency payloads are absent; no
 packaged-build claim is made. Failed invocation evidence remains private.
+
+
+## Trusted startup catalog integration
+
+Tracking issue: #34. Native-session startup captures the fixed application-data
+Widgets folder once and schedules discovery. Authenticated exact status/rescan
+routes reject caller paths, body parameters, foreign origins and wrong methods.
+Shutdown invalidates observations. Four read-only SDK/catalog modules are explicit
+desktop inputs; the private widget import guard retains a narrow importer/module
+allowlist and also rejects qualified private imports. Native token policy now has
+seven exact pairs. No package content enters the WebView; browser isolation and
+third-party execution remain unproven. No Widget Manager or Open folder UI yet.
+
+Validation: 55 combined catalog/HTTP/package-boundary checks pass. Final full suite
+with actual compiled Windows probe opt-in: 968 passed, 23 skipped, 55 subtests
+passed. Native policy: 34 cases passed. A fresh Windows development publish and
+complete 386-file payload verification pass. An owned packaged Windows backend
+proves boot discovery, authentication/path refusal, current-version rescan and
+normal shutdown without receiver operations or installed application state.
+The initial added discovery test used a non-provisional 1.x fixture; correcting
+it to the existing SDK 0.x contract passed without changing inspector behavior.
+The privacy gate rejected a stale backend byte pin. Two ordinary comments were
+clarified to remove ambiguous identifier-shaped prose; the obsolete disposition
+was removed, reducing current-source dispositions from seven to six. No new
+disposition or known-identifier waiver is added. Failed runs remain local.

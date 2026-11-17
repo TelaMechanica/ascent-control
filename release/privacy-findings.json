@@ -10,14 +10,6 @@
       "reason": "format-validation-code"
     },
     {
-      "item_id": "c765c97f594386b9693ebecdabd403483a4d96bb6c6f967ef1fd292aad4e345b",
-      "sha256": "bb6854eedb445973a67f0614445927179e865cb0a19c1711b2a4f83df4766332",
-      "findings": [
-        "computer-label"
-      ],
-      "reason": "public-product-prose"
-    },
-    {
       "item_id": "5c6da1bb7ab8adf3256015ddadc33358e7181c9f8faf0da0b2e4639db0b86fbb",
       "sha256": "f807cdb88f4468912d2f32900921a795de32d1f8466c73c77cb96aef3f67bd14",
       "findings": [

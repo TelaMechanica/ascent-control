@@ -17,6 +17,8 @@ internal static class ServiceHostRequestPolicy
             page.AbsolutePath is not ("/" or "/index.html")) return false;
         return (method, request.AbsolutePath) switch
         {
+            ("GET", "/api/widgets/local/catalog") => true,
+            ("POST", "/api/widgets/local/rescan") => true,
             ("GET", "/api/service-mode/local/status") => true,
             ("POST", "/api/service-mode/local/prepare") => true,
             ("POST", "/api/service-mode/local/credential") => true,
