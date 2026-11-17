@@ -163,3 +163,10 @@ concurrency/failure tests, SDK documentation and source/license inventories.
 Next: capture the host-owned Widgets directory once, wire authenticated startup/
 rescan/status/shutdown, then a text-only Widget Manager. Keep raw caller paths,
 package views, activation, installation and execution outside this interface.
+
+
+Trusted catalog startup owner: Codex, issue #34. Backend lifecycle/authenticated
+status/rescan, native exact-path policy, curated read-only payload inputs and
+concurrency/HTTP/package-boundary checks. Next: fixed-folder opening action and
+text-only Widget Manager, with package metadata escaped as text and no package
+view, activation, install or execution. Keep private key recovery work separate.

@@ -9,6 +9,14 @@ BLOCKED=('service_mode','private_receiver','widget_','picker','netrunner','caddx
          'receiver_operations','receiver_fleet','update_enroll')
 
 
+# Curated read-only catalog edges only; receiver widget implementations remain blocked.
+PUBLIC_WIDGET_IMPORTS = {
+    ('ascent_core', 'widget_catalog.py', 1): {'widget_sdk', 'widget_catalog_io'},
+    ('ascent_core', 'widget_catalog_host.py', 1): {'widget_catalog'},
+    ('runtime', 'dev_harness.py', 0): {'ascent_core.widget_catalog_host'},
+}
+
+
 def sha(path):
     value=hashlib.sha256()
     with Path(path).open('rb') as source:
@@ -25,7 +33,10 @@ def plain(path):
 def check_python(path):
     for node in ast.walk(ast.parse(path.read_bytes())):
         imports=[a.name for a in node.names] if isinstance(node,ast.Import) else [node.module or ''] if isinstance(node,ast.ImportFrom) else []
-        if any(name.split('.')[0].startswith(BLOCKED) for name in imports):raise ValueError(path.name+': private import')
+        permitted = (isinstance(node, ast.ImportFrom) and node.module in
+                     PUBLIC_WIDGET_IMPORTS.get((path.parent.name, path.name, node.level), set()))
+        if not permitted and any(any(part.startswith(BLOCKED) for part in name.split('.')) for name in imports):
+            raise ValueError(path.name+': private import')
         if isinstance(node,ast.Call):
             func=node.func
             if isinstance(func,ast.Name) and func.id in ('__import__','eval','exec','compile'):raise ValueError(path.name+': unreviewed dynamic execution')

@@ -86,9 +86,24 @@ new work; an already blocked daemon worker may finish later and cannot publish.
 Scanner failures and worker-start failures return fixed codes, not exception text
 or root paths. Serialized observations are limited to 256 KiB.
 
-The app still needs the configured folder owner, startup/shutdown wiring,
-authenticated HTTP routes and a text-only Widget Manager view. The coordinator
-is not shipped by the desktop project or connected to native token injection.
+The development desktop now explicitly ships the four read-only SDK/catalog
+modules. Trusted backend startup captures `config_root()/Widgets` once and starts
+a background scan only when the per-launch native host session exists. The
+configurable save directory cannot relocate it. Startup does not create a missing
+folder; shutdown closes the coordinator without joining blocked filesystem I/O.
+
+`GET /api/widgets/local/catalog` returns the current observation and
+`POST /api/widgets/local/rescan` accepts an empty JSON object and schedules a new
+generation. Both require the native host session and existing local-origin
+checks. Query parameters, nonempty bodies and wrong methods are refused. Requests
+cannot start an uninitialized catalog or supply a folder. The native hook adds
+these two exact method/path pairs, for seven total; it exposes no secret to page
+JavaScript. Historical review claims that the SDK inspector is unshipped and that
+the hook has five pairs describe earlier checkpoints. Browser/frame isolation
+remains unproven and package content must never enter the trusted WebView.
+
+The app still needs an explicit fixed-folder opening action and a text-only
+Widget Manager view. No package view is rendered by this integration.
 Package filenames remain untrusted local data; snapshot copies are not sanitized
 support attachments.
 No raw caller-supplied path should become a privileged HTTP folder scan. Package

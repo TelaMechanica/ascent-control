@@ -906,6 +906,26 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="..\..\ascent_core\widget_sdk.py">
+      <Link>ascent_core\widget_sdk.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\ascent_core\widget_catalog.py">
+      <Link>ascent_core\widget_catalog.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\ascent_core\widget_catalog_io.py">
+      <Link>ascent_core\widget_catalog_io.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="..\..\ascent_core\widget_catalog_host.py">
+      <Link>ascent_core\widget_catalog_host.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="..\..\ascent_core\service_target.py">
       <Link>ascent_core\service_target.py</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

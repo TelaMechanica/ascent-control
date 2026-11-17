@@ -16,6 +16,16 @@ if (args.Length == 1 && args[0] == "token-policy")
         passed.Add(Check(Origin("/"), Origin("/api/service-mode/local/" + path), method));
         passed.Add(!Check(Origin("/"), Origin("/api/service-mode/local/" + path), method, false));
     }
+    foreach (var entry in new[] { ("GET", "/api/widgets/local/catalog"), ("POST", "/api/widgets/local/rescan") })
+    {
+        passed.Add(Check(Origin("/"), Origin(entry.Item2), entry.Item1));
+        passed.Add(!Check(Origin("/"), Origin(entry.Item2), entry.Item1, false));
+        passed.Add(!Check("https://widget.invalid/", Origin(entry.Item2), entry.Item1));
+        passed.Add(!Check(Origin("/"), Origin(entry.Item2), entry.Item1 == "GET" ? "POST" : "GET"));
+        passed.Add(!Check(Origin("/widget/view"), Origin(entry.Item2), entry.Item1));
+        passed.Add(!Check(Origin("/"), Origin(entry.Item2), entry.Item1, sender: new object()));
+    }
+    passed.Add(!Check(Origin("/"), Origin("/api/widgets/local/catalog/extra")));
     passed.Add(!Check(Origin("/"), Origin("/api/service-mode/local/status"), sender: new object()));
     passed.Add(!Check("https://widget.invalid/", Origin("/api/service-mode/local/status")));
     passed.Add(!Check(Origin("/widget/view"), Origin("/api/service-mode/local/status")));
