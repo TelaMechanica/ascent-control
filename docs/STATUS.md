@@ -417,3 +417,21 @@ Failed/intermediate evidence and the first build are retained locally.
 Final URI negative fixtures also reject semicolon path parameters before catalog
 or folder adapters. Three tests reproduced the earlier ignored-parameter behavior;
 the fixed root was never selectable, and the strict rejection now passes.
+
+
+## Receiver client-key compatibility
+
+Tracking issue: #39; full legacy migration remains #36. The pure host policy
+recommends a retained compatible key without generating/replacing one. Known
+classic Ground identity restricts readiness to ECDSA P-256; unknown compatibility
+remains unknown. Readiness refuses incompatible selection before credential load
+and independently checks the actual loaded public-key algorithm before SSH or
+enrollment lookup. Settings explains the restriction, while server gates remain
+authoritative. No private conversion/bootstrap or credential data is imported.
+
+Validation: 15 pure/controller policy cases and Settings render checks pass.
+Final full suite with owned Windows interpreter/native/catalog opt-ins: 1000 passed,
+22 skipped, 55 subtests passed. Widget Manager remains intact. Fresh isolated
+Windows development publish and complete 388-file payload verification pass.
+No retained credential was read or changed; fixtures use synthetic material.
+Legacy conversion/initial access and actual receiver qualification remain open.

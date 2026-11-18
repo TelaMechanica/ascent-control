@@ -946,6 +946,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="..\..\ascent_core\service_key_policy.py">
+      <Link>ascent_core\service_key_policy.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="..\..\ascent_core\service_receiver.py">
       <Link>ascent_core\service_receiver.py</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
