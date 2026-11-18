@@ -426,8 +426,8 @@
     {
       "source": "runtime/dev_harness.py",
       "target": "runtime/dev_harness.py",
-      "sha256": "193bf92f6f81af34b3b207b31a342751e0dc942b5e92536997fbe6cc6ee53ed1",
-      "bytes": 315786
+      "sha256": "0d2606830c2d7671b1b383b20176a8ec96c1344bd07f3ecbca7ed437b3551518",
+      "bytes": 315803
     },
     {
       "source": "runtime/device_capability.py",
@@ -1236,9 +1236,9 @@
     "docs/SHARED_SOURCE_IMPORT.json": "76206d3ceab3302c76e17a3afd2531f6e06b41655c5c932dc7f1236793b993ee",
     "docs/SOURCE_REVIEW.md": "6f08de97f00d27fc1a8094d516cee51032bc696b671de1b930b6822c5fe9a731",
     "docs/STANDALONE_WIDGET_INVENTORY.md": "aacfd6823d1741077fa54a17a71c797ca9e6d7da3dfc8d1668aaf98fca8aba87",
-    "docs/STATUS.md": "b8e61878fc75714ebd678ee36d9f1f702ca188399111b9366b7bfc3bd67a4a7c",
+    "docs/STATUS.md": "76c1942e8efb313d159607ba5f57d579916470bfa48c10649364ee4136f13ca0",
     "docs/TASKS.md": "34d7a94d1520e7fa396bcdf1adc75dc21148854766d7b5be0dff5320ed178a67",
-    "docs/sdk/LOCAL_CATALOG.md": "4ea3514ecdbe47eb452766f6bb42641ba1cc43310353ab00347a6a735700eba2",
+    "docs/sdk/LOCAL_CATALOG.md": "c30da8d0c84f442858a09bef03012bf1c091da10a1a4700b764c5fcd8aad9f95",
     "docs/sdk/PUBLISHER_TRUST.md": "681143d4ebf1c41280d7698a89ab21e8b710efbf87d404d70cd1f13343ca70fe",
     "docs/sdk/README.md": "c76c9f0f7940b112b60b4042d213b627bbef75e3a57a91dfb3adbed2503f530d",
     "firmware/hdpro/README.md": "2137ae7da86a6f723765d08549495585f3a93ac4bbdd16dca7a8b13b806f0b0c",
@@ -1331,7 +1331,7 @@
     "runtime/caddx_sky_user_cfg.py": "ae564e925856ccb8a483c9df477bfbf2c50472ff75af51af8a588c6b935352f4",
     "runtime/caddx_tile_image.py": "3362291ff44cbf09ed44d4814fe5efb198925eed66689e033d4f411b93fdd568",
     "runtime/caddx_vendor_write.py": "f22b3d83106beb88c69b04339537830ace2535ce1bdda5fc4d2d4b9b316f5af7",
-    "runtime/dev_harness.py": "193bf92f6f81af34b3b207b31a342751e0dc942b5e92536997fbe6cc6ee53ed1",
+    "runtime/dev_harness.py": "0d2606830c2d7671b1b383b20176a8ec96c1344bd07f3ecbca7ed437b3551518",
     "runtime/device_capability.py": "fa9d47b46e2922ca5dfb0de1e65566c7bf691d7e7c332954a5c0216811af2911",
     "runtime/device_config_store.py": "979e2e28e0068b22ceff62a3eb8ed745f2535275369a19dc05450845a0e73415",
     "runtime/device_naming.py": "83e5e3b7a732ed35c3e7262d6a5140b34e8a04293e6e6a2b3e082fc9133e1274",
@@ -1491,7 +1491,7 @@
     "tests/test_shared_import.py": "ca3c244f53ed026db7533c9c0f54b5971f14abdb9980406503db42d2f0cf0178",
     "tests/test_widget_catalog.py": "8ab992e9c1f7f82ccbf3a7da26a2db79588346a79f2c27e03d2b006656604afe",
     "tests/test_widget_catalog_host.py": "2d1234c6681eb5dc681ab0c66a0a92b4e51231da99ef6fc827354476ac3a3e35",
-    "tests/test_widget_catalog_http.py": "00b407bfa2d2a4b12a9e2455294a23b3daf433844f12f197e4ab5cac63a54bbe",
+    "tests/test_widget_catalog_http.py": "7e5bff31a89f2afde0527f930d92a34a55b775910c350b44ad44b469f97e89c3",
     "tests/test_widget_catalog_packaging.py": "4e93189a7ffb319ab2f052dd8414250f79222f7bae110ce7bbe275730583f723",
     "tests/test_widget_catalog_ui.py": "dce568f869f840f9432c4ac1295c2bd64e7413b0db01140693b9bc8f3d100c15",
     "tests/test_widget_catalog_windows.py": "74a9a0e6219ea8beed6bd4b9a84d24814aa69798689344e2fc9dac31a428d21c",

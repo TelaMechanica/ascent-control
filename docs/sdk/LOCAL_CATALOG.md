@@ -97,7 +97,7 @@ folder; shutdown closes the coordinator without joining blocked filesystem I/O.
 `GET /api/widgets/local/catalog` returns the current observation and
 `POST /api/widgets/local/rescan` accepts an empty JSON object and schedules a new
 generation. Both require the native host session and existing local-origin
-checks. Query parameters, nonempty bodies and wrong methods are refused. Requests
+checks. URI path/query parameters, nonempty bodies and wrong methods are refused. Requests
 cannot start an uninitialized catalog or supply a folder. The native hook adds
 these exact method/path pairs; it exposes no secret to page
 JavaScript. Historical review claims that the SDK inspector is unshipped and that

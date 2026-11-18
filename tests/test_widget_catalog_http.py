@@ -176,3 +176,17 @@ def test_ambiguous_catalog_body_framing_is_refused_before_adapters(server, monke
     assert response.status == 400
     assert json.loads(response.read())['error'] == 'INVALID_CATALOG_REQUEST'
     connection.close()
+
+
+@pytest.mark.parametrize('method,path', [
+    ('GET', '/api/widgets/local/catalog;folder=synthetic-other'),
+    ('POST', '/api/widgets/local/rescan;folder=synthetic-other'),
+    ('POST', '/api/widgets/local/open-folder;folder=synthetic-other'),
+])
+def test_semicolon_parameters_cannot_reach_catalog_or_folder_adapters(server, monkeypatch, method, path):
+    calls = []
+    monkeypatch.setattr(server, 'widget_catalog_status', lambda **kw: calls.append('catalog') or {'ok': True})
+    monkeypatch.setattr(server, 'open_widget_catalog_folder', lambda: calls.append('folder') or {'ok': True, 'open_requested': True})
+    code, result = request(server, method, path, token=TOKEN, body={} if method == 'POST' else None)
+    assert code == 400 and result['error'] == 'INVALID_CATALOG_REQUEST'
+    assert calls == []

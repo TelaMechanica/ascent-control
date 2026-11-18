@@ -5190,7 +5190,7 @@ class Handler(SimpleHTTPRequestHandler):
         try:
             target = urlparse(self.path)
             lengths = self.headers.get_all('Content-Length', [])
-            if (target.query or target.fragment or len(lengths) > 1 or
+            if (target.params or target.query or target.fragment or len(lengths) > 1 or
                     self.headers.get_all('Transfer-Encoding', [])):
                 return False
             length = int(lengths[0]) if lengths else 0

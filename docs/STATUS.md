@@ -404,7 +404,7 @@ and this catalog interface does not change key handling.
 
 Validation: 56 combined host/DOM/HTTP/package checks pass, including 22 actual
 Windows filesystem/folder-opening cases with fake openers. Final full regression
-with actual Windows interpreter/native/catalog opt-ins: 982 passed, 22 skipped,
+with actual Windows interpreter/native/catalog opt-ins: 985 passed, 22 skipped,
 55 subtests passed. The 40-case compiled request policy, fresh Windows development
 publish and 387-file package verification pass. No Explorer launch, actual WebView
 visual/accessibility acceptance or hardware qualification is claimed by these tests.
@@ -413,3 +413,7 @@ separate tests keep body parameters, duplicate lengths and transfer coding refus
 Rendered tests preserve folder-opening acceptance separately from a later failed
 status read, reject prototype-property labels and ignore invalid observation time.
 Failed/intermediate evidence and the first build are retained locally.
+
+Final URI negative fixtures also reject semicolon path parameters before catalog
+or folder adapters. Three tests reproduced the earlier ignored-parameter behavior;
+the fixed root was never selectable, and the strict rejection now passes.
