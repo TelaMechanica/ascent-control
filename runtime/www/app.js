@@ -19,6 +19,8 @@ const hx = v => typeof v === 'number' ? `0x${v.toString(16).toUpperCase().padSta
 const safeErr = v => { const x=String(v??'').replace(/[A-Z]:\\[^:\r\n]+/gi,'<local-path>').replace(/\\\\[^:\r\n]+/g,'<network-path>'); if(/failed to fetch/i.test(x)) return 'LOCAL RUNTIME REQUEST FAILED'; return x.slice(0,240); };
 
 const ERROR_SENTENCES = {
+  CLIENT_KEY_ALGORITHM_INCOMPATIBLE: 'This receiver requires a compatible client key. Select ECDSA P-256 for a Gnd485 receiver. Existing keys have not been replaced.',
+  CLIENT_KEY_ALGORITHM_MISMATCH: 'The stored key algorithm does not match the selected credential type. Existing keys were preserved; check the selected credential before trying again.',
   SSH_READINESS_NOT_VERIFIED: 'SSH authentication or its fixed no-op did not complete. The matching client public key must already be authorized on this receiver. No receiver trust record was created by this attempt.',
   HOST_KEY_CHANGED: 'The receiver host key differs from the saved trust record. The saved key was preserved. Verify the receiver identity before any separate trust replacement.',
   RECEIVER_OBSERVATION_EXPIRED: 'The fingerprint observation expired or was already used. Read the selected receiver fingerprint again.',
@@ -2633,13 +2635,15 @@ function localServicePanel(){
   body+=`<button id="serviceLocalCreate" ${w.busy||checked!==false?'disabled':''}>Create credential on this PC</button></div>`;
   body+='<p>Read the selected USB receiver’s SSH host fingerprint, then compare it with a trusted reference before confirming. Observing a fingerprint does not authenticate the receiver.</p>';
   const observed=w.observation;
+  const incompatible=observed?.compatible_client_key_types&&!observed.compatible_client_key_types.includes(w.keyType);
+  if(incompatible)body+='<p>This receiver requires ECDSA P-256. Select that credential type and check its preparation. Existing keys stay unchanged.</p>';
   if(observed){
     body+=kv('Observed receiver',observed.receiver_name)+kv('Observed firmware',observed.firmware||'Not reported');
     body+=kv('Observed SSH host fingerprint',observed.host_fingerprint);
     body+='<p>SSH authentication has not been established by this observation.</p>';
   }
   body+=`<div class="actions"><button id="serviceReceiverInspect" ${w.busy?'disabled':''}>Read selected receiver fingerprint</button>`;
-  body+=`<button id="serviceReceiverVerify" ${w.busy||!observed||checked!==true?'disabled':''}>Confirm fingerprint and check SSH</button></div>`;
+  body+=`<button id="serviceReceiverVerify" ${w.busy||!observed||checked!==true||incompatible?'disabled':''}>Confirm fingerprint and check SSH</button></div>`;
   if(checked!==true)body+='<p>Check or create the local credential before attempting SSH authentication.</p>';
   if(w.receiverResult){
     body+=kv('Last completed SSH check',w.receiverResult.receiver_name);

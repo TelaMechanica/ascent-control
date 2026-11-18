@@ -26,3 +26,9 @@ assert(html.includes('SSH authentication has not been established'));
 ui.localServiceState().receiverResult={receiver_name:'<synthetic result>'};
 html=ui.localServicePanel();assert(html.includes('not a live session'));
 assert(html.includes('&lt;synthetic result&gt;'));
+
+ui.localServiceState().keyType='ed25519';
+ui.localServiceState().observation.compatible_client_key_types=['ecdsa'];
+html=ui.localServicePanel();
+assert(html.includes('This receiver requires ECDSA P-256'));
+assert(html.includes('id="serviceReceiverVerify" disabled'));

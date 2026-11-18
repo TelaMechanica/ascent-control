@@ -178,3 +178,11 @@ inputs, render/late-result/native-folder tests and UI pin provenance. Preserve t
 locked baseline in history. No feature-page, receiver lifecycle or guest execution
 route is added. Full AC+ legacy migration must include issue #36's compatible-key
 conversion/activation guards and preservation tests; do not drop the repaired flow.
+
+
+Client-key compatibility owner: Codex, #39. Port the prior reviewed local policy
+to current main without losing Widget Manager/pins. Guard selection and actual
+key material before readiness side effects; preserve explicit archival exports.
+Future legacy conversion/recovery must apply the same rule before authorization
+or publishing a changed identity; source-only readiness does not implement those
+private flows or establish hardware qualification.

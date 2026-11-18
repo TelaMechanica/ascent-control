@@ -10,6 +10,7 @@ import time
 from .service_access import AccessDenied
 from .service_enrollment import ReceiverEnrollment
 from .service_records import host_key_fingerprint
+from .service_key_policy import compatible_key_types, require_compatible_key_type
 
 
 @dataclass(frozen=True, repr=False)
@@ -53,7 +54,8 @@ class ReceiverService:
         return {'observation_id':token, 'host_fingerprint':fingerprint,
                 'host_key_algorithm':public_key.split()[0], 'receiver_name':target.device_name,
                 'firmware':target.firmware, 'trusted_record_present':existing is not None,
-                'ssh_authenticated':False, 'initial_access_available':False}
+                'ssh_authenticated':False, 'initial_access_available':False,
+                'compatible_client_key_types':compatible_key_types(target.device_name, target.firmware)}
 
     def verify(self, observation_id, confirmed_fingerprint, *, confirmed, key_type='ed25519'):
         self._require()
@@ -71,7 +73,14 @@ class ReceiverService:
             raise AccessDenied('RECEIVER_FINGERPRINT_CONFIRMATION_CHANGED')
         target = observation.target
         self._selector.check(target)
+        require_compatible_key_type(key_type, target.device_name, target.firmware)
         credential = self._credentials(key_type).load()
+        public_key = getattr(credential, 'public_key', None)
+        parts = public_key.split() if isinstance(public_key, str) else []
+        actual_type = {'ssh-ed25519':'ed25519', 'ecdsa-sha2-nistp256':'ecdsa'}.get(parts[0] if parts else None)
+        require_compatible_key_type(actual_type, target.device_name, target.firmware)
+        if actual_type != key_type:
+            raise AccessDenied('CLIENT_KEY_ALGORITHM_MISMATCH')
         client_fingerprint = host_key_fingerprint(credential.public_key)
         existing = self._enrollments.lookup(target.binding.receiver_identity)
         if existing and (existing.client_fingerprint != client_fingerprint or
