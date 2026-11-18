@@ -18,8 +18,12 @@ python tools/widget_sdk.py catalog ./Widgets
 ```
 
 It lists supported declarative ZIP packages without extraction, registration or
-execution. This is a source/CLI preview, not the application's startup scanner or
-an implemented Widget Manager installation flow.
+execution. Development desktop builds also scan the app-owned Widgets folder at
+boot. Open **WIDGET MANAGER**, choose **Open Widgets folder**, place supported ZIPs
+there and choose **Rescan**. Folder opening is a Windows host action; it does not
+open a package. This workflow discovers and validates packages only. It supplies
+no registration, installation, activation or third-party execution. The released
+0.43.62 installer does not include this development interface.
 
 The example command creates a new file and refuses to overwrite one. It produces
 identical bytes on repeat builds with the same source. Keep generated archives

@@ -61,5 +61,5 @@ def test_actual_native_request_policy_rejects_other_views_origins_and_subresourc
         '-ExecutablePath',win(executable)],capture_output=True,text=True,timeout=15)
     assert result.returncode == 0, 'Actual native request-policy fixture failed'
     report = json.loads(result.stdout)
-    assert report['passed'] and report['token_policy_cases'] >= 34
+    assert report['passed'] and report['token_policy_cases'] >= 40
     assert report['browser_frame_isolation_proven'] is False

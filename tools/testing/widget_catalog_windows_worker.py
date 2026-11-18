@@ -15,6 +15,7 @@ def run(settings):
     sys.path.insert(0, settings['source'])
     from ascent_core import widget_catalog as C
     from ascent_core import widget_catalog_io as IO
+    from ascent_core.widget_catalog_host import open_catalog_folder
     from ascent_core.widget_sdk import MAX_ARCHIVE_BYTES
     import _winapi
     parent=Path(settings['fixture_parent'])
@@ -85,6 +86,16 @@ def run(settings):
         try:report=C.scan_folder(folder)
         finally:C.MAX_PACKAGES=old
         verify('bounded_scan',report['status']=='PACKAGE_LIMIT' and report['entries']==[])
+        opening=root/'opening';opening.mkdir();opened=[];destination=opening/'Widgets'
+        response=open_catalog_folder(destination,opener=opened.append)
+        verify('folder_open_fixed',response=={'ok':True,'open_requested':True} and opened==[destination] and destination.is_dir())
+        verify('folder_open_request_only',str(root) not in json.dumps(response) and list(destination.iterdir())==[])
+        blocked=root/'blocked';blocked.mkdir();(blocked/'Widgets').write_text('retain fixture')
+        response=open_catalog_folder(blocked/'Widgets',opener=opened.append)
+        verify('folder_open_file_refusal',not response['ok'] and (blocked/'Widgets').read_text()=='retain fixture' and opened==[destination])
+        _winapi.CreateJunction(str(outside),str(opening/'junction'))
+        response=open_catalog_folder(opening/'junction'/'Widgets',opener=opened.append)
+        verify('folder_open_junction_refusal',not response['ok'] and not (outside/'Widgets').exists() and opened==[destination])
     except Exception as error:
         return {'platform':'Windows','passed':False,'checks':checks,'failed_check':str(error) if isinstance(error,AssertionError) else type(error).__name__,'fixture_retained':True}
     shutil.rmtree(root)

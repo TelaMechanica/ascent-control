@@ -385,3 +385,31 @@ The privacy gate rejected a stale backend byte pin. Two ordinary comments were
 clarified to remove ambiguous identifier-shaped prose; the obsolete disposition
 was removed, reducing current-source dispositions from seven to six. No new
 disposition or known-identifier waiver is added. Failed runs remain local.
+
+
+## Local Widget Manager development interface
+
+Tracking issue: #37. WIDGET MANAGER is reachable without a receiver and outside
+Advanced. It displays host catalog observations and scan times using text nodes,
+with explicit missing/empty/refused/delayed/failed states. Rescan schedules only
+discovery. Open Widgets folder is an authenticated fixed-folder host action; it
+can create only the final ordinary Widgets directory and reports opening requested.
+No package is opened, rendered, installed or run. Native eligibility now has eight
+exact pairs; browser/frame isolation remains separate. Existing unrelated Settings
+navigation/copy debt is intentionally deferred under approved UI governance.
+
+The next full legacy-key flow must also retain the compatibility repair tracked
+in issue #36. The current public preview does not implement legacy conversion,
+and this catalog interface does not change key handling.
+
+Validation: 56 combined host/DOM/HTTP/package checks pass, including 22 actual
+Windows filesystem/folder-opening cases with fake openers. Final full regression
+with actual Windows interpreter/native/catalog opt-ins: 982 passed, 22 skipped,
+55 subtests passed. The 40-case compiled request policy, fresh Windows development
+publish and 387-file package verification pass. No Explorer launch, actual WebView
+visual/accessibility acceptance or hardware qualification is claimed by these tests.
+An old fixture sending a GET body was corrected to a supported bodyless GET;
+separate tests keep body parameters, duplicate lengths and transfer coding refused.
+Rendered tests preserve folder-opening acceptance separately from a later failed
+status read, reject prototype-property labels and ignore invalid observation time.
+Failed/intermediate evidence and the first build are retained locally.

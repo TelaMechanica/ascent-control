@@ -19,6 +19,7 @@ internal static class ServiceHostRequestPolicy
         {
             ("GET", "/api/widgets/local/catalog") => true,
             ("POST", "/api/widgets/local/rescan") => true,
+            ("POST", "/api/widgets/local/open-folder") => true,
             ("GET", "/api/service-mode/local/status") => true,
             ("POST", "/api/service-mode/local/prepare") => true,
             ("POST", "/api/service-mode/local/credential") => true,

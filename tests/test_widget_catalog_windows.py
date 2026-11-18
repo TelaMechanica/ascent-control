@@ -30,5 +30,5 @@ def test_actual_windows_handles_and_junction_refusal():
     assert result.returncode==0, 'Inspect local-only Windows catalog evidence under artifacts'
     report=json.loads(result.stdout)
     assert report['passed'] and report['platform']=='Windows'
-    assert len(report['checks'])==18 and all(report['checks'].values())
+    assert len(report['checks'])==22 and all(report['checks'].values())
     assert report['fixture_removed'] and report['receiver_accessed'] is False

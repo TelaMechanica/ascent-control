@@ -257,7 +257,7 @@ function loadingValues(){
 }
 
 function setNav(view){
- const allowed=['device','firmware','rf','hub','rc','fleet','repeater','settings','diagnostics'];
+ const allowed=['device','firmware','rf','hub','rc','fleet','repeater','widgetmanager','settings','diagnostics'];
  if(!allowed.includes(view))return;state.view=view;
  $$('.nav').forEach(n=>n.classList.toggle('active',n.dataset.view===view));
  for(const key of (VIEW_RELOADS[view]||[]))state[key]=null;
@@ -287,11 +287,11 @@ function connectionState(){
 }
 
 function pageVisible(view){
+  if(view==='widgetmanager')return true;
   if(state.activeConnection?.connected&&state.activeConnection?.network_target){
     if(view==='repeater')return state.activeConnection.network_target.kind==='repeater';
     return NO_DEVICE_PAGES.includes(view);
   }
-  if(view==='widgetmanager'&&!'')return false;
   const p=state.capabilities?.pages?.[view];
   const fromDoc=p?p.visible!==false:null;
   // These device editors never inherit the generic fail-open policy.
@@ -4063,9 +4063,22 @@ function bindRepeater(){
   });
 }
 
+let widgetCatalogPage=null;
+function closeWidgetCatalogPage(){
+  if(widgetCatalogPage){widgetCatalogPage.close();widgetCatalogPage=null;}
+}
+function renderWidgetManager(){
+  if(widgetCatalogPage)return;
+  if(!globalThis.AscentWidgetCatalog){$('#content').textContent='Widget catalog interface is unavailable.';return;}
+  widgetCatalogPage=globalThis.AscentWidgetCatalog.mount({root:$('#content'),document,
+    request:(path,method)=>fetchJson(path,true,5000,'Catalog request timed out.',method==='POST'?
+      {method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}:{})});
+}
+
 function render(){
- if(state.mode==='live'){renderLive();return;}
- const views={device:renderDevice,firmware:renderFirmware,rf:renderRf,hub:renderHub,rc:renderRc,fleet:renderFleet,repeater:renderRepeater,settings:renderSettings,diagnostics:renderDiagnostics};
+ if(state.mode==='live'){closeWidgetCatalogPage();renderLive();return;}
+ if(state.view!=='widgetmanager')closeWidgetCatalogPage();
+ const views={device:renderDevice,firmware:renderFirmware,rf:renderRf,hub:renderHub,rc:renderRc,fleet:renderFleet,repeater:renderRepeater,widgetmanager:renderWidgetManager,settings:renderSettings,diagnostics:renderDiagnostics};
  applyNavVisibility();(views[state.view]||renderDevice)();
 }
 
