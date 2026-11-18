@@ -1,5 +1,6 @@
 """Trusted startup, fixed folder ownership and real HTTP route refusal."""
 import json
+import http.client
 import time
 from pathlib import Path
 import pytest
@@ -33,7 +34,7 @@ def test_startup_is_explicit_idempotent_and_keeps_fixed_nonconfigurable_root(ser
     assert str(tmp_path) not in json.dumps(doc) and TOKEN not in json.dumps(doc)
 
 
-@pytest.mark.parametrize('method,path', [('GET', '/api/widgets/local/catalog'), ('POST', '/api/widgets/local/rescan')])
+@pytest.mark.parametrize('method,path', [('GET', '/api/widgets/local/catalog'), ('POST', '/api/widgets/local/rescan'), ('POST', '/api/widgets/local/open-folder')])
 @pytest.mark.parametrize('token', [None, '8' * 64, 'bad'])
 def test_unauthorized_calls_cannot_reach_catalog(server, monkeypatch, method, path, token):
     monkeypatch.setattr(server, 'widget_catalog_status', lambda **kw: pytest.fail('unauthorized catalog'))
@@ -44,7 +45,7 @@ def test_unauthorized_calls_cannot_reach_catalog(server, monkeypatch, method, pa
 def test_absent_startup_is_not_implicitly_created_by_http(server, monkeypatch):
     monkeypatch.setattr(app.local_settings, 'config_root', lambda: pytest.fail('request chose folder'))
     for method, path in [('GET', '/api/widgets/local/catalog'), ('POST', '/api/widgets/local/rescan')]:
-        code, body = request(server, method, path, token=TOKEN, body={})
+        code, body = request(server, method, path, token=TOKEN, body={} if method == 'POST' else None)
         assert code == 503 and body['error'] == 'CATALOG_NOT_STARTED'
 
 
@@ -128,3 +129,64 @@ def test_boot_discovery_and_explicit_rescan_observe_only_current_package_metadat
     latest = complete(server)
     assert latest['result']['entries'][0]['package']['version'] == '0.2.0'
     assert not latest['result']['entries'][0]['package']['executable']
+
+
+def test_folder_open_action_uses_captured_root_and_schedules_observation(server, monkeypatch, tmp_path):
+    import ascent_core.widget_catalog_host as host
+    calls = []
+    monkeypatch.setattr(app.local_settings, 'config_root', lambda: tmp_path)
+    monkeypatch.setattr(host, 'open_catalog_folder', lambda path: calls.append(path) or {'ok': True, 'open_requested': True})
+    server.start_widget_catalog()
+    generation = complete(server)['generation']
+    monkeypatch.setattr(app.local_settings, 'config_root', lambda: tmp_path / 'other')
+    code, result = request(server, 'POST', '/api/widgets/local/open-folder', token=TOKEN, body={'path': 'synthetic-other'})
+    assert code == 400 and not calls
+    code, result = request(server, 'POST', '/api/widgets/local/open-folder', token=TOKEN, body={})
+    assert code == 200 and result == {'ok': True, 'open_requested': True}
+    assert calls == [tmp_path / 'Widgets']
+    assert complete(server)['generation'] == generation + 1
+    assert request(server, 'GET', '/api/widgets/local/open-folder', token=TOKEN)[0] == 405
+    assert str(tmp_path) not in json.dumps(result)
+
+
+@pytest.mark.parametrize('method,path,body', [
+    ('GET', '/api/widgets/local/catalog', {'folder': 'synthetic-other'}),
+    ('POST', '/api/widgets/local/rescan', {'padding': 'x' * 100}),
+    ('POST', '/api/widgets/local/open-folder', {'padding': 'x' * 100}),
+])
+def test_catalog_body_parameters_and_oversize_are_refused_before_adapters(server, monkeypatch, method, path, body):
+    monkeypatch.setattr(server, 'widget_catalog_status', lambda **kw: pytest.fail('body reached catalog'))
+    monkeypatch.setattr(server, 'open_widget_catalog_folder', lambda: pytest.fail('body reached opener'))
+    assert request(server, method, path, token=TOKEN, body=body)[0] == 400
+
+
+@pytest.mark.parametrize('header', ['duplicate-length', 'transfer-coding'])
+def test_ambiguous_catalog_body_framing_is_refused_before_adapters(server, monkeypatch, header):
+    monkeypatch.setattr(server, 'widget_catalog_status', lambda **kw: pytest.fail('framing reached catalog'))
+    connection = http.client.HTTPConnection('localhost', server.server_address[1], timeout=3)
+    connection.putrequest('POST', '/api/widgets/local/rescan')
+    connection.putheader('X-Ascent-Host-Token', TOKEN)
+    connection.putheader('Content-Length', '0')
+    if header == 'duplicate-length':
+        connection.putheader('Content-Length', '0')
+    else:
+        connection.putheader('Transfer-Encoding', 'chunked')
+    connection.endheaders()
+    response = connection.getresponse()
+    assert response.status == 400
+    assert json.loads(response.read())['error'] == 'INVALID_CATALOG_REQUEST'
+    connection.close()
+
+
+@pytest.mark.parametrize('method,path', [
+    ('GET', '/api/widgets/local/catalog;folder=synthetic-other'),
+    ('POST', '/api/widgets/local/rescan;folder=synthetic-other'),
+    ('POST', '/api/widgets/local/open-folder;folder=synthetic-other'),
+])
+def test_semicolon_parameters_cannot_reach_catalog_or_folder_adapters(server, monkeypatch, method, path):
+    calls = []
+    monkeypatch.setattr(server, 'widget_catalog_status', lambda **kw: calls.append('catalog') or {'ok': True})
+    monkeypatch.setattr(server, 'open_widget_catalog_folder', lambda: calls.append('folder') or {'ok': True, 'open_requested': True})
+    code, result = request(server, method, path, token=TOKEN, body={} if method == 'POST' else None)
+    assert code == 400 and result['error'] == 'INVALID_CATALOG_REQUEST'
+    assert calls == []

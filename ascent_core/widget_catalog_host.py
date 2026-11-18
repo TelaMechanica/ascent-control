@@ -1,6 +1,7 @@
 """Single-worker trusted-host catalog observations; no activation or installation."""
 from datetime import datetime, timezone
 import json
+import os
 from pathlib import Path
 from threading import RLock, Thread
 from time import monotonic
@@ -131,3 +132,30 @@ class CatalogCoordinator:
             self._queued = False
             self._encoded = None
             self._observed_at = None
+
+
+def open_catalog_folder(folder, *, opener=None, platform=os.name):
+    """Trusted host action for its captured folder; never an HTTP path broker.
+
+    Only the final Widgets directory may be created, under an existing ordinary
+    parent. Production opening uses the Windows explore operation. Package files
+    and views are never opened. Tests supply an owned opener, not a shell command.
+    """
+    if platform != 'nt':
+        return {'ok': False, 'error': 'FOLDER_OPEN_UNSUPPORTED'}
+    from .widget_catalog_io import open_folder
+    folder = Path(folder)
+    if not folder.is_absolute() or folder.name != 'Widgets':
+        return {'ok': False, 'error': 'FOLDER_OPEN_REFUSED'}
+    try:
+        with open_folder(folder.parent):
+            folder.mkdir(exist_ok=True)
+            with open_folder(folder) as selected:
+                selected.check()
+                if opener is None:
+                    os.startfile(str(folder), 'explore')
+                else:
+                    opener(folder)
+        return {'ok': True, 'open_requested': True}
+    except (OSError, ValueError, NotImplementedError):
+        return {'ok': False, 'error': 'FOLDER_OPEN_REFUSED'}

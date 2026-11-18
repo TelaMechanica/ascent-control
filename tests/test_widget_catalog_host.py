@@ -1,5 +1,6 @@
 """Trusted fixed-folder scans, bounded coalescing and stale-result invalidation."""
 import json
+import os
 from threading import Event
 import time
 
@@ -153,3 +154,44 @@ def test_failure_from_obsolete_scan_is_discarded(tmp_path):
     finally:
         release.set()
         manager.close()
+
+
+def test_folder_opening_is_explicit_fixed_leaf_and_does_not_open_package_files(tmp_path):
+    from ascent_core.widget_catalog_host import open_catalog_folder
+    folder = tmp_path / 'Widgets'
+    calls = []
+    assert open_catalog_folder(folder, platform='posix', opener=calls.append)['error'] == 'FOLDER_OPEN_UNSUPPORTED'
+    assert not folder.exists() and not calls
+    result = open_catalog_folder(folder, platform='nt', opener=calls.append)
+    assert result == {'ok': True, 'open_requested': True}
+    assert calls == [folder] and folder.is_dir() and list(folder.iterdir()) == []
+    assert open_catalog_folder(tmp_path / 'other', platform='nt', opener=calls.append)['error'] == 'FOLDER_OPEN_REFUSED'
+    assert not (tmp_path / 'other').exists()
+
+
+def test_folder_opening_refuses_files_missing_parents_and_linked_parents(tmp_path):
+    from ascent_core.widget_catalog_host import open_catalog_folder
+    def forbidden(path):
+        pytest.fail('unsafe folder reached opener')
+    folder = tmp_path / 'Widgets'
+    folder.write_text('retain this file')
+    assert not open_catalog_folder(folder, platform='nt', opener=forbidden)['ok']
+    assert folder.read_text() == 'retain this file'
+    assert not open_catalog_folder(tmp_path / 'missing' / 'Widgets', platform='nt', opener=forbidden)['ok']
+    assert not (tmp_path / 'missing').exists()
+    if os.name != 'nt':
+        actual = tmp_path / 'actual'
+        actual.mkdir()
+        linked = tmp_path / 'linked'
+        linked.symlink_to(actual, target_is_directory=True)
+        assert not open_catalog_folder(linked / 'Widgets', platform='nt', opener=forbidden)['ok']
+        assert not (actual / 'Widgets').exists()
+
+
+def test_folder_open_errors_never_echo_paths_or_exception_text(tmp_path):
+    from ascent_core.widget_catalog_host import open_catalog_folder
+    def refused(path):
+        raise OSError('synthetic-private-opener-detail')
+    result = open_catalog_folder(tmp_path / 'Widgets', platform='nt', opener=refused)
+    assert result == {'ok': False, 'error': 'FOLDER_OPEN_REFUSED'}
+    assert str(tmp_path) not in json.dumps(result)

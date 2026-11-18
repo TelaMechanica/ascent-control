@@ -5186,6 +5186,20 @@ class Handler(SimpleHTTPRequestHandler):
             self.json_response({'ok': False, 'error': 'DESKTOP_HOST_SESSION_REQUIRED'}, 403)
         return valid
 
+    def _catalog_request_is_empty(self, *, write=False):
+        try:
+            target = urlparse(self.path)
+            lengths = self.headers.get_all('Content-Length', [])
+            if (target.params or target.query or target.fragment or len(lengths) > 1 or
+                    self.headers.get_all('Transfer-Encoding', [])):
+                return False
+            length = int(lengths[0]) if lengths else 0
+            if not 0 <= length <= (64 if write else 0):
+                return False
+            return not write or self._read_json_body() == {}
+        except (ValueError, UnicodeError):
+            return False
+
     def end_headers(self):
         self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
         self.send_header("Pragma", "no-cache")
@@ -5218,12 +5232,12 @@ class Handler(SimpleHTTPRequestHandler):
         if not self._allow_local_request(write=False):
             return
         p = urlparse(self.path).path
-        if p in ('/api/widgets/local/catalog', '/api/widgets/local/rescan'):
+        if p in ('/api/widgets/local/catalog', '/api/widgets/local/rescan', '/api/widgets/local/open-folder'):
             if not self._require_host_session(): return
             if p != '/api/widgets/local/catalog':
                 self.json_response({'ok': False, 'error': 'METHOD_NOT_ALLOWED'}, 405)
                 return
-            if urlparse(self.path).query or urlparse(self.path).fragment:
+            if not self._catalog_request_is_empty():
                 self.json_response({'ok': False, 'error': 'INVALID_CATALOG_REQUEST'}, 400)
                 return
             result = self.server.widget_catalog_status()
@@ -5459,16 +5473,17 @@ class Handler(SimpleHTTPRequestHandler):
         if not self._allow_local_request(write=True):
             return
         p = urlparse(self.path).path
-        if p in ('/api/widgets/local/catalog', '/api/widgets/local/rescan'):
+        if p in ('/api/widgets/local/catalog', '/api/widgets/local/rescan', '/api/widgets/local/open-folder'):
             if not self._require_host_session(): return
-            if p != '/api/widgets/local/rescan':
+            if p not in ('/api/widgets/local/rescan', '/api/widgets/local/open-folder'):
                 self.json_response({'ok': False, 'error': 'METHOD_NOT_ALLOWED'}, 405)
                 return
-            try:
-                if urlparse(self.path).query or urlparse(self.path).fragment or self._read_json_body() != {}:
-                    raise ValueError('Catalog requests have no parameters')
-            except (ValueError, UnicodeError):
+            if not self._catalog_request_is_empty(write=True):
                 self.json_response({'ok': False, 'error': 'INVALID_CATALOG_REQUEST'}, 400)
+                return
+            if p == '/api/widgets/local/open-folder':
+                result = self.server.open_widget_catalog_folder()
+                self.json_response(result, 200 if result.get('ok') else 409)
                 return
             result = self.server.widget_catalog_status(rescan=True)
             self.json_response(result if result is not None else
@@ -6095,6 +6110,17 @@ class AscentHTTPServer(ThreadingHTTPServer):
             if self._catalog is None:
                 return None
             return self._catalog.request_scan() if rescan else self._catalog.document()
+
+    def open_widget_catalog_folder(self):
+        with self._catalog_lock:
+            if self._catalog_closed or self._catalog is None:
+                return {'ok': False, 'error': 'CATALOG_NOT_STARTED'}
+            folder = self._catalog.folder
+        from ascent_core.widget_catalog_host import open_catalog_folder
+        result = open_catalog_folder(folder)
+        if result.get('ok'):
+            self.widget_catalog_status(rescan=True)
+        return result
 
     def server_close(self):
         # Do not join potentially blocked filesystem I/O during application shutdown.

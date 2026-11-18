@@ -10,7 +10,7 @@ Windows MSI build tooling, shared protocol helpers and camera-image builders.
 | Version | Available now | Scope |
 |---|---|---|
 | [0.43.62 Windows release](https://github.com/TelaMechanica/ascent-control/releases/tag/v0.43.62) | Downloadable MSI | Public AC; excludes AC+ receiver access and receiver widget deployment |
-| Current `main` | Public development source | AC+ host credential preparation, guarded receiver-readiness checks and a non-executing widget SDK preview |
+| Current `main` | Public development source | AC+ host credential preparation, guarded receiver-readiness checks, a local widget catalog and a non-executing SDK preview |
 
 The AC+ and SDK source checkpoint is merged into this repository. It is not a
 released AC+ installer. Private initial-access installation and receiver widget

@@ -170,3 +170,11 @@ status/rescan, native exact-path policy, curated read-only payload inputs and
 concurrency/HTTP/package-boundary checks. Next: fixed-folder opening action and
 text-only Widget Manager, with package metadata escaped as text and no package
 view, activation, install or execution. Keep private key recovery work separate.
+
+
+Widget Manager owner: Codex, issue #37. Scope: text-only first-party DOM/controller,
+normal navigation, fixed-folder opening, scoped native/HTTP policy, exact payload
+inputs, render/late-result/native-folder tests and UI pin provenance. Preserve the
+locked baseline in history. No feature-page, receiver lifecycle or guest execution
+route is added. Full AC+ legacy migration must include issue #36's compatible-key
+conversion/activation guards and preservation tests; do not drop the repaired flow.

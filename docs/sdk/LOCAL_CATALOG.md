@@ -1,9 +1,10 @@
 # Read-only local folder catalog preview
 
 The operator-selected workflow is a local Widgets folder scanned at application
-startup, with Open Widgets folder and Rescan actions. This increment supplies
-bounded discovery and a command-line preview. It does not add startup/UI wiring,
-registration, activation, installed-state tracking or receiver installation.
+startup, with Open Widgets folder and Rescan actions. Development desktop builds
+now provide that host workflow, alongside the bounded command-line scanner.
+Neither interface registers, activates, installs or runs a widget, or establishes
+receiver installed state. The released 0.43.62 installer predates this preview.
 
 From the source root, point the tool at an existing local folder:
 
@@ -13,7 +14,8 @@ python tools/widget_sdk.py catalog ./Widgets
 
 Only top-level `.zip` files using the existing declarative SDK 0.1 contract are
 inspected. Directories are not traversed and unknown extensions are ignored.
-The folder is not created if missing. This does not define a native Picker/
+Scanning does not create a missing folder. Only the explicit folder-opening
+action may create the final Widgets leaf. This does not define a native Picker/
 Netrunner installer format or admit arbitrary package code. Mapster remains deferred.
 
 ## Discovery results
@@ -74,7 +76,7 @@ The Windows design uses Microsoft's [CreateFileW](https://learn.microsoft.com/en
 and [FILE_BASIC_INFO](https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_basic_info)
 contracts. Creation timestamps are not substituted for native change times.
 
-## Next integration boundary
+## Desktop integration and remaining boundaries
 
 A source-only `CatalogCoordinator` now supplies background scan coordination for
 a fixed host-supplied folder. It retains one worker and coalesces pending requests
@@ -95,15 +97,31 @@ folder; shutdown closes the coordinator without joining blocked filesystem I/O.
 `GET /api/widgets/local/catalog` returns the current observation and
 `POST /api/widgets/local/rescan` accepts an empty JSON object and schedules a new
 generation. Both require the native host session and existing local-origin
-checks. Query parameters, nonempty bodies and wrong methods are refused. Requests
+checks. URI path/query parameters, nonempty bodies and wrong methods are refused. Requests
 cannot start an uninitialized catalog or supply a folder. The native hook adds
-these two exact method/path pairs, for seven total; it exposes no secret to page
+these exact method/path pairs; it exposes no secret to page
 JavaScript. Historical review claims that the SDK inspector is unshipped and that
 the hook has five pairs describe earlier checkpoints. Browser/frame isolation
 remains unproven and package content must never enter the trusted WebView.
 
-The app still needs an explicit fixed-folder opening action and a text-only
-Widget Manager view. No package view is rendered by this integration.
+WIDGET MANAGER is available outside Advanced and without a receiver in the
+development desktop. It reads the host observation, displays the actual scan
+time, polls only while a scan is pending and discards results after navigation.
+Metadata is placed in text nodes, never markup, links, package icons or views.
+Malformed responses cannot become validated/installed/running claims.
+
+`POST /api/widgets/local/open-folder` accepts only an empty object and the native
+host session. It uses the already captured folder, refuses nonordinary/linked
+parents and targets, and can create only the final Widgets leaf under an existing
+ordinary application-data parent. It never takes a package path or opens a ZIP.
+The native eligibility list now contains eight exact method/path pairs. Windows
+uses the directory explore operation; the response says opening was requested,
+not that an Explorer window or installation was verified. This follows Python's
+[startfile contract](https://docs.python.org/3.12/library/os.html#os.startfile).
+Actual Windows fixtures use fake openers, not Explorer or a receiver.
+
+Registration, activation, installation and guest execution remain unavailable.
+The interface does not establish browser/frame isolation or admit guest content.
 Package filenames remain untrusted local data; snapshot copies are not sanitized
 support attachments.
 No raw caller-supplied path should become a privileged HTTP folder scan. Package

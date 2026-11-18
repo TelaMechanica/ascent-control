@@ -16,7 +16,7 @@ if (args.Length == 1 && args[0] == "token-policy")
         passed.Add(Check(Origin("/"), Origin("/api/service-mode/local/" + path), method));
         passed.Add(!Check(Origin("/"), Origin("/api/service-mode/local/" + path), method, false));
     }
-    foreach (var entry in new[] { ("GET", "/api/widgets/local/catalog"), ("POST", "/api/widgets/local/rescan") })
+    foreach (var entry in new[] { ("GET", "/api/widgets/local/catalog"), ("POST", "/api/widgets/local/rescan"), ("POST", "/api/widgets/local/open-folder") })
     {
         passed.Add(Check(Origin("/"), Origin(entry.Item2), entry.Item1));
         passed.Add(!Check(Origin("/"), Origin(entry.Item2), entry.Item1, false));
