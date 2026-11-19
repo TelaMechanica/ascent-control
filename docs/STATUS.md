@@ -1,5 +1,12 @@
 # Current status
 
+## Repeater Ethernet bind
+
+HF Bind and MF Bind accept fresh status with either radio linked. Reverse Roles
+requires both radio links to be idle. Host regression checks cover every
+active/idle combination for both bind requests and refusal of Reverse Roles
+with an active link. Bind acknowledgments do not verify pairing.
+
 ## Current public checkpoint
 
 PRs #24 and #25 are merged. Public `main` contains the reviewed AC+ service-mode
