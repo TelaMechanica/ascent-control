@@ -195,3 +195,25 @@ def test_adversarial_json_is_normalized_to_package_rejection(tmp_path, entry_nam
         return list(result.items())
     with pytest.raises(PackageInvalid):
         inspect_package(mutate(tmp_path, change))
+
+
+def test_release_payload_uses_trusted_archive_and_file_digests():
+    import hashlib
+    import io
+    import zipfile
+    from ascent_core.widget_sdk import verify_release_payload
+
+    source = io.BytesIO()
+    with zipfile.ZipFile(source, 'w') as archive:
+        archive.writestr('widget-runtime', b'opaque runtime bytes')
+    data = source.getvalue()
+    digest = hashlib.sha256(data).hexdigest()
+    pins = {'widget-runtime': hashlib.sha256(b'opaque runtime bytes').hexdigest()}
+    assert verify_release_payload(data, archive_digest=digest, file_digests=pins) == {
+        'widget-runtime': b'opaque runtime bytes'}
+    with pytest.raises(PackageInvalid, match='archive digest'):
+        verify_release_payload(data, archive_digest='0' * 64, file_digests=pins)
+    with pytest.raises(PackageInvalid, match='payload inventory'):
+        verify_release_payload(data, archive_digest=digest, file_digests={})
+    with pytest.raises(PackageInvalid, match='payload digest'):
+        verify_release_payload(data, archive_digest=digest, file_digests={'widget-runtime': '0' * 64})
