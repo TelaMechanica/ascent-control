@@ -2033,5 +2033,5 @@
     "tools/verify_public_build.py": "5a1de6f82d4c058ceb5045f001bf58af78a5f4f8b9f8f1ba654f2d42fefe5862",
     "tools/widget_sdk.py": "c9655333d6d5c580cf79660f33bcfee1ff493e4d17ed3db2e0ebe094cf435f3e"
   },
-  "release_channel": "internal-development"
+  "release_channel": "public"
 }
