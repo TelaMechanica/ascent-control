@@ -62,7 +62,23 @@ def verify(root,reference,phase):
     profile=json.loads((reference/'release/public-payload.json').read_text())
     deps=json.loads((reference/'release/dependencies.json').read_text())
     expected=expected_files(profile,deps)
-    if profile['version']!='0.43.63' or profile['licensor']!='TelaMechanica':raise ValueError('Unexpected public release identity')
+    if profile['licensor'] != 'TelaMechanica':
+        raise ValueError('Unexpected public release identity')
+    version = profile['version']
+    parts = version.split('.') if isinstance(version, str) else []
+    if (len(parts) != 3 or any(not part.isascii() or not part.isdecimal() or
+                               str(int(part)) != part for part in parts) or
+            any(int(part) > limit for part, limit in zip(parts, (255, 255, 65535)))):
+        raise ValueError('Invalid MSI product version')
+    harness = expected['runtime/dev_harness.py']
+    harness_path = root / (harness['source'] if phase == 'source' else 'runtime/dev_harness.py')
+    assignments = [node.value for node in ast.parse(harness_path.read_bytes()).body
+                   if isinstance(node, ast.Assign) and
+                   any(isinstance(target, ast.Name) and target.id == 'APP_VERSION'
+                       for target in node.targets)]
+    if (len(assignments) != 1 or not isinstance(assignments[0], ast.Constant)
+            or assignments[0].value != version):
+        raise ValueError('Backend version differs from the MSI product version')
     for target,entry in expected.items():
         path=root/(entry.get('source',target) if phase=='source' and 'source' in entry else target)
         plain(path)
