@@ -6,6 +6,8 @@ import re
 import subprocess
 import sys
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -52,3 +54,16 @@ def test_reviewed_payload_targets_are_in_the_desktop_publish_inventory():
             if link:links.add(link.replace(chr(92),'/'))
     required={row['target'] for row in profile['files']}
     assert required <= links, 'Reviewed files omitted from desktop publish: '+repr(sorted(required-links))
+
+
+def test_public_msi_verifier_rejects_backend_version_drift(tmp_path):
+    from tools.verify_public_build import verify
+
+    release = tmp_path / 'release'
+    release.mkdir()
+    profile = json.loads((ROOT / 'release/public-payload.json').read_text())
+    profile['version'] = '0.43.64'
+    (release / 'public-payload.json').write_text(json.dumps(profile))
+    (release / 'dependencies.json').write_bytes((ROOT / 'release/dependencies.json').read_bytes())
+    with pytest.raises(ValueError, match='Backend version differs'):
+        verify(ROOT, tmp_path, 'source')
