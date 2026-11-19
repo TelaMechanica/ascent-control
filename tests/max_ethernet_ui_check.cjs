@@ -15,6 +15,8 @@ const {boot}=require('./helpers/ethernet_ui_boot.cjs');
  u.state.mode='live';u.liveState().doc={eligibility:{eligible:false,profiles:{usbc:{rtsp_url:'rtsp://192.0.2.20/live.ch01'},rj45:{rtsp_url:'rtsp://192.0.2.30/live.ch01'}}}};
  u.maxEthernetState().doc=info;u.renderLive();
  const content=ctx.document.querySelector('#content');assert.match(content.innerHTML,/OPEN VIDEO WINDOW/);
+ assert.match(content.innerHTML,/id="liveHidControls"/);
+ assert.match(content.innerHTML,/MAX ETH · 192\.0\.2\.10:9100/);
  assert.match(content.innerHTML,/data-maxethkey="PAIRING"/);assert.doesNotMatch(content.innerHTML,/id="livePowerApply"/);
  assert.equal(u.liveVideoSelection().url,'rtsp://192.0.2.10/live.ch01','default follows selected Ethernet target');
  ctx.document.querySelector('#videoStart').onclick();assert.equal(messages[0].url,'rtsp://192.0.2.10/live.ch01');

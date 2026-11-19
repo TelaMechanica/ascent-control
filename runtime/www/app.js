@@ -3638,6 +3638,9 @@ function liveSticksPanel(){
     body+=`<div class="toolbar" style="justify-content:flex-start"><button class="secondary" id="hidVendorMap">FILL FROM AXES IN ORDER (CAMERA / GIMBAL WORK ONLY)</button></div>`;
   }
   body+='<div id="liveHidStream">';
+  const ethernet=maxEthernetTarget();
+  if(ethernet) body+=kv('Control destination',`MAX ETH · ${ethernet.device_ip}:9100`)
+    +noticeDetail('Start requests CRSF passthrough and sends mapped channels. Receiver acceptance is unverified.');
   body+=kv('Stream',RcSource.present(l.hidStatusUnavailable?null:l.hidStream?.rc_source).output,false)
     +kv('Frames sent',st?.frames_sent??0)
     +kv('Stick age',st?.axes_age_ms!=null?`${st.axes_age_ms} ms${st.axes_stale?' — STALE':''}`:'—',false)
@@ -3649,7 +3652,7 @@ function liveSticksPanel(){
   body+=`<div class="toolbar" style="justify-content:flex-start;flex-wrap:wrap">`
     +`<select id="crsfRate"><option value="50">50 Hz</option><option value="100">100 Hz</option>`
     +`<option value="150">150 Hz</option></select>`
-    +`<button class="action" id="crsfStreamStart"${(inputCurrent&&!st?.running&&mapOk)?'':' disabled'}>START TRANSMITTING</button>`
+    +`<button class="action" id="crsfStreamStart"${(inputCurrent&&!st?.running&&mapOk&&(!ethernet||l.hidStream?.rc_source?.receiver_token))?'':' disabled'}>START TRANSMITTING</button>`
     +`<button class="secondary" id="crsfStreamStop"${st?.running?'':' disabled'}>STOP TRANSMITTING</button></div>`;
   body+=notice('TRANSMISSION STOPS WHEN THE STICKS GO STALE. It does not hold the last position and it does not send centre — centre is a real command, whereas silence lets the receiver’s own configured failsafe take over, which is the one set up for exactly this case. CGC has no staleness handling at all; this is ours.','warn');
   body+=noticeDetail('Input axes use their HID usage identities and normalized range 0–2048. EdgeTX input CH1–CH32 are separate from the 16 ASCENT/CRSF output slots. Output follows the explicit channel map; nothing is assigned or centred automatically.');
@@ -3687,8 +3690,10 @@ function renderLive(){
   const l=liveState();
   let out=pageHead('LIVE','CGC v0.3.5 CONTROL PLANE — UDP 9001');
   if(maxEthernetTarget()){
-    out+=liveVideoPanel()+'<div id="maxEthPanel">'+maxEthernetPanel(true)+'</div>'+liveResultPanel();
-    $('#content').innerHTML=out;bindLive();bindMaxEthernet();return;
+    out+=liveVideoPanel()+'<div id="maxEthPanel">'+maxEthernetPanel(true)+'</div>'
+      +'<div id="liveHidControls">'+liveSticksPanel()+'</div>'+liveResultPanel();
+    $('#content').innerHTML=out;l.hidControlsKey=liveHidControlsKey();
+    bindLive();bindMaxEthernet();return;
   }
   if(!l.doc){ out+=notice('READING LIVE STATE…'); $('#content').innerHTML=out; return; }
   /* ADVANCED is reachable here too. The toggle lives in the config nav, which is
@@ -3769,9 +3774,13 @@ function bindLiveHid(post,act){
     const h=hostChannel(); if(h) h.postMessage({type:'hid',action:'stop'}); });
   $$('[data-hidpath]').forEach(b=>b.addEventListener('click',()=>{
     const h=hostChannel(); if(h) h.postMessage({type:'hid',action:'start',path:b.dataset.hidpath}); }));
-  $('#crsfStreamStart')?.addEventListener('click',()=>act(async()=>{
-    l.hidStream=acceptHidObservation(await post('/api/cgc/hid/stream',
-      hidSourceRequest({action:'start',apply:true,rate_hz:Number($('#crsfRate').value)}))); return l.hidStream; }));
+  $('#crsfStreamStart')?.addEventListener('click',()=>{
+    const request=hidSourceRequest({action:'start',apply:true,rate_hz:Number($('#crsfRate').value)});
+    act(async()=>{
+      l.hidStream=acceptHidObservation(await post('/api/cgc/hid/stream',request));
+      return l.hidStream;
+    });
+  });
   $('#hidVendorMap')?.addEventListener('click',()=>act(async()=>{
     l.hidStream=acceptHidObservation(await post('/api/cgc/hid/vendor-map',hidSourceRequest({apply:true}))); return l.hidStream; }));
   $('#mapVendor')?.addEventListener('click',()=>act(async()=>{

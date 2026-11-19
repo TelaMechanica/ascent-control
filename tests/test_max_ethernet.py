@@ -124,7 +124,7 @@ def test_bad_field_is_partial_without_fake_units():
 
 @pytest.fixture
 def host(monkeypatch):
-    t=target();session=SimpleNamespace(device=SimpleNamespace(network_target=t),generation=4)
+    t=target();session=SimpleNamespace(device=SimpleNamespace(network_target=t),generation=4,network_binding=lambda:None)
     monkeypatch.setattr(D,'SESSION',session)
     monkeypatch.setattr(D.maxeth,'fast_route',lambda _:dict(source_ip=t['source_ip'],if_index=t['if_index']))
     monkeypatch.setattr(D,'NETWORK_SESSION_LOCK',threading.Lock());monkeypatch.setattr(D,'DEVICE_MUTATION_LOCK',threading.Lock())
@@ -167,3 +167,81 @@ def test_actual_ethernet_ui_keeps_transport_scopes_and_video_controls():
     root=Path(__file__).resolve().parents[1]
     r=subprocess.run(['node','tests/max_ethernet_ui_check.cjs'],cwd=root,capture_output=True,text=True)
     assert r.returncode==0,r.stdout+r.stderr
+
+
+@pytest.mark.parametrize('change', [None, 'continuing', 'route', 'selection', 'stopped'])
+def test_hid_stream_frame_targets_selected_ethernet_only(host, monkeypatch, change):
+    from test_hid_source_identity import stream
+
+    target, session, _ = host
+    sender = stream()
+    sender._output_scope = D._hid_ethernet_scope()
+    monkeypatch.setattr(D, 'CRSF_STREAM', sender)
+    sends = []
+    if change == 'continuing':
+        sender._sent = 1
+
+    class Datagram:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            pass
+
+        def bind(self, address):
+            assert address == (target['source_ip'], 0)
+
+        def connect(self, address):
+            self.address = address
+            assert address[0] == target['device_ip']
+            if change == 'selection':
+                session.generation += 1
+
+        def send(self, frame):
+            sends.append((self.address[1], frame))
+
+    pins = []
+    monkeypatch.setattr(D, '_pin_windows_ipv4_interface', lambda sock, index: pins.append(index))
+    monkeypatch.setattr(D.socket, 'socket', lambda *args: Datagram())
+    monkeypatch.setattr(D, '_require_binding', lambda *args: pytest.fail('USB fallback'))
+    if change == 'route':
+        monkeypatch.setattr(D.maxeth, 'fast_route', lambda _: {})
+    if change == 'stopped':
+        sender._stop.set()
+    if change in ('route', 'selection', 'stopped'):
+        with pytest.raises(D.hidaxes.HidError):
+            D._crsf_socket_send(b'fixture')
+        assert sends == []
+    else:
+        D._crsf_socket_send(b'fixture')
+        mode = [(9001, D.cgc.build_set_mode(D.cgc.Passthrough.CRSF))] if change is None else []
+        assert sends == mode + [(9100, b'fixture')]
+        assert pins == [target['if_index']]
+    assert not D.NETWORK_SESSION_LOCK.locked()
+
+
+@pytest.mark.parametrize('changed_identity', [False, True])
+def test_ethernet_hid_start_rechecks_receiver_before_stream(host, monkeypatch, changed_identity):
+    from test_hid_source_identity import connection, mapping, sample, stream
+
+    sender = stream()
+    sender.source_event(connection())
+    sender.source_sample(sample())
+    sender.set_channel_map(mapping())
+    monkeypatch.setattr(D, 'CRSF_STREAM', sender)
+    monkeypatch.setattr(D, '_cgc_guard', lambda: pytest.fail('USB control gate used'))
+    starts = []
+    monkeypatch.setattr(sender, 'start', lambda **kwargs: starts.append(kwargs))
+    if changed_identity:
+        monkeypatch.setattr(D.maxeth, 'read_rpc', lambda *args: status(bytes((242, 0, 0, 2))))
+    request = dict(action='start', apply=True, epoch='one',
+                   descriptor_id=sender._hid_source['fingerprint'],
+                   receiver_token=D._hid_receiver_identity_token())
+    if changed_identity:
+        with pytest.raises(D.hidaxes.HidError) as error:
+            D.hid_stream(request)
+        assert error.value.code == 'MAX_ETH_IDENTITY_CHANGED'
+        assert not starts
+    else:
+        D.hid_stream(request)
+        assert starts == [dict(rate_hz=None, output_scope=D._hid_ethernet_scope())]
