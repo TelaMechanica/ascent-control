@@ -260,6 +260,7 @@
     "tests/test_windows_device_inventory_native.py",
     "tests/widget_catalog_render.cjs",
     "tools/Build-Installer.ps1",
+    "tools/Verify-PairedInstallerRelease.ps1",
     "tools/Stage-GStreamer.ps1",
     "tools/Stage-PythonRuntime.ps1",
     "tools/Test-GStreamerPayload.ps1",
