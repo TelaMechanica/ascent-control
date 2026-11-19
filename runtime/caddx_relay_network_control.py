@@ -87,8 +87,8 @@ def perform(target, action):
                 or actual.get('local_mac4') != before['local_mac']
                 or actual.get('role_raw') != before['role_raw']):
             raise NetworkControlError('A radio identity or role changed. Read Ethernet status again.')
-        if actual.get('slot0_link_state') != 0:
-            raise NetworkControlError('Network button control is currently qualified only with both radio links idle.')
+        if action == 'swap' and actual.get('slot0_link_state') != 0:
+            raise NetworkControlError('Reverse Roles requires both radio links to be idle.')
     result = {'ok': True, 'action': action, 'device_ip': host,
               'factory_serial': fresh['factory_serial'], 'transport': 'ethernet',
               'execution_verified': False, 'pairing_verified': False, 'retry': False}
