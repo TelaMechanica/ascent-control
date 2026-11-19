@@ -27,8 +27,8 @@ supports discovery and inspection only.
 
 | Widget | Standalone repository status |
 |---|---|
-| Picker | Local candidate. A separate public repository is planned. |
-| Netrunner | Local candidate. A separate public repository is planned. |
+| [Picker](https://github.com/TelaMechanica/ascent-picker) | Public source subset and host checks. Installable release pending. |
+| [Netrunner](https://github.com/TelaMechanica/ascent-netrunner) | Public source subset and host checks. Installable release pending. |
 
 For a sample package and the manifest format, see the
 [Widget SDK quick start](docs/sdk/README.md). The
