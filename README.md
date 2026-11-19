@@ -9,22 +9,22 @@ Windows MSI build tooling, shared protocol helpers and camera-image builders.
 
 | Version | Available now | Scope |
 |---|---|---|
-| [0.43.62 Windows release](https://github.com/TelaMechanica/ascent-control/releases/tag/v0.43.62) | Downloadable MSI | Public AC; excludes AC+ receiver access and receiver widget deployment |
-| Current `main` | Public development source | AC+ host credential preparation, guarded receiver-readiness checks, a read-only Widget Manager and a non-executing Widget SDK preview |
+| [0.43.63 Windows release](https://github.com/TelaMechanica/ascent-control/releases/tag/v0.43.63) | Downloadable MSI | Public AC with local Widget SDK preview inspection |
+| Current `main` | Public AC source | Guarded receiver-readiness checks and read-only Widget Manager |
 
-The AC+ and SDK source checkpoint is merged into this repository. It is not a
-released AC+ installer. Private initial-access installation and receiver widget
-implementations are excluded. Third-party widget execution is disabled.
+Public AC and private AC+ are built and verified as a pair before the public
+release is published. Release notes record both versions so authorized AC+
+users can find the companion installer in its private repository.
 
 See the [public transition status](docs/PUBLIC_TRANSITION_STATUS.md) and
 [AC+ development review](docs/CONSOLIDATED_REVIEW_0.43.63_DEV3.md).
 
 ## Widget SDK and standalone widgets
 
-The development desktop scans its **Widgets** folder at startup. In **Widget
+ASCENT Control scans its **Widgets** folder at startup. In **Widget
 Manager**, select **Open Widgets folder**, copy in a supported ZIP package and
 select **Rescan**. The manager validates and lists package metadata. This preview
-supports discovery and inspection only. The 0.43.62 installer predates it.
+supports discovery and inspection only.
 
 | Widget | Standalone repository status |
 |---|---|
@@ -92,14 +92,11 @@ VRX, VRX Max and VRX Pro use the separate **Rockchip RK3568** receiver platform.
 
 ## Build the released Windows MSI
 
-Current `main` is an internal-development source profile. Its MSI build script
-intentionally refuses release packaging. To reproduce the published maintenance
-version, use a fresh checkout of its release tag with .NET SDK 8.0.424 on Windows
-x64:
+Use a fresh checkout of the published release tag with .NET SDK 8.0.424 on Windows x64:
 
 ```powershell
-git clone --branch v0.43.62 --single-branch https://github.com/TelaMechanica/ascent-control.git ascent-control-04362
-cd ascent-control-04362
+git clone --branch v0.43.63 --single-branch https://github.com/TelaMechanica/ascent-control.git ascent-control-04363
+cd ascent-control-04363
 ```
 
 Then run:
