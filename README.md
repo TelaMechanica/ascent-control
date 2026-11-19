@@ -10,17 +10,31 @@ Windows MSI build tooling, shared protocol helpers and camera-image builders.
 | Version | Available now | Scope |
 |---|---|---|
 | [0.43.62 Windows release](https://github.com/TelaMechanica/ascent-control/releases/tag/v0.43.62) | Downloadable MSI | Public AC; excludes AC+ receiver access and receiver widget deployment |
-| Current `main` | Public development source | AC+ host credential preparation, guarded receiver-readiness checks, a local widget catalog and a non-executing SDK preview |
+| Current `main` | Public development source | AC+ host credential preparation, guarded receiver-readiness checks, a read-only Widget Manager and a non-executing Widget SDK preview |
 
 The AC+ and SDK source checkpoint is merged into this repository. It is not a
 released AC+ installer. Private initial-access installation and receiver widget
 implementations are excluded. Third-party widget execution is disabled.
 
-Start with the [public transition status](docs/PUBLIC_TRANSITION_STATUS.md),
-[AC+ development review](docs/CONSOLIDATED_REVIEW_0.43.63_DEV3.md) or
-[widget SDK quick start](docs/sdk/README.md). The
-[confinement proposal](docs/SDK_CONFINEMENT_PROPOSAL.md) records the remaining
-isolation tests; merging source does not prove those tests or receiver behavior.
+See the [public transition status](docs/PUBLIC_TRANSITION_STATUS.md) and
+[AC+ development review](docs/CONSOLIDATED_REVIEW_0.43.63_DEV3.md).
+
+## Widget SDK and standalone widgets
+
+The development desktop scans its **Widgets** folder at startup. In **Widget
+Manager**, select **Open Widgets folder**, copy in a supported ZIP package and
+select **Rescan**. The manager validates and lists package metadata. This preview
+supports discovery and inspection only. The 0.43.62 installer predates it.
+
+| Widget | Standalone repository status |
+|---|---|
+| Picker | Local candidate. A separate public repository is planned. |
+| Netrunner | Local candidate. A separate public repository is planned. |
+
+For a sample package and the manifest format, see the
+[Widget SDK quick start](docs/sdk/README.md). The
+[confinement proposal](docs/SDK_CONFINEMENT_PROPOSAL.md) tracks the isolation work
+needed before third-party execution.
 
 ## Download and test
 
