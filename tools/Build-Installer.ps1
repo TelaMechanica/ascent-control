@@ -9,6 +9,13 @@ param(
 )
 $ErrorActionPreference='Stop'
 $repo=(Resolve-Path (Join-Path $PSScriptRoot '..')).ProviderPath
+$sourceCommit=$null
+if(Test-Path -LiteralPath (Join-Path $repo '.git')){
+ $trackedChanges=git -C $repo status --porcelain --untracked-files=no
+ if($LASTEXITCODE -ne 0 -or $trackedChanges){throw 'Use a clean tracked source checkout for installer provenance'}
+ $sourceCommit=git -C $repo rev-parse HEAD
+ if($LASTEXITCODE -ne 0 -or $sourceCommit -cnotmatch '^[0-9a-f]{40}$'){throw 'Could not verify the installer source commit'}
+}
 $payloadSpec=Get-Content -LiteralPath (Join-Path $repo 'release\public-payload.json') -Raw|ConvertFrom-Json
 foreach($required in @('python.exe','pythonw.exe','python312.zip','python312._pth')){
  if(-not $payloadSpec.dependencies.pyembed.PSObject.Properties[$required]){throw ('Embedded Python pin is missing: '+$required)}
@@ -114,6 +121,6 @@ New-Item -ItemType Directory -Force -Path $OutputDir|Out-Null
 $final=Join-Path $OutputDir (Split-Path -Leaf $msi)
 if(Test-Path -LiteralPath $final){throw 'Preserve the existing MSI; select another output directory'}
 Copy-Item -LiteralPath $msi -Destination $final
-$record=[ordered]@{version=$version;file_version=$fileVersion;msi=$final;bytes=(Get-Item -LiteralPath $final).Length;sha256=(Get-FileHash -LiteralPath $final -Algorithm SHA256).Hash.ToLowerInvariant();verified_payload_files=$count;extracted_payload=$payload;work=$WorkDir;installed=$false;hardware_executed=$false;signed=$false}
+$record=[ordered]@{source_commit=$sourceCommit;version=$version;file_version=$fileVersion;msi=$final;bytes=(Get-Item -LiteralPath $final).Length;sha256=(Get-FileHash -LiteralPath $final -Algorithm SHA256).Hash.ToLowerInvariant();verified_payload_files=$count;extracted_payload=$payload;work=$WorkDir;installed=$false;hardware_executed=$false;signed=$false}
 $record|ConvertTo-Json|Set-Content -Encoding UTF8 (Join-Path $OutputDir 'public-msi-build-result.json')
 Write-Host ($record|ConvertTo-Json -Compress)

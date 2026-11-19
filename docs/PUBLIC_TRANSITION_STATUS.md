@@ -21,9 +21,16 @@ the Live page in source. The simultaneous control, playback and failsafe paths
 still need receiver qualification. The AC+ product profile remains review-only.
 
 Promote the next paired release after both Windows installers have built from
-reviewed source and passed inventory and extraction checks. Record both source
-commits, versions and installer hashes. The package review must cover the public
-AC+ payload as well as AC.
+the same reviewed commit on public main and passed inventory and extraction
+checks. Run the Windows pair verifier with both build records and that commit:
+
+```powershell
+.\tools\Verify-PairedInstallerRelease.ps1 -CoreRecord <ac-record> -PlusRecord <acplus-record> -SourceCommit <main-commit>
+```
+
+The verifier reads both MSI databases without installing and checks their recorded
+versions, byte counts and SHA-256 digests. The receipt lists the source commit and
+both installer identities. The package review covers both payloads.
 
 ## Review and privacy
 
