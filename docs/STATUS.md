@@ -14,9 +14,9 @@ foundations and non-executing widget SDK preview. The reviewed follow-up is
 `8e5691c39d6b06287904bcacbf05daa024a44659`; the verified post-merge main checkpoint
 is `a6d87d63887fe46ab7b956de1ed649df0f0dddcc`.
 
-The downloadable release remains 0.43.62. Current development source is not a
-production AC+ release and intentionally cannot produce a release MSI. No widget
-executor or private initial-access/receiver widget implementation is published.
+The downloadable public ASCENT Control release is 0.43.63. Its Widget Manager
+inspects local SDK preview packages. Receiver widget deployment remains part of
+private AC+.
 See [transition status](PUBLIC_TRANSITION_STATUS.md) for the remaining work.
 
 The operator-supplied independent follow-up review reports no blocking findings

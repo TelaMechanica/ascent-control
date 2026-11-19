@@ -1348,14 +1348,33 @@ def crsf_send(body: dict) -> dict:
 
 HID_OPERATION_ID = "cgc_hid_crsf_stream"
 
+def _hid_ethernet_scope():
+    dev = SESSION.device
+    target = getattr(dev, 'network_target', None)
+    if target is None:
+        return None
+    maxeth.validate_target(target)
+    if target.get('requires_reconnect') or not target.get('connection_token'):
+        raise maxeth.EthernetError('MAX_ETH_RECONNECT', 'Reconnect MAX ETH before starting control.')
+    return (SESSION.generation, target['connection_token'], target['device_ip'],
+            target['source_ip'], target['if_index'], cgc.PROFILES['rj45']['crsf_port'])
+
+
 def _hid_receiver_identity_token():
     # Cache-only preflight correlation, never USB/network probing or physical trust.
+    try:
+        ethernet_scope = _hid_ethernet_scope()
+    except maxeth.EthernetError:
+        return None
+    if ethernet_scope is not None:
+        return hashlib.sha256(json.dumps(ethernet_scope).encode()).hexdigest()
     if not ACTIVE_CONNECTION.get('candidate_id') and not ACTIVE_CONNECTION.get('serial_identity'):
         return None
     observed={'candidate_id':ACTIVE_CONNECTION.get('candidate_id'),
               'serial_identity':ACTIVE_CONNECTION.get('serial_identity'),
               'ground':HOST_CFG['ground'],'port':HOST_CFG.get('crsf_udp_port',9100)}
     return hashlib.sha256(json.dumps(observed,sort_keys=True,default=str).encode()).hexdigest()
+
 
 def _hid_receiver_scope():
     # Existing selected-connection observation only; never probe/enroll a receiver.
@@ -1364,6 +1383,34 @@ def _hid_receiver_scope():
                        'binding':_require_binding(None,None,'CRSF stream'),
                        'ground':HOST_CFG['ground'],'port':HOST_CFG.get('crsf_udp_port',9100)},sort_keys=True,default=str)
 
+def _send_ethernet_crsf(frame: bytes, scope: tuple) -> None:
+    _, _, host, source_ip, if_index, port = scope
+    if not NETWORK_SESSION_LOCK.acquire(blocking=False):
+        raise hidaxes.HidError('HID_ETHERNET_BUSY', 'Connection or network action in progress. Restart control explicitly.')
+    try:
+        if CRSF_STREAM._stop.is_set():
+            raise hidaxes.HidError('HID_STOPPED', 'Control stopped before transmission.')
+        if scope != _hid_ethernet_scope():
+            raise hidaxes.HidError('HID_RECEIVER_CHANGED', 'Selected receiver changed. Restart control explicitly.')
+        route = maxeth.fast_route(host) or {}
+        if (route.get('source_ip'), route.get('if_index')) != (source_ip, if_index):
+            raise hidaxes.HidError('HID_ETHERNET_ROUTE_CHANGED', 'Ethernet route changed. Reconnect before restarting control.')
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
+            _pin_windows_ipv4_interface(sock, if_index)
+            sock.bind((source_ip, 0))
+            if CRSF_STREAM._sent == 0:
+                sock.connect((host, cgc.PROFILES['rj45']['ctrl_port']))
+                if CRSF_STREAM._stop.is_set() or scope != _hid_ethernet_scope():
+                    raise hidaxes.HidError('HID_RECEIVER_CHANGED', 'Control stopped or the receiver changed before mode selection.')
+                sock.send(cgc.build_set_mode(cgc.Passthrough.CRSF))
+            sock.connect((host, port))
+            if CRSF_STREAM._stop.is_set() or scope != _hid_ethernet_scope():
+                raise hidaxes.HidError('HID_RECEIVER_CHANGED', 'Control stopped or the receiver changed before transmission.')
+            sock.send(frame)
+    finally:
+        NETWORK_SESSION_LOCK.release()
+
+
 def _crsf_socket_send(frame: bytes) -> None:
     """One datagram to 9100 from the correlated interface.
 
@@ -1371,6 +1418,8 @@ def _crsf_socket_send(frame: bytes) -> None:
     A changed target refuses this stream; it never automatically redirects output.
     A socket per frame retains the existing source-interface binding behavior.
     """
+    if isinstance(CRSF_STREAM._output_scope, tuple):
+        return _send_ethernet_crsf(frame, CRSF_STREAM._output_scope)
     if CRSF_STREAM._output_scope is not None and CRSF_STREAM._output_scope!=_hid_receiver_scope():
         raise hidaxes.HidError('HID_RECEIVER_CHANGED','Selected receiver changed; explicitly restart output')
     host = HOST_CFG["ground"]
@@ -1383,6 +1432,7 @@ def _crsf_socket_send(frame: bytes) -> None:
         if CRSF_STREAM._output_scope is not None and CRSF_STREAM._output_scope!=_hid_receiver_scope():
             raise hidaxes.HidError('HID_RECEIVER_CHANGED','Selected receiver changed before send')
         sk.send(frame)
+
 
 CRSF_STREAM = hidaxes.CrsfStream(_crsf_socket_send)
 
@@ -1525,10 +1575,28 @@ def hid_stream(body: dict) -> dict:
         if action == "start":
             if body.get("apply") is not True:
                 raise hidaxes.HidError("APPLY_REQUIRED", "the request must set apply=true")
-            _cgc_guard()
+            try:
+                ethernet_scope = _hid_ethernet_scope()
+                if ethernet_scope is None:
+                    _cgc_guard()
+                elif not CRSF_STREAM._hid_source:
+                    raise hidaxes.HidError('HID_NO_AXES', 'Start the desktop HID reader before starting Ethernet control.')
+            except maxeth.EthernetError as exc:
+                raise hidaxes.HidError(exc.code, str(exc)) from exc
             if CRSF_STREAM._hid_source and (body.get('receiver_token') is None or body.get('receiver_token')!=_hid_receiver_identity_token()):
                 raise hidaxes.HidError('HID_RECEIVER_CHANGED','Receiver observation changed; refresh and explicitly restart output')
-            output_scope=_hid_receiver_scope()
+            if ethernet_scope is None:
+                output_scope = _hid_receiver_scope()
+            else:
+                try:
+                    target, _, check = _max_eth_context(ethernet_scope[1])
+                    fresh = maxeth.decode('status', maxeth.read_rpc(target, 'status'))
+                    check(route=True)
+                    maxeth.require_same_receiver(target, fresh)
+                except (maxeth.EthernetError, OSError) as exc:
+                    raise hidaxes.HidError(getattr(exc, 'code', 'HID_ETHERNET_CHECK_FAILED'),
+                                           'Could not verify the selected MAX ETH receiver. Reconnect before starting control.') from exc
+                output_scope = ethernet_scope
             if CRSF_STREAM._hid_source and body.get('receiver_token')!=_hid_receiver_identity_token():
                 raise hidaxes.HidError('HID_RECEIVER_CHANGED','Receiver changed during output preparation')
             CRSF_STREAM.start(rate_hz=body.get("rate_hz"),output_scope=output_scope)

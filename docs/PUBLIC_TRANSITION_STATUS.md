@@ -9,17 +9,21 @@ Both PRs are merged; the source is on `main`, not only on a review branch.
 
 | Area | Current state | Remaining release evidence |
 |---|---|---|
-| Public Windows AC | 0.43.62 downloadable MSI | Later development source needs separate release qualification |
+| Public Windows AC | 0.43.63 downloadable MSI with Widget Manager inspection | Later source changes require a new build and package verification |
 | AC+ foundations | Host-only credential preparation and guarded receiver-readiness code | Actual receiver/daemon qualification, migration and installed transitions |
 | SDK preview | Offline package inspector and deterministic declarative example | Independent example/conformance and production lifecycle |
 | Widget execution | Disabled; no executor | Real browser/OS confinement, resource limits and revocation evidence |
 | Private integrations | Initial-access installation and receiver widget implementations excluded | Separate reviewed ownership/composition; no private source import |
 
-Current `release/public-payload.json` has the `internal-development` channel.
-`tools/Build-Installer.ps1` intentionally refuses that channel. Source publication
-is complete for the reviewed foundation; the full AC+ product and executable SDK
-are unfinished. The released MSI does not acquire development features through a
-source merge. No new release tag or installer is claimed by this checkpoint.
+The public release profile is enabled for AC. The cleaned AC+ changes are being
+integrated into the same repository. MAX Ethernet Live HID and RTSP can share
+the Live page in source. The simultaneous control, playback and failsafe paths
+still need receiver qualification. The AC+ product profile remains review-only.
+
+Promote the next paired release after both Windows installers have built from
+reviewed source and passed inventory and extraction checks. Record both source
+commits, versions and installer hashes. The package review must cover the public
+AC+ payload as well as AC.
 
 ## Review and privacy
 
