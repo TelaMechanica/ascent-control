@@ -1068,8 +1068,8 @@
     {
       "source": "ascent_core/widget_sdk.py",
       "target": "ascent_core/widget_sdk.py",
-      "sha256": "126e826f186abad962cde2bfed985c48a36bd594c66d8d35abc3e4da21d08e5b",
-      "bytes": 6170
+      "sha256": "3c2c99615a84664a93f782da8b0b51ff0935d22180c71971ee429f3cdf847dd0",
+      "bytes": 7565
     },
     {
       "source": "ascent_core/widget_catalog.py",
@@ -1213,7 +1213,7 @@
     "ascent_core/widget_catalog.py": "0ee95fd67e3524afc39d8b31ced8c7a423d5a67892ca0c5773cfc0acb8f02c2a",
     "ascent_core/widget_catalog_host.py": "8480cc2ab7bec693b3e0701dd81c61506441fc05589496eb10a8c1ff9df32c01",
     "ascent_core/widget_catalog_io.py": "a24c29c7d98150e39786b86bc10c96781eb814fe750efe87b5e89959c2fcf4f9",
-    "ascent_core/widget_sdk.py": "126e826f186abad962cde2bfed985c48a36bd594c66d8d35abc3e4da21d08e5b",
+    "ascent_core/widget_sdk.py": "3c2c99615a84664a93f782da8b0b51ff0935d22180c71971ee429f3cdf847dd0",
     "ascent_core/windows_key_material.py": "e8462aad3aa304078be9d32da74ba0cf92942a85849814b28417c32af4ea6b67",
     "ascent_core/windows_tools.py": "ad398d48e036aac7cff2fdd49d95cbeecde9d69a490245b858a38480be45d969",
     "docs/ACPLUS_SERVICE_MODE_REVIEW.md": "390b22e5963f41ef62aac98fe93a7c897c6a19493aaf8933dc8c0ba02422a4fa",
@@ -1460,7 +1460,7 @@
     "tests/test_device_session_integration.py": "10419db5e4acb5c221f56993234e818a08401bd96e7621d0badd3b5d94c5d9fc",
     "tests/test_firmware_upgrade.py": "aad85fa4c937f24f239d2db1de5a264912e38cdb9336db2f615b1f9293259a6b",
     "tests/test_framework_review_followup.py": "32ca385a2f3573f4fd8ebf60a603fb5ffdd2d9ea859da36d29f86301e96b1c39",
-    "tests/test_framework_scaffold.py": "9e10c734380ed4bafba22b5b6d88da75a0e6706f690977b6a82544ccde550136",
+    "tests/test_framework_scaffold.py": "c48062c777bf692c39718c2c3ad7e4a9b2bfc606d0b2e3e6b40e65e016bc9486",
     "tests/test_hdpro_tester_build.py": "677a85f4baa3a03fafc987c4291635a6ef46edb03225306d538e1dbb398d133f",
     "tests/test_hid_crsf_stream.py": "0442524dc5cf004fd156c1b2be117b5f808b371b707c1f6d430b834538cd66f2",
     "tests/test_hid_source_identity.py": "10a226aad09ab79dacd22417df1e9390d6dc7b33d7e35e4000f4071ae52a0ff6",

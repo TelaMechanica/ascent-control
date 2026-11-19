@@ -70,21 +70,55 @@ def inspect_package_bytes(data):
         return _inspect_archive(stream)
 
 
+def _archive_names(archive):
+    entries = archive.infolist()
+    if not 1 <= len(entries) <= MAX_FILES or sum(e.file_size for e in entries) > MAX_EXPANDED_BYTES:
+        raise PackageInvalid('Expanded package exceeds limit')
+    names = []
+    for entry in entries:
+        name = _path(entry.filename)
+        mode = entry.external_attr >> 16
+        if entry.is_dir() or stat.S_ISLNK(mode) or stat.S_IFMT(mode) not in (0, stat.S_IFREG) or entry.flag_bits & 1:
+            raise PackageInvalid('Only ordinary unencrypted files are allowed')
+        names.append(name)
+    if len({n.casefold() for n in names}) != len(names):
+        raise PackageInvalid('Duplicate or case-colliding path')
+    return names
+
+
+def verify_release_payload(data, *, archive_digest, file_digests):
+    """Verify an opaque release archive selected by a trusted host inventory.
+
+    Both digest inputs come from application-owned release metadata. This path
+    never derives trust from a package manifest, opens devices, or runs payloads.
+    """
+    if (not isinstance(data, bytes) or len(data) > MAX_ARCHIVE_BYTES
+            or hashlib.sha256(data).hexdigest() != archive_digest):
+        raise PackageInvalid('Release archive digest differs')
+    try:
+        with zipfile.ZipFile(io.BytesIO(data)) as archive:
+            names = _archive_names(archive)
+            if set(names) != set(file_digests):
+                raise PackageInvalid('Release payload inventory differs')
+            payload = {name: archive.read(name) for name in names}
+            if any(hashlib.sha256(blob).hexdigest() != file_digests[name]
+                   for name, blob in payload.items()):
+                raise PackageInvalid('Release payload digest differs')
+            return payload
+    except PackageInvalid:
+        raise
+    except (zipfile.BadZipFile, zlib.error, EOFError, OSError, ValueError,
+            OverflowError, RuntimeError, NotImplementedError) as exc:
+        raise PackageInvalid('Malformed release archive') from exc
+
+
+
 def _inspect_archive(source):
     try:
         with zipfile.ZipFile(source) as archive:
-            entries = archive.infolist()
-            if not 2 <= len(entries) <= MAX_FILES or sum(e.file_size for e in entries) > MAX_EXPANDED_BYTES:
+            names = _archive_names(archive)
+            if len(names) < 2:
                 raise PackageInvalid('Expanded package exceeds limit')
-            names = []
-            for entry in entries:
-                name = _path(entry.filename)
-                mode = entry.external_attr >> 16
-                if entry.is_dir() or stat.S_ISLNK(mode) or (stat.S_IFMT(mode) not in (0, stat.S_IFREG)) or entry.flag_bits & 1:
-                    raise PackageInvalid('Only ordinary unencrypted files are allowed')
-                names.append(name)
-            if len({n.casefold() for n in names}) != len(names):
-                raise PackageInvalid('Duplicate or case-colliding path')
             if 'widget.json' not in names:
                 raise PackageInvalid('Manifest missing')
             manifest = _json(archive.read('widget.json'))
