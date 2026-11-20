@@ -59,14 +59,14 @@ _PRODUCT_VARIANTS = {"z40": "Z40", "z8": "Z8"}
 # "Families to support" and in vendor `SysParam.data`.  Nothing here is invented:
 # an identity with no known product name must fall through to `derived`.
 TABLE: dict[tuple[str, ...], str] = {
-    ("ascent", "vrx"): "Ascent VRX",
-    ("ascent", "vrx", "m"): "Ascent VRX",
-    ("ascent", "vrxpro"): "Ascent VRX Pro",
-    ("ascent", "vrx", "pro"): "Ascent VRX Pro",
-    ("ascent", "vrxmax"): "Ascent VRX Max",
-    ("ascent", "vrx", "max"): "Ascent VRX Max",
-    ("ascent", "vrx", "max", "wf"): "Ascent VRX Max WF",
-    ("ascent", "vrx", "max", "hf"): "Ascent VRX Max HF",
+    ("ascent", "vrx"): "VRX",
+    ("ascent", "vrx", "m"): "VRX",
+    ("ascent", "vrxpro"): "VRX Pro",
+    ("ascent", "vrx", "pro"): "VRX Pro",
+    ("ascent", "vrxmax"): "VRX Max",
+    ("ascent", "vrx", "max"): "VRX Max",
+    ("ascent", "vrx", "max", "wf"): "VRX Max",
+    ("ascent", "vrx", "max", "hf"): "VRX Max",
     ("ascent", "vrx", "cine"): "Ascent VRX Cine",
     ("ascent", "goggles"): "Ascent Goggles",
     ("ascent", "gtpro"): "Ascent GT Pro",
@@ -158,7 +158,7 @@ def humanize(raw: object) -> dict:
         version_material = [t for t in trailing if t not in _PRODUCT_VARIANTS]
         # A shortened prefix may only match when everything it dropped is version
         # material.  `Ascent_VRX_Max_19_2_4` is a VRX Max; `Ascent_VRX_Max_Quantum`
-        # is an unmodelled variant and must NOT present as "Ascent VRX Max".  This
+        # is an unmodelled variant and must NOT present as "VRX Max".  This
         # is the device-artwork rule applied to names: exact render or no render.
         if (len(set(variants)) > 1 or
                 (version_material and not all(_is_version_token(t)
