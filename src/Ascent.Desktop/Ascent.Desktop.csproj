@@ -378,6 +378,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="..\..\runtime\netrunner-download-pins.json">
+      <Link>runtime\netrunner-download-pins.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="..\..\runtime\dev_harness.py">
       <Link>runtime\dev_harness.py</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

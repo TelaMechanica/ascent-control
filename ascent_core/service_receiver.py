@@ -13,9 +13,10 @@ import secrets
 from threading import RLock
 import time
 from .service_access import AccessDenied
+from .service_credentials import CredentialError
 from .service_enrollment import ReceiverEnrollment
 from .service_records import host_key_fingerprint
-from .service_key_policy import compatible_key_types, require_compatible_key_type
+from .service_key_policy import CLIENT_KEY_TYPES, compatible_key_types, require_compatible_key_type
 
 
 @dataclass(frozen=True, repr=False)
@@ -90,8 +91,20 @@ class ReceiverService:
         record = self._enrollments.lookup(identity)
         if record is None:
             raise AccessDenied('RECEIVER_ENROLLMENT_REQUIRED')
-        credential = self._load_compatible_credential(target, key_type)
-        if host_key_fingerprint(credential.public_key) != record.client_fingerprint:
+        if key_type is None:
+            kinds = compatible_key_types(target.device_name, target.firmware) or CLIENT_KEY_TYPES
+        else:
+            kinds = (key_type,)
+        for kind in kinds:
+            try:
+                credential = self._load_compatible_credential(target, kind)
+            except CredentialError as error:
+                if str(error) != 'CREDENTIAL_NOT_PRESENT':
+                    raise
+                continue
+            if host_key_fingerprint(credential.public_key) == record.client_fingerprint:
+                break
+        else:
             raise AccessDenied('ENROLLMENT_CREDENTIAL_CHANGED')
         active = True
 
@@ -114,13 +127,8 @@ class ReceiverService:
         with self.enrolled(target, key_type=key_type) as enrollment:
             return self._transport.read_network_inventory(enrollment)
 
-    def apply_selected_netrunner_download(self, *, expected_binding, key_type, library,
-                                         release_id, release_pins, action):
-        """Resolve a local widget download using the current enrolled receiver."""
-        self._require()
-        target = self._selector.capture()
-        if target.binding != expected_binding:
-            raise AccessDenied('RECEIVER_BINDING_CHANGED')
+    @staticmethod
+    def _netrunner_releases(target, release_pins):
         if not target.serial_number:
             raise AccessDenied('RECEIVER_IDENTITY_REQUIRED')
 
@@ -135,6 +143,56 @@ class ReceiverService:
 
         supported = {name: pin for name, pin in release_pins.items()
                      if pin.get('widget_id') == 'netrunner' and pin.get('profile', 'max') == profile}
+        return profile, supported
+
+    @staticmethod
+    def _widget_target_document(target):
+        return {'device_id': target.binding.receiver_identity, 'device_name': target.device_name,
+                'serial_number': target.serial_number, 'hardware': target.hardware,
+                'firmware': target.firmware, 'host': target.host, 'source_ip': target.source_ip}
+
+    def netrunner_widget_status(self, *, library, release_pins):
+        self._require()
+        target = self._selector.capture()
+        _, supported = self._netrunner_releases(target, release_pins)
+        root = Path(library)
+        with self.enrolled(target, key_type=None) as enrollment:
+            observed = self._transport.inspect_netrunner_tools(enrollment)
+            enrollment.check()
+        installed = next((pin['version'] for pin in supported.values() if pin['files'] == observed), None)
+        present = any(digest is not None for digest in observed.values())
+        available = []
+        for release_id, pin in supported.items():
+            if not (root / (release_id + '.zip')).is_file() or pin['version'] == installed:
+                continue
+            if not present:
+                action = 'install'
+            elif installed:
+                requested = tuple(map(int, pin['version'].split('.')))
+                previous = tuple(map(int, installed.split('.')))
+                action = 'update' if requested > previous else 'rollback'
+            else:
+                continue
+            available.append({'id': release_id, 'version': pin['version'], 'action': action})
+        return {'receiver': self._widget_target_document(target), 'installed_version': installed,
+                'files_present': present, 'available_releases': available}
+
+    def apply_netrunner_widget_action(self, *, reviewed_target, library, release_id, release_pins, action):
+        self._require()
+        target = self._selector.capture()
+        if reviewed_target != self._widget_target_document(target):
+            raise AccessDenied('RECEIVER_BINDING_CHANGED')
+        return self.apply_selected_netrunner_download(expected_binding=target.binding, key_type=None,
+            library=library, release_id=release_id, release_pins=release_pins, action=action)
+
+    def apply_selected_netrunner_download(self, *, expected_binding, key_type, library,
+                                         release_id, release_pins, action):
+        """Resolve a local widget download using the current enrolled receiver."""
+        self._require()
+        target = self._selector.capture()
+        if target.binding != expected_binding:
+            raise AccessDenied('RECEIVER_BINDING_CHANGED')
+        profile, supported = self._netrunner_releases(target, release_pins)
         if release_id is None:
             release_id = {'max': 'netrunner-max-2.10.1', 'pro-18.21.10': 'netrunner-pro-2.10.1'}[profile]
         if (not isinstance(release_id, str) or not re.fullmatch(r'[a-z0-9][a-z0-9.-]{0,63}', release_id)

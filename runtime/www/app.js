@@ -4089,8 +4089,11 @@ function renderWidgetManager(){
   if(widgetCatalogPage)return;
   if(!globalThis.AscentWidgetCatalog){$('#content').textContent='Widget catalog interface is unavailable.';return;}
   widgetCatalogPage=globalThis.AscentWidgetCatalog.mount({root:$('#content'),document,
-    request:(path,method)=>fetchJson(path,true,5000,'Catalog request timed out.',method==='POST'?
-      {method:'POST',headers:{'Content-Type':'application/json'},body:'{}'}:{})});
+    receiverActions:state.app?.local_credential_preparation===true,
+    confirmAction:message=>window.confirm(message),
+    request:(path,method,body)=>fetchJson(path,true,path==='/api/widgets/manager/action'?120000:15000,
+      'Widget Manager request timed out.',method==='POST'?
+      {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})}:{})});
 }
 
 function render(){

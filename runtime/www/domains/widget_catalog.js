@@ -18,7 +18,7 @@
     PACKAGE_LIMIT:'Folder has too many ZIP packages. No complete catalog is available.',
     BYTE_LIMIT:'Package bytes exceed the scan limit. No complete catalog is available.'
   });
-  function mount({root, document, request, schedule=global.setTimeout, cancel=global.clearTimeout}) {
+  function mount({root, document, request, receiverActions=false, confirmAction, schedule=global.setTimeout, cancel=global.clearTimeout}) {
     let closed=false, pending=false, epoch=0, timer=null, observation=null, error='', actionResult='';
     const node=(tag,text,cls)=>{const value=document.createElement(tag);if(text!==undefined)value.textContent=text;if(cls)value.className=cls;return value;};
     root.replaceChildren();
@@ -37,6 +37,68 @@
     for(const label of ['Package','Version','File','Package check']){const column=node('th',label);column.setAttribute('scope','col');heading.appendChild(column);}
     header.appendChild(heading);table.appendChild(header);const rows=node('tbody');table.appendChild(rows);body.appendChild(table);
     body.appendChild(node('p','Publisher identity is not verified. Receiver installation has not been checked. Widget execution is unavailable in this preview.','notice'));
+    if(receiverActions){
+      const receiverPanel=node('div',undefined,'panel');
+      receiverPanel.appendChild(node('div','NETRUNNER','panel-title'));
+      const controls=node('div',undefined,'panel-body');receiverPanel.appendChild(controls);
+      const inspect=node('button','Check selected receiver','secondary');inspect.type='button';
+      controls.appendChild(inspect);
+      const receiverStatus=node('p');receiverStatus.setAttribute('role','status');controls.appendChild(receiverStatus);
+      const releases=node('div',undefined,'toolbar');controls.appendChild(releases);
+      root.appendChild(receiverPanel);
+      const errors={
+        RECEIVER_SELECTION_REQUIRED:'Connect and select a receiver.',
+        RECEIVER_ENROLLMENT_REQUIRED:'Verify receiver access in Service Mode first.',
+        RECEIVER_BINDING_CHANGED:'The selected receiver changed. Check it again.',
+        NETRUNNER_PROFILE_UNSUPPORTED:'NetRunner downloads for this receiver are unavailable here.',
+        WIDGET_DOWNLOAD_REQUIRED:'Add the NetRunner ZIP to the Widgets folder.',
+        WIDGET_ARCHIVE_INVALID:'The NetRunner ZIP could not be verified. Replace it with the official download.',
+        DEVICE_BUSY:'Another receiver operation is active.'
+      };
+      const actionLabels={install:'Install',update:'Update',rollback:'Roll back'};
+      async function readReceiver(){
+        inspect.disabled=true;releases.replaceChildren();receiverStatus.textContent='Checking selected receiver…';
+        try{
+          const info=await request('/api/widgets/manager','GET');
+          if(closed)return;
+          if(info?.ok!==true){
+            receiverStatus.textContent=errors[info?.error]||'NetRunner status is unavailable.';
+            return;
+          }
+          receiverStatus.textContent=info.installed_version?'Installed NetRunner '+info.installed_version:
+            info.files_present?'Installed NetRunner version could not be verified.':'NetRunner files are absent.';
+          if(!info.available_releases?.length){
+            receiverStatus.textContent+=' Add the receiver’s widget download to install or change versions.';
+            return;
+          }
+          for(const release of info.available_releases){
+            const label=actionLabels[release.action];
+            if(!label||typeof release.id!=='string'||typeof release.version!=='string')continue;
+            const button=node('button',label+' '+release.version,'secondary');button.type='button';
+            button.onclick=async()=>{
+              if(inspect.disabled||!confirmAction?.(label+' NetRunner '+release.version+
+                  ' on receiver '+info.receiver.serial_number+'?'))return;
+              inspect.disabled=true;releases.replaceChildren();receiverStatus.textContent=label+' requested…';
+              try{
+                const result=await request('/api/widgets/manager/action','POST',{
+                  widget_id:'netrunner',action:release.action,release_id:release.id,
+                  confirm:true,expected_target:info.receiver
+                });
+                if(closed)return;
+                receiverStatus.textContent=result?.ok===true?'NetRunner files verified. Check the receiver to see the current version.':
+                  errors[result?.error]||'NetRunner action was not confirmed. Check the receiver before retrying.';
+              }catch{
+                if(!closed)receiverStatus.textContent='NetRunner action was not confirmed. Check the receiver before retrying.';
+              }finally{if(!closed)inspect.disabled=false;}
+            };
+            releases.appendChild(button);
+          }
+        }catch{
+          if(!closed)receiverStatus.textContent='NetRunner status is unavailable.';
+        }finally{if(!closed)inspect.disabled=false;}
+      }
+      inspect.onclick=readReceiver;
+    }
     function valid(doc){
       if(!doc||doc.schema!=='ascent.widget_catalog_host.v0'||!phases.has(doc.phase)||
          !Number.isSafeInteger(doc.generation)||doc.generation<0||doc.registration_performed!==false||

@@ -20,9 +20,9 @@ const doc=(phase='COMPLETE',result=blank(),generation=1)=>({schema:'ascent.widge
 const walk=root=>[root,...root.children.flatMap(walk)];
 const button=(root,text)=>walk(root).find(node=>node.tagName==='button'&&node.textContent===text);
 const flush=async()=>{for(let i=0;i<8;i++)await Promise.resolve();};
-function mount(request){
+function mount(request, options={}){
  const root=new Element('section'),timers=new Map();let id=0;
- const page=ctx.AscentWidgetCatalog.mount({root,document,request,
+ const page=ctx.AscentWidgetCatalog.mount({root,document,request,...options,
    schedule:callback=>{const token=++id;timers.set(token,callback);return token;},cancel:token=>timers.delete(token)});
  return {root,timers,page};
 }
@@ -95,6 +95,26 @@ function mount(request){
  assert(!unknown.root.textContent.includes('[native code]'));unknown.page.close();
  const noTime=doc();noTime.observed_at='0';
  const uncertain=mount(async()=>noTime);await flush();assert(!uncertain.root.textContent.includes('Last scan completed at'));uncertain.page.close();
+
+ const target={serial_number:'1234',device_name:'Ascent_VRX_pro'};
+ const receiverCalls=[];
+ let confirm=false;
+ const receiver=mount(async(path,method,body)=>{
+  if(path==='/api/widgets/manager')return {ok:true,receiver:target,files_present:false,
+    available_releases:[{id:'netrunner-pro-2.10.1',version:'2.10.1',action:'install'}]};
+  if(path==='/api/widgets/manager/action'){receiverCalls.push(body);return {ok:true};}
+  return doc();
+ },{receiverActions:true,confirmAction:()=>confirm});
+ await flush();assert.equal(receiverCalls.length,0);
+ await button(receiver.root,'Check selected receiver').onclick();
+ await button(receiver.root,'Install 2.10.1').onclick();assert.equal(receiverCalls.length,0);
+ confirm=true;
+ await button(receiver.root,'Install 2.10.1').onclick();
+ assert.equal(receiverCalls.length,1);
+ assert.equal(receiverCalls[0].expected_target,target);
+ assert.equal(receiverCalls[0].release_id,'netrunner-pro-2.10.1');
+ assert(receiver.root.textContent.includes('NetRunner files verified'));
+ receiver.page.close();
 
  const {boot}=require('./public_ui_render_check.cjs');const ui=boot().__ui;
  ui.state.connections={candidates:[]};ui.state.capabilities={pages:{widgetmanager:{visible:false}}};

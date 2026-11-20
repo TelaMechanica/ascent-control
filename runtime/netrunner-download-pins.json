@@ -1,0 +1,33 @@
+{
+  "netrunner-max-2.10.1": {
+    "files": {
+      "ascent_wifi_channels": "081b5d0ab400fd163d6b9bc33c7233f68b5c0767a3a15ba180ab25614334bfe4",
+      "wpa_cli": "3b1e5969dfa2b5b2248d5c480c4f5fbdc5df4df7e89fa168e39c3bd22de52720",
+      "wpa_supplicant": "72d568262a0f440267a364a189f7c5ccf9a7e36b5b68aff4ae408daa795bb25a"
+    },
+    "sha256": "57949df25e1d77cf1b162b17f255f009e734eb2afe23764903349a9a5ca659c0",
+    "version": "2.10.1",
+    "widget_id": "netrunner"
+  },
+  "netrunner-max-2.10.2": {
+    "files": {
+      "ascent_wifi_channels": "758cdfbc302b8cbe3bb18e57c93ba397f807bccca5f6839789e6df41a0070f03",
+      "wpa_cli": "74fa9f074a98d0e7ac8beea88161ef5634e99246404778553a4486d8a96f7b71",
+      "wpa_supplicant": "9766ad9af2589da45b89e0373df44dca10c1d1391107957485580b55a1e5016a"
+    },
+    "sha256": "f55e7298de2474214e333045049d7bee7ad9a7a87d6124a082ed4b965845ddbe",
+    "version": "2.10.2",
+    "widget_id": "netrunner"
+  },
+  "netrunner-pro-2.10.1": {
+    "files": {
+      "ascent_wifi_channels": "081b5d0ab400fd163d6b9bc33c7233f68b5c0767a3a15ba180ab25614334bfe4",
+      "wpa_cli": "3b1e5969dfa2b5b2248d5c480c4f5fbdc5df4df7e89fa168e39c3bd22de52720",
+      "wpa_supplicant": "72d568262a0f440267a364a189f7c5ccf9a7e36b5b68aff4ae408daa795bb25a"
+    },
+    "profile": "pro-18.21.10",
+    "sha256": "57949df25e1d77cf1b162b17f255f009e734eb2afe23764903349a9a5ca659c0",
+    "version": "2.10.1",
+    "widget_id": "netrunner"
+  }
+}
