@@ -3,18 +3,21 @@
 Digests detect corruption; they do not authenticate publishers. Runtime isolation,
 user grants and publisher verification remain separate production requirements.
 """
+from contextlib import contextmanager
 import hashlib
 import io
 import json
-from pathlib import PurePosixPath
+from pathlib import Path, PurePosixPath
 import re
 import stat
+from tempfile import TemporaryDirectory
 import zipfile
 import zlib
 
 SDK_VERSION = '0.1.0-dev'
 MAX_ARCHIVE_BYTES = 2 * 1024 * 1024
 MAX_EXPANDED_BYTES = 4 * 1024 * 1024
+MAX_PINNED_EXPANDED_BYTES = 5 * 1024 * 1024
 MAX_FILES = 64
 ALLOWED_CAPABILITIES = frozenset({'host.version.read'})
 
@@ -70,9 +73,9 @@ def inspect_package_bytes(data):
         return _inspect_archive(stream)
 
 
-def _archive_names(archive):
+def _archive_names(archive, *, max_expanded_bytes=MAX_EXPANDED_BYTES):
     entries = archive.infolist()
-    if not 1 <= len(entries) <= MAX_FILES or sum(e.file_size for e in entries) > MAX_EXPANDED_BYTES:
+    if not 1 <= len(entries) <= MAX_FILES or sum(e.file_size for e in entries) > max_expanded_bytes:
         raise PackageInvalid('Expanded package exceeds limit')
     names = []
     for entry in entries:
@@ -86,18 +89,20 @@ def _archive_names(archive):
     return names
 
 
-def verify_release_payload(data, *, archive_digest, file_digests):
+def verify_release_payload(data, *, archive_digest, file_digests, max_expanded_bytes=MAX_EXPANDED_BYTES):
     """Verify an opaque release archive selected by a trusted host inventory.
 
     Both digest inputs come from application-owned release metadata. This path
     never derives trust from a package manifest, opens devices, or runs payloads.
     """
+    if type(max_expanded_bytes) is not int or not 0 < max_expanded_bytes <= MAX_PINNED_EXPANDED_BYTES:
+        raise PackageInvalid('Invalid pinned release size limit')
     if (not isinstance(data, bytes) or len(data) > MAX_ARCHIVE_BYTES
             or hashlib.sha256(data).hexdigest() != archive_digest):
         raise PackageInvalid('Release archive digest differs')
     try:
         with zipfile.ZipFile(io.BytesIO(data)) as archive:
-            names = _archive_names(archive)
+            names = _archive_names(archive, max_expanded_bytes=max_expanded_bytes)
             if set(names) != set(file_digests):
                 raise PackageInvalid('Release payload inventory differs')
             payload = {name: archive.read(name) for name in names}
@@ -111,6 +116,24 @@ def verify_release_payload(data, *, archive_digest, file_digests):
             OverflowError, RuntimeError, NotImplementedError) as exc:
         raise PackageInvalid('Malformed release archive') from exc
 
+
+@contextmanager
+def stage_release_payload(path, *, archive_digest, file_digests, max_expanded_bytes=MAX_EXPANDED_BYTES):
+    """Stage a flat, pinned widget payload for a trusted host installer."""
+    from .widget_catalog_io import open_folder
+
+    if not file_digests or any('/' in _path(name) for name in file_digests):
+        raise PackageInvalid('Release files must have plain names')
+    path = Path(path)
+    with open_folder(path.parent) as folder:
+        data = folder.read(path.name, folder.stat(path.name), MAX_ARCHIVE_BYTES)
+    payload = verify_release_payload(data, archive_digest=archive_digest, file_digests=file_digests,
+                                     max_expanded_bytes=max_expanded_bytes)
+    with TemporaryDirectory(prefix='ascent-widget-release-') as directory:
+        root = Path(directory)
+        for name, blob in payload.items():
+            (root / name).write_bytes(blob)
+        yield root
 
 
 def _inspect_archive(source):
