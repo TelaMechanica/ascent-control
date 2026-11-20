@@ -81,9 +81,9 @@ for(const view of ['device','firmware','rf','hub','rc','fleet'])ok(html.includes
 ok(html.includes('data-view="widgetmanager"'),'read-only Widget Manager navigation present');
 for(const view of ['picker','netrunner','widgetlayout'])ok(!html.includes('data-view="'+view+'"'),view+' navigation excluded');
 const code=['runtime/www/app.js','runtime/www/domains/widget_catalog.js'].map(path=>fs.readFileSync(path,'utf8')).join('\n');
-const reviewedLocalPaths=new Set(['/api/service-mode/local/status','/api/service-mode/local/prepare','/api/service-mode/local/credential','/api/service-mode/local/receiver/inspect','/api/service-mode/local/receiver/verify','/api/widgets/local/catalog','/api/widgets/local/rescan','/api/widgets/local/open-folder']);
+const reviewedLocalPaths=new Set(['/api/service-mode/local/status','/api/service-mode/local/prepare','/api/service-mode/local/credential','/api/service-mode/local/receiver/inspect','/api/service-mode/local/receiver/verify','/api/widgets/local/catalog','/api/widgets/local/rescan','/api/widgets/local/open-folder','/api/widgets/manager','/api/widgets/manager/action']);
 const restrictedRequests=code.match(/\/api\/(?:service-mode|widgets|picker|netrunner|cot|relay\/press)[A-Za-z0-9_/-]*/g)||[];
-ok(restrictedRequests.every(path=>reviewedLocalPaths.has(path)),'Only reviewed host-local preparation API requests; receiver operations remain absent');
+ok(restrictedRequests.every(path=>reviewedLocalPaths.has(path)),'Only reviewed desktop host preparation and Widget Manager requests');
 const hdpro={target:'hdpro',plan:{target:'hdpro',buildable:true,stage1:{mode:'bundled_support',complete:true}},job:null};
 ok(ui.fwVariantBuildGate(hdpro,{state:'AVAILABLE',acknowledged:true}).ok,'HD Pro tester build is enabled after donor check and risk acknowledgement');
 ok(!ui.fwVariantBuildGate(hdpro,{state:'AVAILABLE',acknowledged:false}).ok,'HD Pro keeps session risk acknowledgement');

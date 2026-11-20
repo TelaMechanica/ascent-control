@@ -220,6 +220,56 @@ def receiver_readiness_request(action, body):
         DEVICE_MUTATION_LOCK.release()
 
 
+def netrunner_widget_status():
+    from ascent_core.service_access import AccessDenied
+
+    if not DEVICE_MUTATION_LOCK.acquire(blocking=False):
+        return {'ok': False, 'error': 'DEVICE_BUSY'}
+    try:
+        if DEVICE_OPERATION_STATE.get('active'):
+            return {'ok': False, 'error': 'DEVICE_BUSY'}
+        pins = json.loads((ROOT / 'netrunner-download-pins.json').read_text(encoding='utf-8'))
+        return {'ok': True, **_receiver_service().netrunner_widget_status(
+            library=local_settings.widget_library_root(), release_pins=pins)}
+    except (AccessDenied, CredentialError) as error:
+        return {'ok': False, 'error': str(error)}
+    except (OSError, subprocess.TimeoutExpired):
+        return {'ok': False, 'error': 'WIDGET_STATUS_UNAVAILABLE'}
+    finally:
+        DEVICE_MUTATION_LOCK.release()
+
+
+def netrunner_widget_action(body):
+    from ascent_core.service_access import AccessDenied
+    from ascent_core.widget_sdk import PackageInvalid
+
+    fields = {'widget_id', 'action', 'confirm', 'expected_target'}
+    if (not isinstance(body, dict) or not fields <= set(body) <= fields | {'release_id'}
+            or body['widget_id'] != 'netrunner' or body['confirm'] is not True
+            or body['action'] not in ('install', 'update', 'rollback')
+            or not isinstance(body['expected_target'], dict)
+            or (body['action'] != 'install' and not isinstance(body.get('release_id'), str))):
+        return {'ok': False, 'error': 'WIDGET_REQUEST_INVALID'}
+    if not DEVICE_MUTATION_LOCK.acquire(blocking=False):
+        return {'ok': False, 'error': 'DEVICE_BUSY'}
+    try:
+        if DEVICE_OPERATION_STATE.get('active'):
+            return {'ok': False, 'error': 'DEVICE_BUSY'}
+        pins = json.loads((ROOT / 'netrunner-download-pins.json').read_text(encoding='utf-8'))
+        transaction = _receiver_service().apply_netrunner_widget_action(
+            reviewed_target=body['expected_target'], library=local_settings.widget_library_root(),
+            release_id=body.get('release_id'), release_pins=pins, action=body['action'])
+        return {'ok': True, 'widget_id': 'netrunner', 'action': body['action'], 'transaction_id': transaction}
+    except PackageInvalid:
+        return {'ok': False, 'error': 'WIDGET_ARCHIVE_INVALID'}
+    except (AccessDenied, CredentialError) as error:
+        return {'ok': False, 'error': str(error)}
+    except (OSError, subprocess.TimeoutExpired):
+        return {'ok': False, 'error': 'WIDGET_OPERATION_UNCONFIRMED'}
+    finally:
+        DEVICE_MUTATION_LOCK.release()
+
+
 ACTIVE_CONNECTION = {"candidate_id": None, "candidate": None, "serial_identity": None,
                      "rf_bands": None, "serial_bundle": None, "ground_status": None,
                      "ground_local_bb_id": None, "network_binding": None,
@@ -5364,6 +5414,14 @@ class Handler(SimpleHTTPRequestHandler):
                                {'ok': False, 'error': 'CATALOG_NOT_STARTED'},
                                200 if result is not None else 503)
             return
+        if p == '/api/widgets/manager' and _HOST_SESSION_TOKEN:
+            if not self._require_host_session(): return
+            if not self._catalog_request_is_empty():
+                self.json_response({'ok': False, 'error': 'WIDGET_REQUEST_INVALID'}, 400)
+                return
+            result = netrunner_widget_status()
+            self.json_response(result, 200 if result.get('ok') else 409)
+            return
         if p == '/api/app/host-proof':
             values = parse_qs(urlparse(self.path).query).get('challenge', [])
             if not _HOST_SESSION_TOKEN or len(values) != 1 or not re.fullmatch(r'[a-f0-9]{64}', values[0]):
@@ -5608,6 +5666,20 @@ class Handler(SimpleHTTPRequestHandler):
             self.json_response(result if result is not None else
                                {'ok': False, 'error': 'CATALOG_NOT_STARTED'},
                                202 if result is not None else 503)
+            return
+        if p == '/api/widgets/manager/action' and _HOST_SESSION_TOKEN:
+            if not self._require_host_session(): return
+            target = urlparse(self.path)
+            lengths = self.headers.get_all('Content-Length', [])
+            try:
+                if (target.params or target.query or target.fragment or len(lengths) != 1
+                        or self.headers.get_all('Transfer-Encoding', [])
+                        or not 0 < int(lengths[0]) <= 4096):
+                    raise ValueError('invalid widget request framing')
+                result = netrunner_widget_action(self._read_json_body())
+            except (ValueError, UnicodeError):
+                result = {'ok': False, 'error': 'WIDGET_REQUEST_INVALID'}
+            self.json_response(result, 200 if result.get('ok') else 409)
             return
         if p == '/api/service-mode/local/credential':
             if not self._require_host_session(): return

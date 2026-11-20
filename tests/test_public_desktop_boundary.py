@@ -73,3 +73,28 @@ def test_foreign_host_header_is_refused(server):
 def test_public_ui_behavior_and_private_request_absence():
     result=subprocess.run(['node','tests/public_ui_render_check.cjs'],cwd=ROOT,capture_output=True,text=True)
     assert result.returncode==0,result.stdout+result.stderr
+
+
+def test_netrunner_widget_install_requires_native_host_and_explicit_confirmation(server, monkeypatch):
+    token = 'a' * 64
+    monkeypatch.setattr(app, '_HOST_SESSION_TOKEN', token)
+    calls = []
+
+    class Receiver:
+        def apply_netrunner_widget_action(self, **kwargs):
+            calls.append(kwargs)
+            return 'synthetic-transaction'
+
+    monkeypatch.setattr(app, '_receiver_service', lambda: Receiver())
+    path = '/api/widgets/manager/action'
+    body = {'widget_id': 'netrunner', 'action': 'install', 'confirm': True,
+            'expected_target': {'serial_number': '1234'}}
+    headers = {'X-Ascent-Host-Token': token}
+    assert request(server, 'POST', path, body)[0] == 403
+    assert request(server, 'POST', path, {**body, 'confirm': False}, headers)[0] == 409
+    assert request(server, 'POST', path + '?path=alternate', body, headers)[0] == 409
+    assert not calls
+    status, result = request(server, 'POST', path, body, headers)
+    assert status == 200 and result['transaction_id'] == 'synthetic-transaction'
+    assert calls[0]['reviewed_target'] == body['expected_target']
+    assert calls[0]['release_pins']['netrunner-pro-2.10.1']['profile'] == 'pro-18.21.10'

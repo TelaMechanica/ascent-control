@@ -15,7 +15,7 @@ PUBLIC_WIDGET_IMPORTS = {
     ('ascent_core', 'widget_sdk.py', 1): {'widget_catalog_io'},
     ('ascent_core', 'widget_catalog.py', 1): {'widget_sdk', 'widget_catalog_io'},
     ('ascent_core', 'widget_catalog_host.py', 1): {'widget_catalog', 'widget_catalog_io'},
-    ('runtime', 'dev_harness.py', 0): {'ascent_core.widget_catalog_host'},
+    ('runtime', 'dev_harness.py', 0): {'ascent_core.widget_catalog_host', 'ascent_core.widget_sdk'},
 }
 
 

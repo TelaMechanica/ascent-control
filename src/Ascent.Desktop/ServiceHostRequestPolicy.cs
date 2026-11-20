@@ -18,6 +18,8 @@ internal static class ServiceHostRequestPolicy
         return (method, request.AbsolutePath) switch
         {
             ("GET", "/api/widgets/local/catalog") => true,
+            ("GET", "/api/widgets/manager") => true,
+            ("POST", "/api/widgets/manager/action") => true,
             ("POST", "/api/widgets/local/rescan") => true,
             ("POST", "/api/widgets/local/open-folder") => true,
             ("GET", "/api/service-mode/local/status") => true,
