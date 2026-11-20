@@ -2632,7 +2632,10 @@ function localServicePanel(){
   if(credential?.public_key)body+=kv('Public key for authorized receiver setup',credential.public_key);
   if(w.error)body+=`<div class="notice">${esc(w.error)}</div>`;
   body+=`<div class="actions"><button id="serviceLocalCheck" ${w.busy?'disabled':''}>Check preparation</button>`;
-  body+=`<button id="serviceLocalCreate" ${w.busy||checked!==false?'disabled':''}>Create credential on this PC</button></div>`;
+  body+=`<button id="serviceLocalCreate" ${w.busy||checked!==false?'disabled':''}>Create credential on this PC</button>`;
+  if(checked===false&&w.doc?.legacy_credential_available)
+    body+=`<button id="serviceLocalAdopt" ${w.busy?'disabled':''}>Use existing credential</button>`;
+  body+='</div>';
   body+='<p>Read the selected USB receiver’s SSH host fingerprint, then compare it with a trusted reference before confirming. Observing a fingerprint does not authenticate the receiver.</p>';
   const observed=w.observation;
   const incompatible=observed?.compatible_client_key_types&&!observed.compatible_client_key_types.includes(w.keyType);
@@ -2652,13 +2655,14 @@ function localServicePanel(){
   return panel('SERVICE MODE PREPARATION',body);
 }
 
-async function localServiceRequest(create=false){
+async function localServiceRequest(action='status'){
   const w=localServiceState();if(w.busy)return;
-  if(create&&!window.confirm('Create a credential protected for your Windows account? Receiver setup is a separate step.'))return;
-  w.busy=true;w.phase=create?'Creating local credential':'Checking local preparation';w.error=null;render();
+  if(action==='prepare'&&!window.confirm('Create a credential protected for your Windows account? Receiver setup is a separate step.'))return;
+  if(action==='adopt-legacy'&&!window.confirm('Use the existing credential for the selected receiver? The original key files stay on this PC. Receiver access still needs to be checked.'))return;
+  w.busy=true;w.phase=action==='prepare'?'Creating local credential':action==='adopt-legacy'?'Importing existing credential':'Checking local preparation';w.error=null;render();
   try{
     const response=await fetch('/api/service-mode/local/credential',
-      {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:create?'prepare':'status',key_type:w.keyType,confirmed:create})});
+      {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,key_type:w.keyType,confirmed:action!=='status'})});
     const doc=await response.json();
     if(!response.ok||!doc.ok)throw new Error(humanError(doc));
     w.doc=doc;
@@ -2707,8 +2711,9 @@ function renderSettings(){
   });
   $('#serviceReceiverInspect')?.addEventListener('click',()=>receiverServiceRequest('inspect'));
   $('#serviceReceiverVerify')?.addEventListener('click',()=>receiverServiceRequest('verify'));
-  $('#serviceLocalCheck')?.addEventListener('click',()=>localServiceRequest(false));
-  $('#serviceLocalCreate')?.addEventListener('click',()=>localServiceRequest(true));
+  $('#serviceLocalCheck')?.addEventListener('click',()=>localServiceRequest());
+  $('#serviceLocalCreate')?.addEventListener('click',()=>localServiceRequest('prepare'));
+  $('#serviceLocalAdopt')?.addEventListener('click',()=>localServiceRequest('adopt-legacy'));
   $('#backgroundChoose')?.addEventListener('click',prepareBackgroundImage);
   $('#backgroundSave')?.addEventListener('click',saveBackgroundImage);
   $('#nightBtn').onclick=()=>setTheme('night'); $('#dayBtn').onclick=()=>setTheme('day');
