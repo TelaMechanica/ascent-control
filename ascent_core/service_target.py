@@ -21,6 +21,8 @@ class ReceiverTarget:
     serial_port: str
     firmware: str | None
     device_name: str
+    serial_number: str | None = None
+    hardware: str | None = None
 
 
 class SelectedReceiver:
@@ -73,7 +75,8 @@ class SelectedReceiver:
         digest = hashlib.sha256(json.dumps(scope, separators=(',', ':')).encode()).hexdigest()
         return ReceiverTarget(ReceiverBinding(epoch, canonical, digest), str(target_ip),
                               str(source_ip), index, facts['serial_com'], identity.get('firmware'),
-                              identity['device_name'])
+                              identity['device_name'], identity.get('serial_number'),
+                              identity.get('hardware'))
 
     def check(self, target):
         if not isinstance(target, ReceiverTarget) or self.capture() != target:
