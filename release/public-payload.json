@@ -1020,8 +1020,8 @@
     {
       "source": "ascent_core/service_credentials.py",
       "target": "ascent_core/service_credentials.py",
-      "sha256": "27e79a79d39e783f55d8078d154c9150ab166d9985df0c40408460836f219ed2",
-      "bytes": 9929
+      "sha256": "3c8ea614b8393deb1d6e86d8adcf40ab67bca6e33f0e97d25593ef6f70e7ba4f",
+      "bytes": 11552
     },
     {
       "source": "ascent_core/windows_tools.py",
@@ -1203,7 +1203,7 @@
     "ascent_core/receiver_ssh.py": "fbc61f84a643042f7ecbcec61e99c34647435cf5d3dfe6e0c0dfcd113eb41224",
     "ascent_core/service_access.py": "a2aac22a6047e500b30eda5008ec811286a23dbf9c13b26b5dba7dd355affa90",
     "ascent_core/service_channel.py": "7e0acd5fe2fec247018ecefd17782235a55ad05773f05554f35c14b32633f931",
-    "ascent_core/service_credentials.py": "27e79a79d39e783f55d8078d154c9150ab166d9985df0c40408460836f219ed2",
+    "ascent_core/service_credentials.py": "3c8ea614b8393deb1d6e86d8adcf40ab67bca6e33f0e97d25593ef6f70e7ba4f",
     "ascent_core/service_enrollment.py": "ed2a7c5800f05a0ef1caaf5e32c166761f0d09c3e50f0004f7e66f5ae83c1485",
     "ascent_core/service_key_policy.py": "40ca0f4127adab1b9b6cafd2796f7db1fe221303eee26728d879ef9acdb6d6d2",
     "ascent_core/service_loopback_ssh.py": "19a73866131306ebc381a2080e76e3a15c3d26ed184ad25ac347398d3006aa93",
@@ -1485,7 +1485,7 @@
     "tests/test_relay_network_control.py": "dd05b014c3eae57cd5891c8eac804e4818e81fffdef58e1677e9fff787a08425",
     "tests/test_rf_band_plans.py": "7d8675cc25eff9275a14ef8cdd2e2524d9453c9e4719f576edfd3245e60e2af4",
     "tests/test_service_channel.py": "b3147b3fddce9fca34edab8c92acb77ee8d811509ac7993aabeaa771097209c5",
-    "tests/test_service_credentials.py": "a9b2a0cfab6816411c21031a9bd7669cc5bb38c939200f0214f87e6252640ea2",
+    "tests/test_service_credentials.py": "7627925cff9c10486b6cf977b9c0114eb8c417b5ddee6d30c6fbc72d2ad1ebc6",
     "tests/test_service_enrollment.py": "a2c731afaaafd9bd586c191b722baa275f13f56479c2802cb27d6b8c67c8fe85",
     "tests/test_service_key_policy.py": "b0d3f0d00ecb68c3683fb7441a5bb6b984249ac73a2173c38ca6ec0563ff5465",
     "tests/test_service_local_http.py": "341875a3fbad15bd7123032f4e6cacf27824c99e963584d8144663234e9a62d2",
