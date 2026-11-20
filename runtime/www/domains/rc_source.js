@@ -17,7 +17,7 @@ const RcSource = (()=>{
       &&s.input_age_ms+Math.max(0,now-s.generated_at_ms)<=s.stale_after_ms);
     return {name:s.display_name||'HID controller',
       detection:!observed?'Reader observation stale':s.device_present?'Controller detected':'No RC reader connected',
-      profile:s.profile_kind==='edgetx_classic'?'EdgeTX Classic profile (inferred)':s.profile_kind==='edgetx_variant'?'EdgeTX-compatible variant (inferred)':s.recognized_family==='EdgeTX'?'EdgeTX RC detected (inferred)':s.likely_rc?'Generic RC HID':'Game controller · generic HID',
+      profile:s.profile_kind==='edgetx_classic'?'EdgeTX profile (inferred)':s.profile_kind==='edgetx_variant'?'EdgeTX-compatible variant (inferred)':s.recognized_family==='EdgeTX'?'EdgeTX RC detected (inferred)':s.likely_rc?'Generic RC HID':'Game controller · generic HID',
       input:fresh?'Input live':s.device_present?'Input stale or not yet observed':'Input unavailable',
       mapping:s.mapping_present?'Mapped · 16 output slots':'Mapping requires assignment or revalidation',
       output:!observed?'CRSF output observation stale':s.stream_running?'CRSF output active · send-only':'CRSF output stopped',

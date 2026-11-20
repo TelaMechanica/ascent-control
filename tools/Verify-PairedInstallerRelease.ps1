@@ -20,6 +20,26 @@ function Get-MsiProperty($Database, [string]$Name) {
     }
 }
 
+function Assert-NetRunnerDownloadBoundary($Database, [string]$ProductName) {
+    $receiverFiles = @(
+        'ascent_wifi_channels', 'wpa_cli', 'wpa_supplicant',
+        '8188fu.ko', 'hostapd', 'hostapd_cli', 'busybox'
+    )
+    $view = $Database.OpenView('SELECT `FileName` FROM `File`')
+    try {
+        [void]$view.Execute()
+        while ($row = $view.Fetch()) {
+            # MSI can encode a short name followed by the installed long name.
+            $name = ($row.StringData(1) -split '\|')[-1]
+            if ($name -in $receiverFiles) {
+                throw "$ProductName includes NetRunner receiver file '$name'. Ship it in the widget download."
+            }
+        }
+    } finally {
+        [void]$view.Close()
+    }
+}
+
 function Verify-Edition([string]$RecordPath, [string]$ProductName, [string]$FilePrefix) {
     $record = Get-Content -LiteralPath $RecordPath -Raw | ConvertFrom-Json
     if ($record.source_commit -cne $SourceCommit) {
@@ -41,10 +61,12 @@ function Verify-Edition([string]$RecordPath, [string]$ProductName, [string]$File
         (Get-MsiProperty $db 'ProductVersion') -cne $record.version) {
         throw "$ProductName MSI database identity differs from its build record."
     }
+    Assert-NetRunnerDownloadBoundary $db $ProductName
     return [ordered]@{name=$asset.Name; bytes=$asset.Length; sha256=$sha; version=$record.version}
 }
 
 $core = Verify-Edition $CoreRecord 'Ascent Control' 'AscentControl'
 $plus = Verify-Edition $PlusRecord 'Ascent Control+' 'AscentControlPlus'
+if ($core.version -cne $plus.version) { throw 'The paired installers must have the same product version.' }
 if ($core.sha256 -ceq $plus.sha256) { throw 'Both editions point to the same installer bytes.' }
 [ordered]@{source_commit=$SourceCommit; assets=@($core, $plus)} | ConvertTo-Json -Depth 4

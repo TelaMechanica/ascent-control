@@ -444,8 +444,8 @@
     {
       "source": "runtime/device_naming.py",
       "target": "runtime/device_naming.py",
-      "sha256": "83e5e3b7a732ed35c3e7262d6a5140b34e8a04293e6e6a2b3e082fc9133e1274",
-      "bytes": 8887
+      "sha256": "40d6f4f0fe2cba58b32e01d41bf2fc118a2af55f93683c1760a83aa131cbd096",
+      "bytes": 8818
     },
     {
       "source": "runtime/device_session.py",
@@ -864,8 +864,8 @@
     {
       "source": "runtime/www/domains/rc_source.js",
       "target": "runtime/www/domains/rc_source.js",
-      "sha256": "626067c547b1a74947a089c981598f941389a512137643677bd18f94363d09eb",
-      "bytes": 2703
+      "sha256": "e8750a0fffa654a0fb74584df8d796a87ed5a43dbebd92affa812ae839473e65",
+      "bytes": 2695
     },
     {
       "source": "runtime/www/domains/rf_diagnostics.js",
@@ -1341,7 +1341,7 @@
     "runtime/dev_harness.py": "bbdf356a73dfa69f8f045b43d740d33cc8f30b8f0bbb1aabc868a96625be3a5e",
     "runtime/device_capability.py": "fa9d47b46e2922ca5dfb0de1e65566c7bf691d7e7c332954a5c0216811af2911",
     "runtime/device_config_store.py": "979e2e28e0068b22ceff62a3eb8ed745f2535275369a19dc05450845a0e73415",
-    "runtime/device_naming.py": "83e5e3b7a732ed35c3e7262d6a5140b34e8a04293e6e6a2b3e082fc9133e1274",
+    "runtime/device_naming.py": "40d6f4f0fe2cba58b32e01d41bf2fc118a2af55f93683c1760a83aa131cbd096",
     "runtime/device_session.py": "8d03524330eeeab8edebe3157109d488bcc4b44be4de0ccc3f586edeb0ef5b0d",
     "runtime/experimental.py": "dff62541dee4f57327ca1c7d50149b39a89b8ef336cadfdfe4820b3c8e41c16e",
     "runtime/firmware_builder.py": "aaa1295617238ee11103aec4c003a7e16341d275f39a1b82f7ad2650946b4cd6",
@@ -1412,7 +1412,7 @@
     "runtime/www/assets/rc/svg/radiomaster_zorro.svg": "bd2ab73a6dca746849eb620e8f638a2f30f3e5d853b0c6119bf3cb839adc547a",
     "runtime/www/assets/rc/svg/rog_ally.svg": "c42786cf529217daf7352621265b9198f3e5a517e1cac01d04d45f53b75a4fbf",
     "runtime/www/assets/rc/svg/tbs_tango_2.svg": "a9909b5e5e44a8f050373916bbdc2f31b6ea2480e6b6217bc6706fe71589f0ee",
-    "runtime/www/domains/rc_source.js": "626067c547b1a74947a089c981598f941389a512137643677bd18f94363d09eb",
+    "runtime/www/domains/rc_source.js": "e8750a0fffa654a0fb74584df8d796a87ed5a43dbebd92affa812ae839473e65",
     "runtime/www/domains/rf_diagnostics.js": "3cc20d9288144e879fcf49e00dee92f878724dcda8188055e5faf722b8f57561",
     "runtime/www/domains/widget_catalog.js": "52a705afe0300c7ce5bc082d90a56f90f965e9c46de628a22d87335cae32348c",
     "runtime/www/i18n.js": "9354380feb29a789e8544b0ca6140b19f5259ade9cc74a7fcf1abe6286f6ca27",
