@@ -89,3 +89,41 @@ def test_corrupt_private_payload_with_old_checksum_is_refused():
     doc['private_key'] = doc['private_key'].replace('synthetic-canary-only', 'changed-canary-only')
     with pytest.raises(CredentialError, match='DATA_INVALID'):
         ManagedCredential.decode(json.dumps(doc).encode())
+
+
+def test_legacy_adoption_checks_profile_before_opening_store(tmp_path):
+    from ascent_core.service_access import AccessDenied
+    from ascent_core.service_credentials import adopt_windows_credential
+
+    root = tmp_path/'protected'
+    store = ProtectedCredentialStore(root, protector=FakeProtection())
+    with pytest.raises(AccessDenied, match='CLIENT_KEY_ALGORITHM_INCOMPATIBLE'):
+        adopt_windows_credential(store, synthetic(), device_name='Ascent_VRX',
+                                 firmware='Ascent_G_Gnd_19_2_14')
+    assert not root.exists()
+
+
+@pytest.mark.parametrize('returncode', [0, 1])
+def test_legacy_adoption_verifies_pair_before_protecting(tmp_path, monkeypatch, returncode):
+    from contextlib import contextmanager
+    from types import SimpleNamespace
+    from ascent_core import service_credentials, windows_key_material
+
+    key = synthetic()
+    store = ProtectedCredentialStore(tmp_path/'protected', protector=FakeProtection())
+
+    @contextmanager
+    def materialize(credential):
+        assert credential == key
+        yield tmp_path/'identity', {}, tmp_path/'System32'
+
+    monkeypatch.setattr(windows_key_material, 'materialized_credential', materialize)
+    monkeypatch.setattr(service_credentials.subprocess, 'run', lambda *a, **kw:
+                        SimpleNamespace(returncode=returncode, stdout=key.public_key))
+    if returncode:
+        with pytest.raises(CredentialError, match='KEY_PAIR_MISMATCH'):
+            service_credentials.adopt_windows_credential(store, key, device_name='Ascent_VRX_Max')
+        assert not (tmp_path/'protected').exists()
+    else:
+        status = service_credentials.adopt_windows_credential(store, key, device_name='Ascent_VRX_Max')
+        assert store.load() == key and status['receiver_access'] is False

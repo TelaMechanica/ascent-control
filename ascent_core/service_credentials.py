@@ -207,3 +207,36 @@ def generate_windows_credential(store, *, key_type='ed25519'):
     except CredentialError: raise
     except (OSError, ValueError, subprocess.SubprocessError, AccessDenied):
         raise CredentialError('CREDENTIAL_GENERATION_FAILED') from None
+
+
+def adopt_windows_credential(store, credential, *, device_name, firmware=None):
+    """Adopt an explicitly selected legacy key into an empty protected store."""
+    from .service_key_policy import require_compatible_key_type
+    from .windows_key_material import materialized_credential
+
+    if not isinstance(credential, ManagedCredential):
+        raise CredentialError('CREDENTIAL_DATA_INVALID')
+    credential.encode()
+    algorithm = credential.public_key.split()[0]
+    key_type = {'ssh-ed25519': 'ed25519', 'ecdsa-sha2-nistp256': 'ecdsa'}.get(algorithm)
+    require_compatible_key_type(key_type, device_name, firmware)
+
+    if store.status().get('credential_present'):
+        raise CredentialError('CREDENTIAL_ALREADY_PRESENT')
+    try:
+        with materialized_credential(credential) as (path, env, tools):
+            result = subprocess.run(
+                [str(tools/'OpenSSH/ssh-keygen.exe'), '-y', '-P', '', '-f', str(path)],
+                env=env, stdin=subprocess.DEVNULL, capture_output=True, text=True,
+                timeout=10, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0),
+            )
+            if result.returncode or not hmac.compare_digest(
+                host_key_fingerprint(result.stdout.strip()),
+                host_key_fingerprint(credential.public_key),
+            ):
+                raise CredentialError('CREDENTIAL_KEY_PAIR_MISMATCH')
+    except CredentialError:
+        raise
+    except (OSError, ValueError, RuntimeError, subprocess.SubprocessError):
+        raise CredentialError('CREDENTIAL_VERIFICATION_FAILED') from None
+    return store.create(credential)

@@ -1020,8 +1020,8 @@
     {
       "source": "ascent_core/service_credentials.py",
       "target": "ascent_core/service_credentials.py",
-      "sha256": "27e79a79d39e783f55d8078d154c9150ab166d9985df0c40408460836f219ed2",
-      "bytes": 9929
+      "sha256": "3c8ea614b8393deb1d6e86d8adcf40ab67bca6e33f0e97d25593ef6f70e7ba4f",
+      "bytes": 11552
     },
     {
       "source": "ascent_core/windows_tools.py",
@@ -1032,8 +1032,8 @@
     {
       "source": "ascent_core/windows_key_material.py",
       "target": "ascent_core/windows_key_material.py",
-      "sha256": "e8462aad3aa304078be9d32da74ba0cf92942a85849814b28417c32af4ea6b67",
-      "bytes": 2427
+      "sha256": "b6e828d7bfa7bb02eef7df4216ecaa10f1b8f9bc7d9a3cfec5c6f2f12859399d",
+      "bytes": 3111
     },
     {
       "source": "ascent_core/service_target.py",
@@ -1203,7 +1203,7 @@
     "ascent_core/receiver_ssh.py": "fbc61f84a643042f7ecbcec61e99c34647435cf5d3dfe6e0c0dfcd113eb41224",
     "ascent_core/service_access.py": "a2aac22a6047e500b30eda5008ec811286a23dbf9c13b26b5dba7dd355affa90",
     "ascent_core/service_channel.py": "7e0acd5fe2fec247018ecefd17782235a55ad05773f05554f35c14b32633f931",
-    "ascent_core/service_credentials.py": "27e79a79d39e783f55d8078d154c9150ab166d9985df0c40408460836f219ed2",
+    "ascent_core/service_credentials.py": "3c8ea614b8393deb1d6e86d8adcf40ab67bca6e33f0e97d25593ef6f70e7ba4f",
     "ascent_core/service_enrollment.py": "ed2a7c5800f05a0ef1caaf5e32c166761f0d09c3e50f0004f7e66f5ae83c1485",
     "ascent_core/service_key_policy.py": "40ca0f4127adab1b9b6cafd2796f7db1fe221303eee26728d879ef9acdb6d6d2",
     "ascent_core/service_loopback_ssh.py": "19a73866131306ebc381a2080e76e3a15c3d26ed184ad25ac347398d3006aa93",
@@ -1214,7 +1214,7 @@
     "ascent_core/widget_catalog_host.py": "8480cc2ab7bec693b3e0701dd81c61506441fc05589496eb10a8c1ff9df32c01",
     "ascent_core/widget_catalog_io.py": "a24c29c7d98150e39786b86bc10c96781eb814fe750efe87b5e89959c2fcf4f9",
     "ascent_core/widget_sdk.py": "3c2c99615a84664a93f782da8b0b51ff0935d22180c71971ee429f3cdf847dd0",
-    "ascent_core/windows_key_material.py": "e8462aad3aa304078be9d32da74ba0cf92942a85849814b28417c32af4ea6b67",
+    "ascent_core/windows_key_material.py": "b6e828d7bfa7bb02eef7df4216ecaa10f1b8f9bc7d9a3cfec5c6f2f12859399d",
     "ascent_core/windows_tools.py": "ad398d48e036aac7cff2fdd49d95cbeecde9d69a490245b858a38480be45d969",
     "docs/ACPLUS_SERVICE_MODE_REVIEW.md": "390b22e5963f41ef62aac98fe93a7c897c6a19493aaf8933dc8c0ba02422a4fa",
     "docs/ARCHITECTURE.md": "5d04934a1cc4ca32b50fca1808801569a8287ceaf41312bfa07555b016aad2d3",
@@ -1485,7 +1485,7 @@
     "tests/test_relay_network_control.py": "dd05b014c3eae57cd5891c8eac804e4818e81fffdef58e1677e9fff787a08425",
     "tests/test_rf_band_plans.py": "7d8675cc25eff9275a14ef8cdd2e2524d9453c9e4719f576edfd3245e60e2af4",
     "tests/test_service_channel.py": "b3147b3fddce9fca34edab8c92acb77ee8d811509ac7993aabeaa771097209c5",
-    "tests/test_service_credentials.py": "a9b2a0cfab6816411c21031a9bd7669cc5bb38c939200f0214f87e6252640ea2",
+    "tests/test_service_credentials.py": "7627925cff9c10486b6cf977b9c0114eb8c417b5ddee6d30c6fbc72d2ad1ebc6",
     "tests/test_service_enrollment.py": "a2c731afaaafd9bd586c191b722baa275f13f56479c2802cb27d6b8c67c8fe85",
     "tests/test_service_key_policy.py": "b0d3f0d00ecb68c3683fb7441a5bb6b984249ac73a2173c38ca6ec0563ff5465",
     "tests/test_service_local_http.py": "341875a3fbad15bd7123032f4e6cacf27824c99e963584d8144663234e9a62d2",
