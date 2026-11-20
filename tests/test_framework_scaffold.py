@@ -217,3 +217,24 @@ def test_release_payload_uses_trusted_archive_and_file_digests():
         verify_release_payload(data, archive_digest=digest, file_digests={})
     with pytest.raises(PackageInvalid, match='payload digest'):
         verify_release_payload(data, archive_digest=digest, file_digests={'widget-runtime': '0' * 64})
+
+
+def test_pinned_release_staging_keeps_default_archive_limits(tmp_path):
+    import hashlib
+    import zipfile
+    import pytest
+    from ascent_core.widget_sdk import MAX_EXPANDED_BYTES, PackageInvalid, stage_release_payload
+
+    path = tmp_path / 'receiver.zip'
+    blob = b'x' * (MAX_EXPANDED_BYTES + 1)
+    with zipfile.ZipFile(path, 'w', compression=zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr('receiver-tool', blob)
+    pins = {'archive_digest': hashlib.sha256(path.read_bytes()).hexdigest(),
+            'file_digests': {'receiver-tool': hashlib.sha256(blob).hexdigest()}}
+
+    with pytest.raises(PackageInvalid, match='Expanded package exceeds limit'):
+        with stage_release_payload(path, **pins):
+            pytest.fail('default expansion limit changed')
+    with stage_release_payload(path, max_expanded_bytes=len(blob), **pins) as staged:
+        assert (staged / 'receiver-tool').read_bytes() == blob
+    assert not staged.exists()
