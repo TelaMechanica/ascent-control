@@ -3,7 +3,7 @@
   "items": [
     {
       "item_id": "75bdc1473cde96513cf78c6990947d2f7b8ca2ea50ea35aa423ddb63d80f518d",
-      "sha256": "27e79a79d39e783f55d8078d154c9150ab166d9985df0c40408460836f219ed2",
+      "sha256": "3c8ea614b8393deb1d6e86d8adcf40ab67bca6e33f0e97d25593ef6f70e7ba4f",
       "findings": [
         "private-key-marker"
       ],
@@ -43,7 +43,7 @@
     },
     {
       "item_id": "f22335dd2018db513727b0d808a47b0fd094fcf1a5e3036d00c4c24949d33daf",
-      "sha256": "a9b2a0cfab6816411c21031a9bd7669cc5bb38c939200f0214f87e6252640ea2",
+      "sha256": "7627925cff9c10486b6cf977b9c0114eb8c417b5ddee6d30c6fbc72d2ad1ebc6",
       "findings": [
         "private-key-marker"
       ],
