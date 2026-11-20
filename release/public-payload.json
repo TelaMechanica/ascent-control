@@ -1032,8 +1032,8 @@
     {
       "source": "ascent_core/windows_key_material.py",
       "target": "ascent_core/windows_key_material.py",
-      "sha256": "e8462aad3aa304078be9d32da74ba0cf92942a85849814b28417c32af4ea6b67",
-      "bytes": 2427
+      "sha256": "b6e828d7bfa7bb02eef7df4216ecaa10f1b8f9bc7d9a3cfec5c6f2f12859399d",
+      "bytes": 3111
     },
     {
       "source": "ascent_core/service_target.py",
@@ -1214,7 +1214,7 @@
     "ascent_core/widget_catalog_host.py": "8480cc2ab7bec693b3e0701dd81c61506441fc05589496eb10a8c1ff9df32c01",
     "ascent_core/widget_catalog_io.py": "a24c29c7d98150e39786b86bc10c96781eb814fe750efe87b5e89959c2fcf4f9",
     "ascent_core/widget_sdk.py": "3c2c99615a84664a93f782da8b0b51ff0935d22180c71971ee429f3cdf847dd0",
-    "ascent_core/windows_key_material.py": "e8462aad3aa304078be9d32da74ba0cf92942a85849814b28417c32af4ea6b67",
+    "ascent_core/windows_key_material.py": "b6e828d7bfa7bb02eef7df4216ecaa10f1b8f9bc7d9a3cfec5c6f2f12859399d",
     "ascent_core/windows_tools.py": "ad398d48e036aac7cff2fdd49d95cbeecde9d69a490245b858a38480be45d969",
     "docs/ACPLUS_SERVICE_MODE_REVIEW.md": "390b22e5963f41ef62aac98fe93a7c897c6a19493aaf8933dc8c0ba02422a4fa",
     "docs/ARCHITECTURE.md": "5d04934a1cc4ca32b50fca1808801569a8287ceaf41312bfa07555b016aad2d3",
