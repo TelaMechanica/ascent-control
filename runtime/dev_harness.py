@@ -123,22 +123,73 @@ def _selected_service_credential(kind):
     raise CredentialError('CLIENT_KEY_TYPE_UNSUPPORTED')
 
 
+def _legacy_credential_paths(key_type):
+    root = local_settings.config_root() / 'service_mode'
+    base = 'service_mode_' + key_type
+    return root / (base + '.dpapi'), root / (base + '.pub')
+
+
+def _adopt_legacy_credential(store, key_type):
+    from ascent_core.service_access import AccessDenied
+    from ascent_core.service_credentials import (
+        CurrentUserDpapi, ManagedCredential, MAX_BYTES, adopt_windows_credential,
+    )
+    from ascent_core.service_key_policy import require_compatible_key_type
+
+    device = SESSION.device
+    identity = dict(device.identity) if device else {}
+    name, firmware = identity.get('device_name'), identity.get('firmware')
+    if device_capability.classify(name).get('role') != 'receiver':
+        raise CredentialError('RECEIVER_SELECTION_REQUIRED')
+    try:
+        require_compatible_key_type(key_type, name, firmware)
+    except AccessDenied as error:
+        raise CredentialError(str(error)) from None
+    private_path, public_path = _legacy_credential_paths(key_type)
+    try:
+        if private_path.parent.is_symlink() or any(path.is_symlink() or not path.is_file()
+                                                   for path in (private_path, public_path)):
+            raise CredentialError('LEGACY_CREDENTIAL_NOT_PRESENT')
+        with private_path.open('rb') as source:
+            wrapped = source.read(MAX_BYTES + 1)
+        with public_path.open('rb') as source:
+            public = source.read(4097)
+        algorithm = {'ed25519': 'ssh-ed25519', 'ecdsa': 'ecdsa-sha2-nistp256'}[key_type]
+        if len(public) > 4096 or public.split(maxsplit=1)[:1] != [algorithm.encode('ascii')]:
+            raise CredentialError('CLIENT_KEY_ALGORITHM_MISMATCH')
+        source = ManagedCredential(public.decode('utf-8').strip(), CurrentUserDpapi().unprotect(wrapped))
+    except (OSError, UnicodeError):
+        raise CredentialError('LEGACY_CREDENTIAL_READ_FAILED') from None
+    try:
+        adopt_windows_credential(store, source, device_name=name, firmware=firmware)
+    except AccessDenied as error:
+        raise CredentialError(str(error)) from None
+    return store.status()
+
+
 def service_credential_request(body):
     if (not isinstance(body, dict) or set(body) != {'action', 'key_type', 'confirmed'}
-            or body['action'] not in ('status', 'prepare')
+            or body['action'] not in ('status', 'prepare', 'adopt-legacy')
             or body['key_type'] not in ('ed25519', 'ecdsa')
             or type(body['confirmed']) is not bool):
         return {'ok': False, 'error': 'INVALID_SERVICE_REQUEST'}
-    if body['action'] == 'prepare' and body['confirmed'] is not True:
+    if body['action'] != 'status' and body['confirmed'] is not True:
         return {'ok': False, 'error': 'LOCAL_PREPARATION_CONFIRMATION_REQUIRED'}
     try:
         store = _selected_service_credential(body['key_type'])
-        result = (generate_windows_credential(store, key_type=body['key_type'])
-                  if body['action'] == 'prepare' else store.status())
+        if body['action'] == 'adopt-legacy':
+            result = _adopt_legacy_credential(store, body['key_type'])
+        elif body['action'] == 'prepare':
+            result = generate_windows_credential(store, key_type=body['key_type'])
+        else:
+            result = store.status()
         if result.get('credential_present') is True:
             result['public_key'] = store.load().public_key
+        paths = _legacy_credential_paths(body['key_type'])
         return {'ok': True, 'local_credential': result, 'receiver_access': False,
-                'receiver_setup_available': False, 'key_type': body['key_type']}
+                'receiver_setup_available': False, 'key_type': body['key_type'],
+                'legacy_credential_available': all(path.is_file() and not path.is_symlink()
+                                                   for path in paths)}
     except CredentialError as error:
         return {'ok': False, 'error': str(error), 'receiver_access': False}
 

@@ -98,3 +98,40 @@ def test_widget_origin_without_token_cannot_reach_privileged_adapters(server, mo
     monkeypatch.setattr(app,'_receiver_service',lambda:pytest.fail('widget acquired controller'))
     status, body = request(server,method,path,body={},origin='https://widget.invalid')
     assert status == 403 and TOKEN not in json.dumps(body)
+
+
+def test_existing_credential_action_adopts_only_selected_legacy_pair(server, monkeypatch, tmp_path):
+    from types import SimpleNamespace
+    from ascent_core import service_credentials as credentials
+
+    monkeypatch.setattr(app.local_settings, 'config_root', lambda: tmp_path)
+    monkeypatch.setattr(app, 'SESSION', SimpleNamespace(device=SimpleNamespace(identity={
+        'device_name': 'Ascent_VRX', 'firmware': 'Ascent_G_Gnd_19_2_14',
+    })))
+    private, public = app._legacy_credential_paths('ecdsa')
+    private.parent.mkdir()
+    private.write_bytes(b'fixture-protected-key')
+    public.write_bytes(b'ecdsa-sha2-nistp256 fixture')
+    store = SimpleNamespace(status=lambda: {'credential_present': False})
+    monkeypatch.setattr(app, '_selected_service_credential', lambda kind: store)
+    monkeypatch.setattr(credentials.CurrentUserDpapi, 'unprotect', lambda _, wrapped: b'fixture-raw-key')
+    adopted = []
+
+    def adopt(destination, credential, *, device_name, firmware):
+        assert destination is store and device_name == 'Ascent_VRX'
+        assert credential.public_key == 'ecdsa-sha2-nistp256 fixture'
+        assert credential.private_key == b'fixture-raw-key'
+        adopted.append(firmware)
+
+    monkeypatch.setattr(credentials, 'adopt_windows_credential', adopt)
+    path = '/api/service-mode/local/credential'
+    body = {'action': 'adopt-legacy', 'key_type': 'ecdsa', 'confirmed': True}
+    assert request(server, 'POST', path, body=body)[0] == 403
+    assert request(server, 'POST', path, token=TOKEN, body={**body, 'confirmed': False})[0] == 409
+    assert request(server, 'POST', path, token=TOKEN, body={**body, 'key_type': 'ed25519'})[0] == 409
+    assert not adopted
+    code, result = request(server, 'POST', path, token=TOKEN, body=body)
+    assert code == 200 and result['receiver_access'] is False
+    assert adopted == ['Ascent_G_Gnd_19_2_14']
+    assert private.read_bytes() == b'fixture-protected-key'
+    assert public.read_bytes() == b'ecdsa-sha2-nistp256 fixture'
