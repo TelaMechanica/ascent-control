@@ -2664,6 +2664,13 @@ function localServicePanel(){
     if(a.first_access&&a.first_access.detail)body+=kv('First access',a.first_access.detail);
     if(v.receiver_name)body+=kv('Verified receiver',v.receiver_name);
     if(!a.ok&&a.stage)body+=kv('Stopped at',a.stage);
+    // Say plainly whether the receiver was changed, so a failure is not read as
+    // "nothing happened." A key installed but unverified means the device WAS
+    // modified; a retry is safe because install is idempotent.
+    if(!a.ok){
+      if(a.receiver_modified)body+='<div class="notice warn">The receiver was modified: the key was installed, but verification did not complete, so no trust was recorded. A retry is safe.</div>';
+      else body+='<p>The receiver was not modified.</p>';
+    }
   }
   return panel('SERVICE MODE PREPARATION',body);
 }

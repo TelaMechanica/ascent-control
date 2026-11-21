@@ -142,13 +142,29 @@ def local_service_activate(body=None):
         access = _fa.install_key(target=target, public_key=public_key, tool_path=str(tool),
                                  serial_port=serial_port, listen_addr=listen_addr)
         if not access.get('ok'):
+            # The enrollment commands ran iff we got as far as verifying the install;
+            # earlier stages (first access / privilege / session / root_home) did not
+            # touch the receiver. Tell the operator which it was: a modified receiver
+            # needs different handling than one left untouched.
+            modified = access.get('stage') == 'verify_install'
             return {'ok': False, 'stage': access.get('stage', 'first_access'),
-                    'error': 'FIRST_ACCESS_FAILED', 'first_access': access}
-        # Authenticate the now-installed key against the confirmed host key and
-        # record trust. This is the only path that writes an enrollment record.
-        verification = service.verify(observation['observation_id'], observation['host_fingerprint'],
-                                      confirmed=True, key_type='ed25519')
-        return {'ok': True, 'first_access': access, 'verification': verification}
+                    'error': 'FIRST_ACCESS_FAILED', 'first_access': access,
+                    'receiver_modified': modified, 'key_installed': False}
+        # The key is installed. Authenticate it and record trust. verify() is the
+        # ONLY path that writes a record. If it fails, the key is STILL installed --
+        # the receiver has been modified -- so say so plainly. Retry is safe because
+        # the install is idempotent, but support must not be told "nothing happened."
+        try:
+            verification = service.verify(observation['observation_id'], observation['host_fingerprint'],
+                                          confirmed=True, key_type='ed25519')
+        except (AccessDenied, CredentialError) as verr:
+            return {'ok': False, 'stage': 'verify', 'error': str(getattr(verr, 'code', verr)),
+                    'key_installed': True, 'receiver_modified': True, 'first_access': access,
+                    'detail': 'First access installed the managed key, but authenticated '
+                              'verification failed, so no trust record was saved. The receiver was '
+                              'modified; a retry is safe because the key install is idempotent.'}
+        return {'ok': True, 'first_access': access, 'verification': verification,
+                'receiver_modified': True, 'key_installed': True}
     except (AccessDenied, CredentialError, _fa.FirstAccessError) as error:
         return {'ok': False, 'error': str(getattr(error, 'code', error))}
     except (OSError, subprocess.TimeoutExpired) as error:
