@@ -426,8 +426,8 @@
     {
       "source": "runtime/dev_harness.py",
       "target": "runtime/dev_harness.py",
-      "sha256": "6610a816c1a89eb82a15dcf32b540322a428f44b7a68cca7d7bd20c8b8cad27b",
-      "bytes": 325852
+      "sha256": "b4b88032051c5ffcbc286998494f203412d2316472712fd542966d06df02e3c3",
+      "bytes": 329813
     },
     {
       "source": "runtime/device_capability.py",
@@ -606,8 +606,8 @@
     {
       "source": "runtime/www/app.js",
       "target": "runtime/www/app.js",
-      "sha256": "5a9d74010892cbd7f666f0fd751129ab762af891e2c11ee75219ea124abbc802",
-      "bytes": 270032
+      "sha256": "b532068dbee141a7ef7ee0549b1faf2015d3f23ac4c574e8832bc92f659a062e",
+      "bytes": 271981
     },
     {
       "source": "runtime/www/assets/ascent_skull.png",
@@ -1106,6 +1106,42 @@
       "target": "runtime/netrunner-download-pins.json",
       "sha256": "98b3b79f8caf90e9e2462501696dda4e59c7f8b4383fe33288fcc4e59fd33187",
       "bytes": 1429
+    },
+    {
+      "source": "runtime/first_access_tool.py",
+      "target": "runtime/first_access_tool.py",
+      "sha256": "d08009cd7a2df81067f6c79546f63c8ab2eebaf664294e6fc79ed662389a8e07",
+      "bytes": 16806
+    },
+    {
+      "source": "ascent_core/first_access.py",
+      "target": "ascent_core/first_access.py",
+      "sha256": "41a92f41cf0949b1ae33f4523d5cf40c332498858295acd260e51e3a164d8ea5",
+      "bytes": 6855
+    },
+    {
+      "source": "ascent_core/first_access_session.py",
+      "target": "ascent_core/first_access_session.py",
+      "sha256": "deb807b3e4b7a73fd81c5bcb9dc81f9d7c14b91158adb16931b2cf7378b4bafb",
+      "bytes": 28782
+    },
+    {
+      "source": "ascent_core/enrollment_commands.py",
+      "target": "ascent_core/enrollment_commands.py",
+      "sha256": "007385b653de4bede7f618035065306c3340a5faa755f087900c6abb15081227",
+      "bytes": 16999
+    },
+    {
+      "source": "ascent_core/service_firmware.py",
+      "target": "ascent_core/service_firmware.py",
+      "sha256": "8df9e054ef2a69bf97da05d47c3b1492620f46d796fb0dff6b4bce828a3be7d4",
+      "bytes": 24941
+    },
+    {
+      "source": "ascent_core/service_gate2.py",
+      "target": "ascent_core/service_gate2.py",
+      "sha256": "a25185fd27fd58c8b63b943ebbe7d1119411edc1b5fa367276658c9541b8ab81",
+      "bytes": 13547
     }
   ],
   "dependencies": {
@@ -1375,7 +1411,7 @@
     "runtime/windows_device_inventory.py": "2de7f8ab7904613aece0b9bec7c3021a2ead5fd8a71637f73235710b486d0f12",
     "runtime/windows_driver_repair.py": "4ae8a03dc9023b0136a3f57d8e991ac31d28b2fe6776739c23b403ee25f77ba3",
     "runtime/www/app.css": "818bfaad22f893a66a5f3fffcb37b220cc39c683fa61893f44692661a10cd5ad",
-    "runtime/www/app.js": "5a9d74010892cbd7f666f0fd751129ab762af891e2c11ee75219ea124abbc802",
+    "runtime/www/app.js": "b532068dbee141a7ef7ee0549b1faf2015d3f23ac4c574e8832bc92f659a062e",
     "runtime/www/assets/ascent_skull.png": "d79322bd44bc6c22780daf17301018ec3f61eb31b6a0151d1e900ba159161d02",
     "runtime/www/assets/devices/Ascent_CamHub.png": "d64ab39a6567f2bb6e948098f89a7b6970d8f9ea41c60e01778b5a0b5d735acf",
     "runtime/www/assets/devices/Ascent_GT.png": "45a704c782577b4c909898672a4b2ca9c51b9220e51bdfd87447b519d2dc62a0",

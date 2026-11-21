@@ -2617,7 +2617,7 @@ function saveBackgroundImage(){
 }
 
 function localServiceState(){
-  state.localService=state.localService||{doc:null,busy:false,error:null,keyType:'ed25519',observation:null,receiverResult:null};
+  state.localService=state.localService||{doc:null,busy:false,error:null,keyType:'ed25519',observation:null,receiverResult:null,activation:null};
   return state.localService;
 }
 
@@ -2651,6 +2651,19 @@ function localServicePanel(){
   if(w.receiverResult){
     body+=kv('Last completed SSH check',w.receiverResult.receiver_name);
     body+='<p>Pinned SSH authentication and the fixed no-op completed for that receiver. Its trust record was saved on this PC. This result is not a live session or authorization for receiver changes.</p>';
+  }
+  // ONE BUTTON. First access installs this PC's managed key over the physical
+  // USB/serial connection to the selected receiver, then verify() authenticates
+  // it against the confirmed host key and records trust. The manual steps above
+  // remain as an advanced path.
+  body+=`<div class="actions"><button id="serviceActivate" ${w.busy||checked!==true?'disabled':''}>Set up Service Mode (one button)</button></div>`;
+  if(checked!==true)body+='<p>Prepare the local credential above first; the one-button setup installs that key.</p>';
+  if(w.activation){
+    const a=w.activation,v=a.verification||{};
+    body+=kv('Service Mode setup',a.ok?(a.already_verified?'Already set up (verified)':'Set up and verified'):'Did not complete');
+    if(a.first_access&&a.first_access.detail)body+=kv('First access',a.first_access.detail);
+    if(v.receiver_name)body+=kv('Verified receiver',v.receiver_name);
+    if(!a.ok&&a.stage)body+=kv('Stopped at',a.stage);
   }
   return panel('SERVICE MODE PREPARATION',body);
 }
@@ -2688,6 +2701,19 @@ async function receiverServiceRequest(action){
   finally{w.busy=false;w.phase=null;render();}
 }
 
+async function localServiceActivate(){
+  const w=localServiceState();if(w.busy)return;
+  if(!window.confirm('Set up Service Mode on the selected receiver? This performs first access over the physical USB/serial connection, installs this computer’s managed key, then authenticates it. It needs a physical connection to the receiver you selected.'))return;
+  w.busy=true;w.phase='Setting up Service Mode (first access, then verify)';w.error=null;w.activation=null;render();
+  try{
+    const response=await fetch('/api/service-mode/local/activate',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
+    const doc=await response.json();
+    if(!response.ok||!doc.ok){w.activation=doc&&doc.ok===false?doc:null;throw new Error(humanError(doc));}
+    w.activation=doc;
+  }catch(error){w.error=humanError(error.message||error);}
+  finally{w.busy=false;w.phase=null;render();}
+}
+
 function renderSettings(){
   let out=pageHead('APPLICATION SETTINGS','LOCAL PREFERENCES');
   const theme=document.body.classList.contains('day')?'day':'night';
@@ -2711,6 +2737,7 @@ function renderSettings(){
   });
   $('#serviceReceiverInspect')?.addEventListener('click',()=>receiverServiceRequest('inspect'));
   $('#serviceReceiverVerify')?.addEventListener('click',()=>receiverServiceRequest('verify'));
+  $('#serviceActivate')?.addEventListener('click',()=>localServiceActivate());
   $('#serviceLocalCheck')?.addEventListener('click',()=>localServiceRequest());
   $('#serviceLocalCreate')?.addEventListener('click',()=>localServiceRequest('prepare'));
   $('#serviceLocalAdopt')?.addEventListener('click',()=>localServiceRequest('adopt-legacy'));

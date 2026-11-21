@@ -97,6 +97,68 @@ def local_service_preparation(*, create=False, body=None):
 # path, login or command. Construction performs no receiver I/O.
 _RECEIVER_SERVICE = None
 
+
+def local_service_activate(body=None):
+    """One-button Service Mode: inspect -> first access (install key) -> verify.
+
+    Composes the trusted-host SDK with first access. First access installs the
+    managed public key over a physical/USB session; the SDK's verify() is the ONLY
+    path that records trust, and it does so only after authenticating the installed
+    key against the confirmed host key -- so a first access that installs a key but
+    fails verification leaves no trust record.
+
+    Transport note (bench item): inspect()/verify() use SSH over the RNDIS sibling;
+    first access uses the serial lane. On stock firmware these are exclusive, so a
+    live run sequences serial first-access then the RNDIS/0x3A switch before verify;
+    that sequencing is validated on the bench, not here.
+    """
+    from ascent_core.service_access import AccessDenied
+    from ascent_core import first_access as _fa
+    if not DEVICE_MUTATION_LOCK.acquire(blocking=False):
+        return {'ok': False, 'error': 'DEVICE_BUSY'}
+    previous_operation = dict(DEVICE_OPERATION_STATE)
+    try:
+        if DEVICE_OPERATION_STATE.get('active'):
+            return {'ok': False, 'error': 'DEVICE_BUSY'}
+        service = _receiver_service()
+        observation = service.inspect()
+        if observation.get('ssh_authenticated') and observation.get('trusted_record_present'):
+            return {'ok': True, 'already_verified': True, 'observation': observation}
+        store = _host_credential_store()
+        if not store.status().get('credential_present'):
+            generate_windows_credential(store)
+        public_key = store.load().public_key
+        device = SESSION.device
+        identity = dict(device.identity) if device else {}
+        target = {'device_name': identity.get('device_name'), 'firmware': identity.get('firmware')}
+        candidate = ACTIVE_CONNECTION.get('candidate') or {}
+        serial_port = candidate.get('serial_com')
+        listen_addr = HOST_CFG.get('host_rndis_ip')
+        tool = ROOT / 'first_access_tool.py'
+        # First access opens the serial port; stand discovery down so it does not
+        # race the tool for the exclusive COM handle.
+        DEVICE_OPERATION_STATE.update({'active': True, 'operation_id': 'service_mode_activate',
+                                       'started_at': utc_now()})
+        access = _fa.install_key(target=target, public_key=public_key, tool_path=str(tool),
+                                 serial_port=serial_port, listen_addr=listen_addr)
+        if not access.get('ok'):
+            return {'ok': False, 'stage': access.get('stage', 'first_access'),
+                    'error': 'FIRST_ACCESS_FAILED', 'first_access': access}
+        # Authenticate the now-installed key against the confirmed host key and
+        # record trust. This is the only path that writes an enrollment record.
+        verification = service.verify(observation['observation_id'], observation['host_fingerprint'],
+                                      confirmed=True, key_type='ed25519')
+        return {'ok': True, 'first_access': access, 'verification': verification}
+    except (AccessDenied, CredentialError, _fa.FirstAccessError) as error:
+        return {'ok': False, 'error': str(getattr(error, 'code', error))}
+    except (OSError, subprocess.TimeoutExpired) as error:
+        return {'ok': False, 'error': 'SERVICE_ACTIVATE_UNAVAILABLE', 'detail': str(error)[:200]}
+    finally:
+        DEVICE_OPERATION_STATE.clear()
+        DEVICE_OPERATION_STATE.update(previous_operation)
+        DEVICE_MUTATION_LOCK.release()
+
+
 def _receiver_service():
     global _RECEIVER_SERVICE
     if _RECEIVER_SERVICE is None:
@@ -5696,6 +5758,12 @@ class Handler(SimpleHTTPRequestHandler):
         if p == '/api/service-mode/local/prepare':
             if not self._require_host_session(): return
             result = local_service_preparation(create=True, body=self._read_json_body())
+            self.json_response(result, 200 if result.get('ok') else 409)
+            return
+        if p == '/api/service-mode/local/activate':
+            if not self._require_host_session(): return
+            try: result = local_service_activate(self._read_json_body())
+            except (ValueError, UnicodeError): result = {'ok': False, 'error': 'INVALID_SERVICE_REQUEST'}
             self.json_response(result, 200 if result.get('ok') else 409)
             return
         if p == "/api/network/max/key":
