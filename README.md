@@ -10,7 +10,18 @@ Windows MSI build tooling, shared protocol helpers and camera-image builders.
 | Version | Available now | Scope |
 |---|---|---|
 | [0.43.63 Windows release](https://github.com/TelaMechanica/ascent-control/releases/tag/v0.43.63) | Downloadable MSI | Public AC with local Widget SDK preview inspection |
-| Current `main` | Public AC source | Guarded receiver-readiness checks and read-only Widget Manager |
+| Current `main` | Public AC source | Guarded receiver-readiness checks, read-only Widget Manager, and one-button Service Mode first-access (source only) |
+
+### One-button Service Mode (new on `main`, source only)
+
+`main` adds a single-press Service Mode activation: transport → first access →
+key enrollment → verification. First access is a **physical/USB (serial)** path that
+installs this computer's managed key on the selected receiver; trust is recorded
+**only** by the authenticated `verify()` step, so a first access that installs the
+key but fails verification records no trust and says the receiver was modified (a
+retry is safe — the install is idempotent). It is reviewable and CI-checked in
+source, **not yet receiver-qualified on hardware**, and is not part of any published
+MSI. See `ascent_core/first_access.py` and `/api/service-mode/local/activate`.
 
 Build and verify both AC and AC+ before publishing a paired release. Release
 notes record the version and availability of each Windows installer.
