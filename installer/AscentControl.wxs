@@ -45,8 +45,19 @@
          that way, and the application in Program Files stayed on the first one
          installed. -->
     <MajorUpgrade
+        Schedule="afterInstallInitialize"
         AllowSameVersionUpgrades="yes"
         DowngradeErrorMessage="A newer version of Ascent Control is already installed. Uninstall it first if you intend to go back." />
+
+    <!-- Migrate the retired side-by-side Plus product in the same transaction. -->
+    <Upgrade Id="95810E93-1BC3-5750-9CC8-99249572FC78">
+      <UpgradeVersion Maximum="$(var.ProductVersion)" IncludeMaximum="yes"
+                      Property="LEGACY_ASCENT_PLUS" />
+      <UpgradeVersion Minimum="$(var.ProductVersion)" IncludeMinimum="no"
+                      OnlyDetect="yes" Property="NEWER_LEGACY_ASCENT_PLUS" />
+    </Upgrade>
+    <Launch Condition="Installed OR NOT NEWER_LEGACY_ASCENT_PLUS"
+            Message="A newer version of Ascent Control is already installed." />
 
     <MediaTemplate EmbedCab="yes" />
 

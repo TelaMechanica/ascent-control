@@ -186,3 +186,9 @@ key material before readiness side effects; preserve explicit archival exports.
 Future legacy conversion/recovery must apply the same rule before authorization
 or publishing a changed identity; source-only readiness does not implement those
 private flows or establish hardware qualification.
+
+## Shared Windows installer lineage — issue #57
+
+Branch `fix/shared-windows-msi-lineage` owns MSI authoring, the offline paired
+installer verifier and the source tests. Registered upgrade and local data
+preservation still need Windows qualification.

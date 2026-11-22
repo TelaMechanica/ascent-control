@@ -442,3 +442,11 @@ Final full suite with owned Windows interpreter/native/catalog opt-ins: 1000 pas
 Windows development publish and complete 388-file payload verification pass.
 No retained credential was read or changed; fixtures use synthetic material.
 Legacy conversion/initial access and actual receiver qualification remain open.
+
+## AC and AC+ Windows installer migration — issue #57
+
+The installer declares one Windows product identity and recognizes the
+retired separate Plus upgrade code. The offline paired verifier requires
+that shared upgrade code and distinct MSI product codes. This change covers
+installer authoring and review. Replacing an installed product and reading
+its saved settings still need Windows testing.

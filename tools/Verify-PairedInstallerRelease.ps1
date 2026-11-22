@@ -61,12 +61,17 @@ function Verify-Edition([string]$RecordPath, [string]$ProductName, [string]$File
         (Get-MsiProperty $db 'ProductVersion') -cne $record.version) {
         throw "$ProductName MSI database identity differs from its build record."
     }
-    Assert-NetRunnerDownloadBoundary $db $ProductName
-    return [ordered]@{name=$asset.Name; bytes=$asset.Length; sha256=$sha; version=$record.version}
+    $upgradeCode = Get-MsiProperty $db 'UpgradeCode'
+    if ($upgradeCode -ne '{353ECEAF-B574-563B-9587-39464C4F0131}') {
+        throw "$FilePrefix does not upgrade the Ascent Control Windows product."
+    }
+    Assert-NetRunnerDownloadBoundary $db $FilePrefix
+    return [ordered]@{name=$asset.Name; bytes=$asset.Length; sha256=$sha; version=$record.version; product_code=(Get-MsiProperty $db 'ProductCode'); upgrade_code=$upgradeCode}
 }
 
 $core = Verify-Edition $CoreRecord 'Ascent Control' 'AscentControl'
-$plus = Verify-Edition $PlusRecord 'Ascent Control+' 'AscentControlPlus'
+$plus = Verify-Edition $PlusRecord 'Ascent Control' 'AscentControlPlus'
 if ($core.version -cne $plus.version) { throw 'The paired installers must have the same product version.' }
+if ($core.product_code -eq $plus.product_code) { throw 'Edition packages must have distinct MSI product codes.' }
 if ($core.sha256 -ceq $plus.sha256) { throw 'Both editions point to the same installer bytes.' }
 [ordered]@{source_commit=$SourceCommit; assets=@($core, $plus)} | ConvertTo-Json -Depth 4
