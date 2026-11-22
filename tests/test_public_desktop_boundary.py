@@ -98,3 +98,20 @@ def test_netrunner_widget_install_requires_native_host_and_explicit_confirmation
     assert status == 200 and result['transaction_id'] == 'synthetic-transaction'
     assert calls[0]['reviewed_target'] == body['expected_target']
     assert calls[0]['release_pins']['netrunner-pro-2.10.1']['profile'] == 'pro-18.21.10'
+
+
+def test_msi_uses_shared_lineage_and_migrates_separate_plus():
+    from xml.etree import ElementTree
+
+    ns = {"wix": "http://wixtoolset.org/schemas/v4/wxs"}
+    package = ElementTree.parse(ROOT / "installer" / "AscentControl.wxs").find("wix:Package", ns)
+    assert package.attrib["Name"] == "Ascent Control"
+    assert package.attrib["UpgradeCode"] == "353ECEAF-B574-563B-9587-39464C4F0131"
+    major = package.find("wix:MajorUpgrade", ns)
+    assert major.attrib["Schedule"] == "afterInstallInitialize"
+    assert major.attrib["AllowSameVersionUpgrades"] == "yes"
+    legacy = package.find("wix:Upgrade", ns)
+    assert legacy.attrib["Id"] == "95810E93-1BC3-5750-9CC8-99249572FC78"
+    rows = legacy.findall("wix:UpgradeVersion", ns)
+    assert rows[0].attrib["IncludeMaximum"] == "yes"
+    assert rows[1].attrib["OnlyDetect"] == "yes"
