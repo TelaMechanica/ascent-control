@@ -1505,7 +1505,7 @@
     "tests/max_ethernet_ui_check.cjs": "d58d83ae3ec16c0a616d6c54786a3b906ceb4aca225eefb51e9d36faea27f316",
     "tests/public_diagnostics_flow.cjs": "d2fd1468bce578182bc81dac7d16fd40b49071f77a411790479f62b0786b4396",
     "tests/public_live_interaction.cjs": "56a71f9bb168ab0af163cde6c0bed1e26e1102dcf9bb2ad95b026630f71b51ae",
-    "tests/public_ui_render_check.cjs": "ff7a9e15c6e919b368b0593f293c3d8e98875e6d02170daa5abb0b19aa75b91c",
+    "tests/public_ui_render_check.cjs": "0a528bf6bc39b561f74894f5b60d995cd9a4fe6b76e50fcfff6c241431960923",
     "tests/service_local_preparation_render.cjs": "de154f2529c847378352700e524cfa8da75e235ba14893f09083f8ae28cc5965",
     "tests/test_caddx_cgc.py": "bd99a26982177365f7cc0e61143f74aa25f6ffca0e141d665178811cb2ca7250",
     "tests/test_camera_identity_hooks.py": "1ecf5b194904d17c2f0f0cbf3b3a669c118dd2043316caee460989c066a40887",
