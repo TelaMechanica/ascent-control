@@ -145,6 +145,39 @@ function mount(request, options={}){
  assert.equal(button(changedReceiver.root,'Check selected receiver').disabled,false);
  changedReceiver.page.close();
 
+ let updateAttempts=0;
+ let receiverChecks=0;
+ const updateHost=async(path,method,body)=>{
+  if(path==='/api/widgets/manager'){
+   receiverChecks++;
+   return {ok:true,receiver:target,files_present:true,installed_version:'2.10.1',
+    available_releases:[{id:'netrunner-pro-2.10.2',version:'2.10.2',action:'update'}]};
+  }
+  if(path==='/api/widgets/manager/action'){
+   assert.equal(body.expected_target,target);
+   if(++updateAttempts===1)throw new Error('fixture interruption');
+   return {ok:true};
+  }
+  return doc();
+ };
+ const interrupted=mount(updateHost,{receiverActions:true,confirmAction:()=>true});
+ await flush();await button(interrupted.root,'Check selected receiver').onclick();
+ await button(interrupted.root,'Update 2.10.2').onclick();
+ assert(interrupted.root.textContent.includes('NetRunner action was not confirmed. Check the receiver before retrying.'));
+ assert(!button(interrupted.root,'Update 2.10.2'));
+ interrupted.page.close();
+ const reopened=mount(updateHost,{receiverActions:true,confirmAction:()=>true});
+ await flush();
+ assert.equal(receiverChecks,1);
+ assert(!button(reopened.root,'Update 2.10.2'));
+ await button(reopened.root,'Check selected receiver').onclick();
+ assert.equal(receiverChecks,2);
+ assert(reopened.root.textContent.includes('Installed NetRunner 2.10.1'));
+ await button(reopened.root,'Update 2.10.2').onclick();
+ assert.equal(updateAttempts,2);
+ assert(reopened.root.textContent.includes('NetRunner files verified for 2.10.2'));
+ reopened.page.close();
+
  const {boot}=require('./public_ui_render_check.cjs');const ui=boot().__ui;
  ui.state.connections={candidates:[]};ui.state.capabilities={pages:{widgetmanager:{visible:false}}};
  assert.equal(ui.pageVisible('widgetmanager'),true);

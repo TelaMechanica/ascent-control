@@ -1561,7 +1561,7 @@
     "tests/test_widget_catalog_windows.py": "74a9a0e6219ea8beed6bd4b9a84d24814aa69798689344e2fc9dac31a428d21c",
     "tests/test_widget_source_inventory.py": "6dd9c1ba464ab766d6a80ee5365ab46a3f67c58bb58ba27f3796ef9bb69aad80",
     "tests/test_windows_device_inventory_native.py": "88ecfa16d21a59dd343b181c545fee2e0e6ada5752dbc6d478d0803feba1997d",
-    "tests/widget_catalog_render.cjs": "b0141a4c39ae74f95aa5375ab3d33f44444e4c14af87d025cd0c06c1f30f024d",
+    "tests/widget_catalog_render.cjs": "7d84941a56d8ab8ad53fa8c3e26f24485d4bede5657ac0477a70dc3598b2b50e",
     "third_party/licenses/LGPL-2.1.txt": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2",
     "third_party/licenses/NOTICE-GStreamer.txt": "8d9d48950a5ee7e25fcfce624d5bda6e658fc0d1ebf2e2da559343c7d25414ed",
     "third_party/licenses/Python-3.12.7-LICENSE.txt": "e502c6b880ff58d614901495a9009c136539cd0b1e2a2abb8fc00b934c203419",

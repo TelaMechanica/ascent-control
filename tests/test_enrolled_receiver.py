@@ -190,9 +190,11 @@ def test_activate_netrunner_bundle_preserves_previous_files_on_failure(tmp_path,
     def authenticated(*args):
         yield ['local test shell'], {}
 
+    interrupt = failure == 'interrupted'
+
     def capture(args, env):
         prefix = ('mv() { case "$2" in *".wpa_cli.new-"*) return 9;; esac; command mv "$@"; }; '
-                  if failure == 'interrupted' else '')
+                  if interrupt else '')
         result = subprocess.run(['sh', '-c', prefix + args[-1]], capture_output=True, timeout=5)
         return result.returncode, result.stdout
 
@@ -210,6 +212,15 @@ def test_activate_netrunner_bundle_preserves_previous_files_on_failure(tmp_path,
         expected = new
     assert {name: (tmp_path / name).read_bytes() for name in names} == expected
     assert not (tmp_path / '.install-lock').exists()
+
+    if failure == 'interrupted':
+        interrupt = False
+        retry_transaction = 'fedcba9876543210'
+        for name, payload in new.items():
+            (tmp_path / f'.{name}.new-{retry_transaction}').write_bytes(payload)
+        ssh.activate_netrunner_stage(enrollment, **{**args, 'transaction': retry_transaction})
+        assert {name: (tmp_path / name).read_bytes() for name in names} == new
+        assert not (tmp_path / '.install-lock').exists()
 
 
 def test_selected_pro_never_uses_max_download_or_unrelated_board(tmp_path, monkeypatch):
