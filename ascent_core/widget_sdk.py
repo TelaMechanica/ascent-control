@@ -117,9 +117,8 @@ def verify_release_payload(data, *, archive_digest, file_digests, max_expanded_b
         raise PackageInvalid('Malformed release archive') from exc
 
 
-@contextmanager
-def stage_release_payload(path, *, archive_digest, file_digests, max_expanded_bytes=MAX_EXPANDED_BYTES):
-    """Stage a flat, pinned widget payload for a trusted host installer."""
+def read_release_payload(path, *, archive_digest, file_digests, max_expanded_bytes=MAX_EXPANDED_BYTES):
+    """Read and verify a flat, pinned release without extracting it."""
     from .widget_catalog_io import open_folder
 
     if not file_digests or any('/' in _path(name) for name in file_digests):
@@ -127,8 +126,15 @@ def stage_release_payload(path, *, archive_digest, file_digests, max_expanded_by
     path = Path(path)
     with open_folder(path.parent) as folder:
         data = folder.read(path.name, folder.stat(path.name), MAX_ARCHIVE_BYTES)
-    payload = verify_release_payload(data, archive_digest=archive_digest, file_digests=file_digests,
+    return verify_release_payload(data, archive_digest=archive_digest, file_digests=file_digests,
                                      max_expanded_bytes=max_expanded_bytes)
+
+
+@contextmanager
+def stage_release_payload(path, *, archive_digest, file_digests, max_expanded_bytes=MAX_EXPANDED_BYTES):
+    """Stage a flat, pinned widget payload for a trusted host installer."""
+    payload = read_release_payload(path, archive_digest=archive_digest, file_digests=file_digests,
+                                   max_expanded_bytes=max_expanded_bytes)
     with TemporaryDirectory(prefix='ascent-widget-release-') as directory:
         root = Path(directory)
         for name, blob in payload.items():

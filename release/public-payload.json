@@ -1062,14 +1062,14 @@
     {
       "source": "ascent_core/service_receiver.py",
       "target": "ascent_core/service_receiver.py",
-      "sha256": "6eff539898b92c75cd4d7ccdc1d5eb0d6b43440bdf3f14bb9aaef324bf5b23fe",
-      "bytes": 16159
+      "sha256": "3c09175ce27bd0c7c7ffd92508372112b087690167677f0eeae0b578e7558a01",
+      "bytes": 16752
     },
     {
       "source": "ascent_core/widget_sdk.py",
       "target": "ascent_core/widget_sdk.py",
-      "sha256": "8b89890356538dad04d3d4a35f47d96526c1591f1d0b7074064ac1e8be390ea8",
-      "bytes": 8910
+      "sha256": "201701cdc5786b60df4e049af165b36f207928e49d5b120dca6b612bd5d6321b",
+      "bytes": 9258
     },
     {
       "source": "ascent_core/widget_catalog.py",
@@ -1092,8 +1092,8 @@
     {
       "source": "runtime/www/domains/widget_catalog.js",
       "target": "runtime/www/domains/widget_catalog.js",
-      "sha256": "7d0c137211878cb151cbf6ae2c69c881d6e8a7123b21867fa93721c817a6d7e6",
-      "bytes": 13143
+      "sha256": "668d243169db875410cdd5fe5681b6db11b162e41175446a791e54b8a029295c",
+      "bytes": 13432
     },
     {
       "source": "ascent_core/service_key_policy.py",
@@ -1255,13 +1255,13 @@
     "ascent_core/service_enrollment.py": "ed2a7c5800f05a0ef1caaf5e32c166761f0d09c3e50f0004f7e66f5ae83c1485",
     "ascent_core/service_key_policy.py": "40ca0f4127adab1b9b6cafd2796f7db1fe221303eee26728d879ef9acdb6d6d2",
     "ascent_core/service_loopback_ssh.py": "19a73866131306ebc381a2080e76e3a15c3d26ed184ad25ac347398d3006aa93",
-    "ascent_core/service_receiver.py": "6eff539898b92c75cd4d7ccdc1d5eb0d6b43440bdf3f14bb9aaef324bf5b23fe",
+    "ascent_core/service_receiver.py": "3c09175ce27bd0c7c7ffd92508372112b087690167677f0eeae0b578e7558a01",
     "ascent_core/service_records.py": "2386ce224102734ca4bcd9a80f236a3a517d056e38fa65c5016b4368eecfd5e2",
     "ascent_core/service_target.py": "c2350de5920e59d7410f1046c4964716f183ac1f3ae5cacb98aec4cceeb9b705",
     "ascent_core/widget_catalog.py": "0ee95fd67e3524afc39d8b31ced8c7a423d5a67892ca0c5773cfc0acb8f02c2a",
     "ascent_core/widget_catalog_host.py": "8480cc2ab7bec693b3e0701dd81c61506441fc05589496eb10a8c1ff9df32c01",
     "ascent_core/widget_catalog_io.py": "a24c29c7d98150e39786b86bc10c96781eb814fe750efe87b5e89959c2fcf4f9",
-    "ascent_core/widget_sdk.py": "8b89890356538dad04d3d4a35f47d96526c1591f1d0b7074064ac1e8be390ea8",
+    "ascent_core/widget_sdk.py": "201701cdc5786b60df4e049af165b36f207928e49d5b120dca6b612bd5d6321b",
     "ascent_core/windows_key_material.py": "b6e828d7bfa7bb02eef7df4216ecaa10f1b8f9bc7d9a3cfec5c6f2f12859399d",
     "ascent_core/windows_tools.py": "ad398d48e036aac7cff2fdd49d95cbeecde9d69a490245b858a38480be45d969",
     "docs/ACPLUS_SERVICE_MODE_REVIEW.md": "390b22e5963f41ef62aac98fe93a7c897c6a19493aaf8933dc8c0ba02422a4fa",
@@ -1291,7 +1291,7 @@
     "docs/SHARED_SOURCE_IMPORT.json": "76206d3ceab3302c76e17a3afd2531f6e06b41655c5c932dc7f1236793b993ee",
     "docs/SOURCE_REVIEW.md": "6f08de97f00d27fc1a8094d516cee51032bc696b671de1b930b6822c5fe9a731",
     "docs/STANDALONE_WIDGET_INVENTORY.md": "aacfd6823d1741077fa54a17a71c797ca9e6d7da3dfc8d1668aaf98fca8aba87",
-    "docs/STATUS.md": "3813b207dc03461f2592b0257458d74b76287581db08d96bd0fc689ca88923ab",
+    "docs/STATUS.md": "ff3f4ef92abee423c9f2a8975baf6ae7510fb62b9f74f83b506ab81c3ca168d0",
     "docs/TASKS.md": "08e281e96b891cfeb0510c3517c5cdfd8c9e86d069ae89f80419150980dfc9b3",
     "docs/sdk/LOCAL_CATALOG.md": "c30da8d0c84f442858a09bef03012bf1c091da10a1a4700b764c5fcd8aad9f95",
     "docs/sdk/PUBLISHER_TRUST.md": "681143d4ebf1c41280d7698a89ab21e8b710efbf87d404d70cd1f13343ca70fe",
@@ -1462,7 +1462,7 @@
     "runtime/www/assets/rc/svg/tbs_tango_2.svg": "a9909b5e5e44a8f050373916bbdc2f31b6ea2480e6b6217bc6706fe71589f0ee",
     "runtime/www/domains/rc_source.js": "e8750a0fffa654a0fb74584df8d796a87ed5a43dbebd92affa812ae839473e65",
     "runtime/www/domains/rf_diagnostics.js": "3cc20d9288144e879fcf49e00dee92f878724dcda8188055e5faf722b8f57561",
-    "runtime/www/domains/widget_catalog.js": "7d0c137211878cb151cbf6ae2c69c881d6e8a7123b21867fa93721c817a6d7e6",
+    "runtime/www/domains/widget_catalog.js": "668d243169db875410cdd5fe5681b6db11b162e41175446a791e54b8a029295c",
     "runtime/www/i18n.js": "9354380feb29a789e8544b0ca6140b19f5259ade9cc74a7fcf1abe6286f6ca27",
     "runtime/www/i18n/en.json": "26cc8dfd85c7cfabe5fcc98a292d83346e6f5b155c95b7022e2a30ed65328dc6",
     "runtime/www/i18n/ru.json": "cd46b5ccdc0748c209c4b0936dadb28a6b320727104b74d7cb3a23c9855ffbb5",
@@ -1493,7 +1493,7 @@
     "tests/helpers/ethernet_ui_boot.cjs": "b020ee01a475daecc712492892293e8736aa6291cfa9f47f72a6f7ed67078a4f",
     "tests/helpers/ui_source.js": "caa4924df81af5827be167a2e510d36e23626fc912b458c959e172c410ae51d6",
     "tests/local_identity.py": "b1c4635b2777869a104ce291f8a32a06f9c11c3c89674d3e2b7dcf8b48fc9e19",
-    "tests/locked_ui.py": "1707efdfd3760d79c83c06e41ec07a842b553cc8bdacb329146fb3abdbe39bd1",
+    "tests/locked_ui.py": "225314b8e02ff76eaaf73c7e94dc06ed2b72702af00e3c3a6cea867a209a6831",
     "tests/max_ethernet_ui_check.cjs": "d58d83ae3ec16c0a616d6c54786a3b906ceb4aca225eefb51e9d36faea27f316",
     "tests/public_diagnostics_flow.cjs": "d2fd1468bce578182bc81dac7d16fd40b49071f77a411790479f62b0786b4396",
     "tests/public_live_interaction.cjs": "56a71f9bb168ab0af163cde6c0bed1e26e1102dcf9bb2ad95b026630f71b51ae",
@@ -1553,7 +1553,7 @@
     "tests/test_widget_catalog_windows.py": "74a9a0e6219ea8beed6bd4b9a84d24814aa69798689344e2fc9dac31a428d21c",
     "tests/test_widget_source_inventory.py": "6dd9c1ba464ab766d6a80ee5365ab46a3f67c58bb58ba27f3796ef9bb69aad80",
     "tests/test_windows_device_inventory_native.py": "88ecfa16d21a59dd343b181c545fee2e0e6ada5752dbc6d478d0803feba1997d",
-    "tests/widget_catalog_render.cjs": "f07c1845fb9e8258a9dfe45f0111757f3eca19858521de37afd2ef45baa2f602",
+    "tests/widget_catalog_render.cjs": "5579ccb1795bc60c278914683937e9f86e6254d16081addd5aa45dadb497d181",
     "third_party/licenses/LGPL-2.1.txt": "5749785c8bdefafcb5d798270ed0a967036fe2ca63dcedade1627565dfef81d2",
     "third_party/licenses/NOTICE-GStreamer.txt": "8d9d48950a5ee7e25fcfce624d5bda6e658fc0d1ebf2e2da559343c7d25414ed",
     "third_party/licenses/Python-3.12.7-LICENSE.txt": "e502c6b880ff58d614901495a9009c136539cd0b1e2a2abb8fc00b934c203419",

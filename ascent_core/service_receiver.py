@@ -152,6 +152,8 @@ class ReceiverService:
                 'firmware': target.firmware, 'host': target.host, 'source_ip': target.source_ip}
 
     def netrunner_widget_status(self, *, library, release_pins):
+        from .widget_sdk import PackageInvalid, read_release_payload
+
         self._require()
         target = self._selector.capture()
         _, supported = self._netrunner_releases(target, release_pins)
@@ -162,8 +164,18 @@ class ReceiverService:
         installed = next((pin['version'] for pin in supported.values() if pin['files'] == observed), None)
         present = any(digest is not None for digest in observed.values())
         available = []
+        archives = []
         for release_id, pin in supported.items():
-            if not (root / (release_id + '.zip')).is_file() or pin['version'] == installed:
+            try:
+                read_release_payload(root / (release_id + '.zip'),
+                                     archive_digest=pin['sha256'], file_digests=pin['files'])
+                archive_state = 'verified'
+            except FileNotFoundError:
+                archive_state = 'missing'
+            except (OSError, PackageInvalid):
+                archive_state = 'invalid'
+            archives.append({'id': release_id, 'version': pin['version'], 'state': archive_state})
+            if archive_state != 'verified' or pin['version'] == installed:
                 continue
             if not present:
                 action = 'install'
@@ -175,7 +187,7 @@ class ReceiverService:
                 continue
             available.append({'id': release_id, 'version': pin['version'], 'action': action})
         return {'receiver': self._widget_target_document(target), 'installed_version': installed,
-                'files_present': present, 'available_releases': available}
+                'files_present': present, 'available_releases': available, 'release_archives': archives}
 
     def apply_netrunner_widget_action(self, *, reviewed_target, library, release_id, release_pins, action):
         self._require()

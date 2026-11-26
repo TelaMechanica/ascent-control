@@ -67,10 +67,14 @@
           }
           receiverStatus.textContent=info.installed_version?'Installed NetRunner '+info.installed_version:
             info.files_present?'Installed NetRunner version could not be verified.':'NetRunner files are absent.';
-          if(!info.available_releases?.length){
-            receiverStatus.textContent+=' Add the receiver’s widget download to install or change versions.';
-            return;
+          const archives=info.release_archives||[];
+          if(archives.some(archive=>archive.state==='invalid')){
+            receiverStatus.textContent+=' A NetRunner ZIP could not be verified. Replace it with the official download.';
           }
+          if(archives.some(archive=>archive.state==='missing')){
+            receiverStatus.textContent+=' Add missing NetRunner downloads to the Widgets folder.';
+          }
+          if(!info.available_releases?.length)return;
           for(const release of info.available_releases){
             const label=actionLabels[release.action];
             if(!label||typeof release.id!=='string'||typeof release.version!=='string')continue;

@@ -116,6 +116,19 @@ function mount(request, options={}){
  assert(receiver.root.textContent.includes('NetRunner files verified'));
  receiver.page.close();
 
+ const badArchive=mount(async path=>{
+  if(path==='/api/widgets/manager')return {ok:true,receiver:target,files_present:false,
+    available_releases:[],release_archives:[
+      {id:'netrunner-max-2.10.2',version:'2.10.2',state:'invalid'},
+      {id:'netrunner-max-2.10.1',version:'2.10.1',state:'missing'}]};
+  return doc();
+ },{receiverActions:true});
+ await flush();await button(badArchive.root,'Check selected receiver').onclick();
+ assert(badArchive.root.textContent.includes('ZIP could not be verified'));
+ assert(badArchive.root.textContent.includes('Add missing NetRunner downloads'));
+ assert(!badArchive.root.textContent.includes('Install 2.10.2'));
+ badArchive.page.close();
+
  const {boot}=require('./public_ui_render_check.cjs');const ui=boot().__ui;
  ui.state.connections={candidates:[]};ui.state.capabilities={pages:{widgetmanager:{visible:false}}};
  assert.equal(ui.pageVisible('widgetmanager'),true);
