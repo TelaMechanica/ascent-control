@@ -43,7 +43,8 @@
       const controls=node('div',undefined,'panel-body');receiverPanel.appendChild(controls);
       const inspect=node('button','Check selected receiver','secondary');inspect.type='button';
       controls.appendChild(inspect);
-      const receiverStatus=node('p');receiverStatus.setAttribute('role','status');controls.appendChild(receiverStatus);
+      const receiverStatus=node('p');receiverStatus.setAttribute('role','status');
+      receiverStatus.tabIndex=-1;controls.appendChild(receiverStatus);
       const releases=node('div',undefined,'toolbar');controls.appendChild(releases);
       root.appendChild(receiverPanel);
       const errors={
@@ -53,6 +54,10 @@
         NETRUNNER_PROFILE_UNSUPPORTED:'NetRunner downloads for this receiver are unavailable here.',
         WIDGET_DOWNLOAD_REQUIRED:'Add the NetRunner ZIP to the Widgets folder.',
         WIDGET_ARCHIVE_INVALID:'The NetRunner ZIP could not be verified. Replace it with the official download.',
+        NETRUNNER_INSTALLED_RELEASE_UNKNOWN:'The installed files could not be matched to an approved release. Check the receiver state before changing versions.',
+        NETRUNNER_RELEASE_DIRECTION_INVALID:'The installed version no longer matches this action. Check the selected receiver again.',
+        NETRUNNER_ALREADY_PRESENT:'NetRunner files are already present. Check the selected receiver before changing versions.',
+        RECEIVER_ENROLLMENT_CHANGED:'Receiver access changed. Verify access in Service Mode before trying again.',
         DEVICE_BUSY:'Another receiver operation is active.'
       };
       const actionLabels={install:'Install',update:'Update',rollback:'Roll back'};
@@ -67,12 +72,14 @@
           }
           receiverStatus.textContent=info.installed_version?'Installed NetRunner '+info.installed_version:
             info.files_present?'Installed NetRunner version could not be verified.':'NetRunner files are absent.';
-          const archives=info.release_archives||[];
-          if(archives.some(archive=>archive.state==='invalid')){
-            receiverStatus.textContent+=' A NetRunner ZIP could not be verified. Replace it with the official download.';
-          }
-          if(archives.some(archive=>archive.state==='missing')){
-            receiverStatus.textContent+=' Add missing NetRunner downloads to the Widgets folder.';
+          for(const archive of info.release_archives||[]){
+            if(typeof archive.id!=='string'||!/^[a-z0-9][a-z0-9.-]{0,63}$/.test(archive.id))continue;
+            const filename=archive.id+'.zip';
+            if(archive.state==='invalid'){
+              receiverStatus.textContent+=' Replace '+filename+' with the official download.';
+            }else if(archive.state==='missing'){
+              receiverStatus.textContent+=' Add '+filename+' to the Widgets folder.';
+            }
           }
           if(!info.available_releases?.length)return;
           for(const release of info.available_releases){
@@ -82,14 +89,16 @@
             button.onclick=async()=>{
               if(inspect.disabled||!confirmAction?.(label+' NetRunner '+release.version+
                   ' on receiver '+info.receiver.serial_number+'?'))return;
-              inspect.disabled=true;releases.replaceChildren();receiverStatus.textContent=label+' requested…';
+              inspect.disabled=true;releases.replaceChildren();
+              receiverStatus.textContent=label+' requested for NetRunner '+release.version+'…';
+              receiverStatus.focus();
               try{
                 const result=await request('/api/widgets/manager/action','POST',{
                   widget_id:'netrunner',action:release.action,release_id:release.id,
                   confirm:true,expected_target:info.receiver
                 });
                 if(closed)return;
-                receiverStatus.textContent=result?.ok===true?'NetRunner files verified. Check the receiver to see the current version.':
+                receiverStatus.textContent=result?.ok===true?'NetRunner files verified for '+release.version+'. Check the selected receiver to refresh status.':
                   errors[result?.error]||'NetRunner action was not confirmed. Check the receiver before retrying.';
               }catch{
                 if(!closed)receiverStatus.textContent='NetRunner action was not confirmed. Check the receiver before retrying.';

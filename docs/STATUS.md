@@ -1,5 +1,12 @@
 # Current status
 
+## Widget Manager action feedback
+
+Missing and unverified NetRunner downloads identify the exact ZIP the operator
+can add or replace. Widget Manager explains changed receiver state and returns
+keyboard focus to the result after an action removes its buttons. The receiver
+selection, enrollment and archive verification contracts are unchanged.
+
 ## NetRunner release archive status
 
 Widget Manager verifies each profile-approved local archive before offering
