@@ -96,3 +96,30 @@ def test_vrx_max_hf_uses_its_own_approved_render():
     assert device_image_for_name('Ascent_VRX_Max_WF') == '/assets/devices/Ascent_VRX_MAX_WF.png'
     assert device_image_for_name('Ascent_VRX_Max') == '/assets/devices/Ascent_VRXMAX.png'
     assert device_image_for_name('Ascent_VRX_Max_XF') is None
+
+
+@pytest.mark.parametrize('content, message', [
+    (None, 'missing Windows publish source'),
+    (b'changed', 'Windows publish source hash differs from the manifest'),
+])
+def test_desktop_check_names_invalid_source_pin(tmp_path, content, message):
+    docs = tmp_path / 'docs'
+    docs.mkdir()
+    (docs / 'SHARED_SOURCE_IMPORT.json').write_text('{"files": []}')
+    release = tmp_path / 'release'
+    release.mkdir()
+    name = 'tests/render.cjs'
+    (release / 'public-payload.json').write_text(json.dumps({
+        'files': [],
+        'source_files': {name: hashlib.sha256(b'original').hexdigest()},
+    }))
+    if content is not None:
+        path = tmp_path / name
+        path.parent.mkdir()
+        path.write_bytes(content)
+    result = subprocess.run(
+        [sys.executable, str(ROOT / 'tools/check_public_runtime.py'), '--root', str(tmp_path)],
+        capture_output=True, text=True, timeout=15,
+    )
+    assert result.returncode == 1
+    assert result.stderr.strip() == f'{name}: {message}'

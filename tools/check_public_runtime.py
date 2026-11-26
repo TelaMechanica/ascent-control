@@ -163,6 +163,12 @@ def check_desktop(root):
     expected={item['path']:item for item in receipt['files'] if item['path'].startswith('runtime/')}
     actual={p.relative_to(root).as_posix() for p in (root/'runtime').rglob('*') if p.is_file() and '__pycache__' not in p.parts and p.suffix!='.pyc'}
     profile=json.loads((root/'release/public-payload.json').read_text())
+    for name, digest in profile['source_files'].items():
+        path = root / _relative(name)
+        if not path.is_file():
+            raise SystemExit(f'{name}: missing Windows publish source')
+        if hashlib.sha256(path.read_bytes()).hexdigest() != digest:
+            raise SystemExit(f'{name}: Windows publish source hash differs from the manifest')
     desktop={item['source']:item for item in profile['files'] if item['source'].startswith('runtime/')}
     reviewed=set(expected)|set(desktop)
     if actual!=reviewed:
@@ -188,7 +194,7 @@ def check_desktop(root):
                 raise SystemExit(name+': import outside the reviewed pure runtime closure')
             if isinstance(node,ast.Call) and isinstance(node.func,ast.Name) and node.func.id in {'__import__','eval','exec','compile'}:
                 raise SystemExit(name+': dynamic execution requires dependency review')
-    print('Reviewed runtime inventory, source hashes and static dependency closure passed.')
+    print('Windows publish source pins, reviewed runtime inventory and static dependency closure passed.')
 
 
 def main():
