@@ -643,6 +643,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="..\..\runtime\www\assets\devices\Ascent_VRX_MAX_HF.png">
+      <Link>runtime\www\assets\devices\Ascent_VRX_MAX_HF.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="..\..\runtime\www\assets\devices\Ascent_VRX_MAX_WF.png">
       <Link>runtime\www\assets\devices\Ascent_VRX_MAX_WF.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

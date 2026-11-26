@@ -79,3 +79,20 @@ def test_public_msi_verifier_rejects_backend_version_drift(tmp_path):
     (release / 'dependencies.json').write_bytes((ROOT / 'release/dependencies.json').read_bytes())
     with pytest.raises(ValueError, match='Backend version differs'):
         verify(ROOT, tmp_path, 'source')
+
+
+def test_vrx_max_hf_uses_its_own_approved_render():
+    import sys
+
+    sys.path.insert(0, str(ROOT / 'runtime'))
+    try:
+        from dev_harness import device_image_for_name, device_image_provenance
+    finally:
+        sys.path.pop(0)
+
+    hf = '/assets/devices/Ascent_VRX_MAX_HF.png'
+    assert device_image_provenance('Ascent_VRX_Max_HF') == {
+        'image': hf, 'exact': True, 'depicts': None}
+    assert device_image_for_name('Ascent_VRX_Max_WF') == '/assets/devices/Ascent_VRX_MAX_WF.png'
+    assert device_image_for_name('Ascent_VRX_Max') == '/assets/devices/Ascent_VRXMAX.png'
+    assert device_image_for_name('Ascent_VRX_Max_XF') is None

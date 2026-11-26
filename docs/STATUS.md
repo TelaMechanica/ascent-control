@@ -1,5 +1,12 @@
 # Current status
 
+## VRX MAX HF device artwork
+
+The exact Ascent VRX MAX HF identity now uses the operator-approved Caddx PC Tool
+3.0.6 C image with exact artwork provenance. The PNG matches the vendor bundle
+byte-for-byte. MAX WF and generic MAX retain their existing artwork. The image
+is part of the reviewed Windows publish inventory.
+
 ## Windows publish verification on pull requests
 
 Changes to the reviewed Windows build inputs run the pinned publish and payload

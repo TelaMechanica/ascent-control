@@ -517,6 +517,7 @@ DEVICE_IMAGE_ASSETS = {
     "ascent_vrxpro": "Ascent_VRXPro.png",
     "ascent_vrx_pro": "Ascent_VRXPro.png",
     "ascent_vrx_cine": "Ascent_VRX_Cine.png",
+    "ascent_vrx_max_hf": "Ascent_VRX_MAX_HF.png",
     "ascent_vrx_max_wf": "Ascent_VRX_MAX_WF.png",
 }
 
@@ -525,9 +526,7 @@ def _norm_device_name(value: str | None) -> str:
     # selection and page visibility can never disagree about what a name is.
     return device_capability.norm_device_name(value)
 
-DEVICE_IMAGE_STAND_INS = {
-    "ascent_vrx_max_hf": "ascent_vrx_max_wf",
-}
+DEVICE_IMAGE_STAND_INS: dict[str, str] = {}
 
 def device_image_for_name(value: str | None) -> str | None:
     key = _norm_device_name(value)
