@@ -1,5 +1,15 @@
 # Current status
 
+## Windows source staging and Widget SDK regression
+
+The Windows source-copy inventory includes the six files already listed in the
+reviewed shipping payload and refreshes stale source hashes. A regression checks
+that every shipped source is staged and every pinned source matches the checkout.
+A separate HTTP regression verifies that a declarative preview at a pinned
+NetRunner filename is refused before receiver enrollment. The focused suite
+passed 47 tests. The full public host suite passed 1,033 tests and 55 subtests
+with 25 skips. These changes update the build inventory and tests.
+
 ## Repeater Ethernet bind
 
 HF Bind and MF Bind accept fresh status with either radio linked. Reverse Roles

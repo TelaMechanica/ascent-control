@@ -190,3 +190,56 @@ def test_semicolon_parameters_cannot_reach_catalog_or_folder_adapters(server, mo
     code, result = request(server, method, path, token=TOKEN, body={} if method == 'POST' else None)
     assert code == 400 and result['error'] == 'INVALID_CATALOG_REQUEST'
     assert calls == []
+
+
+def test_catalog_preview_at_pinned_release_path_cannot_authorize_deployment(
+        server, monkeypatch, tmp_path):
+    from types import SimpleNamespace
+
+    from ascent_core.service_receiver import ReceiverService
+    from test_widget_catalog import package
+
+    release_id = 'netrunner-max-2.10.2'
+    library = tmp_path / 'Widgets'
+    library.mkdir()
+    archive = library / (release_id + '.zip')
+    package(archive, identity='netrunner')
+    before = archive.read_bytes()
+
+    target = SimpleNamespace(
+        binding=SimpleNamespace(receiver_identity='fixture-receiver'),
+        device_name='Ascent_VRX_max_WF', serial_number='fixture-serial',
+        hardware='fixture-hardware', firmware='fixture-firmware',
+        host='127.0.0.1', source_ip='127.0.0.1',
+    )
+    service = ReceiverService(selector=SimpleNamespace(capture=lambda: target),
+        enrollments=None, credentials=None, transport=None, enabled=lambda: True)
+
+    def unexpected_enrollment(*args, **kwargs):
+        pytest.fail('An unverified catalog archive reached receiver enrollment')
+
+    monkeypatch.setattr(service, 'enrolled', unexpected_enrollment)
+    monkeypatch.setattr(app, '_receiver_service', lambda: service)
+    monkeypatch.setattr(app.local_settings, 'config_root', lambda: tmp_path)
+    monkeypatch.setattr(app.local_settings, 'widget_library_root', lambda: library)
+
+    server.start_widget_catalog()
+    catalog = complete(server)
+    assert len(catalog['result']['entries']) == 1
+    entry = catalog['result']['entries'][0]
+    assert entry['status'] == 'VALIDATED_PREVIEW'
+    assert entry['package']['id'] == 'netrunner'
+    assert entry['package']['executable'] is False
+    assert entry['package']['publisher_verified'] is False
+
+    action = {'widget_id': 'netrunner', 'action': 'install', 'confirm': True,
+              'expected_target': service._widget_target_document(target),
+              'release_id': release_id}
+    endpoint = '/api/widgets/manager/action'
+    assert request(server, 'POST', endpoint, body=action)[0] == 403
+    assert request(server, 'POST', endpoint, token=TOKEN, body=action) == (
+        409, {'ok': False, 'error': 'WIDGET_ARCHIVE_INVALID'})
+    assert request(server, 'POST', endpoint, token=TOKEN,
+                   body=action | {'archive': archive.name}) == (
+        409, {'ok': False, 'error': 'WIDGET_REQUEST_INVALID'})
+    assert archive.read_bytes() == before
