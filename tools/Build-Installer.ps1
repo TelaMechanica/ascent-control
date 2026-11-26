@@ -5,7 +5,8 @@ param(
   [string]$NativeArchive,
   [string]$CameraArchive,
   [string]$DependencyCache,
-  [int]$BuildRevision=1
+  [int]$BuildRevision=1,
+  [switch]$PublishOnly
 )
 $ErrorActionPreference='Stop'
 $repo=(Resolve-Path (Join-Path $PSScriptRoot '..')).ProviderPath
@@ -88,8 +89,6 @@ $project=Join-Path $source 'src\Ascent.Desktop\Ascent.Desktop.csproj'
 $fileVersion=$version+'.'+$BuildRevision
 Push-Location $source
 try{
- & dotnet tool restore
- if($LASTEXITCODE -ne 0){throw 'Pinned WiX tool restore failed'}
  & dotnet publish $project -c Release -r win-x64 --self-contained true -o $publish "-p:AscentFileVersion=$fileVersion" "-p:BaseOutputPath=$WorkDir\bin\" "-p:BaseIntermediateOutputPath=$WorkDir\obj\" "-p:DirectoryBuildTargetsPath=$source\tools\PreservedBuildOutputs.targets" "-p:PathMap=$WorkDir=/ascent-build" -p:NuGetAudit=false -p:UseSharedCompilation=false -p:ContinuousIntegrationBuild=true -m:1
  if($LASTEXITCODE -ne 0){throw 'Public desktop publish failed'}
  & (Join-Path $publish 'pyembed\python.exe') -I (Join-Path $source 'tools\verify_public_build.py') --root $publish --reference $source --phase publish
@@ -97,6 +96,12 @@ try{
  & (Join-Path $source 'tools\Test-GStreamerPayload.ps1') -StageDir (Join-Path $publish 'gstreamer')
  if($LASTEXITCODE -ne 0){throw 'Published media runtime validation failed'}
  if((Get-Item -LiteralPath (Join-Path $publish 'AscentControl.dll')).VersionInfo.FileVersion -ne $fileVersion){throw 'Desktop file version differs from MSI/backend version'}
+ if($PublishOnly){
+  Write-Host 'Windows publish verified. Installer authoring skipped.'
+  return
+ }
+ & dotnet tool restore
+ if($LASTEXITCODE -ne 0){throw 'Pinned WiX tool restore failed'}
  $msi=Join-Path $WorkDir ('AscentControl-'+$version+'-x64.msi')
  & dotnet tool run wix build (Join-Path $source 'installer\AscentControl.wxs') -arch x64 -d "PublishDir=$publish" -d "ProductVersion=$version" -o $msi
  if($LASTEXITCODE -ne 0){throw 'Public MSI authoring failed'}

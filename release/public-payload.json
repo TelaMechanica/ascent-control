@@ -1224,6 +1224,7 @@
     }
   },
   "source_files": {
+    ".github/workflows/windows-publish.yml": "b2a89a5a2685d5aa494d16ce0251547f7a55a29b6aa352834866118a3c0c8913",
     "ascent_core/enrollment_commands.py": "007385b653de4bede7f618035065306c3340a5faa755f087900c6abb15081227",
     "ascent_core/first_access.py": "41a92f41cf0949b1ae33f4523d5cf40c332498858295acd260e51e3a164d8ea5",
     "ascent_core/first_access_session.py": "deb807b3e4b7a73fd81c5bcb9dc81f9d7c14b91158adb16931b2cf7378b4bafb",
@@ -1291,7 +1292,7 @@
     "docs/SHARED_SOURCE_IMPORT.json": "76206d3ceab3302c76e17a3afd2531f6e06b41655c5c932dc7f1236793b993ee",
     "docs/SOURCE_REVIEW.md": "6f08de97f00d27fc1a8094d516cee51032bc696b671de1b930b6822c5fe9a731",
     "docs/STANDALONE_WIDGET_INVENTORY.md": "aacfd6823d1741077fa54a17a71c797ca9e6d7da3dfc8d1668aaf98fca8aba87",
-    "docs/STATUS.md": "3813b207dc03461f2592b0257458d74b76287581db08d96bd0fc689ca88923ab",
+    "docs/STATUS.md": "67545815cc57e08b738d7946af8482ecba0c60d2758604730383543c2f72687b",
     "docs/TASKS.md": "08e281e96b891cfeb0510c3517c5cdfd8c9e86d069ae89f80419150980dfc9b3",
     "docs/sdk/LOCAL_CATALOG.md": "c30da8d0c84f442858a09bef03012bf1c091da10a1a4700b764c5fcd8aad9f95",
     "docs/sdk/PUBLISHER_TRUST.md": "681143d4ebf1c41280d7698a89ab21e8b710efbf87d404d70cd1f13343ca70fe",
@@ -2060,7 +2061,7 @@
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/sign.h": "3d1450dd9bb4160689b9d160d5a7876e37b61b6c894641f794fa591f67069ddf",
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/ubifs.h": "610a90a227b27e3c22c2ab7f12e947dd2355f1361d09c41bfc9d0ee331398af3",
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mount.ubifs": "175df527fa9406e1dc8784d34112dc624ce7e2bd6eee70dfd75ddc2cecb967c4",
-    "tools/Build-Installer.ps1": "483f923c9952f10db9a030411b7aebd32f09990a08e5c7b774e1c89d4b969c7c",
+    "tools/Build-Installer.ps1": "00439bff200837498b73e03e7bd56846291b37aa82c03a09235b778690341382",
     "tools/Verify-PairedInstallerRelease.ps1": "aa1ecfa55f2dc0b9972799996f1317743e0560f4319564cd641ceb1afc8b21b6",
     "tools/PreservedBuildOutputs.targets": "2656fa2b9d11961684626c052d0c62d01192202be6b34ffca5f06d2ce32fa378",
     "tools/Stage-GStreamer.ps1": "e7f9bd809b4ce27522855ba3c75183bf6dffca379458db3d6c219836ce52e927",

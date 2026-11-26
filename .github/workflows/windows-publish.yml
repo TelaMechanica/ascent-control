@@ -1,0 +1,31 @@
+name: Windows publish verification
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/windows-publish.yml'
+      - 'release/public-payload.json'
+      - 'release/dependencies.json'
+      - 'tools/Build-Installer.ps1'
+      - 'global.json'
+permissions:
+  contents: read
+jobs:
+  windows-publish:
+    runs-on: windows-2022
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
+        with:
+          dotnet-version: '8.0.424'
+      - name: Verify the pinned Windows publish without authoring an MSI
+        shell: pwsh
+        run: |
+          $work = Join-Path $env:RUNNER_TEMP 'ascent-pr-publish'
+          ./tools/Build-Installer.ps1 -PublishOnly -WorkDir $work
+          if ($LASTEXITCODE -ne 0) { throw 'Windows publish failed' }
+          if (Get-ChildItem -LiteralPath $work -Recurse -File -Filter 'AscentControl-*.msi') {
+            throw 'Publish-only run created a product MSI'
+          }

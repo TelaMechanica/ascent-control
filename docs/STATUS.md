@@ -1,5 +1,12 @@
 # Current status
 
+## Windows publish verification on pull requests
+
+Changes to the reviewed Windows build inputs run the pinned publish and payload
+verification on the hosted Windows runner. This workflow uses public downloads
+and read-only repository permissions. The shared builder exits before WiX and
+product MSI creation in publish-only mode.
+
 ## Windows source staging and Widget SDK regression
 
 The Windows source-copy inventory includes the six files already listed in the
