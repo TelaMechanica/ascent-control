@@ -1,5 +1,6 @@
 """Runtime file dependencies include workers launched outside Python imports."""
 import ast
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -54,6 +55,17 @@ def test_reviewed_payload_targets_are_in_the_desktop_publish_inventory():
             if link:links.add(link.replace(chr(92),'/'))
     required={row['target'] for row in profile['files']}
     assert required <= links, 'Reviewed files omitted from desktop publish: '+repr(sorted(required-links))
+
+
+def test_public_build_sources_cover_payload_and_match_checkout():
+    profile = json.loads((ROOT / 'release/public-payload.json').read_text())
+    sources = profile['source_files']
+    for entry in profile['files']:
+        assert sources.get(entry['source']) == entry['sha256'], entry['source']
+    for name, digest in sources.items():
+        path = ROOT / name
+        assert path.is_file(), name
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == digest, name
 
 
 def test_public_msi_verifier_rejects_backend_version_drift(tmp_path):
