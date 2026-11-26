@@ -194,7 +194,7 @@ def check_desktop(root):
                 raise SystemExit(name+': import outside the reviewed pure runtime closure')
             if isinstance(node,ast.Call) and isinstance(node.func,ast.Name) and node.func.id in {'__import__','eval','exec','compile'}:
                 raise SystemExit(name+': dynamic execution requires dependency review')
-    print('Windows publish source pins, reviewed runtime inventory and static dependency closure passed.')
+    print('Reviewed runtime inventory, Windows publish source pins and static dependency closure passed.')
 
 
 def main():

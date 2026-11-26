@@ -2075,7 +2075,7 @@
     "tools/Stage-PythonRuntime.ps1": "a59f170e595a8824242d114ac702afc28c7d599628f47feca1ee59e29233b643",
     "tools/Test-GStreamerPayload.ps1": "81249b363384445e701a96b7feb192f68da180346a0b7591553e91c28c54c2b4",
     "tools/check_camera_source.py": "11f21a9bb55dd2862e4a6f3867e83c1e0ddc7f562dea7d315049359207c7ce9f",
-    "tools/check_public_runtime.py": "8bc20c16ac07cc3765de477ce54bf13db86e08b049cff4702e711ac9ec6029c7",
+    "tools/check_public_runtime.py": "2f48a36637e4087d4f3282108c4446a68a06fbb5b9dddfac9116b87e8e5d3dc6",
     "tools/check_tree.py": "a6ebf4b947530b76345fccc453ff19c0730df7102cadd69e97b0cc678c6d73c0",
     "tools/hdpro_port_assets.json": "02125930eb46334d11619d0f51d75505fa6c6560438ca8b790add20307a10645",
     "tools/inspect_local.py": "abfc8c82a21918505049b3b2da1b0cf24108161a2a480b7f79de4723802205f6",
