@@ -9,6 +9,7 @@ class Element {
   appendChild(child){this.children.push(child);return child;}
   replaceChildren(...children){this._text='';this.children=children;}
   setAttribute(name,value){this.attrs[name]=value;}
+  focus(){document.activeElement=this;}
 }
 const document={createElement:tag=>new Element(tag)};
 const source=fs.readFileSync('runtime/www/domains/widget_catalog.js','utf8');
@@ -113,8 +114,36 @@ function mount(request, options={}){
  assert.equal(receiverCalls.length,1);
  assert.equal(receiverCalls[0].expected_target,target);
  assert.equal(receiverCalls[0].release_id,'netrunner-pro-2.10.1');
- assert(receiver.root.textContent.includes('NetRunner files verified'));
+ assert(receiver.root.textContent.includes('NetRunner files verified for 2.10.1'));
+ assert.equal(document.activeElement.attrs.role,'status');
+ assert.equal(document.activeElement.tabIndex,-1);
  receiver.page.close();
+
+ const badArchive=mount(async path=>{
+  if(path==='/api/widgets/manager')return {ok:true,receiver:target,files_present:false,
+    available_releases:[],release_archives:[
+      {id:'netrunner-max-2.10.2',version:'2.10.2',state:'invalid'},
+      {id:'netrunner-max-2.10.1',version:'2.10.1',state:'missing'}]};
+  return doc();
+ },{receiverActions:true});
+ await flush();await button(badArchive.root,'Check selected receiver').onclick();
+ assert(badArchive.root.textContent.includes('Replace netrunner-max-2.10.2.zip with the official download'));
+ assert(badArchive.root.textContent.includes('Add netrunner-max-2.10.1.zip to the Widgets folder'));
+ assert(!badArchive.root.textContent.includes('Install 2.10.2'));
+ badArchive.page.close();
+
+ const changedReceiver=mount(async path=>{
+  if(path==='/api/widgets/manager')return {ok:true,receiver:target,files_present:true,
+    available_releases:[{id:'netrunner-max-2.10.2',version:'2.10.2',action:'update'}]};
+  if(path==='/api/widgets/manager/action')return {ok:false,error:'NETRUNNER_RELEASE_DIRECTION_INVALID'};
+  return doc();
+ },{receiverActions:true,confirmAction:()=>true});
+ await flush();await button(changedReceiver.root,'Check selected receiver').onclick();
+ await button(changedReceiver.root,'Update 2.10.2').onclick();
+ assert(changedReceiver.root.textContent.includes('The installed version no longer matches this action'));
+ assert(!button(changedReceiver.root,'Update 2.10.2'));
+ assert.equal(button(changedReceiver.root,'Check selected receiver').disabled,false);
+ changedReceiver.page.close();
 
  const {boot}=require('./public_ui_render_check.cjs');const ui=boot().__ui;
  ui.state.connections={candidates:[]};ui.state.capabilities={pages:{widgetmanager:{visible:false}}};

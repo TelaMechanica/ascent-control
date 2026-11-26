@@ -14,6 +14,24 @@ verification on the hosted Windows runner. This workflow uses public downloads
 and read-only repository permissions. The shared builder exits before WiX and
 product MSI creation in publish-only mode.
 
+## Widget Manager action feedback
+
+Missing and unverified NetRunner downloads identify the exact ZIP the operator
+can add or replace. Widget Manager explains changed receiver state and returns
+keyboard focus to the result after an action removes its buttons. The receiver
+selection, enrollment and archive verification contracts are unchanged.
+
+## NetRunner release archive status
+
+Widget Manager verifies each profile-approved local archive before offering
+an install, update or rollback. Missing and invalid downloads have separate
+status. Deployment verifies the selected archive again before it enters
+receiver enrollment. The catalog preview remains independent.
+The public host suite passed 1,034 tests and 55 subtests with 25 skips. An
+isolated Windows publish verified all 395 pinned files, and the packaged
+reader accepted a real pinned ZIP and refused its replacement with a simulated
+receiver. Physical receiver behavior was outside this review.
+
 ## Windows source staging and Widget SDK regression
 
 The Windows source-copy inventory includes the six files already listed in the

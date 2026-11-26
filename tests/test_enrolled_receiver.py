@@ -236,3 +236,57 @@ def test_selected_pro_never_uses_max_download_or_unrelated_board(tmp_path, monke
     with pytest.raises(AccessDenied, match='PROFILE_UNSUPPORTED'):
         service.apply_selected_netrunner_download(**args)
     assert len(selected) == 1
+
+
+def test_widget_status_verifies_pinned_download_and_action_rechecks_it(monkeypatch, tmp_path):
+    from contextlib import contextmanager
+    import hashlib
+    import zipfile
+
+    from ascent_core.widget_sdk import PackageInvalid
+
+    target = SimpleNamespace(binding=ReceiverBinding(1, 'fixture', 'attached'),
+        device_name='Ascent_VRX_max_WF', serial_number='fixture-serial',
+        hardware='fixture-hardware', firmware='fixture-firmware',
+        host='127.0.0.1', source_ip='127.0.0.1')
+    release_id = 'netrunner-max-2.10.2'
+    missing_id = 'netrunner-max-2.10.1'
+    archive = tmp_path / (release_id + '.zip')
+    files = {name: name.encode() for name in ('ascent_wifi_channels', 'wpa_cli', 'wpa_supplicant')}
+    with zipfile.ZipFile(archive, 'w') as package:
+        for name, data in files.items():
+            package.writestr(name, data)
+    valid = archive.read_bytes()
+    pin = {'widget_id': 'netrunner', 'version': '2.10.2',
+           'sha256': hashlib.sha256(valid).hexdigest(),
+           'files': {name: hashlib.sha256(data).hexdigest() for name, data in files.items()}}
+    pins = {missing_id: {**pin, 'version': '2.10.1'}, release_id: pin}
+    enrollment_checks = []
+
+    @contextmanager
+    def enrolled(current, *, key_type):
+        assert current is target
+        enrollment_checks.append(current)
+        yield SimpleNamespace(check=lambda: None)
+
+    service = ReceiverService(selector=SimpleNamespace(capture=lambda: target), credentials=None,
+        enrollments=None, enabled=lambda: True,
+        transport=SimpleNamespace(inspect_netrunner_tools=lambda _: dict.fromkeys(files)))
+    monkeypatch.setattr(service, 'enrolled', enrolled)
+    args = {'library': tmp_path, 'release_pins': pins}
+    status = service.netrunner_widget_status(**args)
+    assert status['release_archives'] == [
+        {'id': missing_id, 'version': '2.10.1', 'state': 'missing'},
+        {'id': release_id, 'version': '2.10.2', 'state': 'verified'}]
+    assert status['available_releases'] == [
+        {'id': release_id, 'version': '2.10.2', 'action': 'install'}]
+    assert archive.read_bytes() == valid
+
+    archive.write_bytes(b'replaced after status')
+    with pytest.raises(PackageInvalid, match='digest differs'):
+        service.apply_netrunner_widget_action(reviewed_target=status['receiver'],
+            release_id=release_id, action='install', **args)
+    assert enrollment_checks == [target]
+    status = service.netrunner_widget_status(**args)
+    assert status['release_archives'][1]['state'] == 'invalid'
+    assert status['available_releases'] == []
