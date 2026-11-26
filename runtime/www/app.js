@@ -116,7 +116,7 @@ async function setLanguage(code){
 
 const state = {
   mode:'configuration',
-  view: 'device', status: null, fleet: null, rf: null, devices: null,
+  view: 'device', status: null, deviceStatusRead: null, fleet: null, rf: null, devices: null,
   templates: {}, app: null, connections: null, activeConnection: null, rfBands: null,
   // RF band editing. rfEdit is null when not editing; rfStage is 'edit' | 'confirm' | 'writing' | 'done'.
   // rfStale marks the loaded table as a pre-write read that has not been reread.
@@ -1317,6 +1317,21 @@ function bindMaxEthernet(){
   };
 }
 
+function deviceConnectionMessage(){
+  if(state.connecting) return ['IDENTIFYING DEVICE','Wait for the connection check to finish.'];
+  if(state.activeConnection?.connected) return ['IDENTITY UNVERIFIED','Refresh to check the selected device’s identity.'];
+  const inventory=state.connections;
+  if(inventory?.error) return ['USB DISCOVERY UNAVAILABLE','Refresh to check attached devices again.'];
+  if(!Array.isArray(inventory?.candidates)) return ['SCANNING FOR A DEVICE','Checking for attached USB devices.'];
+  if(inventory.candidates.some(candidate=>candidate.identity_proven)){
+    return ['DETECTED — NOT CONNECTED YET','Select the detected device and use Connect.'];
+  }
+  if(inventory.candidates.length){
+    return ['USB DEVICE DETECTED','Device identity is unverified. Refresh to check the USB connection again.'];
+  }
+  return ['NO DEVICE','Connect a receiver over USB.'];
+}
+
 function renderDevice(){
   const i=ident(); const s=state.status; const d=state.devices||{}; const c=state.activeConnection?.candidate||{};
   const pd=productDoc(); const t=state.activeConnection?.transport||{};
@@ -1338,60 +1353,19 @@ function renderDevice(){
     return;
   }
 
-  /* NOTHING UNTIL THERE IS SOMETHING TO SHOW.
-
-     This page painted its panels while the connection was still being made, so
-     an operator met a screen of empty and half-filled fields -- product blank,
-     firmware blank, link unknown, Service Mode guessing -- and had to work out
-     which were "not known yet" and which were "not there". Values then appeared
-     one at a time as reads landed. Reported from the bench as loading elements
-     too early.
-
-     A field with nothing in it is not information. Until the receiver is
-     connected and identified, this page says which of the four things is
-     happening and shows nothing else. The connection state already distinguishes
-     them; it just was not being used here. */
-  const cs=connectionState();
-  if(cs!==CONN.CONNECTED_RECOGNIZED && cs!==CONN.CONNECTED_UNRECOGNIZED){
-    /* THE BACKEND'S OWN WORDS FOR THE STATE, not a second set of mine.
-
-       `connection_state_label` already exists and is what the rest of the
-       application prints. Inventing "LOOKING FOR A RECEIVER" beside the
-       established "SCANNING FOR A DEVICE" would be one state with two
-       vocabularies -- the same fault as one fact with two sources, which this
-       page has had three times already. The local strings are only the
-       fallback for the window before the first capability document lands. */
-    const says={
-      [CONN.NO_DEVICE]:['NO DEVICE','Connect a receiver over USB.'],
-      [CONN.SCANNING]:['SCANNING FOR A DEVICE','Checking what is attached.'],
-      [CONN.DETECTED]:['DETECTED — NOT CONNECTED YET',
-                       'A receiver is attached and is being identified.'],
-    }[cs]||['SCANNING FOR A DEVICE','Checking what is attached.'];
-    const label=state.capabilities?.connection_state_label||says[0];
-    /* ONE ROW SURVIVES THE GATE, and it is there for a specific past defect:
-       DEVICE INFO is the page that stays reachable in every state AND the page
-       that explains the sidebar, so it must say WHY pages are hidden rather
-       than calling them "not applicable" -- which reads as a claim about the
-       device class instead of a fact about there being no live device. It is
-       under ADVANCED, where the rest of the sidebar explanation already is. */
-    const cap=state.capabilities||{};
-    const hidden=(cap.hidden||[]).length
-      ? (cap.hidden||[]).join(', ').toUpperCase() : 'NONE';
-    $('#content').innerHTML = out
-      + panel('DEVICE INFO',
-          kv('Status',val(label,cs===CONN.NO_DEVICE?'muted':'warnc'),false)
-          + notice(says[1])
-          + (advancedOn()
-             ? kv('Pages hidden — no live identified device',hidden)
-               + notice('THERE IS NO LIVE, IDENTIFIED DEVICE, so the pages that '
-                 + 'need one are hidden rather than shown empty — the same set '
-                 + 'whether nothing is detected, discovery is still scanning, or '
-                 + 'a device is detected but not yet connected. Nothing here is a '
-                 + 'claim about a device class. Connect a device and its raw '
-                 + 'command-60 identity decides which pages apply; never VID/PID.')
-             : ''));
+  if(!state.activeConnection?.connected || !i?.device_name){
+    const [label,detail]=deviceConnectionMessage();
+    const hidden=(state.capabilities?.hidden||[]).join(', ').toUpperCase()||'NONE';
+    $('#content').innerHTML=out+panel('DEVICE INFO',
+      kv('Status',val(label,label==='NO DEVICE'?'muted':'warnc'),false)+notice(detail)
+      +(advancedOn()?kv('Pages hidden — no live identified device',hidden):''));
     return;
   }
+
+  const ground=deviceHasGroundServices();
+  const link=s?.link||'UNAVAILABLE';
+  const read=state.deviceStatusRead?.state;
+  const rpc=s?'RESPONDED':read==='reading'?'CHECKING…':'UNAVAILABLE';
 
   /* Changed 2026-09-22. This page carried thirty-nine rows across five panels: SDK
      version, RF board code in hex, vendor detail string, topology correlation basis,
@@ -1434,7 +1408,7 @@ function renderDevice(){
     +(pd&&pd.source==='derived'?kv('Name basis','RENDERED FROM THE RAW IDENTITY — NOT A KNOWN VENDOR PRODUCT NAME',false):'')
     +deviceNicknameRow(aliasBb,alias)
     +kv('Firmware',shortFirmware(i?.firmware)||'—',false)
-    +kv('Link',s?.link||'OFFLINE',false)
+    +(ground?kv('Link',link,false):'')
     +kv('Serial',i?.serial_number||'—')
     +kv('Hardware',i?.hardware||'—')
     +`</div></div>`;
@@ -1448,7 +1422,7 @@ function renderDevice(){
   /* Things that need the operator, before reference material. Both return
      nothing when there is nothing to do, so a healthy unit is not pushed down. */
   out+=usbDriverSection();
-  if(deviceHasGroundServices()) out+='';
+  if(ground&&read==='failed') out+=notice('Receiver link status could not be read. Select Refresh to check it again.','warn');
 
   out+=panel('LINK AND TRANSPORT',
     kv('Connection',[i?.port||c.serial_com||t.serial_com,
@@ -1460,7 +1434,7 @@ function renderDevice(){
     +kv('Bound source',nb?`${nb.source_ip} (ifIndex ${nb.ifindex})`:'NOT BOUND',false));
 
   if(deviceHasGroundServices()) out+=panel('SERVICES',
-    kv('Ground RPC',s?val('CONNECTED','good'):val('UNAVAILABLE'),false)
+    kv('Ground RPC',s?val(rpc,'good'):val(rpc),false)
     +kv('Control UDP',state.rf?.available?val('RESPONDING','good'):val('UNAVAILABLE'),false)
     /* NO "Picker API" ROW. It reported NOT INSTALLED for something that was
        never built and is not planned: `50100` and `/v1/picker` appear ZERO
@@ -1502,11 +1476,11 @@ function renderDevice(){
         +kv('Device endpoint',state.app?.ground||'—')
         +kv('Topology correlation',t.topology_qualified?'CONTAINER ID — SERIAL AND RNDIS ARE THE SAME PHYSICAL DEVICE':(t.correlation_basis||'UNQUALIFIED').toUpperCase(),false)
         +kv('Transport state',(t.state||'unresolved').toUpperCase(),false)
-        +kv('Ground RPC',s?'CONNECTED':'UNAVAILABLE')+'')}</div></div>`;
+        +(ground?kv('Ground RPC',rpc):'')+'')}</div></div>`;
 
-    out+=panel('GROUND LINK STATE',
+    if(ground) out+=panel('GROUND LINK STATE',
       kv('Ground host',s?.host||state.app?.ground||'—')
-      +kv('Link state',s?.link||'OFFLINE',false)
+      +kv('Link state',link,false)
       +kv('Local BB ID',s?.local_bb_id||'—')
       +kv('RX MCS',s?.rx_mcs??'—')
       +kv('Peer field (diagnostic only)',s?.peer_diagnostic||'—')
@@ -4181,8 +4155,41 @@ function showConnectProblem(message){
   if(n) n.textContent=safeErr(message);
 }
 
+function clearDeviceStatus(){
+  state.status=null;
+  state.deviceStatusRead=null;
+}
+
+async function readDeviceStatus(){
+  clearDeviceStatus();
+  const target=state.activeConnection;
+  if(!target?.connected||!ident()?.device_name||!deviceHasGroundServices())return;
+  const read={state:'reading'};
+  state.deviceStatusRead=read;
+  const repaint=()=>{
+    updateHeader();
+    if(state.mode==='configuration'&&state.view==='device')renderDevice();
+  };
+  repaint();
+  try{
+    const status=await fetchJson('/api/status');
+    if(state.deviceStatusRead!==read||state.activeConnection!==target)return;
+    if(status?.connected!==true)throw Error('Receiver status was not available.');
+    state.status=status;
+    read.state='ready';
+  }catch{
+    if(state.deviceStatusRead!==read||state.activeConnection!==target)return;
+    read.state='failed';
+  }
+  repaint();
+}
+
 async function refreshConnections(){
-  state.connections=await fetchJson('/api/connections',true);
+  const target=state.activeConnection;
+  const previous=deviceConnectionMessage()[0];
+  const inventory=await fetchJson('/api/connections',true);
+  if(state.activeConnection!==target)return;
+  state.connections=inventory;
   const sel=$('#connectionSelect'); if(!sel)return;
   const prev=sel.value||'auto'; const cs=state.connections?.candidates||[];
   const profiles=state.connections?.network_profiles||[];
@@ -4215,6 +4222,9 @@ async function refreshConnections(){
      && state.connections && !state.connections.error
      && state.connections.active_candidate_id===null){
     state.activeConnection=null;
+    clearDeviceStatus();
+    state.rf=null;
+    state.battery=null;state.batteryLast=null;
     const batt=$('#deviceBattery'); if(batt) batt.innerHTML='';  // connected-only readout
     // RE-ARM AUTO-CONNECT on a genuine disconnect edge. autoConnectTried latches true
     // after the one launch attempt so a failed connect never retry-loops against
@@ -4254,6 +4264,8 @@ async function refreshConnections(){
     setLabel($('#deviceName'), cs.length?'IDENTIFYING ASCENT DEVICE…':'NO DEVICE');
     const img=$('#deviceImage'); img.removeAttribute('src');img.classList.add('hidden');
   }
+  if(state.mode==='configuration'&&state.view==='device'&&!state.activeConnection?.connected
+     && previous!==deviceConnectionMessage()[0])renderDevice();
 }
 
 async function connectSelected(){
@@ -4268,11 +4280,11 @@ async function connectSelected(){
       const result=await response.json();
       if(!response.ok||result.ok===false)throw Error(result.message||'The previous target could not be disconnected.');
     }catch(error){btn.disabled=false;showConnectProblem(error.message||error);return;}
-    state.activeConnection=null;state.capabilities=null;state.status=null;
+    state.activeConnection=null;state.capabilities=null;clearDeviceStatus();
   }
   if(state.activeConnection?.connected){
     try{await fetch('/api/disconnect',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}',cache:'no-store'});
-        state.activeConnection=null; setConnectButton('idle'); await refresh();}
+        state.activeConnection=null; clearDeviceStatus(); setConnectButton('idle'); await refresh();}
     finally{btn.disabled=false;}
     return;
   }
@@ -4285,8 +4297,8 @@ async function connectSelected(){
     const r=await fetch('/api/connect',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({candidate_id:selected}),cache:'no-store'});
     const d=await r.json();
     if(!r.ok||!d.connected) throw Error(d.message||d.error||'DEVICE IDENTITY FAILED');
-    state.activeConnection=d; state.connecting=false;
-    if(d.network_target){state.capabilities=null;state.status=null;await emitConnectionChange();}
+    state.activeConnection=d; state.connecting=false;clearDeviceStatus();
+    if(d.network_target){state.capabilities=null;await emitConnectionChange();}
     Promise.resolve(null);updateHeader();render();
     setConnectButton('connected',
       `Connected to ${d.network_target?d.network_target.label+' · '+d.network_target.device_ip:d.serial_identity?.device_name||'this device'} — press to disconnect`);
@@ -4442,7 +4454,14 @@ onConnectionChange(reloadFirmwarePage);
 async function refresh(){
   $('#status').textContent='REFRESHING READ-ONLY DEVICE STATE…';
   try{state.app=await fetchJson('/api/app'); $('#build').textContent=state.app.version;}catch{}
-  try{const cs=await fetchJson('/api/connection-state',true); if(cs?.active?.serial_identity||cs?.active?.network_target){state.activeConnection={connected:true,...cs.active};}}catch{}
+  clearDeviceStatus();
+  const active=state.activeConnection;
+  try{
+    const cs=await fetchJson('/api/connection-state',true);
+    if(state.activeConnection===active&&!state.connecting&&(cs?.active?.serial_identity||cs?.active?.network_target)){
+      state.activeConnection={connected:true,...cs.active};
+    }
+  }catch{}
   // Clearing a stale "connected" is the 1 s poll's job (refreshConnections, against
   // connection_inventory's active_candidate_id), not this read's: this is also the
   // app-load refresh, where activeConnection is legitimately absent and must not be
@@ -4466,11 +4485,7 @@ async function refresh(){
   // Every mounted page is told the connection state here, before the slow reads
   // below, and each page's own data lands as soon as its read returns.
   await emitConnectionChange();
-  const i=ident();
-  try{
-    state.status=await fetchJson('/api/status');
-    updateHeader();   // the nickname follows the Ground STATUS read
-  }catch(e){state.status=null; updateHeader();}
+  await readDeviceStatus();
   // VRX battery rides the same refresh as /api/status -- read on connect and on
   // manual refresh, never on a page timer (the no-device-timer invariant). Fail-soft.
   await pollBattery();

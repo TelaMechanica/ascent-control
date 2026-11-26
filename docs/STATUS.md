@@ -1,5 +1,11 @@
 # Current status
 
+## Device Info connection and link observations
+
+Device Info distinguishes USB discovery from proven identity. A failed Ground
+read shows link status as unavailable and clears the previous link values.
+Disconnect invalidates the old observation and late replies are discarded.
+
 ## VRX MAX HF device artwork
 
 The exact Ascent VRX MAX HF identity now uses the operator-approved Caddx PC Tool

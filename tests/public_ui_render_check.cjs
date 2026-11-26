@@ -62,7 +62,7 @@ function boot(options={}) {
   vm.createContext(ctx);
   vm.runInContext(fs.readFileSync('runtime/www/i18n.js', 'utf8'), ctx, { filename: 'i18n.js' });
   vm.runInContext(require(require('path').join(process.cwd(),'tests/helpers/ui_source.js'))() +
-                  '\n;globalThis.__ui={state,localServicePanel,localServiceState,localServiceRequest,fwVariantPanel,fwVariantBuildGate,netState,reloadDeviceHistory,backgroundImagePanel,prepareBackgroundImage,backgroundImageState,saveBackgroundImage,advancedOn,renderDevice,renderFirmware,renderFleet,renderSettings,renderDiagnostics,renderLive,liveState,startLivePoll,paintLiveTelemetry,paintLiveVideoStatus,setMode,setNav,pageVisible,renderWidgetManager,render};\n',
+                  '\n;globalThis.__ui={state,localServicePanel,localServiceState,localServiceRequest,fwVariantPanel,fwVariantBuildGate,netState,reloadDeviceHistory,backgroundImagePanel,prepareBackgroundImage,backgroundImageState,saveBackgroundImage,advancedOn,renderDevice,readDeviceStatus,refreshConnections,renderFirmware,renderFleet,renderSettings,renderDiagnostics,renderLive,liveState,startLivePoll,paintLiveTelemetry,paintLiveVideoStatus,setMode,setNav,pageVisible,renderWidgetManager,render};\n',
                   ctx, { filename: 'app.js' });
   return ctx;
 }
@@ -89,6 +89,72 @@ ok(ui.fwVariantBuildGate(hdpro,{state:'AVAILABLE',acknowledged:true}).ok,'HD Pro
 ok(!ui.fwVariantBuildGate(hdpro,{state:'AVAILABLE',acknowledged:false}).ok,'HD Pro keeps session risk acknowledgement');
 hdpro.plan.buildable=false;
 ok(!ui.fwVariantBuildGate(hdpro,{state:'AVAILABLE',acknowledged:true}).ok,'HD Pro retains donor refusal');
-process.exitCode=failed?1:0;
+async function checkDeviceInfo(){
+  const localBbId=['AA','BB','CC','DD'].join(':');
+  let reply;
+  let inventory={candidates:[],active_candidate_id:null};
+  let readInventory=()=>({ok:true,json:async()=>inventory});
+  const fixture=boot({fetch:async url=>{
+    if(url==='/api/app')return new Promise(()=>{});
+    if(url==='/api/status')return reply();
+    if(url==='/api/connections')return readInventory();
+    return {ok:true,json:async()=>({})};
+  }});
+  const device=fixture.__ui;
+  const shown=()=>fixture.document.querySelector('#content').innerHTML;
+  const session={connected:true,candidate_id:'fixture-port',serial_identity:{
+    device_name:'Ascent_VRX_max_HF',serial_number:'fixture-receiver',firmware:'Ascent_VRX_Max_19_2_14'
+  }};
+  device.state.usbDriver={};
+  device.state.connections={candidates:[{id:'fixture-port',identity_proven:false}]};
+  device.renderDevice();
+  ok(shown().includes('USB DEVICE DETECTED')&&shown().includes('Device identity is unverified'),
+     'USB detection does not claim device identity');
+  ok(!shown().includes('fixture-receiver')&&!shown().includes('OFFLINE'),
+     'unproven USB displays no receiver data or false link state');
+
+  device.state.activeConnection=session;
+  device.state.capabilities={connection_state:'connected_recognized',role:'receiver'};
+  reply=()=>({ok:true,json:async()=>({connected:true,link:'LINKED',local_bb_id:localBbId,rx_mcs:4})});
+  await device.readDeviceStatus();
+  ok(shown().includes('LINKED')&&shown().includes(localBbId),'valid Ground status is shown');
+
+  reply=()=>({ok:false,status:503,json:async()=>({error:'synthetic private error'})});
+  await device.readDeviceStatus();
+  ok(shown().includes('fixture-receiver')&&shown().includes('Receiver link status could not be read'),
+     'failed link refresh preserves proven USB identity and explains the next action');
+  ok(shown().includes('UNAVAILABLE')&&!shown().includes('OFFLINE')&&!shown().includes(localBbId)
+     &&!shown().includes('synthetic private error'),'failed refresh hides old telemetry and raw errors');
+
+  let finish;
+  reply=()=>new Promise(resolve=>{finish=resolve;});
+  const read=device.readDeviceStatus();
+  await device.refreshConnections();
+  finish({ok:true,json:async()=>({connected:true,link:'LINKED',local_bb_id:localBbId})});
+  await read;
+  ok(device.state.activeConnection===null&&device.state.status===null&&shown().includes('NO DEVICE')
+     &&!shown().includes('fixture-receiver'),'disconnect drops old identity and the late link response');
+
+  inventory={candidates:[{id:'fixture-port',identity_proven:true}],active_candidate_id:null};
+  await device.refreshConnections();
+  ok(shown().includes('Select the detected device and use Connect'),
+     'a detected device repaints the existing empty view with the connection action');
+
+  inventory={error:'fixture inventory failure'};
+  await device.refreshConnections();
+  ok(shown().includes('USB DISCOVERY UNAVAILABLE')&&!shown().includes('NO DEVICE'),
+     'discovery failure does not assert the device is absent');
+
+  let finishInventory;
+  device.state.activeConnection=session;
+  readInventory=()=>new Promise(resolve=>{finishInventory=resolve;});
+  const discovery=device.refreshConnections();
+  const replacement={...session,candidate_id:'fixture-replacement'};
+  device.state.activeConnection=replacement;
+  finishInventory({ok:true,json:async()=>({candidates:[],active_candidate_id:null})});
+  await discovery;
+  ok(device.state.activeConnection===replacement,'late inventory cannot clear a newly selected device');
+}
+checkDeviceInfo().catch(error=>ok(false,error.stack)).finally(()=>{process.exitCode=failed?1:0;});
 
 }
