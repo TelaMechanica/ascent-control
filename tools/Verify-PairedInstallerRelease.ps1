@@ -52,11 +52,22 @@ function Get-MsiEditionStamp([string]$MsiPath, [string]$ProductName) {
     $proc = Start-Process -FilePath 'msiexec.exe' -Wait -PassThru -ArgumentList @(
         '/a', ('"' + $MsiPath + '"'), '/qn', ('TARGETDIR="' + $extract + '"'), '/L*v', ('"' + $log + '"'))
     if ($proc.ExitCode -ne 0) { throw "$ProductName administrative extraction failed (exit $($proc.ExitCode))." }
-    $stampFiles = @(Get-ChildItem -LiteralPath $extract -Recurse -File -Filter 'ascent_edition.txt')
-    if ($stampFiles.Count -ne 1) {
-        throw "$ProductName MSI must contain exactly one ascent_edition.txt (found $($stampFiles.Count))."
+    # The stamp is the install-root marker the backend reads from ROOT.parent, so it
+    # must sit BESIDE the application, not merely somewhere in the payload. Anchor on
+    # the one application executable and require the stamp as its sibling.
+    $exe = @(Get-ChildItem -LiteralPath $extract -Recurse -File -Filter 'AscentControl.exe')
+    if ($exe.Count -ne 1) {
+        throw "$ProductName MSI must contain exactly one AscentControl.exe (found $($exe.Count))."
     }
-    return ([IO.File]::ReadAllText($stampFiles[0].FullName)).Trim().ToLowerInvariant()
+    $stamp = Join-Path $exe[0].DirectoryName 'ascent_edition.txt'
+    if (-not (Test-Path -LiteralPath $stamp -PathType Leaf)) {
+        throw "$ProductName MSI has no ascent_edition.txt at the install root beside AscentControl.exe."
+    }
+    $all = @(Get-ChildItem -LiteralPath $extract -Recurse -File -Filter 'ascent_edition.txt')
+    if ($all.Count -ne 1) {
+        throw "$ProductName MSI must carry exactly one ascent_edition.txt (found $($all.Count))."
+    }
+    return ([IO.File]::ReadAllText($stamp)).Trim().ToLowerInvariant()
 }
 
 function Verify-Edition([string]$RecordPath, [string]$ProductName, [string]$FilePrefix, [string]$ExpectedEdition) {

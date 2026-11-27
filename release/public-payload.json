@@ -426,8 +426,8 @@
     {
       "source": "runtime/dev_harness.py",
       "target": "runtime/dev_harness.py",
-      "sha256": "3caf7564dc30331cc087942a53d6079099f99884975d109b069281a265160625",
-      "bytes": 340065
+      "sha256": "b579946b8f2b9ebe433eb002415d241a2d916abd0fe19a11e506c8bc2cdc2101",
+      "bytes": 342574
     },
     {
       "source": "runtime/device_capability.py",
@@ -1146,8 +1146,8 @@
     {
       "source": "ascent_core/service_firmware.py",
       "target": "ascent_core/service_firmware.py",
-      "sha256": "a641224b46048a630f662b34c8b4edf1e342bc5d6a94488a5750c51327f2cc60",
-      "bytes": 27272
+      "sha256": "c37b21bcda5bb9e53ea00fd82a1341fa8401226322dc05a3f1ae14b09e63033a",
+      "bytes": 28359
     },
     {
       "source": "ascent_core/service_gate2.py",
@@ -1236,11 +1236,11 @@
     }
   },
   "source_files": {
-    ".github/workflows/windows-publish.yml": "3cf07c9c9b5888e580beff77bf3846d3c95a4897cae92c0d4ad9b857f7e88d67",
+    ".github/workflows/windows-publish.yml": "26a6be92040c43657c914789c8098220f2be1dbc458050e60e4696923eff04ad",
     "ascent_core/enrollment_commands.py": "007385b653de4bede7f618035065306c3340a5faa755f087900c6abb15081227",
     "ascent_core/first_access.py": "41a92f41cf0949b1ae33f4523d5cf40c332498858295acd260e51e3a164d8ea5",
     "ascent_core/first_access_session.py": "deb807b3e4b7a73fd81c5bcb9dc81f9d7c14b91158adb16931b2cf7378b4bafb",
-    "ascent_core/service_firmware.py": "a641224b46048a630f662b34c8b4edf1e342bc5d6a94488a5750c51327f2cc60",
+    "ascent_core/service_firmware.py": "c37b21bcda5bb9e53ea00fd82a1341fa8401226322dc05a3f1ae14b09e63033a",
     "ascent_core/service_gate2.py": "a25185fd27fd58c8b63b943ebbe7d1119411edc1b5fa367276658c9541b8ab81",
     "runtime/first_access_tool.py": "d08009cd7a2df81067f6c79546f63c8ab2eebaf664294e6fc79ed662389a8e07",
     ".config/dotnet-tools.json": "af573fc0b0f33af85fff921ae9f9697fbfe120bd02706331d3d0582b31b7fdb2",
@@ -1399,7 +1399,7 @@
     "runtime/caddx_sky_user_cfg.py": "ae564e925856ccb8a483c9df477bfbf2c50472ff75af51af8a588c6b935352f4",
     "runtime/caddx_tile_image.py": "3362291ff44cbf09ed44d4814fe5efb198925eed66689e033d4f411b93fdd568",
     "runtime/caddx_vendor_write.py": "f22b3d83106beb88c69b04339537830ace2535ce1bdda5fc4d2d4b9b316f5af7",
-    "runtime/dev_harness.py": "3caf7564dc30331cc087942a53d6079099f99884975d109b069281a265160625",
+    "runtime/dev_harness.py": "b579946b8f2b9ebe433eb002415d241a2d916abd0fe19a11e506c8bc2cdc2101",
     "runtime/device_capability.py": "fa9d47b46e2922ca5dfb0de1e65566c7bf691d7e7c332954a5c0216811af2911",
     "runtime/device_config_store.py": "979e2e28e0068b22ceff62a3eb8ed745f2535275369a19dc05450845a0e73415",
     "runtime/device_naming.py": "40d6f4f0fe2cba58b32e01d41bf2fc118a2af55f93683c1760a83aa131cbd096",
@@ -2075,7 +2075,7 @@
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/ubifs.h": "610a90a227b27e3c22c2ab7f12e947dd2355f1361d09c41bfc9d0ee331398af3",
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mount.ubifs": "175df527fa9406e1dc8784d34112dc624ce7e2bd6eee70dfd75ddc2cecb967c4",
     "tools/Build-Installer.ps1": "473695b685c5886e8b65bf79c3bc945bcfafc9fb8d69a8cfaab931c0cf4c0d20",
-    "tools/Verify-PairedInstallerRelease.ps1": "97864ae8a8da5e904fa21594fed689292cdcec3387171e046e09ce2fd9745324",
+    "tools/Verify-PairedInstallerRelease.ps1": "37f7db18b4f28d555027260d0f8d791afc94170da39549544cfef28f6af6b3e8",
     "tools/PreservedBuildOutputs.targets": "2656fa2b9d11961684626c052d0c62d01192202be6b34ffca5f06d2ce32fa378",
     "tools/Stage-GStreamer.ps1": "e7f9bd809b4ce27522855ba3c75183bf6dffca379458db3d6c219836ce52e927",
     "tools/Stage-PythonRuntime.ps1": "a59f170e595a8824242d114ac702afc28c7d599628f47feca1ee59e29233b643",

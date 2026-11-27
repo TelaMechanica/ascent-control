@@ -27,15 +27,33 @@ jobs:
           # the published payload, so an edition-specific regression (e.g. a bad
           # stamp or a payload that fails verify under acplus) must be caught here,
           # not only in the tag-time paired MSI build.
+          #
+          # Each edition runs in its OWN pwsh PROCESS. Build-Installer's GStreamer
+          # payload check loads the native gstreamer library and calls gst_init in
+          # process; a second in-process edition would reuse that already-initialised
+          # library and its registry, and the payload test's "registry written"
+          # assertion would fail for the second edition on an otherwise-identical
+          # payload. A fresh process per edition isolates that native state.
           foreach ($edition in @('ac', 'acplus')) {
             $work = Join-Path $env:RUNNER_TEMP "ascent-pr-publish-$edition"
-            ./tools/Build-Installer.ps1 -PublishOnly -Edition $edition -WorkDir $work
+            pwsh -NoProfile -ExecutionPolicy Bypass -File ./tools/Build-Installer.ps1 `
+              -PublishOnly -Edition $edition -WorkDir $work
             if ($LASTEXITCODE -ne 0) { throw "Windows publish failed for edition '$edition'" }
             if (Get-ChildItem -LiteralPath $work -Recurse -File -Filter 'AscentControl*-*.msi') {
               throw "Publish-only run created a product MSI for edition '$edition'"
             }
-            $stamp = Get-ChildItem -LiteralPath $work -Recurse -File -Filter 'ascent_edition.txt' | Select-Object -First 1
-            if (-not $stamp -or ([IO.File]::ReadAllText($stamp.FullName)).Trim() -cne $edition) {
-              throw "Publish-only run did not stamp edition '$edition' at the install root"
+            # The stamp must sit at the install ROOT, beside the application payload,
+            # not merely somewhere in the tree. Build-Installer writes it to
+            # <work>\publish next to AscentControl.dll.
+            $root  = Join-Path $work 'publish'
+            $stamp = Join-Path $root 'ascent_edition.txt'
+            if (-not (Test-Path -LiteralPath $stamp -PathType Leaf)) {
+              throw "Edition stamp is not at the publish install root for '$edition'"
+            }
+            if (-not (Test-Path -LiteralPath (Join-Path $root 'AscentControl.dll') -PathType Leaf)) {
+              throw "Publish root for '$edition' does not hold the application beside the stamp"
+            }
+            if (([IO.File]::ReadAllText($stamp)).Trim() -cne $edition) {
+              throw "Publish-only stamp for '$edition' has the wrong edition"
             }
           }

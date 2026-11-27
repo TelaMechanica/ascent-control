@@ -109,8 +109,46 @@ gains an acknowledgment control (future, hash re-pin).
 - Stage the commit as an explicit file list; never `git add -A` (the tree carries
   unrelated untracked files such as `tools/privacy_gate_binary.py`).
 
+## Re-review round 2 (codex, 2026-11-27) — findings and fixes
+
+A second static review of the wiring (commit `e9ae15f`) raised five:
+
+1. **(blocker) AC+ Windows publish failed the GStreamer registry assertion.** My
+   both-edition publish-only loop ran both editions in **one `pwsh` process**;
+   `Test-GStreamerPayload.ps1` loads the native gstreamer library and calls `gst_init`
+   in-process, so the second edition reused the first's initialised library and its
+   registry never got written. **Fix:** run each edition in its own `pwsh` process
+   (`windows-publish.yml`). The payloads are identical; this was a process-state leak the
+   loop introduced.
+2. **(high) Freshness test too weak.** It passed even if the only observation were
+   pre-install. **Fix:** the test now asserts verify's `obs-<N>` exceeds the count of
+   inspects taken *before* install — i.e. the observation came from a post-install
+   inspect.
+3. **(high) Modification reported with too much certainty.** `install_key` collapses
+   first-access and the authorized_keys write, so a `verify_install`-stage failure (the
+   write ran, readback failed) was reported as "not modified." **Fix:**
+   `_service_mode_modification` derives an honest `modification_state` from install_key's
+   own stage — `modified` (write ran / leftover possible), `unknown` (a shell may have
+   been obtained), `untouched` (provably no write). `unknown` never projects to
+   "not modified"; the pinned UI's boolean gets the safe direction, the precise state is
+   in `modification_state`.
+4. **(high) Pro policy graded VERIFIED on a PARTIAL bench.** **Fix:** new
+   `OPERATOR_DESIGNATED` grade; the Pro 18.21.10 Stage-1 row keeps the observed managed
+   auth, the original PARTIAL first-access grade, and the operator designation as
+   **separate fields**, and discloses that the (platform, version) key also admits other
+   MAX models on 18.21.10.
+5. **(medium) Stamp placement unverified.** **Fix:** both the pair verifier and the
+   publish-only check now require the stamp **beside the application** (install root),
+   anchored on `AscentControl.exe`/`.dll`, not merely somewhere in the tree.
+
+Observations also addressed: a typed `ElevationDeclined(RuntimeError)` replaces the
+English-substring match for a dismissed UAC prompt; `local_service_activate` has a
+catch-all so an unexpected wiring fault returns a clean error instead of a 500 (lock/state
+still restored by `finally`).
+
 ## Status
 
-Full public suite: **1073 passed, 25 skipped, 55 subtests**. Do NOT merge or publish a
-release until this lands and codex re-clears the wiring — and the "re-qualify on your
-unit" caveat travels with any release notes.
+Full public suite: **1075 passed, 25 skipped, 55 subtests**. The AC+ publish blocker is
+fixed in source but **must be confirmed green in CI** (Windows-only; not runnable from
+WSL). Do NOT merge or publish a release until CI is green and codex re-clears — and the
+"re-qualify on your unit" caveat travels with any release notes.

@@ -29,6 +29,11 @@ import caddx_fw_version as fwver
 VERIFIED = "VERIFIED"      # observed on hardware, this firmware
 INFERRED = "INFERRED"      # read out of that firmware's image
 UNKNOWN = "UNKNOWN"        # no evidence either way
+# An operator accepted this firmware for distribution on evidence SHORT of an
+# independent VERIFIED first-access (e.g. a partial bench run). It is NOT VERIFIED
+# and must never be shown as such; the row keeps the observed result, the original
+# first-access grade and the operator's designation as separate fields.
+OPERATOR_DESIGNATED = "OPERATOR_DESIGNATED"
 
 MAX_DEVICE_NAMES = frozenset({
     "Ascent_VRX_max_HF", "Ascent_VRX_max_WF", "Ascent_VRX_Max",
@@ -252,16 +257,25 @@ STAGE1_EVIDENCE: dict[tuple, dict] = {
     # (platform_of maps the RK3568 Pro to 'max'), so it qualifies the MAX software
     # at 18.21.10, observed on a Pro.
     (PLATFORM_MAX, (18, 21, 10)): {
-        "grade": VERIFIED,
+        # NOT VERIFIED. The grade is the executable truth: this row proceeds on an
+        # operator designation, not an independent verified first access. The three
+        # claims below are kept DISTINCT and must not be blended into "VERIFIED".
+        "grade": OPERATOR_DESIGNATED,
         "device": "Ascent_VRX_Pro on 18.21.10 (AC 0.43.34), serial not supplied",
         "source": "bench_2026-10-30_partial_operator_designated_2026-11-27",
+        "managed_auth_observed": "VERIFIED -- independent pinned-key SSH check, 2026-10-30",
+        "first_access_grade": "PARTIAL -- the first-access tool timed out on that run",
+        "operator_designation": "operator-designated for distribution, 2026-11-27",
+        "platform_scope_note": (
+            "Keyed (platform=max, 18.21.10). platform_of maps the RK3568 Pro to "
+            "'max', so this rule also admits other MAX models on 18.21.10 -- the "
+            "evidence is Pro-specific, though 18.21.10 is a Pro firmware. Narrow it "
+            "to a device name if a non-Pro MAX ever ships 18.21.10."),
         "detail": (
-            "2026-10-30 VRX Pro bench: activation reached VERIFIED, repeat managed "
-            "access succeeded, and an independent pinned-key SSH check confirmed "
-            "access. The initial first-access tool timed out, so the checkpoint "
-            "graded first access PARTIAL overall. Operator-designated as validated "
-            "for distribution on 2026-11-27. No fresh agent hardware test, raw "
-            "capture, serial or timing was supplied beyond the checkpoint."),
+            "2026-10-30 VRX Pro bench: activation reached VERIFIED and an independent "
+            "pinned-key SSH check confirmed managed access; the first-access tool "
+            "timed out, so first access was graded PARTIAL. Operator-designated for "
+            "distribution 2026-11-27. Not an independent VERIFIED first access."),
     },
     (PLATFORM_GND485, (19, 2, 14)): {
         "grade": VERIFIED,

@@ -214,13 +214,11 @@ def _build_activation_orchestrator(body=None):
                                'selected receiver. Configure it on NETWORK ADAPTERS first.')
         try:
             _configure_rndis_elevated(a['ifindex'])
-        except RuntimeError as error:
+        except ElevationDeclined as error:
             # A dismissed UAC prompt is an operator situation, not a host fault;
             # re-raise as PermissionError so the orchestrator reports OPERATOR_DECLINED.
-            text = str(error).lower()
-            if 'dismiss' in text or 'declined' in text or 'cancel' in text:
-                raise PermissionError(str(error)) from None
-            raise
+            # Typed, so this does not depend on matching the message text.
+            raise PermissionError(str(error)) from None
         state['configured'] = a['ifindex']
 
     def rollback_transport():
@@ -243,7 +241,8 @@ def _build_activation_orchestrator(body=None):
                 public_key=public_key, tool_path=str(ROOT / 'first_access_tool.py'),
                 serial_port=candidate.get('serial_com'),
                 listen_addr=HOST_CFG.get('host_rndis_ip'))
-            state['first_access'] = {'detail': access.get('detail') or access.get('stage')}
+            state['first_access'] = {'detail': access.get('detail') or access.get('stage'),
+                                     'stage': access.get('stage')}
             return {'ok': bool(access.get('ok')),
                     'detail': access.get('detail') or access.get('stage'),
                     'access': access}
@@ -300,11 +299,11 @@ def _service_mode_ui_result(res, captured=None):
     orchestrator's rich result, without losing the state-machine fields.
 
     `ok` is derived ONLY from the proven-authentication state, so the UI can never
-    read ACTIVATING/READY as success. `receiver_modified` follows the orchestrator's
-    honest taxonomy: RECOVERY_REQUIRED means device-side state may be left behind;
-    BLOCKED means a prerequisite was unmet and nothing was changed. `verification`
-    and `first_access` come from the captured step payloads (the real verify() and
-    install_key() results), falling back to the identified name.
+    read ACTIVATING/READY as success. `modification_state` reports the receiver
+    honestly and never asserts "unchanged" on incomplete evidence -- see
+    `_service_mode_modification`. `verification` and `first_access` come from the
+    captured step payloads (the real verify() and install_key() results), falling
+    back to the identified name.
     """
     import ascent_core.activation_orchestrator as smo
     captured = captured or {}
@@ -324,8 +323,41 @@ def _service_mode_ui_result(res, captured=None):
         failed = next((s for s in reversed(steps)
                        if s.get('status') in ('FAILED', 'BLOCKED')), None)
         out['stage'] = (failed or {}).get('step')
-        out['receiver_modified'] = res.get('state') == smo.RECOVERY_REQUIRED
+        mod_state, modified = _service_mode_modification(res, captured, smo)
+        out['modification_state'] = mod_state
+        # Boolean projection for the hash-pinned UI, which has only modified /
+        # not-modified. "unknown" must NOT read as "not modified", so it projects to
+        # True (the safe direction); the precise truth is in modification_state.
+        out['receiver_modified'] = modified
     return out
+
+
+def _service_mode_modification(res, captured, smo):
+    """Honest receiver-modification state. NEVER asserts "unchanged" on incomplete
+    evidence: a first-access failure after the authorized_keys write, or any failure
+    once a shell may have been obtained, is reported as modified or unknown, not as
+    untouched. Returns (state_string, ui_bool) where ui_bool is True for anything but
+    a receiver we can show was not written.
+
+      modified   -- the key write ran (install_key stage 'verify_install'), or a
+                    trust write may remain (RECOVERY_REQUIRED).
+      unknown    -- a shell may have been obtained (stage 'session'/'root_home', or
+                    an exception mid-access); the receiver cannot be shown clean.
+      untouched  -- the exploit never fired, or it never reached a privileged shell
+                    (firmware/transport/no-adapter block, or stage 'first_access'/
+                    'privilege'): the authorized_keys append provably never ran.
+    """
+    if res.get('state') == smo.RECOVERY_REQUIRED:
+        return 'modified', True
+    ia = next((s for s in (res.get('steps') or []) if s.get('step') == 'INITIAL_ACCESS'), None)
+    if ia is None or ia.get('status') == 'BLOCKED':
+        return 'untouched', False
+    stage = ((captured or {}).get('first_access') or {}).get('stage')
+    if stage == 'verify_install':
+        return 'modified', True
+    if stage in ('first_access', 'privilege'):
+        return 'untouched', False
+    return 'unknown', True
 
 
 def local_service_activate(body=None):
@@ -357,6 +389,12 @@ def local_service_activate(body=None):
         return {'ok': False, 'error': str(getattr(error, 'code', error))}
     except (OSError, subprocess.TimeoutExpired) as error:
         return {'ok': False, 'error': 'SERVICE_ACTIVATE_UNAVAILABLE', 'detail': str(error)[:200]}
+    except Exception as error:
+        # The orchestrator converts collaborator failures into result states, so an
+        # exception here is an unexpected wiring/host fault. Return a clean error
+        # rather than letting it escape the route as a 500; the lock and operation
+        # state are still restored by the finally below.
+        return {'ok': False, 'error': 'SERVICE_ACTIVATE_ERROR', 'detail': str(error)[:200]}
     finally:
         DEVICE_OPERATION_STATE.clear()
         DEVICE_OPERATION_STATE.update(previous_operation)
@@ -3100,6 +3138,12 @@ def _select_connection_candidate(candidate_id: str | None) -> dict:
             return c
     raise ValueError("Selected Ascent device is no longer present")
 
+
+class ElevationDeclined(RuntimeError):
+    """The operator dismissed the Windows elevation (UAC) prompt. A dedicated type
+    so callers do not have to pattern-match English message text to tell an operator
+    decision apart from a genuine host-network fault."""
+
 def _configure_rndis_elevated(ifindex: int, *, rollback: bool = False) -> dict:
     """Configure -- or undo -- the host address on one RNDIS adapter, elevated.
 
@@ -3180,7 +3224,7 @@ def _configure_rndis_elevated(ifindex: int, *, rollback: bool = False) -> dict:
     tail = tail[-1].strip() if tail else ""
 
     if tail == "rc=DECLINED":
-        raise RuntimeError(
+        raise ElevationDeclined(
             "Windows needs Administrator to set an adapter address, and the "
             "elevation prompt was dismissed. Press ACTIVATE SERVICE MODE again "
             "and choose Yes.")

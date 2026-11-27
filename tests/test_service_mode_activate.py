@@ -90,13 +90,19 @@ def test_success_records_trust_and_verifies_against_a_fresh_observation(monkeypa
     assert result['ok'] is True
     assert result['verification']['receiver_name'] == 'TestRX'
     assert len(svc.records) == 1                      # trust recorded only via verify()
-    # THE FIX: the token verify() used came from an inspect() that ran AFTER
-    # install_key, not a stale pre-install observation.
+    # THE FIX, proven strictly: the observation verify() used must come from an
+    # inspect() that ran AFTER install_key. Each inspect() hands out obs-<N> with N
+    # incrementing, so if verify's N does not exceed the number of inspects taken
+    # BEFORE install, verify reused a stale pre-install observation. (The weaker
+    # "verify used the last observation" assertion passes even then, which is why it
+    # is not used here.)
     kinds = [e[0] for e in log]
-    assert kinds.index('install_key') < kinds.index('verify')
-    last_inspect_before_verify = max(
-        e[1] for e in log[:kinds.index('verify')] if e[0] == 'inspect')
-    assert svc.verify_token == f'obs-{last_inspect_before_verify}'
+    install_i = kinds.index('install_key')
+    inspects_before_install = sum(1 for e in log[:install_i] if e[0] == 'inspect')
+    assert svc.verify_token is not None
+    verify_n = int(svc.verify_token.split('-')[1])
+    assert verify_n > inspects_before_install, 'verify() used a stale pre-install observation'
+    assert any(e[0] == 'inspect' for e in log[install_i + 1:]), 'no fresh observation after install'
 
 
 def test_unqualified_firmware_blocks_before_any_first_access(monkeypatch):
@@ -113,19 +119,43 @@ def test_verify_failure_after_install_reports_modified_and_writes_no_record(monk
     result = app.local_service_activate({})
     assert result['ok'] is False
     assert result['state'] == 'RECOVERY_REQUIRED'         # may hold leftover state
-    assert result['receiver_modified'] is True
+    assert result['receiver_modified'] is True and result['modification_state'] == 'modified'
     assert svc.records == []                               # trust never recorded
     assert any(e[0] == 'install_key' for e in log)        # but the key WAS installed
 
 
-def test_first_access_failure_leaves_receiver_unmodified(monkeypatch):
+def test_pre_shell_failure_leaves_receiver_unmodified(monkeypatch):
+    # No root shell (uid=0 not confirmed): the authorized_keys append provably never
+    # ran, so "not modified" is an evidenced claim, not a guess.
     svc, log = _wire(monkeypatch, install_result={'ok': False, 'stage': 'privilege',
                                                   'detail': 'uid=0 not confirmed'})
     result = app.local_service_activate({})
-    assert result['ok'] is False
-    assert result['state'] == 'BLOCKED'
+    assert result['ok'] is False and result['state'] == 'BLOCKED'
+    assert result['modification_state'] == 'untouched'
     assert result['receiver_modified'] is False
     assert svc.verify_token is None and svc.records == []
+
+
+def test_write_stage_failure_reports_modified(monkeypatch):
+    # install_key reached 'verify_install': the authorized_keys append RAN and its
+    # readback failed. The receiver WAS modified; never report it untouched.
+    svc, log = _wire(monkeypatch, install_result={'ok': False, 'stage': 'verify_install',
+                                                  'installed': 0, 'detail': 'readback != 1'})
+    result = app.local_service_activate({})
+    assert result['ok'] is False and result['state'] == 'BLOCKED'
+    assert result['modification_state'] == 'modified'
+    assert result['receiver_modified'] is True
+
+
+def test_shell_stage_failure_reports_unknown_not_unmodified(monkeypatch):
+    # A root session was obtained (stage 'root_home') but the write outcome is not
+    # evidenced. Must be 'unknown' -- never asserted as untouched.
+    svc, log = _wire(monkeypatch, install_result={'ok': False, 'stage': 'root_home',
+                                                  'detail': 'home not reported'})
+    result = app.local_service_activate({})
+    assert result['ok'] is False and result['state'] == 'BLOCKED'
+    assert result['modification_state'] == 'unknown'
+    assert result['receiver_modified'] is True          # not-modified is never asserted here
 
 
 def test_already_enrolled_reverifies_without_reinstalling(monkeypatch):
@@ -140,7 +170,7 @@ def test_declined_elevation_is_operator_blocked_not_a_fault(monkeypatch):
     svc, log = _wire(monkeypatch, ready=False)
     monkeypatch.setattr(app, '_configure_rndis_elevated',
                         lambda *a, **k: (_ for _ in ()).throw(
-                            RuntimeError('the elevation prompt was dismissed')))
+                            app.ElevationDeclined('the elevation prompt was dismissed')))
     result = app.local_service_activate({})
     assert result['ok'] is False
     assert result['state'] == 'BLOCKED'
