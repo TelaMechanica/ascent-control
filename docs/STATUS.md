@@ -1,5 +1,13 @@
 # Current status
 
+## 0.50.1 core test candidate
+
+Issue #66 tracks a Windows AC prerelease for general desktop and receiver
+feedback. The MSI version and runtime version are pinned to 0.50.1. Release
+assets require inspection of the final installer before upload. The public
+AC+ profile lacks the first-access provider, so factory-fresh one-click AC+
+activation is outside the test scope.
+
 ## VRX MAX HF device artwork
 
 The exact Ascent VRX MAX HF identity now uses the operator-approved Caddx PC Tool
