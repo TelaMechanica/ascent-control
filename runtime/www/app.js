@@ -2668,7 +2668,12 @@ function localServicePanel(){
     // "nothing happened." A key installed but unverified means the device WAS
     // modified; a retry is safe because install is idempotent.
     if(!a.ok){
-      if(a.receiver_modified)body+='<div class="notice warn">The receiver was modified: the key was installed, but verification did not complete, so no trust was recorded. A retry is safe.</div>';
+      // Honest three-way: the backend reports modification_state precisely so the
+      // panel never tells the operator "the key was installed, retry is safe" when
+      // the outcome is merely unknown. Fall back to the boolean for older payloads.
+      const ms=a.modification_state||(a.receiver_modified?'modified':'untouched');
+      if(ms==='modified')body+='<div class="notice warn">The receiver was modified: the managed key was written but verification did not complete, so no trust was recorded. A retry is safe — the key install is idempotent.</div>';
+      else if(ms==='unknown')body+='<div class="notice warn">The receiver may have been changed: a privileged session was reached but the outcome could not be confirmed. Inspect the receiver before retrying — do not assume it was left unchanged.</div>';
       else body+='<p>The receiver was not modified.</p>';
     }
   }

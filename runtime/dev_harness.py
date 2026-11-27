@@ -384,7 +384,16 @@ def local_service_activate(body=None):
         DEVICE_OPERATION_STATE.update({'active': True, 'operation_id': 'service_mode_activate',
                                        'started_at': utc_now()})
         orchestrator, captured = _build_activation_orchestrator(body)
-        return _service_mode_ui_result(orchestrator.activate(), captured)
+        raw = orchestrator.activate()
+        try:
+            return _service_mode_ui_result(raw, captured)
+        except Exception:
+            # Shaping must never discard a known activation outcome (e.g. a VERIFIED).
+            # Fall back to the raw orchestrator result with a minimal derived `ok`.
+            import ascent_core.activation_orchestrator as smo
+            raw = dict(raw)
+            raw['ok'] = raw.get('state') == smo.VERIFIED
+            return raw
     except CredentialError as error:
         return {'ok': False, 'error': str(getattr(error, 'code', error))}
     except (OSError, subprocess.TimeoutExpired) as error:
@@ -3194,12 +3203,18 @@ def _configure_rndis_elevated(ifindex: int, *, rollback: bool = False) -> dict:
         "}")
     enc = base64.b64encode(inner_ps.encode("utf-16-le")).decode("ascii")
 
+    # A dismissed UAC prompt throws Win32 error 1223 (ERROR_CANCELLED,
+    # HRESULT 0x800704C7 = -2147023673). Classify on those STABLE numeric codes
+    # first; the English message match is only a last-resort fallback, so a
+    # localized Windows no longer misreports a cancellation as a generic error.
     outer = ("try{$p=Start-Process -FilePath 'powershell.exe' -Verb RunAs -Wait "
              "-PassThru -WindowStyle Hidden -ArgumentList "
              "'-NoProfile','-ExecutionPolicy','Bypass','-EncodedCommand','" + enc + "';"
              "\"rc=$($p.ExitCode)\"}"
-             "catch{if($_.Exception.Message -match 'cancell?ed'){'rc=DECLINED'}"
-             "else{\"rc=ERR $($_.Exception.Message)\"}}")
+             "catch{$e=$_.Exception;"
+             "if(($e.NativeErrorCode -eq 1223) -or ($e.ErrorCode -eq -2147023673) -or "
+             "($e.HResult -eq -2147023673) -or ($e.Message -match 'cancell?ed'))"
+             "{'rc=DECLINED'}else{\"rc=ERR $($e.Message)\"}}")
     try:
         cp = subprocess.run(["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
                              "-Command", outer],

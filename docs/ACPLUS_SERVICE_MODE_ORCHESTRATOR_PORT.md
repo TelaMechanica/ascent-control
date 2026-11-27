@@ -146,9 +146,32 @@ English-substring match for a dismissed UAC prompt; `local_service_activate` has
 catch-all so an unexpected wiring fault returns a clean error instead of a 500 (lock/state
 still restored by `finally`).
 
+## Re-review round 3 (codex, on ce6f289) — findings and fixes
+
+Codex confirmed round 2's #1 (green in PR CI), #2, #4, #5. Remaining, now fixed:
+
+- **#1 release-side.** The PR publish-only check was isolated, but the **tag-time**
+  release build (`windows-msi.yml`) still ran both editions in one `pwsh` process — same
+  GStreamer-init leak. **Fix:** each edition builds in its own `pwsh -File` process there
+  too. (The paired MSI verifier + extraction only run in this release job, not in
+  publish-only — expected.)
+- **#3 (High) completed — UI change + re-pin.** The binary UI genuinely could not
+  represent "unknown": it read the boolean and told the operator "the key was installed,
+  retry is safe" even when the outcome was unknown. Fixed by making the activation panel
+  read `modification_state` and show three honest cases — modified / **unknown** ("a
+  privileged session was reached but the outcome could not be confirmed; inspect before
+  retrying") / untouched. This is a deliberate, functional change to the hash-pinned UI
+  (`runtime/www/app.js`); `tests/locked_ui.py` re-pinned with a dated history entry. No
+  CSS/navigation/markup change.
+- **Observations.** The PowerShell UAC-cancel detection now classifies on the stable
+  Win32 code 1223 / HRESULT 0x800704C7 (English message only as a last-resort fallback).
+  `local_service_activate` now runs `orchestrator.activate()` first and shapes the result
+  separately, so a shaping error can no longer discard a known activation outcome.
+
 ## Status
 
 Full public suite: **1075 passed, 25 skipped, 55 subtests**. The AC+ publish blocker is
-fixed in source but **must be confirmed green in CI** (Windows-only; not runnable from
-WSL). Do NOT merge or publish a release until CI is green and codex re-clears — and the
-"re-qualify on your unit" caveat travels with any release notes.
+fixed in source for **both** the PR and release workflows; the PR publish-only run went
+green, and the release build must be confirmed green on its tag. Do NOT merge or publish a
+release until CI is green and codex re-clears — and the "re-qualify on your unit" caveat
+travels with any release notes.
