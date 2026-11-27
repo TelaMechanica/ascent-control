@@ -11,6 +11,14 @@ import dev_harness as app
 TOKEN = '7' * 64
 
 
+@pytest.fixture(autouse=True)
+def _acplus_edition(monkeypatch):
+    # The local service-mode guards are AC+ behaviour; exercise them in the edition
+    # that actually ships Service Mode. The base AC edition's 404 gate is asserted
+    # separately by test_ac_edition_hides_service_mode_endpoints.
+    monkeypatch.setattr(app, 'SERVICE_MODE_AVAILABLE', True)
+
+
 @pytest.fixture
 def server(monkeypatch):
     monkeypatch.setattr(app, '_HOST_SESSION_TOKEN', TOKEN)
@@ -135,3 +143,17 @@ def test_existing_credential_action_adopts_only_selected_legacy_pair(server, mon
     assert adopted == ['Ascent_G_Gnd_19_2_14']
     assert private.read_bytes() == b'fixture-protected-key'
     assert public.read_bytes() == b'ecdsa-sha2-nistp256 fixture'
+
+
+def test_ac_edition_hides_service_mode_endpoints(server, monkeypatch):
+    # In the base AC edition every local service-mode route answers 404 ahead of
+    # the host-session check, so the receiver first-access path is unreachable even
+    # with a valid host token. Enabling it requires the AC+ (acplus) edition.
+    monkeypatch.setattr(app, 'SERVICE_MODE_AVAILABLE', False)
+    for method, path in [('GET', '/api/service-mode/local/status'),
+                         ('POST', '/api/service-mode/local/credential'),
+                         ('POST', '/api/service-mode/local/receiver/inspect'),
+                         ('POST', '/api/service-mode/local/prepare'),
+                         ('POST', '/api/service-mode/local/activate')]:
+        status, doc = request(server, method, path, token=TOKEN, body={'confirmed': True})
+        assert status == 404 and doc['error'] == 'SERVICE_MODE_NOT_AVAILABLE'

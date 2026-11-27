@@ -41,12 +41,15 @@ def test_private_operations_are_absent_from_both_verbs(server,path):
 
 
 def test_old_edition_override_and_stamp_do_not_enable_private_code(monkeypatch,tmp_path,server):
+    # Retired edition tokens (consumer/industrial) no longer resolve to anything;
+    # both the env override and the install-root stamp fail safe to AC, which does
+    # not expose Service Mode. Enabling it requires a deliberate 'acplus' stamp.
     monkeypatch.setenv('ASCENT_EDITION','industrial')
     (tmp_path/'ascent_edition.txt').write_text('industrial')
-    monkeypatch.setattr(app,'ROOT',tmp_path)
-    assert app._resolve_edition()=='consumer'
+    monkeypatch.setattr(app,'ROOT',tmp_path/'runtime')
+    assert app._resolve_edition()=='ac'
     status,doc=request(server,'GET','/api/app')
-    assert status==200 and doc['edition']=='consumer' and doc['service_mode_available'] is False
+    assert status==200 and doc['edition']=='ac' and doc['service_mode_available'] is False
     assert not hasattr(app,'service_mode_activate') and not hasattr(app,'_widget_runtime_session')
 
 

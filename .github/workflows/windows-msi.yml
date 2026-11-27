@@ -24,17 +24,28 @@ jobs:
           New-Item -ItemType Directory -Path build-inputs|Out-Null
           gh release download $deps.release_tag --repo $env:GITHUB_REPOSITORY --dir build-inputs --pattern $deps.native.name --pattern $deps.camera.name
           if($LASTEXITCODE -ne 0){throw 'Release build inputs could not be downloaded'}
-      - name: Build and verify MSI without installing
+      - name: Build and verify paired AC / AC+ MSIs without installing
         shell: pwsh
         run: |
           $deps=Get-Content release/dependencies.json -Raw|ConvertFrom-Json
-          ./tools/Build-Installer.ps1 -OutputDir artifacts/release -NativeArchive (Join-Path build-inputs $deps.native.name) -CameraArchive (Join-Path build-inputs $deps.camera.name)
-          if($LASTEXITCODE -ne 0){throw 'MSI build failed'}
-          # Raw build records include machine-local paths and are not uploaded.
+          $native=Join-Path build-inputs $deps.native.name
+          $camera=Join-Path build-inputs $deps.camera.name
+          # One shared core, two Windows products from one checkout. AC is the base
+          # edition; AC+ (acplus) additionally ships one-touch Service Mode. They
+          # share MSI lineage and differ only by the edition stamp and filename.
+          ./tools/Build-Installer.ps1 -Edition ac -OutputDir artifacts/release -NativeArchive $native -CameraArchive $camera
+          if($LASTEXITCODE -ne 0){throw 'AC MSI build failed'}
+          ./tools/Build-Installer.ps1 -Edition acplus -OutputDir artifacts/release -NativeArchive $native -CameraArchive $camera
+          if($LASTEXITCODE -ne 0){throw 'AC+ MSI build failed'}
+          $commit=git rev-parse HEAD
+          ./tools/Verify-PairedInstallerRelease.ps1 -CoreRecord artifacts/release/public-msi-build-result-ac.json -PlusRecord artifacts/release/public-msi-build-result-acplus.json -SourceCommit $commit
+          if($LASTEXITCODE -ne 0){throw 'Paired installer release verification failed'}
+          # Raw build records carry machine-local paths and are not uploaded
+          # (the artifact step below globs only *.msi and SHA256SUMS.txt).
           Get-ChildItem artifacts/release -Filter '*.msi'|ForEach-Object {
             $hash=(Get-FileHash $_.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
-            "$hash  $($_.Name)"|Set-Content -Encoding ascii artifacts/release/SHA256SUMS.txt
-          }
+            "$hash  $($_.Name)"
+          }|Set-Content -Encoding ascii artifacts/release/SHA256SUMS.txt
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: public-windows-msi

@@ -3,6 +3,14 @@
 Status: historical initial scaffold checkpoint; the current draft is PR #24.
 Packaging and host integration have advanced; see the dated supersession below.
 
+**Authorization update — 2026-11-27 (operator, with sustained/direct/explicit Caddx
+approval).** Public AC+ ships functional one-touch Service Mode, including the receiver
+first-access bootstrap over the disclosed `ar_fpvhs_upgrade` file-write, under sustained,
+direct, and explicit vendor (Caddx) approval of the access technique. This resolves the
+open "does the AC+ base necessarily remain private" question in favor of shipping Service
+Mode in the distributed `acplus` edition; only dependent private widgets stay private. The
+authorization record is the project CLAUDE.md §Authorization (2026-11-27).
+
 The operator selected public AC as the sanitized foundation, AC and AC+ public
 bases going forward, Service Mode first, and a public widget SDK. Individual
 widgets remain private until selected for release. This supersedes the earlier

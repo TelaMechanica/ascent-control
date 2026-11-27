@@ -57,14 +57,38 @@ TEMPLATES = ROOT / "vendor_templates"
 
 RNDIS_HELPER = ROOT / "Configure-AscentRNDIS.ps1"
 
-APP_VERSION = '0.50.1'
+APP_VERSION = '0.50.2'
+
+# One core, two Windows products. AC is the base edition; AC+ (acplus) adds
+# one-touch Service Mode. The edition is resolved from the environment first,
+# then from a stamp the installer writes at the install root
+# (tools/Build-Installer.ps1 -Edition). Legacy consumer/industrial tokens are no
+# longer accepted and resolve to None, i.e. the AC fail-safe below.
+EDITION_AC = 'ac'
+EDITION_ACPLUS = 'acplus'
+
+
+def _coerce_edition(value):
+    token = (value or '').strip().lower()
+    return token if token in (EDITION_AC, EDITION_ACPLUS) else None
+
 
 def _resolve_edition() -> str:
-    return 'consumer'
+    env_edition = _coerce_edition(os.environ.get('ASCENT_EDITION'))
+    if env_edition is not None:
+        return env_edition
+    try:
+        stamped = _coerce_edition((ROOT.parent / 'ascent_edition.txt').read_text(encoding='utf-8'))
+    except OSError:
+        stamped = None
+    # Fail safe: an unstamped or unrecognised build is AC, which does not expose
+    # Service Mode. Enabling the receiver first-access path requires a deliberate
+    # 'acplus' stamp, never a default.
+    return stamped if stamped is not None else EDITION_AC
 
 APP_EDITION = _resolve_edition()
 
-SERVICE_MODE_AVAILABLE = False
+SERVICE_MODE_AVAILABLE = APP_EDITION == EDITION_ACPLUS
 
 # Native host bearer secret, consumed once and never forwarded to children.
 # A product/edition flag is not authority. This only protects local preparation;
@@ -5432,6 +5456,16 @@ class Handler(SimpleHTTPRequestHandler):
             self.json_response({'ok': False, 'error': 'DESKTOP_HOST_SESSION_REQUIRED'}, 403)
         return valid
 
+    def _require_service_mode(self):
+        # Service Mode is an AC+ capability. In any other edition the local
+        # service-mode routes answer 404 before the host-session check and before
+        # any device work, so an AC build cannot reach the receiver first-access
+        # path at all. The UI hide is cosmetic; this is the boundary.
+        if SERVICE_MODE_AVAILABLE:
+            return True
+        self.json_response({'ok': False, 'error': 'SERVICE_MODE_NOT_AVAILABLE'}, 404)
+        return False
+
     def _catalog_request_is_empty(self, *, write=False):
         try:
             target = urlparse(self.path)
@@ -5509,6 +5543,7 @@ class Handler(SimpleHTTPRequestHandler):
             self.json_response({'proof': proof})
             return
         if p == '/api/service-mode/local/status':
+            if not self._require_service_mode(): return
             if not self._require_host_session(): return
             result = local_service_preparation()
             self.json_response(result, 200 if result.get('ok') else 409)
@@ -5524,7 +5559,7 @@ class Handler(SimpleHTTPRequestHandler):
                 "version": APP_VERSION,
                 "edition": APP_EDITION,
                 "service_mode_available": SERVICE_MODE_AVAILABLE,
-                "local_credential_preparation": bool(_HOST_SESSION_TOKEN) and os.name == "nt",
+                "local_credential_preparation": SERVICE_MODE_AVAILABLE and bool(_HOST_SESSION_TOKEN) and os.name == "nt",
                 "mode": "operation-qualified",
                 "ground": HOST_CFG["ground"],
                 "night_default": True,
@@ -5759,23 +5794,27 @@ class Handler(SimpleHTTPRequestHandler):
             self.json_response(result, 200 if result.get('ok') else 409)
             return
         if p == '/api/service-mode/local/credential':
+            if not self._require_service_mode(): return
             if not self._require_host_session(): return
             try: result = service_credential_request(self._read_json_body())
             except (ValueError, UnicodeError): result = {'ok': False, 'error': 'INVALID_SERVICE_REQUEST'}
             self.json_response(result, 200 if result.get('ok') else 409)
             return
         if p in ('/api/service-mode/local/receiver/inspect', '/api/service-mode/local/receiver/verify'):
+            if not self._require_service_mode(): return
             if not self._require_host_session(): return
             try: result = receiver_readiness_request(p.rsplit('/', 1)[1], self._read_json_body())
             except (ValueError, UnicodeError): result = {'ok': False, 'error': 'INVALID_SERVICE_REQUEST'}
             self.json_response(result, 200 if result.get('ok') else 409)
             return
         if p == '/api/service-mode/local/prepare':
+            if not self._require_service_mode(): return
             if not self._require_host_session(): return
             result = local_service_preparation(create=True, body=self._read_json_body())
             self.json_response(result, 200 if result.get('ok') else 409)
             return
         if p == '/api/service-mode/local/activate':
+            if not self._require_service_mode(): return
             if not self._require_host_session(): return
             try: result = local_service_activate(self._read_json_body())
             except (ValueError, UnicodeError): result = {'ok': False, 'error': 'INVALID_SERVICE_REQUEST'}
