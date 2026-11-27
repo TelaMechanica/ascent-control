@@ -3207,14 +3207,24 @@ def _configure_rndis_elevated(ifindex: int, *, rollback: bool = False) -> dict:
     # HRESULT 0x800704C7 = -2147023673). Classify on those STABLE numeric codes
     # first; the English message match is only a last-resort fallback, so a
     # localized Windows no longer misreports a cancellation as a generic error.
+    # Classify a dismissed UAC prompt. Win32 ERROR_CANCELLED is 1223 (signed HRESULT
+    # -2147023673); the exception may be WRAPPED, so walk the InnerException chain. A
+    # numeric Win32 error code, when present, is authoritative -- the English message
+    # match is only a fallback for the case where NO Win32 code is exposed at all, so
+    # it can never override a known non-cancellation code (and a localized Windows no
+    # longer misreports a cancellation).
     outer = ("try{$p=Start-Process -FilePath 'powershell.exe' -Verb RunAs -Wait "
              "-PassThru -WindowStyle Hidden -ArgumentList "
              "'-NoProfile','-ExecutionPolicy','Bypass','-EncodedCommand','" + enc + "';"
              "\"rc=$($p.ExitCode)\"}"
-             "catch{$e=$_.Exception;"
-             "if(($e.NativeErrorCode -eq 1223) -or ($e.ErrorCode -eq -2147023673) -or "
-             "($e.HResult -eq -2147023673) -or ($e.Message -match 'cancell?ed'))"
-             "{'rc=DECLINED'}else{\"rc=ERR $($e.Message)\"}}")
+             "catch{$e=$_.Exception;$decl=$false;$sawCode=$false;$x=$e;"
+             "while($x){"
+             "if($x.PSObject.Properties.Match('NativeErrorCode').Count){$sawCode=$true;"
+             "if($x.NativeErrorCode -eq 1223){$decl=$true}}"
+             "if($x.HResult -eq -2147023673){$decl=$true;$sawCode=$true}"
+             "$x=$x.InnerException}"
+             "if((-not $decl) -and (-not $sawCode) -and ($e.Message -match 'cancell?ed')){$decl=$true}"
+             "if($decl){'rc=DECLINED'}else{\"rc=ERR $($e.Message)\"}}")
     try:
         cp = subprocess.run(["powershell.exe", "-NoProfile", "-ExecutionPolicy", "Bypass",
                              "-Command", outer],

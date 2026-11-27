@@ -168,6 +168,22 @@ Codex confirmed round 2's #1 (green in PR CI), #2, #4, #5. Remaining, now fixed:
   `local_service_activate` now runs `orchestrator.activate()` first and shapes the result
   separately, so a shaping error can no longer discard a known activation outcome.
 
+## Re-review round 3-delta (codex, on 486d680) — two partials, fixed
+
+Codex confirmed the release-build isolation and the outcome-preserving shaping, and left
+two partials:
+
+- **UI reporting still over-claimed on ambiguity.** Fixes: only an explicit `untouched`
+  renders "not modified"; an absent or unrecognised `modification_state` (or a bare legacy
+  boolean) renders uncertainty copy that asserts nothing; and the ambiguous message no
+  longer claims "a privileged session was reached" (unknown also covers a mid-access
+  exception where no session was reached). `app.js` re-pinned again.
+- **UAC-cancel classifier.** The English message was an unconditional alternative that
+  could override a known non-cancel code, and only the outer exception was inspected.
+  Fixes: walk the `InnerException` chain for Win32 1223 / HRESULT -2147023673; a present
+  Win32 code is authoritative; the message match runs ONLY when no Win32 code is exposed
+  anywhere.
+
 ## Status
 
 Full public suite: **1075 passed, 25 skipped, 55 subtests**. The AC+ publish blocker is

@@ -2668,13 +2668,15 @@ function localServicePanel(){
     // "nothing happened." A key installed but unverified means the device WAS
     // modified; a retry is safe because install is idempotent.
     if(!a.ok){
-      // Honest three-way: the backend reports modification_state precisely so the
-      // panel never tells the operator "the key was installed, retry is safe" when
-      // the outcome is merely unknown. Fall back to the boolean for older payloads.
-      const ms=a.modification_state||(a.receiver_modified?'modified':'untouched');
-      if(ms==='modified')body+='<div class="notice warn">The receiver was modified: the managed key was written but verification did not complete, so no trust was recorded. A retry is safe — the key install is idempotent.</div>';
-      else if(ms==='unknown')body+='<div class="notice warn">The receiver may have been changed: a privileged session was reached but the outcome could not be confirmed. Inspect the receiver before retrying — do not assume it was left unchanged.</div>';
-      else body+='<p>The receiver was not modified.</p>';
+      // The backend reports modification_state precisely. Only an EXPLICIT
+      // 'untouched' states the receiver was not changed; an explicit 'modified'
+      // (or a legacy true) states it was. Anything else — 'unknown', a missing or
+      // unrecognised state, a bare legacy false — is ambiguous and gets uncertainty
+      // copy that asserts nothing, not "not modified" and not "a session was reached".
+      const ms=a.modification_state;
+      if(ms==='untouched')body+='<p>The receiver was not modified.</p>';
+      else if(ms==='modified'||a.receiver_modified===true)body+='<div class="notice warn">The receiver was modified: the managed key was written but verification did not complete, so no trust was recorded. A retry is safe — the key install is idempotent.</div>';
+      else body+='<div class="notice warn">The receiver’s state could not be confirmed — it may or may not have been changed. Inspect it before retrying; do not assume it was left unchanged.</div>';
     }
   }
   return panel('SERVICE MODE PREPARATION',body);
