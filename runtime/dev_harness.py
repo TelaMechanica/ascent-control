@@ -57,7 +57,7 @@ TEMPLATES = ROOT / "vendor_templates"
 
 RNDIS_HELPER = ROOT / "Configure-AscentRNDIS.ps1"
 
-APP_VERSION = '0.43.67'
+APP_VERSION = '0.50.0'
 
 # The build (tools/Build-Installer.ps1 -Edition) stamps ascent_edition.txt at the
 # install root (beside the executable, i.e. runtime's parent) -- deliberately OUTSIDE
