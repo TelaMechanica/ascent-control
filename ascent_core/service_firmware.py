@@ -29,6 +29,11 @@ import caddx_fw_version as fwver
 VERIFIED = "VERIFIED"      # observed on hardware, this firmware
 INFERRED = "INFERRED"      # read out of that firmware's image
 UNKNOWN = "UNKNOWN"        # no evidence either way
+# An operator accepted this firmware for distribution on evidence SHORT of an
+# independent VERIFIED first-access (e.g. a partial bench run). It is NOT VERIFIED
+# and must never be shown as such; the row keeps the observed result, the original
+# first-access grade and the operator's designation as separate fields.
+OPERATOR_DESIGNATED = "OPERATOR_DESIGNATED"
 
 MAX_DEVICE_NAMES = frozenset({
     "Ascent_VRX_max_HF", "Ascent_VRX_max_WF", "Ascent_VRX_Max",
@@ -195,6 +200,18 @@ STAGE2_EVIDENCE: dict[tuple, dict] = {
         "detail": ("Dropbear observed live on this receiver: tcp/22 open, banner "
                    "SSH-2.0-dropbear_2022.82, offering ssh-ed25519."),
     },
+    # Pro 18.21.10, 2026-10-30: the managed key authenticated over the device's
+    # own SSH (independent pinned-key check), which demonstrates a readable
+    # persistent authorized_keys entry for that session. Cold-cycle (reboot)
+    # persistence was not part of that report and is gated separately by the
+    # orchestrator's persistence check. Pairs with the Stage-1 row below.
+    (PLATFORM_MAX, (18, 21, 10)): {
+        "grade": VERIFIED,
+        "detail": ("Pro 18.21.10 reached VERIFIED on 2026-10-30 with an "
+                   "independent pinned-key SSH check, demonstrating a readable "
+                   "authorized_keys entry over the device's own Dropbear. Reboot "
+                   "persistence was not in that report and is gated separately."),
+    },
     (PLATFORM_MAX, (18, 21, 3)): {"grade": INFERRED, "detail": "dropbear + S50dropbear in image"},
     (PLATFORM_MAX, (18, 21, 4)): {"grade": INFERRED, "detail": "dropbear + S50dropbear in image"},
     (PLATFORM_MAX, (18, 21, 8)): {"grade": INFERRED, "detail": "dropbear + S50dropbear in image"},
@@ -226,10 +243,39 @@ STAGE1_EVIDENCE: dict[tuple, dict] = {
         "detail": (
             "Operator confirms MAX Service Mode worked end to end on 19.2.14 "
             "and corrects the stale unproven-first-access warning in 0.43.29. "
-            "Current test scope is MAX 19.2.14, with Pro separately on 18.21.10. "
-            "This is operator-provided evidence; no fresh agent hardware test, "
-            "raw capture, serial or timing was supplied. It does not qualify "
-            "other firmware, cold-cycle persistence, CoT or Pro first access."),
+            "Test scope is MAX/VRX 19.2.14, with Pro separately on 18.21.10 "
+            "(its own row below). This is operator-provided evidence; no fresh "
+            "agent hardware test, raw capture, serial or timing was supplied. It "
+            "does not qualify other firmware, cold-cycle persistence or CoT."),
+    },
+    # Operator-DESIGNATED validated, 2026-11-27. The 2026-10-30 Pro bench reached
+    # VERIFIED, repeat managed access succeeded, and an INDEPENDENT pinned-key SSH
+    # check confirmed access -- but the first-access TOOL timed out on that run, so
+    # the checkpoint graded first access PARTIAL overall. The operator has elevated
+    # it to validated for distribution. Recorded honestly: this is weaker evidence
+    # than the MAX 19.2.14 end-to-end confirmation, and it is a per-PLATFORM key
+    # (platform_of maps the RK3568 Pro to 'max'), so it qualifies the MAX software
+    # at 18.21.10, observed on a Pro.
+    (PLATFORM_MAX, (18, 21, 10)): {
+        # NOT VERIFIED. The grade is the executable truth: this row proceeds on an
+        # operator designation, not an independent verified first access. The three
+        # claims below are kept DISTINCT and must not be blended into "VERIFIED".
+        "grade": OPERATOR_DESIGNATED,
+        "device": "Ascent_VRX_Pro on 18.21.10 (AC 0.43.34), serial not supplied",
+        "source": "bench_2026-10-30_partial_operator_designated_2026-11-27",
+        "managed_auth_observed": "VERIFIED -- independent pinned-key SSH check, 2026-10-30",
+        "first_access_grade": "PARTIAL -- the first-access tool timed out on that run",
+        "operator_designation": "operator-designated for distribution, 2026-11-27",
+        "platform_scope_note": (
+            "Keyed (platform=max, 18.21.10). platform_of maps the RK3568 Pro to "
+            "'max', so this rule also admits other MAX models on 18.21.10 -- the "
+            "evidence is Pro-specific, though 18.21.10 is a Pro firmware. Narrow it "
+            "to a device name if a non-Pro MAX ever ships 18.21.10."),
+        "detail": (
+            "2026-10-30 VRX Pro bench: activation reached VERIFIED and an independent "
+            "pinned-key SSH check confirmed managed access; the first-access tool "
+            "timed out, so first access was graded PARTIAL. Operator-designated for "
+            "distribution 2026-11-27. Not an independent VERIFIED first access."),
     },
     (PLATFORM_GND485, (19, 2, 14)): {
         "grade": VERIFIED,
@@ -290,9 +336,12 @@ STAGE1_PLATFORM_EVIDENCE: dict[str, dict] = {
     },
     PLATFORM_MAX: {
         "grade": VERIFIED,
-        "observed_on": "19.2.14 (operator confirmation); 18.21.7 (historical)",
-        "detail": ("Operator confirmed 19.2.14 end to end on 2026-10-27; "
-                   "historical Gate 2, 2026-10-08, serial 1001 on 18.21.7."),
+        "observed_on": ("19.2.14 (operator confirmation); 18.21.10 (Pro, partial); "
+                        "18.21.7 (historical)"),
+        "detail": ("Operator confirmed 19.2.14 end to end on 2026-10-27; Pro "
+                   "18.21.10 reached VERIFIED with independent SSH on 2026-10-30 "
+                   "(tool timed out, graded partial); historical Gate 2, "
+                   "2026-10-08, serial 1001 on 18.21.7."),
         "unproven": ("Unlisted MAX firmware has not been shown to behave "
                      "the same way."),
     },

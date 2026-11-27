@@ -2,6 +2,11 @@
 param(
   [string]$OutputDir,
   [string]$WorkDir,
+  # AC is the base product; AC+ (acplus) additionally exposes one-touch Service
+  # Mode. Both editions share one MSI lineage (same ProductName and UpgradeCode in
+  # installer\AscentControl.wxs); they differ only by the edition stamp in the
+  # payload and the MSI filename prefix. The ProductCode is auto-distinct per build.
+  [ValidateSet('ac','acplus')][string]$Edition='ac',
   [string]$NativeArchive,
   [string]$CameraArchive,
   [string]$DependencyCache,
@@ -91,6 +96,11 @@ Push-Location $source
 try{
  & dotnet publish $project -c Release -r win-x64 --self-contained true -o $publish "-p:AscentFileVersion=$fileVersion" "-p:BaseOutputPath=$WorkDir\bin\" "-p:BaseIntermediateOutputPath=$WorkDir\obj\" "-p:DirectoryBuildTargetsPath=$source\tools\PreservedBuildOutputs.targets" "-p:PathMap=$WorkDir=/ascent-build" -p:NuGetAudit=false -p:UseSharedCompilation=false -p:ContinuousIntegrationBuild=true -m:1
  if($LASTEXITCODE -ne 0){throw 'Public desktop publish failed'}
+ # Edition stamp at the install root (the backend reads ROOT.parent/ascent_edition.txt).
+ # It sits beside runtime\, outside the hash-pinned runtime inventory, and is
+ # suffix-safe for the public payload verifier. 'acplus' is what enables Service
+ # Mode; an absent or unrecognised stamp fails safe to AC.
+ [IO.File]::WriteAllText((Join-Path $publish 'ascent_edition.txt'),$Edition)
  & (Join-Path $publish 'pyembed\python.exe') -I (Join-Path $source 'tools\verify_public_build.py') --root $publish --reference $source --phase publish
  if($LASTEXITCODE -ne 0){throw 'Published public payload verification failed'}
  & (Join-Path $source 'tools\Test-GStreamerPayload.ps1') -StageDir (Join-Path $publish 'gstreamer')
@@ -102,7 +112,8 @@ try{
  }
  & dotnet tool restore
  if($LASTEXITCODE -ne 0){throw 'Pinned WiX tool restore failed'}
- $msi=Join-Path $WorkDir ('AscentControl-'+$version+'-x64.msi')
+ $msiBase=if($Edition -eq 'acplus'){'AscentControlPlus'}else{'AscentControl'}
+ $msi=Join-Path $WorkDir ($msiBase+'-'+$version+'-x64.msi')
  & dotnet tool run wix build (Join-Path $source 'installer\AscentControl.wxs') -arch x64 -d "PublishDir=$publish" -d "ProductVersion=$version" -o $msi
  if($LASTEXITCODE -ne 0){throw 'Public MSI authoring failed'}
 }finally{Pop-Location}
@@ -126,6 +137,6 @@ New-Item -ItemType Directory -Force -Path $OutputDir|Out-Null
 $final=Join-Path $OutputDir (Split-Path -Leaf $msi)
 if(Test-Path -LiteralPath $final){throw 'Preserve the existing MSI; select another output directory'}
 Copy-Item -LiteralPath $msi -Destination $final
-$record=[ordered]@{source_commit=$sourceCommit;version=$version;file_version=$fileVersion;msi=$final;bytes=(Get-Item -LiteralPath $final).Length;sha256=(Get-FileHash -LiteralPath $final -Algorithm SHA256).Hash.ToLowerInvariant();verified_payload_files=$count;extracted_payload=$payload;work=$WorkDir;installed=$false;hardware_executed=$false;signed=$false}
-$record|ConvertTo-Json|Set-Content -Encoding UTF8 (Join-Path $OutputDir 'public-msi-build-result.json')
+$record=[ordered]@{edition=$Edition;source_commit=$sourceCommit;version=$version;file_version=$fileVersion;msi=$final;bytes=(Get-Item -LiteralPath $final).Length;sha256=(Get-FileHash -LiteralPath $final -Algorithm SHA256).Hash.ToLowerInvariant();verified_payload_files=$count;extracted_payload=$payload;work=$WorkDir;installed=$false;hardware_executed=$false;signed=$false}
+$record|ConvertTo-Json|Set-Content -Encoding UTF8 (Join-Path $OutputDir ('public-msi-build-result-'+$Edition+'.json'))
 Write-Host ($record|ConvertTo-Json -Compress)

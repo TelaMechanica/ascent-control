@@ -41,13 +41,32 @@ def test_private_operations_are_absent_from_both_verbs(server,path):
 
 
 def test_old_edition_override_and_stamp_do_not_enable_private_code(monkeypatch,tmp_path,server):
+    # Retired edition tokens (consumer/industrial) no longer resolve to anything;
+    # both the env override and the install-root stamp fail safe to AC, which does
+    # not expose Service Mode. Enabling it requires a deliberate 'acplus' stamp.
     monkeypatch.setenv('ASCENT_EDITION','industrial')
     (tmp_path/'ascent_edition.txt').write_text('industrial')
-    monkeypatch.setattr(app,'ROOT',tmp_path)
-    assert app._resolve_edition()=='consumer'
+    monkeypatch.setattr(app,'ROOT',tmp_path/'runtime')
+    assert app._resolve_edition()=='ac'
     status,doc=request(server,'GET','/api/app')
-    assert status==200 and doc['edition']=='consumer' and doc['service_mode_available'] is False
+    assert status==200 and doc['edition']=='ac' and doc['service_mode_available'] is False
     assert not hasattr(app,'service_mode_activate') and not hasattr(app,'_widget_runtime_session')
+
+
+def test_installed_stamp_wins_over_inherited_environment_override(monkeypatch,tmp_path):
+    # Edition is product configuration: an installed AC copy must stay AC even if
+    # the environment inherits ASCENT_EDITION=acplus. The install-root stamp is the
+    # product identity and wins; the env override only resolves an UNSTAMPED build.
+    monkeypatch.setattr(app,'ROOT',tmp_path/'runtime')
+    monkeypatch.setenv('ASCENT_EDITION','acplus')
+    (tmp_path/'ascent_edition.txt').write_text('ac')
+    assert app._resolve_edition()=='ac'            # stamp beats the ambient override
+    (tmp_path/'ascent_edition.txt').write_text('acplus')
+    assert app._resolve_edition()=='acplus'        # an acplus stamp is deliberate
+    (tmp_path/'ascent_edition.txt').unlink()
+    assert app._resolve_edition()=='acplus'         # only an UNSTAMPED build honours env
+    monkeypatch.delenv('ASCENT_EDITION',raising=False)
+    assert app._resolve_edition()=='ac'             # unstamped + no env => AC fail-safe
 
 
 @pytest.mark.parametrize('origin',['http://example.invalid','null','http://127.0.0.1:1'])

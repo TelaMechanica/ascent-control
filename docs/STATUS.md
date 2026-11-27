@@ -152,7 +152,9 @@ runtime inventory and camera-boundary checks passed. Windows package and fresh
 GitHub source checks must pass before publication. Tracking issue: #20.
 
 Original public code remains GPL-3.0-only with the recorded firmware permission.
-AC+ implementation, receiver deployment and Picker remain private. Host checks
+AC+ now ships functional Service Mode publicly under sustained, direct, and explicit
+vendor (Caddx) approval (operator-authorized 2026-11-27); dependent private receiver
+widgets remain private. Host checks
 and package validation do not establish hardware qualification.
 
 Repeater Ethernet identity/role/QoS and guarded bind/role requests remain public.

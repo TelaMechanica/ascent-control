@@ -40,10 +40,43 @@ function Assert-NetRunnerDownloadBoundary($Database, [string]$ProductName) {
     }
 }
 
-function Verify-Edition([string]$RecordPath, [string]$ProductName, [string]$FilePrefix) {
+# Read the edition stamp that is actually inside the MSI payload. The whole AC/AC+
+# split is one bit -- the ascent_edition.txt the installer writes at the install
+# root -- so a pair contract that never inspects that bit cannot tell an AC MSI
+# from an AC+ MSI, and two mis-stamped builds would pass every other check. An
+# administrative extraction lays out the payload without installing; the stamp is
+# at the extracted root beside the app.
+function Get-MsiEditionStamp([string]$MsiPath, [string]$ProductName) {
+    $extract = Join-Path ([IO.Path]::GetTempPath()) ('pair-verify-' + [guid]::NewGuid().ToString('N'))
+    $log = "$extract.log"
+    $proc = Start-Process -FilePath 'msiexec.exe' -Wait -PassThru -ArgumentList @(
+        '/a', ('"' + $MsiPath + '"'), '/qn', ('TARGETDIR="' + $extract + '"'), '/L*v', ('"' + $log + '"'))
+    if ($proc.ExitCode -ne 0) { throw "$ProductName administrative extraction failed (exit $($proc.ExitCode))." }
+    # The stamp is the install-root marker the backend reads from ROOT.parent, so it
+    # must sit BESIDE the application, not merely somewhere in the payload. Anchor on
+    # the one application executable and require the stamp as its sibling.
+    $exe = @(Get-ChildItem -LiteralPath $extract -Recurse -File -Filter 'AscentControl.exe')
+    if ($exe.Count -ne 1) {
+        throw "$ProductName MSI must contain exactly one AscentControl.exe (found $($exe.Count))."
+    }
+    $stamp = Join-Path $exe[0].DirectoryName 'ascent_edition.txt'
+    if (-not (Test-Path -LiteralPath $stamp -PathType Leaf)) {
+        throw "$ProductName MSI has no ascent_edition.txt at the install root beside AscentControl.exe."
+    }
+    $all = @(Get-ChildItem -LiteralPath $extract -Recurse -File -Filter 'ascent_edition.txt')
+    if ($all.Count -ne 1) {
+        throw "$ProductName MSI must carry exactly one ascent_edition.txt (found $($all.Count))."
+    }
+    return ([IO.File]::ReadAllText($stamp)).Trim().ToLowerInvariant()
+}
+
+function Verify-Edition([string]$RecordPath, [string]$ProductName, [string]$FilePrefix, [string]$ExpectedEdition) {
     $record = Get-Content -LiteralPath $RecordPath -Raw | ConvertFrom-Json
     if ($record.source_commit -cne $SourceCommit) {
         throw "$ProductName was not built from the selected shared commit."
+    }
+    if ($record.edition -cne $ExpectedEdition) {
+        throw "$ProductName build record edition '$($record.edition)' is not the expected '$ExpectedEdition'."
     }
     if ($record.installed -ne $false -or $record.hardware_executed -ne $false -or
         $record.verified_payload_files -lt 1) {
@@ -66,12 +99,19 @@ function Verify-Edition([string]$RecordPath, [string]$ProductName, [string]$File
         throw "$FilePrefix does not upgrade the Ascent Control Windows product."
     }
     Assert-NetRunnerDownloadBoundary $db $FilePrefix
-    return [ordered]@{name=$asset.Name; bytes=$asset.Length; sha256=$sha; version=$record.version; product_code=(Get-MsiProperty $db 'ProductCode'); upgrade_code=$upgradeCode}
+    # The stamp in the payload is the load-bearing bit: it must match both the
+    # build record and the edition this slot is supposed to be.
+    $stamp = Get-MsiEditionStamp $asset.FullName $FilePrefix
+    if ($stamp -cne $ExpectedEdition) {
+        throw "$ProductName MSI edition stamp '$stamp' is not the expected '$ExpectedEdition'."
+    }
+    return [ordered]@{name=$asset.Name; bytes=$asset.Length; sha256=$sha; version=$record.version; edition=$stamp; product_code=(Get-MsiProperty $db 'ProductCode'); upgrade_code=$upgradeCode}
 }
 
-$core = Verify-Edition $CoreRecord 'Ascent Control' 'AscentControl'
-$plus = Verify-Edition $PlusRecord 'Ascent Control' 'AscentControlPlus'
+$core = Verify-Edition $CoreRecord 'Ascent Control' 'AscentControl' 'ac'
+$plus = Verify-Edition $PlusRecord 'Ascent Control' 'AscentControlPlus' 'acplus'
 if ($core.version -cne $plus.version) { throw 'The paired installers must have the same product version.' }
 if ($core.product_code -eq $plus.product_code) { throw 'Edition packages must have distinct MSI product codes.' }
 if ($core.sha256 -ceq $plus.sha256) { throw 'Both editions point to the same installer bytes.' }
+if ($core.edition -ceq $plus.edition) { throw 'The paired installers must carry distinct edition stamps (ac / acplus).' }
 [ordered]@{source_commit=$SourceCommit; assets=@($core, $plus)} | ConvertTo-Json -Depth 4
