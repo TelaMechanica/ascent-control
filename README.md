@@ -5,26 +5,43 @@ status, firmware inspection and management, RF and RC management where supported
 and a local fleet registry. This repository contains the public desktop source,
 Windows MSI build tooling, shared protocol helpers and camera-image builders.
 
-## Release and development status
+## Editions and release status
 
-| Version | Available now | Scope |
+ASCENT Control ships as two Windows products built from one core:
+
+- **AC** — the base edition.
+- **AC+** — adds **one-touch Service Mode** for managed receiver access.
+
+Both share one Windows installer lineage and differ only by an edition stamp
+written at the install root. Service Mode is available in **AC+ only**; the AC
+edition does not expose it.
+
+| Version | Editions | Scope |
 |---|---|---|
-| [0.43.63 Windows release](https://github.com/TelaMechanica/ascent-control/releases/tag/v0.43.63) | Downloadable MSI | Public AC with local Widget SDK preview inspection |
-| Current `main` | Public AC source | Guarded receiver-readiness checks, read-only Widget Manager, and one-button Service Mode first-access (source only) |
+| 0.50.2 | AC, AC+ | AC base; AC+ adds one-touch Service Mode (below). Paired Windows MSI release. |
+| [0.43.63](https://github.com/TelaMechanica/ascent-control/releases/tag/v0.43.63) | AC | Prior public AC with local Widget SDK preview inspection |
 
-### One-button Service Mode (new on `main`, source only)
+Download the current installers from
+[Releases](https://github.com/TelaMechanica/ascent-control/releases).
 
-`main` adds a single-press Service Mode activation: transport → first access →
-key enrollment → verification. First access is a **physical/USB (serial)** path that
-installs this computer's managed key on the selected receiver; trust is recorded
-**only** by the authenticated `verify()` step, so a first access that installs the
-key but fails verification records no trust and says the receiver was modified (a
-retry is safe — the install is idempotent). It is reviewable and CI-checked in
-source, **not yet receiver-qualified on hardware**, and is not part of any published
-MSI. See `ascent_core/first_access.py` and `/api/service-mode/local/activate`.
+### One-touch Service Mode (AC+)
 
-Build and verify both AC and AC+ before publishing a paired release. Release
-notes record the version and availability of each Windows installer.
+AC+ provides single-press Service Mode activation: transport readiness → first
+access → key enrollment → SSH verification, with rollback on failure. First access
+is a **physical/USB (serial)** path that installs this computer's managed key on the
+selected receiver through a publicly disclosed vendor updater mechanism; steady-state
+access is ordinary SSH public-key. Trust is recorded **only** by the authenticated
+verify step, and on any failure the activation reports the receiver's state honestly
+— modified, unknown, or not modified — and never claims a safe retry when the
+outcome is unknown.
+
+Automatic first access is gated by recorded firmware evidence: it proceeds on
+qualified firmware (currently VRX / VRX Max on 19.2.14 and VRX Pro on 18.21.10),
+proceeds only with an explicit operator acknowledgment on unproven firmware of a
+proven platform, and is otherwise blocked. **This release has not been re-qualified
+on hardware for every unit — re-qualify Service Mode on your own receiver before
+relying on it.** See `ascent_core/activation_orchestrator.py`,
+`ascent_core/first_access.py` and `/api/service-mode/local/activate`.
 
 See the [public transition status](docs/PUBLIC_TRANSITION_STATUS.md) and
 [AC+ development review](docs/CONSOLIDATED_REVIEW_0.43.63_DEV3.md).
@@ -105,9 +122,11 @@ VRX, VRX Max and VRX Pro use the separate **Rockchip RK3568** receiver platform.
 Use a fresh checkout of the published release tag with .NET SDK 8.0.424 on Windows x64:
 
 ```powershell
-git clone --branch v0.43.63 --single-branch https://github.com/TelaMechanica/ascent-control.git ascent-control-04363
-cd ascent-control-04363
+git clone --branch v0.50.2 --single-branch https://github.com/TelaMechanica/ascent-control.git ascent-control-05002
+cd ascent-control-05002
 ```
+
+Pass `-Edition ac` or `-Edition acplus` to build each edition; omit it for AC.
 
 Then run:
 
