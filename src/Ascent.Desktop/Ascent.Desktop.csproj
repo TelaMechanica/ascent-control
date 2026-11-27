@@ -906,6 +906,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </Content>
+    <Content Include="..\..\ascent_core\activation_orchestrator.py">
+      <Link>ascent_core\activation_orchestrator.py</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="..\..\ascent_core\first_access_session.py">
       <Link>ascent_core\first_access_session.py</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

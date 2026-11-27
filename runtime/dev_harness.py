@@ -60,10 +60,16 @@ RNDIS_HELPER = ROOT / "Configure-AscentRNDIS.ps1"
 APP_VERSION = '0.50.2'
 
 # One core, two Windows products. AC is the base edition; AC+ (acplus) adds
-# one-touch Service Mode. The edition is resolved from the environment first,
-# then from a stamp the installer writes at the install root
-# (tools/Build-Installer.ps1 -Edition). Legacy consumer/industrial tokens are no
-# longer accepted and resolve to None, i.e. the AC fail-safe below.
+# one-touch Service Mode. Edition is product configuration, not an environment
+# preference: the stamp the installer writes at the install root
+# (tools/Build-Installer.ps1 -Edition) is the installed product's identity and
+# WINS when present. An inherited ASCENT_EDITION override only resolves an
+# UNSTAMPED build (running from source / dev), so an installed AC copy stays AC
+# even if some ambient environment sets acplus. Legacy consumer/industrial tokens
+# are no longer accepted and resolve to None, i.e. the AC fail-safe below.
+# NOTE: edition only governs whether Service Mode is *exposed*; it is never the
+# authority that permits a receiver operation -- that stays at the host-session /
+# operation boundary (_require_host_session + the service lease).
 EDITION_AC = 'ac'
 EDITION_ACPLUS = 'acplus'
 
@@ -74,17 +80,22 @@ def _coerce_edition(value):
 
 
 def _resolve_edition() -> str:
-    env_edition = _coerce_edition(os.environ.get('ASCENT_EDITION'))
-    if env_edition is not None:
-        return env_edition
+    # Installed stamp first: it is the product's identity and cannot be overridden
+    # by an inherited environment variable.
     try:
         stamped = _coerce_edition((ROOT.parent / 'ascent_edition.txt').read_text(encoding='utf-8'))
     except OSError:
         stamped = None
-    # Fail safe: an unstamped or unrecognised build is AC, which does not expose
-    # Service Mode. Enabling the receiver first-access path requires a deliberate
-    # 'acplus' stamp, never a default.
-    return stamped if stamped is not None else EDITION_AC
+    if stamped is not None:
+        return stamped
+    # No stamp => unstamped/dev build: honour an explicit environment override.
+    env_edition = _coerce_edition(os.environ.get('ASCENT_EDITION'))
+    if env_edition is not None:
+        return env_edition
+    # Fail safe: an unstamped, unset or unrecognised build is AC, which does not
+    # expose Service Mode. Enabling the receiver first-access path requires a
+    # deliberate 'acplus' stamp, never a default and never an ambient env var.
+    return EDITION_AC
 
 APP_EDITION = _resolve_edition()
 
@@ -122,74 +133,227 @@ def local_service_preparation(*, create=False, body=None):
 _RECEIVER_SERVICE = None
 
 
-def local_service_activate(body=None):
-    """One-button Service Mode: inspect -> first access (install key) -> verify.
+def _service_mode_identify():
+    """IDENTIFY collaborator: {device_id, device_name, firmware} for the selected
+    RECEIVER, or None. Fails closed on anything that is not a selected receiver."""
+    device = SESSION.device
+    if not device:
+        return None
+    identity = dict(device.identity) if device else {}
+    name = identity.get('device_name')
+    if device_capability.classify(name).get('role') != 'receiver':
+        return None
+    return {'device_id': identity.get('serial') or identity.get('device_id') or name,
+            'device_name': name, 'firmware': identity.get('firmware')}
 
-    Composes the trusted-host SDK with first access. First access installs the
-    managed public key over a physical/USB session; the SDK's verify() is the ONLY
-    path that records trust, and it does so only after authenticating the installed
-    key against the confirmed host key -- so a first access that installs a key but
-    fails verification leaves no trust record.
 
-    Transport note (bench item): inspect()/verify() use SSH over the RNDIS sibling;
-    first access uses the serial lane. On stock firmware these are exclusive, so a
-    live run sequences serial first-access then the RNDIS/0x3A switch before verify;
-    that sequencing is validated on the bench, not here.
+def _service_mode_correlated_adapter():
+    """The single RNDIS adapter ContainerId-correlated to the selected receiver.
+
+    Returns None unless there is EXACTLY one. Multiple Ascent units expose the same
+    device-side IP, so the transport step must never guess among several -- an
+    ambiguous or absent correlation fails safe to "configure USB networking first".
     """
-    from ascent_core.service_access import AccessDenied
+    try:
+        doc = network_adapters()
+    except Exception:
+        return None
+    cands = [a for a in doc.get('adapters', []) if a.get('correlated_to_serial')]
+    return cands[0] if len(cands) == 1 else None
+
+
+def _service_mode_key_type(target):
+    """ecdsa where the platform's SSH daemon cannot verify ed25519 (Gnd485's old
+    Dropbear), ed25519 otherwise. A measured platform property, not a probe."""
+    from ascent_core import service_firmware as sf
+    kinds = sf.key_types_for_platform(sf.platform_of(target.get('device_name'),
+                                                      target.get('firmware')))
+    return kinds[0] if kinds else 'ed25519'
+
+
+def _build_activation_orchestrator(body=None):
+    """Wire the bench-proven Service Mode orchestrator to the public primitives.
+
+    The orchestration itself (transport readiness + configure/rollback, firmware
+    qualification, gated first access, enrollment, fresh-observation SSH
+    verification, honest failure taxonomy, idempotent re-verify) is the engineering
+    state machine in ascent_core.activation_orchestrator, proven on the bench.
+    This function ONLY supplies the collaborators; it owns no policy of its own.
+
+    Firmware policy is service_firmware's two-tier model: stage1_supported proceeds
+    on its own; stage1_attemptable proceeds only with a per-request
+    `acknowledge_unproven` from the operator. The firmware (persistent-key)
+    qualification is stage2_supported.
+    """
+    from ascent_core import activation_orchestrator as smo
+    from ascent_core import service_firmware as sf
     from ascent_core import first_access as _fa
+
+    service = _receiver_service()
+    acknowledged = bool((body or {}).get('acknowledge_unproven') is True)
+    # Resolved by identify(), read by the later collaborators. `first_access` and
+    # `verification` are captured here because the orchestrator keeps only pass/fail
+    # from those steps; the UI wants the receiver name and the first-access detail.
+    state = {'key_type': 'ed25519', 'configured': None,
+             'first_access': None, 'verification': None}
+
+    def identify():
+        t = _service_mode_identify()
+        if t:
+            state['key_type'] = _service_mode_key_type(t)
+        return t
+
+    def transport_ready():
+        a = _service_mode_correlated_adapter()
+        return {'ready': bool(a and a.get('ready'))}
+
+    def configure_transport():
+        a = _service_mode_correlated_adapter()
+        if a is None:
+            raise RuntimeError('No uniquely correlated USB-network adapter for the '
+                               'selected receiver. Configure it on NETWORK ADAPTERS first.')
+        try:
+            _configure_rndis_elevated(a['ifindex'])
+        except RuntimeError as error:
+            # A dismissed UAC prompt is an operator situation, not a host fault;
+            # re-raise as PermissionError so the orchestrator reports OPERATOR_DECLINED.
+            text = str(error).lower()
+            if 'dismiss' in text or 'declined' in text or 'cancel' in text:
+                raise PermissionError(str(error)) from None
+            raise
+        state['configured'] = a['ifindex']
+
+    def rollback_transport():
+        if state.get('configured') is not None:
+            _configure_rndis_elevated(state['configured'], rollback=True)
+
+    class _InitialAccess:
+        """INITIAL_ACCESS: obtain first access AND install the managed key. The
+        public exploit primitive does both atomically (there is no "shell without a
+        write"), so enroll_begin below is a confirming no-op."""
+        def establish(self, target):
+            store = _selected_service_credential(state['key_type'])
+            if not store.status().get('credential_present'):
+                generate_windows_credential(store, key_type=state['key_type'])
+            public_key = store.load().public_key
+            candidate = ACTIVE_CONNECTION.get('candidate') or {}
+            access = _fa.install_key(
+                target={'device_name': target.get('device_name'),
+                        'firmware': target.get('firmware')},
+                public_key=public_key, tool_path=str(ROOT / 'first_access_tool.py'),
+                serial_port=candidate.get('serial_com'),
+                listen_addr=HOST_CFG.get('host_rndis_ip'))
+            state['first_access'] = {'detail': access.get('detail') or access.get('stage')}
+            return {'ok': bool(access.get('ok')),
+                    'detail': access.get('detail') or access.get('stage'),
+                    'access': access}
+
+    def enroll_begin():
+        # Enrollment completed atomically inside INITIAL_ACCESS (install_key appends
+        # and reads back the authorized_keys line). Nothing to do; never raises.
+        return {'ok': True}
+
+    def enroll_verify():
+        # THE FIX for the stale-observation bug: take a FRESH observation adjacent
+        # to verification -- after the key is installed and the transport is up --
+        # and authenticate against it. verify() reports ssh_authenticated /
+        # trust_record_saved; translate to the orchestrator's `verified` contract.
+        obs = service.inspect()
+        res = service.verify(obs['observation_id'], obs['host_fingerprint'],
+                             confirmed=True, key_type=state['key_type'])
+        state['verification'] = res
+        return {'verified': bool(res.get('ssh_authenticated') and res.get('trust_record_saved')),
+                'verification': res}
+
+    def already_verified():
+        try:
+            return bool(service.inspect().get('trusted_record_present'))
+        except Exception:
+            return False
+
+    def revoke():
+        # No automated device-side key removal exists in the public tree, so cleanup
+        # cannot be CONFIRMED. Report that plainly: the orchestrator then maps an
+        # enrollment/verify failure to RECOVERY_REQUIRED rather than claiming the
+        # receiver was left clean.
+        return {'cleanup_complete': False}
+
+    orchestrator = smo.Orchestrator(
+        transport_ready=transport_ready,
+        configure_transport=configure_transport,
+        rollback_transport=rollback_transport,
+        identify=identify,
+        firmware_supported=sf.stage2_supported,
+        enroll_begin=enroll_begin,
+        enroll_verify=enroll_verify,
+        revoke=revoke,
+        already_verified=already_verified,
+        initial_access=_InitialAccess(),
+        initial_access_validated=sf.stage1_supported,
+        stage1_attemptable=sf.stage1_attemptable,
+        unproven_acknowledged=acknowledged)
+    return orchestrator, state
+
+
+def _service_mode_ui_result(res, captured=None):
+    """Add the backward-compatible fields the (hash-pinned) UI reads to the
+    orchestrator's rich result, without losing the state-machine fields.
+
+    `ok` is derived ONLY from the proven-authentication state, so the UI can never
+    read ACTIVATING/READY as success. `receiver_modified` follows the orchestrator's
+    honest taxonomy: RECOVERY_REQUIRED means device-side state may be left behind;
+    BLOCKED means a prerequisite was unmet and nothing was changed. `verification`
+    and `first_access` come from the captured step payloads (the real verify() and
+    install_key() results), falling back to the identified name.
+    """
+    import ascent_core.activation_orchestrator as smo
+    captured = captured or {}
+    steps = res.get('steps') or []
+    def step(name):
+        return next((s for s in steps if s.get('step') == name), None)
+    out = dict(res)
+    out['ok'] = res.get('state') == smo.VERIFIED
+    enroll = step('ENROLL') or {}
+    out['already_verified'] = out['ok'] and enroll.get('status') == 'SKIPPED_ALREADY_ENROLLED'
+    idf = step('IDENTIFY') or {}
+    if captured.get('first_access') is not None:
+        out['first_access'] = captured['first_access']
+    out['verification'] = (captured.get('verification')
+                           or {'receiver_name': idf.get('device_name')})
+    if not out['ok']:
+        failed = next((s for s in reversed(steps)
+                       if s.get('status') in ('FAILED', 'BLOCKED')), None)
+        out['stage'] = (failed or {}).get('step')
+        out['receiver_modified'] = res.get('state') == smo.RECOVERY_REQUIRED
+    return out
+
+
+def local_service_activate(body=None):
+    """One-button Service Mode, via the bench-proven orchestrator.
+
+    Restores the engineering state machine onto the public base: transport
+    configure/rollback, firmware qualification, gated first access, enrollment, and
+    SSH verification against a FRESH observation taken adjacent to the check -- never
+    a stale pre-install one. Success is reported ONLY on proven key authentication.
+
+    Hardware status: the orchestration logic and its firmware policy are unit-tested
+    with doubles; the first-access primitive is bench-proven across prior builds
+    (MAX/VRX 19.2.14, Pro 18.21.10). Factory-fresh one-press activation on THIS exact
+    build is not re-qualified here -- re-qualify on the operator's own unit.
+    """
     if not DEVICE_MUTATION_LOCK.acquire(blocking=False):
         return {'ok': False, 'error': 'DEVICE_BUSY'}
     previous_operation = dict(DEVICE_OPERATION_STATE)
     try:
         if DEVICE_OPERATION_STATE.get('active'):
             return {'ok': False, 'error': 'DEVICE_BUSY'}
-        service = _receiver_service()
-        observation = service.inspect()
-        if observation.get('ssh_authenticated') and observation.get('trusted_record_present'):
-            return {'ok': True, 'already_verified': True, 'observation': observation}
-        store = _host_credential_store()
-        if not store.status().get('credential_present'):
-            generate_windows_credential(store)
-        public_key = store.load().public_key
-        device = SESSION.device
-        identity = dict(device.identity) if device else {}
-        target = {'device_name': identity.get('device_name'), 'firmware': identity.get('firmware')}
-        candidate = ACTIVE_CONNECTION.get('candidate') or {}
-        serial_port = candidate.get('serial_com')
-        listen_addr = HOST_CFG.get('host_rndis_ip')
-        tool = ROOT / 'first_access_tool.py'
         # First access opens the serial port; stand discovery down so it does not
-        # race the tool for the exclusive COM handle.
+        # race the tool for the exclusive COM handle while a run is in flight.
         DEVICE_OPERATION_STATE.update({'active': True, 'operation_id': 'service_mode_activate',
                                        'started_at': utc_now()})
-        access = _fa.install_key(target=target, public_key=public_key, tool_path=str(tool),
-                                 serial_port=serial_port, listen_addr=listen_addr)
-        if not access.get('ok'):
-            # The enrollment commands ran iff we got as far as verifying the install;
-            # earlier stages (first access / privilege / session / root_home) did not
-            # touch the receiver. Tell the operator which it was: a modified receiver
-            # needs different handling than one left untouched.
-            modified = access.get('stage') == 'verify_install'
-            return {'ok': False, 'stage': access.get('stage', 'first_access'),
-                    'error': 'FIRST_ACCESS_FAILED', 'first_access': access,
-                    'receiver_modified': modified, 'key_installed': False}
-        # The key is installed. Authenticate it and record trust. verify() is the
-        # ONLY path that writes a record. If it fails, the key is STILL installed --
-        # the receiver has been modified -- so say so plainly. Retry is safe because
-        # the install is idempotent, but support must not be told "nothing happened."
-        try:
-            verification = service.verify(observation['observation_id'], observation['host_fingerprint'],
-                                          confirmed=True, key_type='ed25519')
-        except (AccessDenied, CredentialError) as verr:
-            return {'ok': False, 'stage': 'verify', 'error': str(getattr(verr, 'code', verr)),
-                    'key_installed': True, 'receiver_modified': True, 'first_access': access,
-                    'detail': 'First access installed the managed key, but authenticated '
-                              'verification failed, so no trust record was saved. The receiver was '
-                              'modified; a retry is safe because the key install is idempotent.'}
-        return {'ok': True, 'first_access': access, 'verification': verification,
-                'receiver_modified': True, 'key_installed': True}
-    except (AccessDenied, CredentialError, _fa.FirstAccessError) as error:
+        orchestrator, captured = _build_activation_orchestrator(body)
+        return _service_mode_ui_result(orchestrator.activate(), captured)
+    except CredentialError as error:
         return {'ok': False, 'error': str(getattr(error, 'code', error))}
     except (OSError, subprocess.TimeoutExpired) as error:
         return {'ok': False, 'error': 'SERVICE_ACTIVATE_UNAVAILABLE', 'detail': str(error)[:200]}

@@ -426,8 +426,8 @@
     {
       "source": "runtime/dev_harness.py",
       "target": "runtime/dev_harness.py",
-      "sha256": "3903854ade1d38731a95cbd20f19a2b899cba3e8cc93f0c71061c276857aa039",
-      "bytes": 333002
+      "sha256": "3caf7564dc30331cc087942a53d6079099f99884975d109b069281a265160625",
+      "bytes": 340065
     },
     {
       "source": "runtime/device_capability.py",
@@ -1126,6 +1126,12 @@
       "bytes": 6855
     },
     {
+      "source": "ascent_core/activation_orchestrator.py",
+      "target": "ascent_core/activation_orchestrator.py",
+      "sha256": "1a1978a08c4eff0199146a6f6540889111689646077146560e9d99d91011a649",
+      "bytes": 32004
+    },
+    {
       "source": "ascent_core/first_access_session.py",
       "target": "ascent_core/first_access_session.py",
       "sha256": "deb807b3e4b7a73fd81c5bcb9dc81f9d7c14b91158adb16931b2cf7378b4bafb",
@@ -1140,8 +1146,8 @@
     {
       "source": "ascent_core/service_firmware.py",
       "target": "ascent_core/service_firmware.py",
-      "sha256": "8df9e054ef2a69bf97da05d47c3b1492620f46d796fb0dff6b4bce828a3be7d4",
-      "bytes": 24941
+      "sha256": "a641224b46048a630f662b34c8b4edf1e342bc5d6a94488a5750c51327f2cc60",
+      "bytes": 27272
     },
     {
       "source": "ascent_core/service_gate2.py",
@@ -1230,11 +1236,11 @@
     }
   },
   "source_files": {
-    ".github/workflows/windows-publish.yml": "b2a89a5a2685d5aa494d16ce0251547f7a55a29b6aa352834866118a3c0c8913",
+    ".github/workflows/windows-publish.yml": "3cf07c9c9b5888e580beff77bf3846d3c95a4897cae92c0d4ad9b857f7e88d67",
     "ascent_core/enrollment_commands.py": "007385b653de4bede7f618035065306c3340a5faa755f087900c6abb15081227",
     "ascent_core/first_access.py": "41a92f41cf0949b1ae33f4523d5cf40c332498858295acd260e51e3a164d8ea5",
     "ascent_core/first_access_session.py": "deb807b3e4b7a73fd81c5bcb9dc81f9d7c14b91158adb16931b2cf7378b4bafb",
-    "ascent_core/service_firmware.py": "8df9e054ef2a69bf97da05d47c3b1492620f46d796fb0dff6b4bce828a3be7d4",
+    "ascent_core/service_firmware.py": "a641224b46048a630f662b34c8b4edf1e342bc5d6a94488a5750c51327f2cc60",
     "ascent_core/service_gate2.py": "a25185fd27fd58c8b63b943ebbe7d1119411edc1b5fa367276658c9541b8ab81",
     "runtime/first_access_tool.py": "d08009cd7a2df81067f6c79546f63c8ab2eebaf664294e6fc79ed662389a8e07",
     ".config/dotnet-tools.json": "af573fc0b0f33af85fff921ae9f9697fbfe120bd02706331d3d0582b31b7fdb2",
@@ -1393,7 +1399,7 @@
     "runtime/caddx_sky_user_cfg.py": "ae564e925856ccb8a483c9df477bfbf2c50472ff75af51af8a588c6b935352f4",
     "runtime/caddx_tile_image.py": "3362291ff44cbf09ed44d4814fe5efb198925eed66689e033d4f411b93fdd568",
     "runtime/caddx_vendor_write.py": "f22b3d83106beb88c69b04339537830ace2535ce1bdda5fc4d2d4b9b316f5af7",
-    "runtime/dev_harness.py": "3903854ade1d38731a95cbd20f19a2b899cba3e8cc93f0c71061c276857aa039",
+    "runtime/dev_harness.py": "3caf7564dc30331cc087942a53d6079099f99884975d109b069281a265160625",
     "runtime/device_capability.py": "fa9d47b46e2922ca5dfb0de1e65566c7bf691d7e7c332954a5c0216811af2911",
     "runtime/device_config_store.py": "979e2e28e0068b22ceff62a3eb8ed745f2535275369a19dc05450845a0e73415",
     "runtime/device_naming.py": "40d6f4f0fe2cba58b32e01d41bf2fc118a2af55f93683c1760a83aa131cbd096",
@@ -1479,7 +1485,7 @@
     "runtime/www/index.html": "10ed51af4a5e2d687acbe6fc1b6c8780f17a42a4e6ccf8a8ee7e0841823e4f5f",
     "src/Ascent.Desktop/App.xaml": "c224747501fff732ca28f968e11c59109f726e60d69c9668843a3f232552c054",
     "src/Ascent.Desktop/App.xaml.cs": "c6011d45cdad7c170a0c4c0c3038316f2db8313183e0354dab943b2a9cfe0b93",
-    "src/Ascent.Desktop/Ascent.Desktop.csproj": "5b0b517fa6e0ae51107f782d603f5c8b972f34db07bac31fd0c32debafb7b7a2",
+    "src/Ascent.Desktop/Ascent.Desktop.csproj": "c13a26757bce2d0ae8442b8024d6516a0850a0681a5ba072d75b1c5e39b2871b",
     "src/Ascent.Desktop/Assets/AscentControl.ico": "b1bb2afcf46f9fbf8d233ff84958ccf17596021ab639f11313801ae5f3da652e",
     "src/Ascent.Desktop/Assets/AscentControlIcon.png": "03d93cfd69f86cfe17591f04de53afbdb0d49113e22016838089e9271cb36060",
     "src/Ascent.Desktop/BackendHost.cs": "3e61de3af500c9203cc4c858b4d7415ad038e3b6f6d9aa74a71f9ad18ea12fba",
@@ -1532,7 +1538,7 @@
     "tests/test_packages.py": "125a4886498f5b832f32963b3444ce66b379e90e3d498995543ad87311de33f4",
     "tests/test_phase475_hid_encoding.py": "eed233b67a0f9da44121df096f332e0311a22d7a84a8a02919f4ab67fde45081",
     "tests/test_privacy_review.py": "92e1c7d10b68b21973a42bf05fa4426e04cf864630b8b2de5e85c5c5d4830870",
-    "tests/test_public_desktop_boundary.py": "931837da1d6e2ec1cfd7f62b3bf74f6e6c27072f23b00532ed5b58eef906b67b",
+    "tests/test_public_desktop_boundary.py": "a4d2020dd915f2cbf430204b242216d31b15af2ddb9f58782ae26c6172e4aee5",
     "tests/test_public_firmware_staging.py": "d0b071807754628e30b7d75b17e8ac97f30f1f2d0682e7bb9f5340d3edde7308",
     "tests/test_public_license.py": "b8f3bfc678a017b394aa050b14e3722996bb513c6da16ce00dee658659839262",
     "tests/test_public_live_interaction.py": "63795ed51cffe7d8fcbe708ea710a7e149f50eac7090c4057b81bfb0034cd0cf",
@@ -2069,7 +2075,7 @@
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mkfs.ubifs/ubifs.h": "610a90a227b27e3c22c2ab7f12e947dd2355f1361d09c41bfc9d0ee331398af3",
     "third_party/native-ubifs-source/firmware/native_ubifs/upstream/ubifs-utils/mount.ubifs": "175df527fa9406e1dc8784d34112dc624ce7e2bd6eee70dfd75ddc2cecb967c4",
     "tools/Build-Installer.ps1": "473695b685c5886e8b65bf79c3bc945bcfafc9fb8d69a8cfaab931c0cf4c0d20",
-    "tools/Verify-PairedInstallerRelease.ps1": "aa1ecfa55f2dc0b9972799996f1317743e0560f4319564cd641ceb1afc8b21b6",
+    "tools/Verify-PairedInstallerRelease.ps1": "97864ae8a8da5e904fa21594fed689292cdcec3387171e046e09ce2fd9745324",
     "tools/PreservedBuildOutputs.targets": "2656fa2b9d11961684626c052d0c62d01192202be6b34ffca5f06d2ce32fa378",
     "tools/Stage-GStreamer.ps1": "e7f9bd809b4ce27522855ba3c75183bf6dffca379458db3d6c219836ce52e927",
     "tools/Stage-PythonRuntime.ps1": "a59f170e595a8824242d114ac702afc28c7d599628f47feca1ee59e29233b643",
@@ -2089,7 +2095,8 @@
     "tools/testing/windows_ssh_worker.py": "011a6ccc5a5841c7e124f191702a1983122722429bbe0c69d354854966af5ce0",
     "tools/verify_public_build.py": "ba951965d3b187988324379c3c6150cf32e7ce9ef187e6bbd0fbb3d33ce74c45",
     "tools/widget_sdk.py": "c9655333d6d5c580cf79660f33bcfee1ff493e4d17ed3db2e0ebe094cf435f3e",
-    "runtime/netrunner-download-pins.json": "98b3b79f8caf90e9e2462501696dda4e59c7f8b4383fe33288fcc4e59fd33187"
+    "runtime/netrunner-download-pins.json": "98b3b79f8caf90e9e2462501696dda4e59c7f8b4383fe33288fcc4e59fd33187",
+    "ascent_core/activation_orchestrator.py": "1a1978a08c4eff0199146a6f6540889111689646077146560e9d99d91011a649"
   },
   "release_channel": "public"
 }

@@ -53,6 +53,22 @@ def test_old_edition_override_and_stamp_do_not_enable_private_code(monkeypatch,t
     assert not hasattr(app,'service_mode_activate') and not hasattr(app,'_widget_runtime_session')
 
 
+def test_installed_stamp_wins_over_inherited_environment_override(monkeypatch,tmp_path):
+    # Edition is product configuration: an installed AC copy must stay AC even if
+    # the environment inherits ASCENT_EDITION=acplus. The install-root stamp is the
+    # product identity and wins; the env override only resolves an UNSTAMPED build.
+    monkeypatch.setattr(app,'ROOT',tmp_path/'runtime')
+    monkeypatch.setenv('ASCENT_EDITION','acplus')
+    (tmp_path/'ascent_edition.txt').write_text('ac')
+    assert app._resolve_edition()=='ac'            # stamp beats the ambient override
+    (tmp_path/'ascent_edition.txt').write_text('acplus')
+    assert app._resolve_edition()=='acplus'        # an acplus stamp is deliberate
+    (tmp_path/'ascent_edition.txt').unlink()
+    assert app._resolve_edition()=='acplus'         # only an UNSTAMPED build honours env
+    monkeypatch.delenv('ASCENT_EDITION',raising=False)
+    assert app._resolve_edition()=='ac'             # unstamped + no env => AC fail-safe
+
+
 @pytest.mark.parametrize('origin',['http://example.invalid','null','http://127.0.0.1:1'])
 def test_cross_site_post_refuses_before_any_setting_change(server,monkeypatch,origin):
     monkeypatch.setattr(app.local_settings,'set_auto_connect',lambda *_:pytest.fail('must not write'))
