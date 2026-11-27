@@ -21,18 +21,22 @@
 -->
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
 
+  <!-- ProductName / UpgradeCode / ShortcutGuid are supplied per edition by
+       tools/Build-Installer.ps1 (-Edition ac|acplus). AC and AC+ are separate
+       products with distinct UpgradeCodes, so both can be installed and upgraded
+       independently. Manufacturer stays the project name for both. -->
   <Package
-      Name="Ascent Control"
+      Name="$(var.ProductName)"
       Manufacturer="Ascent Control"
       Version="$(var.ProductVersion)"
-      UpgradeCode="353ECEAF-B574-563B-9587-39464C4F0131"
+      UpgradeCode="$(var.UpgradeCode)"
       Scope="perMachine"
       Compressed="yes">
 
     <!-- Stable across versions, derived once from the product name. Changing it
          would turn an upgrade into a second parallel installation. -->
 
-    <SummaryInformation Description="Ascent Control" />
+    <SummaryInformation Description="$(var.ProductName)" />
 
     <!-- Replace an older build in place. A downgrade is refused with a readable
          message rather than being allowed to half-apply over a newer tree.
@@ -46,7 +50,7 @@
          installed. -->
     <MajorUpgrade
         AllowSameVersionUpgrades="yes"
-        DowngradeErrorMessage="A newer version of Ascent Control is already installed. Uninstall it first if you intend to go back." />
+        DowngradeErrorMessage="A newer version of $(var.ProductName) is already installed. Uninstall it first if you intend to go back." />
 
     <MediaTemplate EmbedCab="yes" />
 
@@ -55,14 +59,14 @@
         Message="Ascent Control requires 64-bit Windows." />
 
     <StandardDirectory Id="ProgramFiles6432Folder">
-      <Directory Id="INSTALLFOLDER" Name="Ascent Control" />
+      <Directory Id="INSTALLFOLDER" Name="$(var.ProductName)" />
     </StandardDirectory>
 
     <StandardDirectory Id="ProgramMenuFolder">
-      <Directory Id="ShortcutFolder" Name="Ascent Control" />
+      <Directory Id="ShortcutFolder" Name="$(var.ProductName)" />
     </StandardDirectory>
 
-    <Feature Id="Main" Title="Ascent Control" Level="1">
+    <Feature Id="Main" Title="$(var.ProductName)" Level="1">
       <ComponentGroupRef Id="ApplicationFiles" />
       <ComponentRef Id="StartMenuShortcut" />
     </Feature>
@@ -76,16 +80,16 @@
     </ComponentGroup>
 
     <Component Id="StartMenuShortcut" Directory="ShortcutFolder"
-               Guid="27C3411D-3611-5867-A96A-8819CDE97642">
+               Guid="$(var.ShortcutGuid)">
       <Shortcut Id="AscentControlShortcut"
-                Name="Ascent Control"
+                Name="$(var.ProductName)"
                 Description="Configuration and live control for Ascent receivers"
                 Target="[INSTALLFOLDER]AscentControl.exe"
                 WorkingDirectory="INSTALLFOLDER" />
       <RemoveFolder Id="RemoveShortcutFolder" Directory="ShortcutFolder" On="uninstall" />
       <!-- A per-machine package still needs a per-user registry key to own the
            per-user Start Menu folder; the shortcut has no other keypath. -->
-      <RegistryValue Root="HKCU" Key="Software\Ascent Control"
+      <RegistryValue Root="HKCU" Key="Software\$(var.ProductName)"
                      Name="Installed" Type="integer" Value="1" KeyPath="yes" />
     </Component>
 

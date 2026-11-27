@@ -12,11 +12,16 @@ def authoring():
 
 def test_existing_shared_product_upgrade_identity_is_preserved():
     package = authoring().find('w:Package', NS)
-    # Existing public product identity: changing it creates a parallel product.
-    assert package.attrib['UpgradeCode'] == '353ECEAF-B574-563B-9587-39464C4F0131'
+    # Identity is supplied per edition by Build-Installer.ps1; the wxs is
+    # parameterized. Changing an edition's UpgradeCode creates a parallel product.
+    assert package.attrib['UpgradeCode'] == '$(var.UpgradeCode)'
     assert package.attrib['Scope'] == 'perMachine'
     upgrade = package.find('w:MajorUpgrade', NS)
     assert upgrade is not None and upgrade.attrib['AllowSameVersionUpgrades'] == 'yes'
+    # AC keeps its original UpgradeCode (stable identity); AC+ is a distinct product.
+    build = (ROOT/'tools/Build-Installer.ps1').read_text()
+    assert '353ECEAF-B574-563B-9587-39464C4F0131' in build
+    assert '95810E93-1BC3-5750-9CC8-99249572FC78' in build
 
 
 def test_uninstall_has_no_authored_user_data_or_provider_cleanup():

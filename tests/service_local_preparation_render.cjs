@@ -2,7 +2,9 @@ const assert=require('assert');
 const {boot}=require('./public_ui_render_check.cjs');
 const ctx=boot(),ui=ctx.__ui;
 ui.state.app={};assert.equal(ui.localServicePanel(),'');
-ui.state.app={local_credential_preparation:true};
+// AC (Service Mode unavailable) hides the panel even with host preparation ready.
+ui.state.app={local_credential_preparation:true,service_mode_available:false};assert.equal(ui.localServicePanel(),'');
+ui.state.app={local_credential_preparation:true,service_mode_available:true};
 let html=ui.localServicePanel();
 assert(html.includes('Not checked'));
 assert(html.includes('id="serviceLocalCreate" disabled'));

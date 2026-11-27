@@ -11,6 +11,12 @@ import dev_harness as app
 TOKEN = '7' * 64
 
 
+@pytest.fixture(autouse=True)
+def _acplus_edition(monkeypatch):
+    # Service Mode is an AC+ feature; these tests exercise it, so run under AC+.
+    monkeypatch.setattr(app, 'SERVICE_MODE_AVAILABLE', True)
+
+
 @pytest.fixture
 def server(monkeypatch):
     monkeypatch.setattr(app, '_HOST_SESSION_TOKEN', TOKEN)
@@ -77,6 +83,23 @@ def test_host_proof_authenticates_backend_without_exposing_secret(server):
     assert doc == {'proof': hmac.new(TOKEN.encode(), ('ascent-host-proof:' + challenge).encode(), hashlib.sha256).hexdigest()}
     assert TOKEN not in json.dumps(doc)
     assert request(server, 'GET', '/api/app/host-proof?challenge=bad')[0] == 403
+
+
+@pytest.mark.parametrize('method,path', [
+    ('GET', '/api/service-mode/local/status'),
+    ('POST', '/api/service-mode/local/prepare'),
+    ('POST', '/api/service-mode/local/credential'),
+    ('POST', '/api/service-mode/local/receiver/inspect'),
+    ('POST', '/api/service-mode/local/receiver/verify'),
+    ('POST', '/api/service-mode/local/activate'),
+])
+def test_ac_edition_hides_service_mode_endpoints(server, monkeypatch, method, path):
+    # AC (no Service Mode): every endpoint answers 404 as though absent, ahead of
+    # the host-session check, even with a valid host token.
+    monkeypatch.setattr(app, 'SERVICE_MODE_AVAILABLE', False)
+    monkeypatch.setattr(app, '_host_credential_store', lambda: pytest.fail('AC must not touch store'))
+    status, doc = request(server, method, path, token=TOKEN, body={'confirmed': True})
+    assert status == 404 and doc['error'] == 'SERVICE_MODE_NOT_AVAILABLE'
 
 
 def test_settings_render_truth_and_escaping():

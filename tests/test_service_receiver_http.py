@@ -1,6 +1,6 @@
 """Actual HTTP routing and shared operation guard; trusted controller double only."""
 import pytest
-from test_service_local_http import app, server, request, TOKEN
+from test_service_local_http import app, server, request, TOKEN, _acplus_edition
 
 
 @pytest.mark.parametrize('action', ['inspect', 'verify'])

@@ -42,11 +42,14 @@ def test_private_operations_are_absent_from_both_verbs(server,path):
 
 def test_old_edition_override_and_stamp_do_not_enable_private_code(monkeypatch,tmp_path,server):
     monkeypatch.setenv('ASCENT_EDITION','industrial')
+    # Install layout: stamp sits at the install root, beside the executable; ROOT is
+    # the runtime/ subdir, so the stamp is read from ROOT.parent.
+    runtime_dir=tmp_path/'runtime';runtime_dir.mkdir()
     (tmp_path/'ascent_edition.txt').write_text('industrial')
-    monkeypatch.setattr(app,'ROOT',tmp_path)
-    assert app._resolve_edition()=='consumer'
+    monkeypatch.setattr(app,'ROOT',runtime_dir)
+    assert app._resolve_edition()=='ac'
     status,doc=request(server,'GET','/api/app')
-    assert status==200 and doc['edition']=='consumer' and doc['service_mode_available'] is False
+    assert status==200 and doc['edition']=='ac' and doc['service_mode_available'] is False
     assert not hasattr(app,'service_mode_activate') and not hasattr(app,'_widget_runtime_session')
 
 

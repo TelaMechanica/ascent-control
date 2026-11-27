@@ -2623,6 +2623,7 @@ function localServiceState(){
 
 function localServicePanel(){
   if(!state.app?.local_credential_preparation)return '';
+  if(!state.app?.service_mode_available)return '';
   const w=localServiceState(),credential=w.doc?.local_credential;
   const checked=credential?.credential_present;
   let body='<p>Prepare a credential protected for your Windows account. Receiver setup is not available: the matching public key must already be authorized on the receiver. These checks do not install keys or enable receiver changes.</p>';

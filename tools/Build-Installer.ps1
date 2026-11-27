@@ -5,8 +5,18 @@ param(
   [string]$NativeArchive,
   [string]$CameraArchive,
   [string]$DependencyCache,
-  [int]$BuildRevision=1
+  [int]$BuildRevision=1,
+  # Which product to build. "ac" is the baseline; "acplus" additionally carries the
+  # public one-touch Service Mode (runtime gates on the stamped edition). Default
+  # is the safe baseline: an unspecified build is AC, never AC+. Build BOTH to ship
+  # the pair. Each edition is a distinct product (ProductName/UpgradeCode/MSI name).
+  [ValidateSet('ac','acplus')]
+  [string]$Edition='ac'
 )
+$editionIdentity=@{
+  ac    =@{ProductName='Ascent Control';      UpgradeCode='353ECEAF-B574-563B-9587-39464C4F0131'; ShortcutGuid='27C3411D-3611-5867-A96A-8819CDE97642'; MsiBase='AscentControl'}
+  acplus=@{ProductName='Ascent Control Plus'; UpgradeCode='95810E93-1BC3-5750-9CC8-99249572FC78'; ShortcutGuid='02693A80-BD97-5194-B3AA-B50A96350C37'; MsiBase='AscentControlPlus'}
+}[$Edition]
 $ErrorActionPreference='Stop'
 $repo=(Resolve-Path (Join-Path $PSScriptRoot '..')).ProviderPath
 $sourceCommit=$null
@@ -92,13 +102,19 @@ try{
  if($LASTEXITCODE -ne 0){throw 'Pinned WiX tool restore failed'}
  & dotnet publish $project -c Release -r win-x64 --self-contained true -o $publish "-p:AscentFileVersion=$fileVersion" "-p:BaseOutputPath=$WorkDir\bin\" "-p:BaseIntermediateOutputPath=$WorkDir\obj\" "-p:DirectoryBuildTargetsPath=$source\tools\PreservedBuildOutputs.targets" "-p:PathMap=$WorkDir=/ascent-build" -p:NuGetAudit=false -p:UseSharedCompilation=false -p:ContinuousIntegrationBuild=true -m:1
  if($LASTEXITCODE -ne 0){throw 'Public desktop publish failed'}
+ # Stamp the edition at the install root (beside the executable), deliberately
+ # OUTSIDE the hash-pinned runtime\ allowlist the verifier enforces -- the stamp's
+ # content differs per edition. dev_harness._resolve_edition reads it from here.
+ Set-Content -Path (Join-Path $publish 'ascent_edition.txt') -Value $Edition -NoNewline -Encoding ascii
+ if((Get-Content -LiteralPath (Join-Path $publish 'ascent_edition.txt') -Raw).Trim() -ne $Edition){throw "Edition stamp did not land as '$Edition'."}
+ Write-Host "Edition: $Edition ($($editionIdentity.ProductName)); stamped ascent_edition.txt at the install root"
  & (Join-Path $publish 'pyembed\python.exe') -I (Join-Path $source 'tools\verify_public_build.py') --root $publish --reference $source --phase publish
  if($LASTEXITCODE -ne 0){throw 'Published public payload verification failed'}
  & (Join-Path $source 'tools\Test-GStreamerPayload.ps1') -StageDir (Join-Path $publish 'gstreamer')
  if($LASTEXITCODE -ne 0){throw 'Published media runtime validation failed'}
  if((Get-Item -LiteralPath (Join-Path $publish 'AscentControl.dll')).VersionInfo.FileVersion -ne $fileVersion){throw 'Desktop file version differs from MSI/backend version'}
- $msi=Join-Path $WorkDir ('AscentControl-'+$version+'-x64.msi')
- & dotnet tool run wix build (Join-Path $source 'installer\AscentControl.wxs') -arch x64 -d "PublishDir=$publish" -d "ProductVersion=$version" -o $msi
+ $msi=Join-Path $WorkDir ($editionIdentity.MsiBase+'-'+$version+'-x64.msi')
+ & dotnet tool run wix build (Join-Path $source 'installer\AscentControl.wxs') -arch x64 -d "PublishDir=$publish" -d "ProductVersion=$version" -d "ProductName=$($editionIdentity.ProductName)" -d "UpgradeCode=$($editionIdentity.UpgradeCode)" -d "ShortcutGuid=$($editionIdentity.ShortcutGuid)" -o $msi
  if($LASTEXITCODE -ne 0){throw 'Public MSI authoring failed'}
 }finally{Pop-Location}
 
@@ -121,6 +137,6 @@ New-Item -ItemType Directory -Force -Path $OutputDir|Out-Null
 $final=Join-Path $OutputDir (Split-Path -Leaf $msi)
 if(Test-Path -LiteralPath $final){throw 'Preserve the existing MSI; select another output directory'}
 Copy-Item -LiteralPath $msi -Destination $final
-$record=[ordered]@{source_commit=$sourceCommit;version=$version;file_version=$fileVersion;msi=$final;bytes=(Get-Item -LiteralPath $final).Length;sha256=(Get-FileHash -LiteralPath $final -Algorithm SHA256).Hash.ToLowerInvariant();verified_payload_files=$count;extracted_payload=$payload;work=$WorkDir;installed=$false;hardware_executed=$false;signed=$false}
-$record|ConvertTo-Json|Set-Content -Encoding UTF8 (Join-Path $OutputDir 'public-msi-build-result.json')
+$record=[ordered]@{source_commit=$sourceCommit;edition=$Edition;product_name=$editionIdentity.ProductName;upgrade_code=$editionIdentity.UpgradeCode;version=$version;file_version=$fileVersion;msi=$final;bytes=(Get-Item -LiteralPath $final).Length;sha256=(Get-FileHash -LiteralPath $final -Algorithm SHA256).Hash.ToLowerInvariant();verified_payload_files=$count;extracted_payload=$payload;work=$WorkDir;installed=$false;hardware_executed=$false;signed=$false}
+$record|ConvertTo-Json|Set-Content -Encoding UTF8 (Join-Path $OutputDir ('public-msi-build-result-'+$Edition+'.json'))
 Write-Host ($record|ConvertTo-Json -Compress)
