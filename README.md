@@ -18,7 +18,7 @@ edition does not expose it.
 
 | Version | Editions | Scope |
 |---|---|---|
-| 0.50.2 | AC, AC+ | AC base; AC+ adds one-touch Service Mode (below). Paired Windows MSI release. |
+| [0.50.2](https://github.com/TelaMechanica/ascent-control/releases/tag/v0.50.2) | AC, AC+ | AC base; AC+ adds one-touch Service Mode (below). Paired Windows MSI release. |
 | [0.43.63](https://github.com/TelaMechanica/ascent-control/releases/tag/v0.43.63) | AC | Prior public AC with local Widget SDK preview inspection |
 
 Download the current installers from
