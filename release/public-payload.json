@@ -1140,8 +1140,8 @@
     {
       "source": "ascent_core/enrollment_commands.py",
       "target": "ascent_core/enrollment_commands.py",
-      "sha256": "007385b653de4bede7f618035065306c3340a5faa755f087900c6abb15081227",
-      "bytes": 16999
+      "sha256": "952b2c35fb41b2d07ab37a357382a23ab73441690c307790cdb5ff9efe1002d8",
+      "bytes": 17353
     },
     {
       "source": "ascent_core/service_firmware.py",
@@ -1237,7 +1237,7 @@
   },
   "source_files": {
     ".github/workflows/windows-publish.yml": "26a6be92040c43657c914789c8098220f2be1dbc458050e60e4696923eff04ad",
-    "ascent_core/enrollment_commands.py": "007385b653de4bede7f618035065306c3340a5faa755f087900c6abb15081227",
+    "ascent_core/enrollment_commands.py": "952b2c35fb41b2d07ab37a357382a23ab73441690c307790cdb5ff9efe1002d8",
     "ascent_core/first_access.py": "41a92f41cf0949b1ae33f4523d5cf40c332498858295acd260e51e3a164d8ea5",
     "ascent_core/first_access_session.py": "deb807b3e4b7a73fd81c5bcb9dc81f9d7c14b91158adb16931b2cf7378b4bafb",
     "ascent_core/service_firmware.py": "c37b21bcda5bb9e53ea00fd82a1341fa8401226322dc05a3f1ae14b09e63033a",
