@@ -64,6 +64,12 @@ USRDATA_AUTHORIZED_KEYS = USRDATA_HOME + "/.ssh/authorized_keys"
 VENDOR_RUN_HOOK = "/usrdata/run.sh"
 HOOK_MARKER = "# ascent-service-mode"
 DEFAULT_ROOT_HOME = "/root"
+# Indices into an `ls -ld` mode string, e.g. "drwxr-xr-x": index 0 is the file type
+# and the owner/group/other rwx triples follow, so the group-write bit is index 5 and
+# the other-write bit is index 8. parse_enrollment_verification() indexes these only
+# after checking len(mode) >= 10, so both are always in range when used.
+_GROUP_W = 5
+_OTHER_W = 8
 UNSAFE_MOUNT_TARGETS = frozenset({"", "/", "/usr", "/etc", "/bin", "/sbin",
                                   "/lib", "/dev", "/proc", "/sys", "/tmp",
                                   "/var", "/usrdata"})
